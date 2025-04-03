@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect } from "react";
 import userApi from "../api/userAPI";
-import { Script } from "@/type/script";
+import { Script } from "@/types/script";
 
 const useFetchProfile = (userId: string) => {
     const [data, setData] = useState(null);
