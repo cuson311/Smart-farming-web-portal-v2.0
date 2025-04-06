@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import commentApi from "../api/commentAPI";
+import { ScriptComment } from "@/types/comment";
 
 const useFetchComments = (userId: string, scriptId: string) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<ScriptComment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

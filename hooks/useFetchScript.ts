@@ -1,8 +1,9 @@
 ﻿import { useState, useEffect, useCallback } from "react";
 import scriptApi from "../api/scriptAPI";
+import { Script } from "@/types/script";
 
 const useFetchScriptInfo = (userId: string, scriptId: string) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<Script | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   //   console.log("Calling fetch Data:", { userId, scriptId });

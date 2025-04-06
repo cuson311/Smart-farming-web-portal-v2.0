@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+﻿import { useState, useEffect, useCallback } from "react";
 import userApi from "../api/userAPI";
 import { Script } from "@/types/script";
 
@@ -92,34 +92,32 @@ const useFetchActivities = (userId: string, year: string) => {
 };
 
 const useFetchScriptsList = (userId: string) => {
-
     const [data, setData] = useState<Script[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<unknown>(null);
 
-    useEffect(() => {
+    const fetchScriptsList = useCallback(async () => {
         if (!userId) return;
 
-        const fetchScriptsList = async () => {
-            setLoading(true);
-            setError(null);
+        setLoading(true);
+        setError(null);
 
-            try {
-                const data = await userApi.scriptsList(userId);
-                //console.log("Fetch script List", data);
-                setData(data);
-            } catch (err) {
-                console.error("Error fetching scripts:", err);
-                // setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+        try {
+            const scripts = await userApi.scriptsList(userId);
+            setData(scripts);
+        } catch (err) {
+            console.error("Error fetching scripts:", err);
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }, [userId]);
 
+    useEffect(() => {
         fetchScriptsList();
-    }, [userId]); // Runs when `userId` changes
+    }, [fetchScriptsList]);
 
-    return { data, loading, error };
+    return { data, loading, error, refetch: fetchScriptsList };
 };
 
 const useFetchModelsList = (userId: string) => {

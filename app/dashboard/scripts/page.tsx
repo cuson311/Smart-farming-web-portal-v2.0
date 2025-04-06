@@ -9,6 +9,7 @@ import { useFetchScriptsList } from "@/hooks/useFetchUser";
 import NewScriptDialog from "@/components/script/script-list/NewScript";
 import ScriptList from "@/components/script/script-list/ScriptList";
 import { Script } from "@/types/script";
+import userApi from "@/api/userAPI";
 
 const ScriptsPage = () => {
   const { toast } = useToast();
@@ -22,9 +23,11 @@ const ScriptsPage = () => {
     }
   }, []);
 
-  const { data: scripts, loading: scriptsListLoading } = useFetchScriptsList(
-    userId ? userId : ""
-  );
+  const {
+    data: scripts,
+    loading: scriptsListLoading,
+    refetch,
+  } = useFetchScriptsList(userId ? userId : "");
 
   // console.log("Scripts nè", scripts);
 
@@ -34,11 +37,24 @@ const ScriptsPage = () => {
       script.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const toggleFavorite = (id: string): void => {
-    toast({
-      title: "Favorite updated",
-      description: "Script favorite status has been updated.",
-    });
+  const toggleFavorite = async (id: string, isFavorite: boolean) => {
+    if (!userId) return;
+
+    const action = isFavorite ? "remove" : "add";
+    try {
+      await userApi.favoriteScript(userId, id, action);
+      toast({
+        title: "Favorite updated",
+        description: "Script favorite status has been updated.",
+      });
+      refetch();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update favorite status.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -70,7 +86,7 @@ const ScriptsPage = () => {
 
 interface ScriptTabsProps {
   filteredScripts: Script[];
-  toggleFavorite: (id: string) => void;
+  toggleFavorite: (id: string, isFavorite: boolean) => void;
   loading: boolean;
 }
 

@@ -18,11 +18,3 @@ export interface NewScriptData {
     privacy: "public" | "private";
     share_id?: string[];
 }
-export interface ToastOptions {
-    title: string;
-    description: string;
-    variant?: 'default' | 'destructive';
-    duration?: number;
-}
-
-export type ToastType = (options: ToastOptions) => void;
