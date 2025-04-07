@@ -17,6 +17,7 @@ import { Script } from "@/types/script";
 import userApi from "@/api/userAPI";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "@/hooks/use-toast";
+import notificationApi from "@/api/notificationAPI";
 
 type SearchUser = {
   _id: string;
@@ -209,7 +210,7 @@ const EditScriptModal = ({
     setSharedUsers(updatedUsers);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.name) {
       toast({
         title: "Missing information",
@@ -223,7 +224,39 @@ const EditScriptModal = ({
     if (formData.privacy === "public") {
       formData.share_id = [];
     }
+    if (formData.privacy === "private") {
+      const compareShareUser = (arr1: string[], arr2: string[]) => {
+        if (arr1.length !== arr2.length) {
+          // Return elements that are in arr1 but not in arr2
+          return arr1.filter((item) => !arr2.includes(item));
+        }
 
+        const sortedArr1 = arr1.slice().sort();
+        const sortedArr2 = arr2.slice().sort();
+
+        // Return null if the arrays are the same
+        if (sortedArr1.every((item, index) => item === sortedArr2[index])) {
+          return null; // Arrays are the same
+        }
+
+        // Return the elements that are in arr1 but not in arr2
+        return arr1.filter((item) => !arr2.includes(item));
+      };
+
+      // Compare formData.share_id with oldUserShareId
+      const newShareUserList = compareShareUser(
+        formData.share_id,
+        oldUserShareId
+      );
+
+      if (newShareUserList) {
+        await notificationApi.createNotification(
+          formData.owner_id,
+          newShareUserList,
+          formData._id
+        );
+      }
+    }
     onConfirm(formData);
   };
 

@@ -49,7 +49,9 @@ const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
           {script.privacy}
         </span>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/dashboard/${userId}/scripts/${script._id}`}>View</Link>
+          <Link href={`/dashboard/${userId}/scripts/${script._id}?tab=code`}>
+            View
+          </Link>
         </Button>
       </CardFooter>
     </Card>
