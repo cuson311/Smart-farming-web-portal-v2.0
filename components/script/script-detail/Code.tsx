@@ -279,66 +279,74 @@ const CodeTab = ({ script }: { script: Script }) => {
             </Button>
 
             {/* Edit actions for owner */}
-            {script.owner_id === userId && (
-              <>
-                {!disableEditFile && (
-                  <>
-                    {/* New version button */}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleNewVersion}
-                      title="New version"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
+            {typeof window !== "undefined" &&
+              localStorage.getItem("userId") === userId && (
+                <>
+                  {!disableEditFile && (
+                    <>
+                      {/* New version button */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleNewVersion}
+                        title="New version"
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
 
-                    {/* Upload button */}
-                    <Button variant="ghost" size="icon" asChild title="Upload">
-                      <label>
-                        <Upload className="h-4 w-4" />
-                        <input
-                          type="file"
-                          className="sr-only"
-                          accept="application/json"
-                          onChange={handleUpload}
-                        />
-                      </label>
-                    </Button>
+                      {/* Upload button */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        asChild
+                        title="Upload"
+                      >
+                        <label>
+                          <Upload className="h-4 w-4" />
+                          <input
+                            type="file"
+                            className="sr-only"
+                            accept="application/json"
+                            onChange={handleUpload}
+                          />
+                        </label>
+                      </Button>
 
-                    {/* Save button */}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleSubmitFile}
-                      title="Save"
-                    >
-                      <Save className="h-4 w-4" />
-                    </Button>
+                      {/* Save button */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleSubmitFile}
+                        title="Save"
+                      >
+                        <Save className="h-4 w-4" />
+                      </Button>
 
-                    {/* Delete version button */}
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setOpenDeleteDialog(true)}
-                      title="Delete version"
-                    >
-                      <Trash className="h-4 w-4" />
-                    </Button>
-                  </>
-                )}
+                      {/* Delete version button */}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setOpenDeleteDialog(true)}
+                        title="Delete version"
+                      >
+                        <Trash className="h-4 w-4" />
+                      </Button>
+                    </>
+                  )}
 
-                {/* Toggle edit mode button */}
-                <Button
-                  variant={disableEditFile ? "ghost" : "secondary"}
-                  size="icon"
-                  onClick={() => setDisableEditFile((prev) => !prev)}
-                  title={disableEditFile ? "Enable editing" : "Disable editing"}
-                >
-                  <Edit className="h-4 w-4" />
-                </Button>
-              </>
-            )}
+                  {/* Toggle edit mode button */}
+                  <Button
+                    variant={disableEditFile ? "ghost" : "secondary"}
+                    size="icon"
+                    onClick={() => setDisableEditFile((prev) => !prev)}
+                    title={
+                      disableEditFile ? "Enable editing" : "Disable editing"
+                    }
+                  >
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                </>
+              )}
           </div>
         </CardDescription>
       </CardHeader>

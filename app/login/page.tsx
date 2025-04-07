@@ -55,7 +55,7 @@ export default function LoginPage() {
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("userId", data.user_id);
       localStorage.setItem("profileImage", data.profile_image);
-
+      window.dispatchEvent(new Event("loginSuccess"));
       // Navigate to overview page
       // const userId = localStorage.getItem("userId");
       router.push(`/dashboard`);

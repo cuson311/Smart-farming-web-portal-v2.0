@@ -55,17 +55,21 @@ const CommentItem = ({
   const [showSubComments, setShowSubComments] = useState(false);
   const [commentHistory, setCommentHistory] = useState<UpdateHistory[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const [userId, setUserId] = useState<string>("");
 
-  const { userId } = useParams();
-  const user_Id: string = Array.isArray(userId) ? userId[0] : userId;
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userId = localStorage.getItem("userId") || "";
+      setUserId(userId);
+    }
+  }, []);
   const { data: allSubComments, setData: setAllSubComments } =
-    useFetchSubComments(user_Id, script._id, comment._id);
+    useFetchSubComments(script.owner_id, script._id, comment._id);
 
   const getAllSubComments = async () => {
     try {
       const response = await commentApi.getAllSubComments(
-        user_Id,
+        script.owner_id,
         script._id,
         comment._id
       );
@@ -94,7 +98,7 @@ const CommentItem = ({
   const handleSaveEdit = async () => {
     try {
       const response = await commentApi.updateComment(
-        user_Id,
+        script.owner_id,
         script._id,
         comment._id,
         editContent
@@ -130,7 +134,7 @@ const CommentItem = ({
 
   const handleConfirmDelete = async () => {
     try {
-      await commentApi.deleteComment(user_Id, script._id, comment._id);
+      await commentApi.deleteComment(script.owner_id, script._id, comment._id);
       await getAllComments();
       await getAllSubComments();
 
@@ -170,7 +174,7 @@ const CommentItem = ({
 
     try {
       const response = await commentApi.createComment(
-        user_Id,
+        script.owner_id,
         script._id,
         replyCommentData
       );
@@ -206,7 +210,7 @@ const CommentItem = ({
     try {
       // Replace this with your actual API call to get comment history
       const response = await commentApi.getCommentHistory(
-        user_Id,
+        script.owner_id,
         script._id,
         comment._id
       );
