@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -35,6 +35,15 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userId = localStorage.getItem("userId") || "";
+      setUserId(userId);
+    }
+  }, []);
+
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const routes = [
@@ -51,10 +60,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       active: pathname === "/dashboard/profile",
     },
     {
-      href: "/dashboard/scripts",
+      href: `/dashboard/${userId}/scripts`,
       label: "Scripts",
       icon: Code2,
-      active: pathname.includes("/dashboard/scripts"),
+      active: pathname.includes(`/dashboard/${userId}/scripts`),
     },
     {
       href: "/dashboard/models",

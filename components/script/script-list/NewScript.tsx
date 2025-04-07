@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Plus, Upload, FileText } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Plus, Upload, FileText, Search, X, Globe, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,11 +13,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { NewScriptData } from "@/types/script";
-import { ToastType } from "@/types/script";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Editor from "@monaco-editor/react";
 import {
@@ -26,30 +26,122 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import scriptApi from "@/api/scriptAPI";
 import notificationApi from "@/api/notificationAPI";
-
-// We would need to import these from wherever they're defined in your project
-// import scriptApi from "@/api/scriptAPI";
-// import notificationApi from "@/api/notificationAPI";
-
+import userApi from "@/api/userAPI";
 interface NewScriptDialogProps {
-  toast: ToastType;
   onScriptCreated?: (script: NewScriptData) => void;
 }
 
-const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
-  const router = useRouter();
+// User type definition based on first file's usage
+interface SearchUser {
+  _id: string;
+  username: string;
+  profile_image?: string;
+}
+
+// Search Results Component
+const SearchResults = ({
+  searchResults,
+  handleAddUser,
+  sharedUserIds,
+  handleCloseResults,
+}: {
+  searchResults: SearchUser[];
+  handleAddUser: (index: number) => void;
+  sharedUserIds: string[];
+  handleCloseResults: () => void;
+}) => {
+  return searchResults.length > 0 ? (
+    <Card className="w-full max-h-64 overflow-y-auto relative mt-2">
+      <CardContent className="p-4">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm text-muted-foreground">Search Results</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6"
+            onClick={handleCloseResults}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Results List */}
+        <div className="space-y-2">
+          {searchResults.map((user, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between p-2 rounded-md hover:bg-accent"
+            >
+              <div className="flex items-center gap-2">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={user.profile_image} />
+                  <AvatarFallback>{user.username[0] || "?"}</AvatarFallback>
+                </Avatar>
+                <div className="text-sm">
+                  <p className="font-medium">
+                    {user.username || "Unknown User"}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleAddUser(index)}
+                disabled={sharedUserIds.includes(user._id)}
+              >
+                {sharedUserIds.includes(user._id) ? "Added" : "Add"}
+              </Button>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  ) : (
+    <Card className="w-full relative mt-2">
+      <CardContent className="p-4">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm text-muted-foreground">Search Results</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6"
+            onClick={handleCloseResults}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="flex items-center justify-center py-4">
+          <p className="text-sm text-muted-foreground">No users found</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
+  const { theme } = useTheme();
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
-  const [newScript, setNewScript] = useState<any>({
+  const [newScript, setNewScript] = useState<NewScriptData>({
     name: "",
     description: "",
     privacy: "public",
-    share_id: [], // Added share_id from first file
+    share_id: [],
   });
 
   // Added file data state from first file
   const [fileData, setFileData] = useState("");
+
+  // User search states from first file
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchUser[]>([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [sharedUsers, setSharedUsers] = useState<SearchUser[]>([]);
 
   // Load default template when dialog opens
   useEffect(() => {
@@ -57,6 +149,38 @@ const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
       fetchDefaultTemplate();
     }
   }, [open]);
+
+  // Update share_id when sharedUsers changes
+  useEffect(() => {
+    const userIds = sharedUsers.map((user) => user._id);
+    setNewScript((prev) => ({
+      ...prev,
+      share_id: userIds,
+    }));
+  }, [sharedUsers]);
+
+  const handleOpenChange = (open: boolean) => {
+    if (open) {
+      setOpen(true);
+      return;
+    }
+  };
+
+  // Handle close
+  const handleCloseDialog = () => {
+    setOpen(false);
+    setNewScript({
+      name: "",
+      description: "",
+      privacy: "public",
+      share_id: [],
+    });
+    setFileData("");
+    setSharedUsers([]);
+    setSearchTerm("");
+    setSearchResults([]);
+    setShowSearchResults(false);
+  };
 
   // Fetch default template function from first file
   const fetchDefaultTemplate = () => {
@@ -87,6 +211,53 @@ const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
 
   const handlePrivacyChange = (value: string): void => {
     setNewScript((prev: any) => ({ ...prev, privacy: value }));
+
+    // Clear shared users when switching to public
+    if (value === "public") {
+      setSharedUsers([]);
+      setSearchTerm("");
+      setSearchResults([]);
+      setShowSearchResults(false);
+    }
+  };
+
+  // Handle search term change
+  const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Handle search user
+  const handleSearchUser = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!searchTerm.trim()) return;
+
+    try {
+      const response = await userApi.searchUser(searchTerm);
+      setSearchResults(response);
+      setShowSearchResults(true);
+    } catch (error) {
+      console.error("Error searching users:", error);
+      toast({
+        title: "Search failed",
+        description: "Failed to search users. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Handle add user to shared list
+  const handleAddUser = (index: number) => {
+    const userToAdd = searchResults[index];
+    if (!sharedUsers.some((user) => user._id === userToAdd._id)) {
+      setSharedUsers([...sharedUsers, userToAdd]);
+    }
+  };
+
+  // Handle remove user from shared list
+  const handleRemoveUser = (index: number) => {
+    const updatedUsers = [...sharedUsers];
+    updatedUsers.splice(index, 1);
+    setSharedUsers(updatedUsers);
   };
 
   // Handle upload file function from first file
@@ -168,27 +339,33 @@ const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
     }
 
     try {
+      // Ensure share_id is empty for public scripts
+      if (newScript.privacy === "public") {
+        newScript.share_id = [];
+      }
+
       // Uncomment and adjust these based on your actual API implementation
       const scriptId = await scriptApi.createScript(userId, newScript);
-      await notificationApi.createNotification(
-        userId,
-        newScript.share_id,
-        scriptId._id
-      );
-      handleSubmitFile(userId, scriptId._id);
 
-      // For demonstration purposes
-      console.log("Would create script with data:", newScript);
-      console.log("Would upload file data:", fileData);
+      // Only create notifications for private scripts with shared users
+      if (newScript.privacy === "private" && newScript.share_id.length > 0) {
+        await notificationApi.createNotification(
+          userId,
+          newScript.share_id,
+          scriptId._id
+        );
+      }
+
+      handleSubmitFile(userId, scriptId._id);
 
       toast({
         title: "Script created",
         description: `Script "${newScript.name}" has been created successfully.`,
       });
 
-      //   if (onScriptCreated) {
-      //     onScriptCreated(newScript);
-      //   }
+      if (onScriptCreated) {
+        onScriptCreated(newScript);
+      }
 
       setNewScript({
         name: "",
@@ -197,6 +374,7 @@ const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
         share_id: [],
       });
       setFileData("");
+      setSharedUsers([]);
       setOpen(false);
 
       // Uncomment if you want to navigate after creation
@@ -212,7 +390,7 @@ const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button>
           <Plus className="mr-2 h-4 w-4" />
@@ -250,23 +428,125 @@ const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
                   placeholder="Enter script description (optional)"
                 />
               </div>
-              <div className="grid gap-2">
+
+              {/* Privacy section - adapted from first file */}
+              <div className="space-y-4">
                 <Label>Privacy</Label>
                 <RadioGroup
                   value={newScript.privacy}
                   onValueChange={handlePrivacyChange}
-                  className="flex space-x-4"
+                  className="grid grid-cols-1 gap-4"
                 >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="public" id="public" />
-                    <Label htmlFor="public">Public</Label>
+                  <div className="flex items-start space-x-2 p-4 border rounded-md hover:bg-accent">
+                    <RadioGroupItem
+                      value="public"
+                      id="public"
+                      className="mt-1"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center">
+                        <Globe className="mr-2 h-4 w-4 text-blue-500" />
+                        <Label htmlFor="public" className="font-medium">
+                          Public
+                        </Label>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Anyone can view and fork this script
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="private" id="private" />
-                    <Label htmlFor="private">Private</Label>
+                  <div className="flex items-start space-x-2 p-4 border rounded-md hover:bg-accent">
+                    <RadioGroupItem
+                      value="private"
+                      id="private"
+                      className="mt-1"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center">
+                        <Lock className="mr-2 h-4 w-4 text-amber-500" />
+                        <Label htmlFor="private" className="font-medium">
+                          Private
+                        </Label>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Only you and people you share with can access
+                      </p>
+                    </div>
                   </div>
                 </RadioGroup>
               </div>
+
+              {/* Shared users section - ONLY appears when privacy is set to private */}
+              {newScript.privacy === "private" && (
+                <div className="space-y-4">
+                  <Label>Shared Users</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      value={searchTerm}
+                      onChange={handleSearchTermChange}
+                      placeholder="Search for users"
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      size="default"
+                      onClick={handleSearchUser}
+                      variant="secondary"
+                    >
+                      <Search className="h-4 w-4 mr-2" />
+                      Search
+                    </Button>
+                  </div>
+
+                  {/* Search results */}
+                  {showSearchResults && (
+                    <SearchResults
+                      searchResults={searchResults}
+                      handleAddUser={handleAddUser}
+                      sharedUserIds={sharedUsers.map((user) => user._id)}
+                      handleCloseResults={() => setShowSearchResults(false)}
+                    />
+                  )}
+
+                  {/* Shared users list */}
+                  {sharedUsers.length > 0 && (
+                    <div className="space-y-2">
+                      <Label className="text-sm">Shared with:</Label>
+                      <div className="space-y-2">
+                        {sharedUsers.map((user, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between p-2 rounded-md bg-accent"
+                          >
+                            <div className="flex items-center gap-2">
+                              <Avatar className="h-8 w-8">
+                                <AvatarImage src={user.profile_image} />
+                                <AvatarFallback>
+                                  {user.username[0] || "?"}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div className="text-sm">
+                                <p className="font-medium">
+                                  {user.username || "Unknown User"}
+                                </p>
+                              </div>
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => handleRemoveUser(index)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Script JSON section - now as a separate row spanning full width */}
@@ -311,7 +591,7 @@ const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
               <Editor
                 height="400px"
                 language="json"
-                theme={"light"}
+                theme={theme === "dark" ? "vs-dark" : "light"}
                 value={fileData || "{}"}
                 onChange={handleEditorChange}
                 options={{
@@ -325,11 +605,7 @@ const NewScriptDialog = ({ toast, onScriptCreated }: NewScriptDialogProps) => {
             </div>
           </div>
           <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setOpen(false)}
-            >
+            <Button type="button" variant="outline" onClick={handleCloseDialog}>
               Cancel
             </Button>
             <Button type="submit">Create Script</Button>
