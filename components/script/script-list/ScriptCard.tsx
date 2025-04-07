@@ -13,7 +13,7 @@ import { Script } from "@/types/script";
 
 interface ScriptCardProps {
   script: Script;
-  toggleFavorite: (id: string) => void;
+  toggleFavorite: (id: string, isFavorite: boolean) => void;
 }
 
 const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
@@ -31,7 +31,7 @@ const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
           variant="ghost"
           size="icon"
           className="h-8 w-8"
-          onClick={() => toggleFavorite(script._id)}
+          onClick={() => toggleFavorite(script._id, script.isFavorite)}
         >
           <Star
             className={script.favorite ? "fill-yellow-400 text-yellow-400" : ""}
@@ -59,6 +59,9 @@ const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
             Updated {new Date(script.lastUpdated).toLocaleDateString()}
           </span>
         )} */}
+        <span className="rounded-full bg-muted px-2 py-1 text-xs font-medium">
+          {script.privacy}
+        </span>
         <Button variant="ghost" size="sm" asChild>
           <Link href={`/dashboard/scripts/${script._id}`}>View</Link>
         </Button>

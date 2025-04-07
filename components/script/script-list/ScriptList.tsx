@@ -3,7 +3,7 @@ import { Script } from "@/types/script";
 
 interface ScriptListProps {
   scripts: Script[];
-  toggleFavorite: (id: string) => void;
+  toggleFavorite: (id: string, isFavorite: boolean) => void;
   loading: boolean;
 }
 
