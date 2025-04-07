@@ -31,7 +31,7 @@ const useFetchComments = (userId: string, scriptId: string) => {
 };
 
 const useFetchSubComments = (userId: string, scriptId: string, commentId: string) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<ScriptComment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

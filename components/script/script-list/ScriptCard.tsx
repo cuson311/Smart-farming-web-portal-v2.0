@@ -3,20 +3,21 @@ import { Code2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Script } from "@/types/script";
-
+import { useParams } from "next/navigation";
 interface ScriptCardProps {
   script: Script;
   toggleFavorite: (id: string, isFavorite: boolean) => void;
 }
 
 const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
+  const { userId } = useParams();
+
   return (
     <Card key={script._id}>
       <CardHeader className="flex flex-row items-start justify-between pb-2">
@@ -34,36 +35,21 @@ const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
           onClick={() => toggleFavorite(script._id, script.isFavorite)}
         >
           <Star
-            className={script.favorite ? "fill-yellow-400 text-yellow-400" : ""}
+            className={
+              script.isFavorite ? "fill-yellow-400 text-yellow-400" : ""
+            }
             size={16}
           />
           <span className="sr-only">Favorite</span>
         </Button>
       </CardHeader>
 
-      {/* {script.tags && script.tags.length > 0 && (
-        <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {script.tags.map((tag) => (
-              <span key={tag} className="rounded-full bg-muted px-2 py-1 text-xs font-medium">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </CardContent>
-      )}
-       */}
       <CardFooter className="flex items-center justify-between">
-        {/* {script.lastUpdated && (
-          <span className="text-sm text-muted-foreground">
-            Updated {new Date(script.lastUpdated).toLocaleDateString()}
-          </span>
-        )} */}
         <span className="rounded-full bg-muted px-2 py-1 text-xs font-medium">
           {script.privacy}
         </span>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/dashboard/scripts/${script._id}`}>View</Link>
+          <Link href={`/dashboard/${userId}/scripts/${script._id}`}>View</Link>
         </Button>
       </CardFooter>
     </Card>

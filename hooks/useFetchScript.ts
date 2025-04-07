@@ -7,26 +7,29 @@ const useFetchScriptInfo = (userId: string, scriptId: string) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   //   console.log("Calling fetch Data:", { userId, scriptId });
-  useEffect(() => {
-    console.log("UseEffect is running");
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await scriptApi.getScriptInfo(userId, scriptId);
-        // console.log("Get script Info: ", data);
-        setData(data);
-      } catch (err) {
-        console.error("Error fetching script info:", err);
-        // setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+  const fetchScriptInfo = useCallback(async () => {
+    if (!userId) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await scriptApi.getScriptInfo(userId, scriptId);
+      // console.log("Get script Info: ", data);
+      setData(data);
+    } catch (err) {
+      console.error("Error fetching script info:", err);
+      // setError(err);
+    } finally {
+      setLoading(false);
+    }
   }, [userId, scriptId]);
 
-  return { data, setData, loading, error };
+  useEffect(() => {
+    fetchScriptInfo();
+  }, [fetchScriptInfo]);
+
+  return { data, setData, loading, error, refetch: fetchScriptInfo };
 };
 
 const useFetchScriptFile = (userId: string, scriptId: string, version: number) => {

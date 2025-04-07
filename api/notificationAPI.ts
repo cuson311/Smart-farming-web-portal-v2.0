@@ -13,7 +13,7 @@ const notificationApi = {
         return response.data;
     },
 
-    createNotification: async (from: string, to: string, script_id: string) => {
+    createNotification: async (from: string, to: string[], script_id: string) => {
         const response = await axiosInstance.post(`/notification/share`, {
             from: from,
             to: to,

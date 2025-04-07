@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,23 +11,15 @@ import ScriptList from "@/components/script/script-list/ScriptList";
 import { Script } from "@/types/script";
 import userApi from "@/api/userAPI";
 
-const ScriptsPage = () => {
+const ScriptsPage = ({ params }: { params: { userId: string } }) => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [userId, setUserId] = useState<string>("");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const userId = localStorage.getItem("userId") || "";
-      setUserId(userId);
-    }
-  }, []);
 
   const {
     data: scripts,
     loading: scriptsListLoading,
     refetch,
-  } = useFetchScriptsList(userId ? userId : "");
+  } = useFetchScriptsList(params.userId);
 
   // console.log("Scripts nè", scripts);
 
@@ -38,11 +30,9 @@ const ScriptsPage = () => {
   );
 
   const toggleFavorite = async (id: string, isFavorite: boolean) => {
-    if (!userId) return;
-
     const action = isFavorite ? "remove" : "add";
     try {
-      await userApi.favoriteScript(userId, id, action);
+      await userApi.favoriteScript(params.userId, id, action);
       toast({
         title: "Favorite updated",
         description: "Script favorite status has been updated.",
@@ -72,7 +62,7 @@ const ScriptsPage = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <NewScriptDialog toast={toast} />
+          <NewScriptDialog />
         </div>
       </div>
       <ScriptTabs
@@ -100,7 +90,6 @@ const ScriptTabs = ({
       <TabsList>
         <TabsTrigger value="all">All Scripts</TabsTrigger>
         <TabsTrigger value="favorites">Favorites</TabsTrigger>
-        <TabsTrigger value="recent">Recently Updated</TabsTrigger>
       </TabsList>
 
       <TabsContent value="all" className="border-none p-0 pt-4">
@@ -118,24 +107,6 @@ const ScriptTabs = ({
           loading={loading}
         />
       </TabsContent>
-
-      {/* <TabsContent value="recent" className="border-none p-0 pt-4">
-        <ScriptList 
-          scripts={filteredScripts
-            .slice()
-            .sort((a, b) => {
-              // If lastUpdated exists, sort by it
-              if (a.lastUpdated && b.lastUpdated) {
-                return new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime();
-              }
-              return 0;
-            })
-            .slice(0, 6)
-          }
-          toggleFavorite={toggleFavorite}
-          loading={loading}
-        />
-      </TabsContent> */}
     </Tabs>
   );
 };

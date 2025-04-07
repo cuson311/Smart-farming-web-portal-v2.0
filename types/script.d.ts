@@ -16,5 +16,5 @@ export interface NewScriptData {
     name: string;
     description: string;
     privacy: "public" | "private";
-    share_id?: string[];
+    share_id: string[];
 }
