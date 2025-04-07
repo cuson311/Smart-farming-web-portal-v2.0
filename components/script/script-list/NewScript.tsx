@@ -162,7 +162,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
   const handleOpenChange = (open: boolean) => {
     if (open) {
       setOpen(true);
-      return;
+    } else {
+      handleCloseDialog();
     }
   };
 
