@@ -1,209 +1,118 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
-import Link from "next/link";
-import { Github, Globe, Linkedin, Twitter } from "lucide-react";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import Notifications from "@/components/user/Notification";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ShieldAlert } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import Profile from "@/components/profile/Profile";
+import ActivitySection from "@/components/profile/Activity";
+import Notifications from "@/components/profile/Notification";
+import TopScriptList from "@/components/profile/TopScripts";
+import { useEffect, useState } from "react";
+
+// This component will be rendered on invalid tab routes
+const NotFoundComponent = () => {
+  const router = useRouter();
+  return (
+    <div className="grid gap-6">
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" onClick={() => router.back()}>
+          <ArrowLeft className="h-4 w-4" />
+          <span className="sr-only">Back</span>
+        </Button>
+        <h1 className="text-2xl font-bold">Page Not Found</h1>
+      </div>
+
+      <Alert variant="destructive" className="bg-destructive/10">
+        <ShieldAlert className="h-5 w-5" />
+        <AlertTitle className="mb-2">Invalid Tab</AlertTitle>
+        <AlertDescription>
+          The requested tab does not exist. Please select a valid tab or return
+          to the dashboard.
+        </AlertDescription>
+        <div className="mt-4">
+          <Button asChild>
+            <Link href="/dashboard">Return to Dashboard</Link>
+          </Button>
+        </div>
+      </Alert>
+    </div>
+  );
+};
 
 const ProfilePage = ({ params }: { params: { userId: string } }) => {
-  const { toast } = useToast();
-  const [profile, setProfile] = useState({
-    username: "johndoe",
-    fullName: "John Doe",
-    email: "john.doe@example.com",
-    bio: "Irrigation specialist with 5 years of experience in automated systems.",
-    website: "https://example.com",
-    github: "johndoe",
-    twitter: "johndoe",
-    linkedin: "johndoe",
-  });
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab");
+  const [isOwner, setIsOwner] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
+  // Check if the current user is the profile owner
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const currentUserId = localStorage.getItem("userId");
+      setIsOwner(currentUserId === params.userId);
+    }
+  }, [params.userId]);
+
+  // Define valid tabs based on whether the user is the owner
+  const validTabs = isOwner
+    ? ["profile", "activity", "notifications", "top-scripts"]
+    : ["profile", "activity", "top-scripts"];
+
+  // Check if tab parameter is valid for the current user
+  const isValidTab = tabParam && validTabs.includes(tabParam);
+
+  // If notifications tab is requested but user is not owner, it's invalid
+  const isInvalidNotificationsRequest =
+    tabParam === "notifications" && !isOwner;
+
+  // Set default tab if none is specified or if the tab is invalid
+  const tabName = isValidTab ? tabParam : "profile";
+
+  // Handle tab change by updating query parameter
+  const handleTabChange = (value: string) => {
+    const newUrl = `/dashboard/${params.userId}/profile?tab=${value}`;
+    router.replace(newUrl);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Profile updated",
-      description: "Your profile has been updated successfully.",
-    });
-  };
+  // If invalid tab or trying to access notifications as non-owner, render NotFound component
+  if (!isValidTab || isInvalidNotificationsRequest) {
+    return <NotFoundComponent />;
+  }
 
   return (
     <div className="grid gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Profile</h1>
-        <Button variant="outline" asChild>
-          <Link href="/dashboard">Back to Dashboard</Link>
-        </Button>
       </div>
-      <Tabs defaultValue="profile">
+      <Tabs value={tabName} onValueChange={handleTabChange}>
         <TabsList>
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="activity">Activity</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
+          {isOwner && (
+            <TabsTrigger value="notifications">Notifications</TabsTrigger>
+          )}
+          <TabsTrigger value="top-scripts">Top Scripts</TabsTrigger>
         </TabsList>
         <TabsContent value="profile" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Profile Information</CardTitle>
-              <CardDescription>
-                Update your profile information here.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="flex flex-col gap-6 sm:flex-row">
-                  <div className="flex flex-col items-center gap-4">
-                    <Avatar className="h-24 w-24">
-                      <AvatarImage src="/placeholder-user.jpg" alt="Profile" />
-                      <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                    <Button variant="outline" size="sm">
-                      Change Avatar
-                    </Button>
-                  </div>
-                  <div className="grid flex-1 gap-4">
-                    <div className="grid gap-2">
-                      <Label htmlFor="username">Username</Label>
-                      <Input
-                        id="username"
-                        name="username"
-                        value={profile.username}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="fullName">Full Name</Label>
-                      <Input
-                        id="fullName"
-                        name="fullName"
-                        value={profile.fullName}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={profile.email}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="bio">Bio</Label>
-                  <Textarea
-                    id="bio"
-                    name="bio"
-                    value={profile.bio}
-                    onChange={handleChange}
-                    rows={4}
-                  />
-                </div>
-                <div className="grid gap-4">
-                  <Label>Social Links</Label>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="flex items-center gap-2">
-                      <Globe className="h-4 w-4" />
-                      <Input
-                        name="website"
-                        placeholder="Website"
-                        value={profile.website}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Github className="h-4 w-4" />
-                      <Input
-                        name="github"
-                        placeholder="GitHub"
-                        value={profile.github}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Twitter className="h-4 w-4" />
-                      <Input
-                        name="twitter"
-                        placeholder="Twitter"
-                        value={profile.twitter}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Linkedin className="h-4 w-4" />
-                      <Input
-                        name="linkedin"
-                        placeholder="LinkedIn"
-                        value={profile.linkedin}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <Button type="submit">Save Changes</Button>
-              </form>
-            </CardContent>
-          </Card>
+          <Profile />
         </TabsContent>
         <TabsContent value="activity">
-          <Card>
-            <CardHeader>
-              <CardTitle>Activity Log</CardTitle>
-              <CardDescription>Your recent activities</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-4 rounded-lg border p-4"
-                  >
-                    <div className="grid gap-1">
-                      <p className="text-sm font-medium">
-                        You {i % 2 === 0 ? "updated" : "created"} a{" "}
-                        {i % 3 === 0 ? "script" : "model"}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {i} {i === 1 ? "hour" : "hours"} ago
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <ActivitySection />
         </TabsContent>
-        <TabsContent value="notifications">
-          <Notifications />
+        {isOwner && (
+          <TabsContent value="notifications">
+            <Notifications />
+          </TabsContent>
+        )}
+        <TabsContent value="top-scripts">
+          <TopScriptList />
         </TabsContent>
       </Tabs>
     </div>
   );
 };
+
 export default ProfilePage;

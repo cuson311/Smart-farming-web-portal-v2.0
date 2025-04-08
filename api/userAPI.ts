@@ -57,6 +57,11 @@ const userApi = {
     });
     return response.data;
   },
+
+  sharedScript: async (userId: string) => {
+    const response = await axiosInstance.get(`/${userId}/shared-script`);
+    return response.data;
+  },
 };
 
 export default userApi;
