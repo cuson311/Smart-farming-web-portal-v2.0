@@ -1,9 +1,10 @@
 ﻿import { useState, useEffect, useCallback } from "react";
 import userApi from "../api/userAPI";
 import { Script } from "@/types/script";
+import { UserProfile } from "@/types/user";
 
 const useFetchProfile = (userId: string) => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
