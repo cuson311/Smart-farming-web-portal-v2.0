@@ -29,7 +29,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useFetchProfile } from "@/hooks/useFetchUser";
 import { UserNotify } from "@/types/user";
-import notificationApi from "@/api/notificationAPI";
+import { useSocket } from "@/hooks/useSocket";
 
 const Header = () => {
   const router = useRouter();
@@ -38,26 +38,9 @@ const Header = () => {
   const [userId, setUserId] = useState<string>("");
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [notifications, setNotifications] = useState<UserNotify[]>([]);
 
-  useEffect(() => {
-    // Only fetch notifications if userId exists
-    if (userId) {
-      const fetchNotifications = async () => {
-        try {
-          const response = await notificationApi.allNotification(userId);
-          console.log("Notifications response:", response); // For debugging
-          setNotifications(response);
-          setIsLoading(false);
-        } catch (error) {
-          console.error("Failed to fetch notifications:", error);
-          setIsLoading(false);
-        }
-      };
-
-      fetchNotifications();
-    }
-  }, [userId]);
+  // Use the socket hook instead of directly managing notifications here
+  const { notifications, ring, setRing } = useSocket();
 
   // Only fetch profile when userId exists and user is logged in
   const { data: user } = useFetchProfile(isLoggedIn ? userId : "");
@@ -152,6 +135,13 @@ const Header = () => {
     router.replace("/");
   };
 
+  // Reset notification ring when dropdown is opened
+  const handleNotificationOpen = () => {
+    if (ring) {
+      setRing(false);
+    }
+  };
+
   // Render loading state
   if (isLoading) {
     return (
@@ -221,54 +211,56 @@ const Header = () => {
       {isLoggedIn ? (
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <DropdownMenu>
+          <DropdownMenu onOpenChange={handleNotificationOpen}>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full relative"
+                className={`rounded-full relative ${
+                  ring ? "animate-pulse ring-2 ring-primary" : ""
+                }`}
               >
                 <Bell className="h-4 w-4" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                  {notifications.length}
-                </span>
+                {notifications.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                    {notifications.length}
+                  </span>
+                )}
                 <span className="sr-only">Notifications</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-72">
               <div className="p-2 font-medium border-b">Notifications</div>
               <div className="max-h-96 overflow-auto">
-                {isLoading ? (
-                  <div className="p-4 text-center text-gray-500">
-                    Loading notifications...
-                  </div>
-                ) : notifications.length === 0 ? (
+                {notifications.length === 0 ? (
                   <div className="p-4 text-center text-gray-500">
                     No notifications
                   </div>
                 ) : (
-                  notifications.slice(-5).map((notification) => (
-                    <DropdownMenuItem
-                      key={notification._id}
-                      className="flex flex-col items-start p-3 hover:bg-accent"
-                    >
-                      <div className="flex w-full gap-2">
-                        <div className="flex items-center">
-                          <Share2 className="h-5 w-5 text-blue-500" />
+                  [...notifications.slice(-5)]
+                    .reverse()
+                    .map((notification: UserNotify) => (
+                      <DropdownMenuItem
+                        key={notification._id}
+                        className="flex flex-col items-start p-3 hover:bg-accent"
+                      >
+                        <div className="flex w-full gap-2">
+                          <div className="flex items-center">
+                            <Share2 className="h-5 w-5 text-blue-500" />
+                          </div>
+                          <p className="font-medium">
+                            <span className="font-semibold">
+                              {notification.from.username}
+                            </span>{" "}
+                            shared{" "}
+                            {notification.script_id?.name
+                              ? notification.script_id?.name
+                              : "something"}{" "}
+                            with you
+                          </p>
                         </div>
-                        <p className="font-medium">
-                          <span className="font-semibold">
-                            {notification.from.username}
-                          </span>{" "}
-                          shared{" "}
-                          {notification.script_id?.name
-                            ? notification.script_id?.name
-                            : "something"}{" "}
-                          with you
-                        </p>
-                      </div>
-                    </DropdownMenuItem>
-                  ))
+                      </DropdownMenuItem>
+                    ))
                 )}
               </div>
               <DropdownMenuSeparator />
