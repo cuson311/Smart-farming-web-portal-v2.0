@@ -32,7 +32,7 @@ import scriptApi from "@/api/scriptAPI";
 import notificationApi from "@/api/notificationAPI";
 import userApi from "@/api/userAPI";
 interface NewScriptDialogProps {
-  onScriptCreated?: (script: NewScriptData) => void;
+  onScriptCreated: () => void;
 }
 
 // User type definition based on first file's usage
@@ -365,7 +365,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       });
 
       if (onScriptCreated) {
-        onScriptCreated(newScript);
+        onScriptCreated();
       }
 
       setNewScript({
@@ -377,9 +377,6 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       setFileData("");
       setSharedUsers([]);
       setOpen(false);
-
-      // Uncomment if you want to navigate after creation
-      window.location.reload();
     } catch (error) {
       console.error("Error creating script:", error);
       toast({

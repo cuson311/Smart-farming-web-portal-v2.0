@@ -36,6 +36,7 @@ import { toast } from "@/hooks/use-toast";
 import { useFetchSubComments } from "@/hooks/useFetchComment";
 import SubCommentItem from "./SubCommentItem";
 import { useParams } from "next/navigation";
+import { formatDistanceToNow } from "date-fns";
 
 const CommentItem = ({
   script,
@@ -251,6 +252,9 @@ const CommentItem = ({
             <span className="font-semibold">{comment.owner_id.username}</span>
             <span className="text-sm text-gray-500">
               {formatDate(comment.updatedAt)}
+              {/* {formatDistanceToNow(new Date(comment.updatedAt), {
+                addSuffix: true,
+              })} */}
             </span>
           </div>
 

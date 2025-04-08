@@ -46,10 +46,12 @@ const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
 
       <CardFooter className="flex items-center justify-between">
         <span className="rounded-full bg-muted px-2 py-1 text-xs font-medium">
-          {script.privacy}
+          {script.privacy ? script.privacy : "public"}
         </span>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/dashboard/${userId}/scripts/${script._id}?tab=code`}>
+          <Link
+            href={`/dashboard/${script.owner_id}/scripts/${script._id}?tab=code`}
+          >
             View
           </Link>
         </Button>

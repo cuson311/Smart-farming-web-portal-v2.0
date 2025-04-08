@@ -49,6 +49,7 @@ const ScriptDetailsCard = ({
   const handleDeleteConfirm = async () => {
     try {
       await scriptApi.deleteScriptInfo(userId, scriptId);
+      await scriptApi.deleteScriptFiles(userId, scriptId);
       toast({
         title: "Successful!",
         description: "Script deleted successfully",
@@ -56,7 +57,7 @@ const ScriptDetailsCard = ({
       });
       setIsDeleteModalOpen(false);
       // Navigate back to scripts list or wherever appropriate
-      router.push(`/dashboard/${userId}/scripts`);
+      router.push(`/dashboard/${userId}/scripts?tab=all`);
     } catch (error) {
       console.error("Error deleting script:", error);
       toast({

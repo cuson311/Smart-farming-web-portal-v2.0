@@ -18,14 +18,13 @@ import scriptApi from "@/api/scriptAPI";
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
+  const router = useRouter();
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="icon" asChild>
-          <Link href={`/dashboard/${userId}/scripts`}>
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back</span>
-          </Link>
+        <Button variant="ghost" onClick={() => router.back()}>
+          <ArrowLeft className="h-4 w-4" />
+          <span className="sr-only">Back</span>
         </Button>
         <h1 className="text-2xl font-bold">Page Not Found</h1>
       </div>
@@ -39,7 +38,7 @@ const NotFoundComponent = ({ userId }: { userId: string }) => {
         </AlertDescription>
         <div className="mt-4">
           <Button asChild>
-            <Link href={`/dashboard/${userId}/scripts`}>
+            <Link href={`/dashboard/${userId}/scripts?tab=all`}>
               Return to My Scripts
             </Link>
           </Button>
@@ -123,11 +122,9 @@ const ScriptDetailPage = ({
     return (
       <div className="grid gap-6">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" asChild>
-            <Link href={`/dashboard/${userId}/scripts`}>
-              <ArrowLeft className="h-4 w-4" />
-              <span className="sr-only">Back</span>
-            </Link>
+          <Button variant="ghost" onClick={() => router.back()}>
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">Back</span>
           </Button>
           <h1 className="text-2xl font-bold">Script Access</h1>
         </div>
@@ -141,7 +138,7 @@ const ScriptDetailPage = ({
           </AlertDescription>
           <div className="mt-4">
             <Button asChild>
-              <Link href={`/dashboard/${userId}/scripts`}>
+              <Link href={`/dashboard/${userId}/scripts?tab=all`}>
                 Return to My Scripts
               </Link>
             </Button>
@@ -156,11 +153,9 @@ const ScriptDetailPage = ({
     return (
       <div className="grid gap-6">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" asChild>
-            <Link href={`/dashboard/${userId}/scripts`}>
-              <ArrowLeft className="h-4 w-4" />
-              <span className="sr-only">Back</span>
-            </Link>
+          <Button variant="ghost" onClick={() => router.back()}>
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">Back</span>
           </Button>
           <h1 className="text-2xl font-bold">Loading...</h1>
         </div>
@@ -177,11 +172,9 @@ const ScriptDetailPage = ({
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="icon" asChild>
-          <Link href={`/dashboard/${userId}/scripts`}>
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back</span>
-          </Link>
+        <Button variant="ghost" onClick={() => router.back()}>
+          <ArrowLeft className="h-4 w-4" />
+          <span className="sr-only">Back</span>
         </Button>
         <h1 className="text-2xl font-bold">{scriptInfo?.name}</h1>
       </div>
