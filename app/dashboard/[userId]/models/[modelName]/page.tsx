@@ -17,6 +17,8 @@ import modelApi from "@/api/modelAPI";
 import { Model } from "@/types/model";
 import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOverviewCard";
 import { useFetchModelInfo } from "@/hooks/useFetchModel";
+import ModelVersionTab from "@/components/model/model-detail/versions/ModelVersionTab";
+import ScriptModelTab from "@/components/model/model-detail/scripts/ScriptModelTab";
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
@@ -194,25 +196,25 @@ const ModelDetailPage = ({
               <TabsTrigger value="scripts">Scripts</TabsTrigger>
               <TabsTrigger value="versions">Versions</TabsTrigger>
             </TabsList>
+            <TabsContent value="versions" className="border-none p-0 pt-4">
+              {modelInfo ? (
+                <ModelVersionTab model={modelInfo} />
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Loading model details...
+                </p>
+              )}
+            </TabsContent>
+            <TabsContent value="scripts" className="border-none p-0 pt-4">
+              {modelInfo ? (
+                <ScriptModelTab model={modelInfo} />
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Loading model details...
+                </p>
+              )}
+            </TabsContent>
             {/*
-             <TabsContent value="code" className="border-none p-0 pt-4">
-              {modelInfo ? (
-                <CodeTab model={modelInfo} />
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  Loading model details...
-                </p>
-              )}
-            </TabsContent>
-            <TabsContent value="comments" className="border-none p-0 pt-4">
-              {modelInfo ? (
-                <CommentsTab model={modelInfo} />
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  Loading model details...
-                </p>
-              )}
-            </TabsContent>
             <TabsContent value="versions" className="border-none p-0 pt-4">
               <VersionCompareTab />
             </TabsContent> */}

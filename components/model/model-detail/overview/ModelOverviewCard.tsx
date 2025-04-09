@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Model, Tag, UpdateModelData } from "@/types/model";
-import EditScriptModal from "./EditModelsModal";
-import DeleteScriptModal from "./DeleteModelsModal";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import modelApi from "@/api/modelAPI";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/formatDate";
+import EditModelModal from "./EditModelsModal";
+import DeleteModelModal from "./DeleteModelsModal";
 
 const ModelOverviewCard = ({
   model,
@@ -20,13 +20,13 @@ const ModelOverviewCard = ({
   refetch: () => void;
 }) => {
   const router = useRouter();
-  const { userId, scriptId } = useParams<{
+  const { userId, modelName } = useParams<{
     userId: string;
-    scriptId: string;
+    modelName: string;
   }>();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  console.log("modelOverviewCard ", model);
+
   const handleEditConfirm = async (updatedModel: UpdateModelData) => {
     try {
       await modelApi.updateModelInfo(userId, updatedModel);
@@ -82,9 +82,13 @@ const ModelOverviewCard = ({
           <DetailItem
             label="Description"
             value={
-              model?.description !== ""
-                ? model?.description
-                : "There is no description"
+              model?.description !== "" ? (
+                model?.description
+              ) : (
+                <div className="text-sm text-muted-foreground italic">
+                  No description.
+                </div>
+              )
             }
           />
           <DetailItem
@@ -109,7 +113,7 @@ const ModelOverviewCard = ({
             value={
               model?.tags ? (
                 model.tags.map((tag: Tag) => (
-                  <Badge variant="outline" key={tag.key}>
+                  <Badge variant="default" className="mr-2" key={tag.key}>
                     {tag.key} : {tag.value}
                   </Badge>
                 ))
@@ -149,7 +153,7 @@ const ModelOverviewCard = ({
         </CardContent>
       </Card>
 
-      <EditScriptModal
+      <EditModelModal
         open={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         onConfirm={handleEditConfirm}
@@ -157,7 +161,7 @@ const ModelOverviewCard = ({
         title="Edit Model"
       />
 
-      <DeleteScriptModal
+      <DeleteModelModal
         open={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDeleteConfirm}
