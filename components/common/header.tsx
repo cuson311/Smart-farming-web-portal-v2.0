@@ -250,7 +250,7 @@ const Header = () => {
                           </div>
                           <p className="font-medium">
                             <span className="font-semibold">
-                              {notification.from.username}
+                              {notification.from?.username}
                             </span>{" "}
                             shared{" "}
                             {notification.script_id?.name

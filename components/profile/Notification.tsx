@@ -84,9 +84,9 @@ const Notifications = () => {
                 className={`flex items-start gap-4 p-4 border-b hover:bg-accent/5 transition-colors bg-accent/10`}
               >
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={notification.from.profile_image} />
+                  <AvatarImage src={notification.from?.profile_image} />
                   <AvatarFallback>
-                    {notification.from.username.substring(0, 2).toUpperCase()}
+                    {notification.from?.username.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
@@ -94,7 +94,7 @@ const Notifications = () => {
                     <div>
                       <p className="font-medium">
                         <span className="font-semibold">
-                          {notification.from.username}
+                          {notification.from?.username}
                         </span>{" "}
                         shared{" "}
                         {notification.script_id?.name
