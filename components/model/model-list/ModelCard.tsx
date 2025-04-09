@@ -45,11 +45,8 @@ const ModelCard = ({ model, toggleFavorite }: ModelCardProp) => {
         <div className="flex gap-2 text-s font-bold">
           Version {model.__v}
           <Badge
-            className={`gap-1 ${
-              model.enableSchedule
-                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300"
-            }`}
+            className={`gap-1 `}
+            variant={model.enableSchedule ? "default" : "secondary"}
           >
             {model.enableSchedule ? (
               <CalendarCheck2 size="16" />
