@@ -1,5 +1,7 @@
+import { ScriptCardSkeleton } from "@/components/skeleton/ScriptCardSkeleton";
 import ScriptCard from "./ScriptCard";
 import { Script } from "@/types/script";
+import { CardSkeletonGrid } from "@/components/skeleton/CardSkeletonGrid";
 
 interface ScriptListProps {
   scripts: Script[];
@@ -11,7 +13,7 @@ const ScriptList = ({ scripts, toggleFavorite, loading }: ScriptListProps) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-muted-foreground">Loading scripts...</div>
+        <CardSkeletonGrid count={6} component={<ScriptCardSkeleton />} />
       </div>
     );
   }

@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   if (loading) return <p>Loading...</p>;
 
-  return <>{children}</>;
+  return <div className=" h-screen">{children}</div>;
 };
 
 export default ProtectedRoute;

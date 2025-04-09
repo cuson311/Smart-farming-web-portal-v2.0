@@ -17,6 +17,7 @@ import { convertTimestamp } from "@/utils/dateUtils";
 import modelApi from "@/api/modelAPI";
 import { Model, ModelVersion } from "@/types/model";
 import { DatePickerWithRange } from "@/components/ui/DataPickerWithRange";
+import { ModelVersionSkeleton } from "./ModelVersionSkeleton";
 
 const ModelVersionTab = ({ model }: { model: Model }) => {
   const params = useParams();
@@ -75,6 +76,20 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
   };
 
   console.log("version", versions);
+
+  if (versionLoading) {
+    return <ModelVersionSkeleton />;
+  }
+
+  if (versionError) {
+    return (
+      <Card>
+        <CardContent className="pt-6">
+          <div className="text-center text-destructive">{versionError}</div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>

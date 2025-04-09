@@ -1,7 +1,8 @@
 import ModelCard from "./ModelCard";
 import ScriptCard from "./ModelCard";
 import { Model } from "@/types/model";
-import ModelCardSkeleton from "./ModelCardSkeleton";
+import ModelCardSkeleton from "../../skeleton/ModelCardSkeleton";
+import { CardSkeletonGrid } from "@/components/skeleton/CardSkeletonGrid";
 
 interface ModelListProps {
   models: Model[];
@@ -13,9 +14,7 @@ const ModelList = ({ models, toggleFavorite, loading }: ModelListProps) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-muted-foreground">
-          <ModelCardSkeleton />
-        </div>
+        <CardSkeletonGrid count={6} component={<ModelCardSkeleton />} />
       </div>
     );
   }

@@ -9,13 +9,11 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Clock } from "lucide-react";
 import { convertTimestamp } from "@/utils/dateUtils";
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
-import { Model, ModelVersion, ScriptModel } from "@/types/model";
+import { Model, ScriptModel } from "@/types/model";
 import { DatePickerWithRange } from "@/components/ui/DataPickerWithRange";
 
 const ScriptModelTab = ({ model }: { model: Model }) => {
