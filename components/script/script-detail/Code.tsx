@@ -71,33 +71,58 @@ const CodeTab = ({ script }: { script: Script }) => {
   };
 
   // Handle file submission/saving
-  const handleSubmitFile = async () => {
+  const handleSubmitFile = async (newFile = false, newVersion = -1) => {
     if (!fileData) return;
 
     try {
-      // Update version in script info if version number changed
-      if (stateVersion !== curVersion) {
-        const versions = script.version || [];
-        const newVersions = versions
-          .map((v) => (v === curVersion ? stateVersion : v))
-          .sort((a, b) => b - a);
+      // Get current versions array
+      let newVersionArr = [...script.version];
+
+      if (newFile) {
+        // Add new version to array
+        newVersionArr.push(newVersion);
+        newVersionArr = newVersionArr.sort((a, b) => b - a);
+
+        // Update script info with new versions array
         await scriptApi.updateScriptInfo(user_Id, script._id, {
-          versions: newVersions,
+          version: newVersionArr,
         });
+
+        // Update current version in state
+        setCurVersion(newVersion);
+        script.version = newVersionArr;
+      } else if (stateVersion !== curVersion) {
+        // Rename file
         await scriptApi.renameFile(
           user_Id,
           script._id,
           curVersion,
           stateVersion
         );
+
+        // Update versions array - replace old version with new version
+        newVersionArr = newVersionArr.map((item) =>
+          item === curVersion ? stateVersion : item
+        );
+        newVersionArr = newVersionArr.sort((a, b) => b - a);
+
+        // Update script info with new versions array
+        await scriptApi.updateScriptInfo(user_Id, script._id, {
+          version: newVersionArr,
+        });
+
+        // Update current version in state
         setCurVersion(stateVersion);
+        script.version = newVersionArr;
       }
 
       // Create a blob and file object
       const jsonBlob = new Blob([fileData], { type: "application/json" });
       const jsonFile = new File(
         [jsonBlob],
-        `v${stateVersion.toFixed(1)}.json`,
+        newFile
+          ? `v${newVersion.toFixed(1)}.json`
+          : `v${stateVersion.toFixed(1)}.json`,
         { type: "application/json" }
       );
 
@@ -121,28 +146,8 @@ const CodeTab = ({ script }: { script: Script }) => {
     setFileData("{}");
     setStateVersion(newVersion);
 
-    try {
-      const newVersions = [...versions, newVersion].sort((a, b) => b - a);
-      await scriptApi.updateScriptInfo(user_Id, script._id, {
-        versions: newVersions,
-      });
-
-      // Create and upload an empty file for the new version
-      const jsonBlob = new Blob(["{}"], { type: "application/json" });
-      const jsonFile = new File([jsonBlob], `v${newVersion.toFixed(1)}.json`, {
-        type: "application/json",
-      });
-
-      const formFileData = new FormData();
-      formFileData.append("files", jsonFile);
-      formFileData.append("remote_path", `/${userId}/script/${script._id}/`);
-
-      await scriptApi.uploadScriptFile(formFileData);
-
-      setCurVersion(newVersion);
-    } catch (error) {
-      console.error("Error creating new version:", error);
-    }
+    // Call handleSubmitFile with newFile=true and the new version number
+    handleSubmitFile(true, newVersion);
   };
 
   // Handle file upload
@@ -174,10 +179,12 @@ const CodeTab = ({ script }: { script: Script }) => {
       const newVersions = versions
         .filter((v) => v !== curVersion)
         .sort((a, b) => b - a);
+
       await scriptApi.updateScriptInfo(user_Id, script._id, {
-        versions: newVersions,
+        version: newVersions,
       });
 
+      script.version = newVersions;
       setOpenDeleteDialog(false);
 
       if (newVersions.length > 0) {
@@ -238,17 +245,6 @@ const CodeTab = ({ script }: { script: Script }) => {
                   ))}
               </DropdownMenuContent>
             </DropdownMenu>
-
-            {/* Version input (when editing) */}
-            {!disableEditFile && (
-              <Input
-                type="number"
-                step="0.1"
-                value={stateVersion}
-                onChange={(e) => setStateVersion(parseFloat(e.target.value))}
-                className="w-24"
-              />
-            )}
           </div>
         </div>
         <CardDescription className="flex items-center justify-between">
@@ -316,7 +312,7 @@ const CodeTab = ({ script }: { script: Script }) => {
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={handleSubmitFile}
+                        onClick={() => handleSubmitFile()}
                         title="Save"
                       >
                         <Save className="h-4 w-4" />
@@ -359,9 +355,9 @@ const CodeTab = ({ script }: { script: Script }) => {
           onChange={handleEditorChange}
           options={{
             inlineSuggest: { enabled: true },
-            fontSize: 14, // should be a number
+            fontSize: 14,
             formatOnType: true,
-            autoClosingBrackets: "always", // boolean or "always" depending on Monaco config
+            autoClosingBrackets: "always",
             minimap: { enabled: false },
             readOnly: disableEditFile,
           }}

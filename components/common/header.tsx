@@ -13,6 +13,7 @@ import {
   Code2,
   Database,
   Home,
+  Share2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useFetchProfile } from "@/hooks/useFetchUser";
+import { UserNotify } from "@/types/user";
+import { useSocket } from "@/hooks/useSocket";
 
 const Header = () => {
   const router = useRouter();
@@ -35,6 +38,9 @@ const Header = () => {
   const [userId, setUserId] = useState<string>("");
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Use the socket hook instead of directly managing notifications here
+  const { notifications, ring, setRing } = useSocket();
 
   // Only fetch profile when userId exists and user is logged in
   const { data: user } = useFetchProfile(isLoggedIn ? userId : "");
@@ -89,13 +95,13 @@ const Header = () => {
       active: pathname === "/dashboard",
     },
     {
-      href: `/dashboard/${userId}/profile`,
+      href: `/dashboard/${userId}/profile?tab=profile`,
       label: "Profile",
       icon: User,
       active: pathname.includes(`/dashboard/${userId}/profile`),
     },
     {
-      href: `/dashboard/${userId}/scripts`,
+      href: `/dashboard/${userId}/scripts?tab=all`,
       label: "Scripts",
       icon: Code2,
       active: pathname.includes(`/dashboard/${userId}/scripts`),
@@ -127,6 +133,13 @@ const Header = () => {
 
     setIsLoggedIn(false);
     router.replace("/");
+  };
+
+  // Reset notification ring when dropdown is opened
+  const handleNotificationOpen = () => {
+    if (ring) {
+      setRing(false);
+    }
   };
 
   // Render loading state
@@ -198,17 +211,66 @@ const Header = () => {
       {isLoggedIn ? (
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button
-            variant="outline"
-            size="icon"
-            asChild
-            className="rounded-full"
-          >
-            <Link href={`/dashboard/${userId}/notifications`}>
-              <Bell className="h-4 w-4" />
-              <span className="sr-only">Notifications</span>
-            </Link>
-          </Button>
+          <DropdownMenu onOpenChange={handleNotificationOpen}>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className={`rounded-full relative ${
+                  ring ? "animate-pulse ring-2 ring-primary" : ""
+                }`}
+              >
+                <Bell className="h-4 w-4" />
+                {notifications.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                    {notifications.length}
+                  </span>
+                )}
+                <span className="sr-only">Notifications</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-72">
+              <div className="p-2 font-medium border-b">Notifications</div>
+              <div className="max-h-96 overflow-auto">
+                {notifications.length === 0 ? (
+                  <div className="p-4 text-center text-gray-500">
+                    No notifications
+                  </div>
+                ) : (
+                  [...notifications.slice(-5)]
+                    .reverse()
+                    .map((notification: UserNotify) => (
+                      <DropdownMenuItem
+                        key={notification._id}
+                        className="flex flex-col items-start p-3 hover:bg-accent"
+                      >
+                        <div className="flex w-full gap-2">
+                          <div className="flex items-center">
+                            <Share2 className="h-5 w-5 text-blue-500" />
+                          </div>
+                          <p className="font-medium">
+                            <span className="font-semibold">
+                              {notification.from.username}
+                            </span>{" "}
+                            shared{" "}
+                            {notification.script_id?.name
+                              ? notification.script_id?.name
+                              : "something"}{" "}
+                            with you
+                          </p>
+                        </div>
+                      </DropdownMenuItem>
+                    ))
+                )}
+              </div>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild className="justify-center font-medium">
+                <Link href={`/dashboard/${userId}/profile?tab=notifications`}>
+                  View all notifications
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -231,16 +293,28 @@ const Header = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/${userId}/profile`}>Profile</Link>
+                <Link href={`/dashboard/${userId}/profile?tab=profile`}>
+                  <User className="mr-2 h-4 w-4" />
+                  Profile
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href={`/dashboard/${userId}/scripts`}>Scripts</Link>
+                <Link href={`/dashboard/${userId}/scripts?tab=all`}>
+                  <Code2 className="mr-2 h-4 w-4" />
+                  Scripts
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/models">Models</Link>
+                <Link href="/dashboard/models">
+                  <Database className="mr-2 h-4 w-4" />
+                  Models
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/settings">Settings</Link>
+                <Link href="/dashboard/settings">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignout}>

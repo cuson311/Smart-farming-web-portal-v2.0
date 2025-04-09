@@ -30,13 +30,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       active: pathname === "/dashboard",
     },
     {
-      href: `/dashboard/${userId}/profile`,
+      href: `/dashboard/${userId}/profile?tab=profile`,
       label: "Profile",
       icon: User,
       active: pathname.includes(`/dashboard/${userId}/profile`),
     },
     {
-      href: `/dashboard/${userId}/scripts`,
+      href: `/dashboard/${userId}/scripts?tab=all`,
       label: "Scripts",
       icon: Code2,
       active: pathname.includes(`/dashboard/${userId}/scripts`),
