@@ -1,6 +1,7 @@
 import ModelCard from "./ModelCard";
 import ScriptCard from "./ModelCard";
 import { Model } from "@/types/model";
+import ModelCardSkeleton from "./ModelCardSkeleton";
 
 interface ModelListProps {
   models: Model[];
@@ -12,7 +13,9 @@ const ModelList = ({ models, toggleFavorite, loading }: ModelListProps) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-muted-foreground">Loading models...</div>
+        <div className="text-muted-foreground">
+          <ModelCardSkeleton />
+        </div>
       </div>
     );
   }

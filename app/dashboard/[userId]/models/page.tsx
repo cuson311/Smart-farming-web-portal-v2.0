@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useFetchModelsList } from "@/hooks/useFetchUser";
-import NewScriptDialog from "@/components/script/script-list/NewScript";
 import { Model } from "@/types/model";
 import ModelList from "@/components/model/model-list/ModelList";
+import NewModelDialog from "@/components/model/model-list/NewModel";
 
 const ModelPage = ({ params }: { params: { userId: string } }) => {
   const { toast } = useToast();
@@ -17,12 +17,12 @@ const ModelPage = ({ params }: { params: { userId: string } }) => {
   const {
     data: models,
     loading: modelsListLoading,
-    refetch,
+    refetch: refetchAllModels,
   } = useFetchModelsList(params.userId);
 
   const filteredModels = models.filter(
     (model: Model) =>
-      model.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      model.alt_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       model.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -59,7 +59,7 @@ const ModelPage = ({ params }: { params: { userId: string } }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <NewScriptDialog />
+          <NewModelDialog onModelCreated={refetchAllModels} />
         </div>
       </div>
       <ScriptTabs

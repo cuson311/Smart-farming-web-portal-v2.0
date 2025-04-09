@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, FormEvent, ChangeEvent } from "react";
-import { useTheme } from "next-themes";
-import { Plus } from "lucide-react";
+import { Check, Pencil, Plus, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,9 +19,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 import { NewModelData } from "@/types/model";
+import modelApi from "@/api/modelAPI";
+
+interface Tag {
+  key: string;
+  value: string;
+}
 
 interface NewModelDialogProps {
-  onModelCreated?: (model: NewModelData) => void;
+  onModelCreated: () => void;
 }
 
 const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
@@ -33,8 +38,12 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
     description: "",
     tags: [],
   });
-  const [tagInput, setTagInput] = useState("");
+  const [tagKey, setTagKey] = useState("");
+  const [tagValue, setTagValue] = useState("");
+  const [isEditingTag, setIsEditingTag] = useState(false);
+  const [editingTagIndex, setEditingTagIndex] = useState<number | null>(null);
 
+  console.log("newModel", newModel);
   const handleOpenChange = (open: boolean) => {
     if (open) {
       setOpen(true);
@@ -47,10 +56,17 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
     setOpen(false);
     setNewModel({
       name: "",
-      description: "",
       tags: [],
+      description: "",
     });
-    setTagInput("");
+    resetTagInputs();
+  };
+
+  const resetTagInputs = () => {
+    setTagKey("");
+    setTagValue("");
+    setIsEditingTag(false);
+    setEditingTagIndex(null);
   };
 
   const handleModelChange = (
@@ -60,30 +76,71 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
     setNewModel((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleTagInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTagInput(e.target.value);
+  const handleTagKeyChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTagKey(e.target.value);
   };
 
-  const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput.trim() !== "") {
-      e.preventDefault();
-      if (!newModel.tags.some((tag) => tag.key === tagInput.trim())) {
-        setNewModel((prev) => ({
-          ...prev,
-          tags: [
-            ...prev.tags,
-            { key: tagInput.trim(), value: tagInput.trim() },
-          ],
-        }));
-      }
-      setTagInput("");
+  const handleTagValueChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTagValue(e.target.value);
+  };
+
+  const handleAddTag = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (tagKey.trim() === "" || tagValue.trim() === "") {
+      toast({
+        title: "Missing information",
+        description: "Please provide both key and value for the tag.",
+        variant: "destructive",
+      });
+      return;
     }
+
+    if (isEditingTag && editingTagIndex !== null) {
+      // Update existing tag
+      const updatedTags = [...newModel.tags];
+      updatedTags[editingTagIndex] = {
+        key: tagKey.trim(),
+        value: tagValue.trim(),
+      };
+
+      setNewModel((prev) => ({
+        ...prev,
+        tags: updatedTags,
+      }));
+    } else {
+      // Check for duplicate keys
+      if (newModel.tags.some((tag) => tag.key === tagKey.trim())) {
+        toast({
+          title: "Duplicate tag",
+          description: "A tag with this key already exists.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Add new tag
+      setNewModel((prev) => ({
+        ...prev,
+        tags: [...prev.tags, { key: tagKey.trim(), value: tagValue.trim() }],
+      }));
+    }
+
+    resetTagInputs();
   };
 
-  const handleRemoveTag = (tagToRemove: string) => {
+  const handleEditTag = (index: number) => {
+    const tagToEdit = newModel.tags[index];
+    setTagKey(tagToEdit.key);
+    setTagValue(tagToEdit.value);
+    setIsEditingTag(true);
+    setEditingTagIndex(index);
+  };
+
+  const handleRemoveTag = (keyToRemove: string) => {
     setNewModel((prev) => ({
       ...prev,
-      tags: prev.tags.filter((tag) => tag.key !== tagToRemove),
+      tags: prev.tags.filter((tag) => tag.key !== keyToRemove),
     }));
   };
 
@@ -98,10 +155,23 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
       });
       return;
     }
+    const userId =
+      typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+
+    if (!userId) {
+      toast({
+        title: "Authentication error",
+        description: "You must be logged in to create a script.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
+      const modelId = await modelApi.createModel(userId, newModel);
+
       if (onModelCreated) {
-        onModelCreated(newModel);
+        onModelCreated();
       }
 
       toast({
@@ -159,25 +229,84 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="tags">Tags</Label>
-                <Input
-                  id="tags"
-                  value={tagInput}
-                  onChange={handleTagInputChange}
-                  onKeyDown={handleAddTag}
-                  placeholder="Press Enter to add a tag"
-                />
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {newModel.tags.map((tag) => (
-                    <Badge key={tag.key} variant="secondary">
-                      {tag.value}
-                      <button
+                <Label>Tags</Label>
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2 flex-1">
+                    <Label htmlFor="tagKey" className="text-s">
+                      Key
+                    </Label>
+                    <Input
+                      id="tagKey"
+                      value={tagKey}
+                      onChange={handleTagKeyChange}
+                      placeholder="Enter tag key"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 flex-1">
+                    <Label htmlFor="tagValue" className="text-s">
+                      Value
+                    </Label>
+                    <Input
+                      id="tagValue"
+                      value={tagValue}
+                      onChange={handleTagValueChange}
+                      placeholder="Enter tag value"
+                    />
+                  </div>
+                  <div className="flex items-end gap-2">
+                    {isEditingTag && (
+                      <Button
                         type="button"
-                        onClick={() => handleRemoveTag(tag.key)}
-                        className="ml-1 hover:text-destructive"
+                        variant="outline"
+                        size="sm"
+                        className="mb-0.5"
+                        onClick={resetTagInputs}
                       >
-                        <X className="h-3 w-3" />
-                      </button>
+                        <X className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <div>
+                      <Button
+                        type="button"
+                        onClick={handleAddTag}
+                        size="sm"
+                        className="mb-0.5"
+                      >
+                        {isEditingTag ? (
+                          <Check className="h-4 w-4" />
+                        ) : (
+                          <Plus className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {newModel.tags.map((tag, index) => (
+                    <Badge
+                      key={tag.key + index}
+                      variant="secondary"
+                      className="gap-1"
+                    >
+                      <span className="font-medium">{tag.key}:</span>{" "}
+                      {tag.value}
+                      <div className="flex items-center ml-1">
+                        <button
+                          type="button"
+                          onClick={() => handleEditTag(index)}
+                          className="hover:text-blue-500 mr-1"
+                        >
+                          <Pencil className="h-3 w-3" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveTag(tag.key)}
+                          className="hover:text-destructive"
+                        >
+                          <Trash className="h-3 w-3" />
+                        </button>
+                      </div>
                     </Badge>
                   ))}
                 </div>

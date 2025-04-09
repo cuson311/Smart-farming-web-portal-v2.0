@@ -10,13 +10,14 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import modelApi from "@/api/modelAPI";
 import { Badge } from "@/components/ui/badge";
+import { formatDate } from "@/lib/formatDate";
 
 const ModelOverviewCard = ({
   model,
   refetch,
 }: {
-  model: Model | null;
-  refetch?: () => void;
+  model: Model;
+  refetch: () => void;
 }) => {
   const router = useRouter();
   const { userId, scriptId } = useParams<{
@@ -25,7 +26,7 @@ const ModelOverviewCard = ({
   }>();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
+  console.log("modelOverviewCard ", model);
   const handleEditConfirm = async (updatedModel: UpdateModelData) => {
     try {
       await modelApi.updateModelInfo(userId, updatedModel);
@@ -35,7 +36,7 @@ const ModelOverviewCard = ({
         variant: "default",
       });
       setIsEditModalOpen(false);
-      refetch?.();
+      refetch();
     } catch (error) {
       console.error("Error updating model:", error);
       toast({
@@ -48,7 +49,7 @@ const ModelOverviewCard = ({
 
   const handleDeleteConfirm = async () => {
     try {
-      await modelApi.deleteModelInfo(userId, model?.name);
+      await modelApi.deleteModelInfo(userId, model.alt_name);
       toast({
         title: "Successful!",
         description: "Model deleted successfully",
@@ -75,6 +76,10 @@ const ModelOverviewCard = ({
         </CardHeader>
         <CardContent className="grid gap-4">
           <DetailItem
+            label="Name"
+            value={model?.alt_name !== "" ? model.alt_name : model.name}
+          />
+          <DetailItem
             label="Description"
             value={
               model?.description !== ""
@@ -82,21 +87,37 @@ const ModelOverviewCard = ({
                 : "There is no description"
             }
           />
-          <DetailItem label="Created" value={model?.creation_timestamp} />
+          <DetailItem
+            label="Created"
+            value={
+              model?.creation_timestamp
+                ? formatDate(model?.creation_timestamp)
+                : ""
+            }
+          />
           <DetailItem
             label="Last Updated"
-            value={model?.last_updated_timestamp}
+            value={
+              model?.last_updated_timestamp
+                ? formatDate(model?.last_updated_timestamp)
+                : ""
+            }
           />
 
           <DetailItem
             label="Tags"
             value={
-              model?.latest_versions?.[0]?.tags &&
-              model?.latest_versions?.[0]?.tags.map((tag: Tag) => (
-                <Badge variant="outline" key={tag.key}>
-                  {tag.key} : {tag.value}
-                </Badge>
-              ))
+              model?.tags ? (
+                model.tags.map((tag: Tag) => (
+                  <Badge variant="outline" key={tag.key}>
+                    {tag.key} : {tag.value}
+                  </Badge>
+                ))
+              ) : (
+                <div className="text-sm text-muted-foreground italic">
+                  No tags found.
+                </div>
+              )
             }
           />
 
@@ -155,7 +176,7 @@ function DetailItem({ label, value }: DetailItemProps) {
   return (
     <div>
       <h3 className="mb-1 text-sm font-medium">{label}</h3>
-      <p className="text-sm text-muted-foreground">{value}</p>
+      <div className="text-sm text-muted-foreground">{value}</div>
     </div>
   );
 }

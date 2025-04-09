@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import modelApi from "@/api/modelAPI";
 import { Model } from "@/types/model";
 import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOverviewCard";
+import { useFetchModelInfo } from "@/hooks/useFetchModel";
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
@@ -64,13 +65,9 @@ const ModelDetailPage = ({
   const isValidTab = tabParam && validTabs.includes(tabParam);
   const tabName = isValidTab ? tabParam : "overview";
 
-  const [modelInfo, setModelInfo] = useState<Model | null>(null);
   const [hasAccess, setHasAccess] = useState<boolean>(false);
   const [isChecking, setIsChecking] = useState<boolean>(true);
   const [userId, setUserId] = useState<string>("");
-
-  console.log("modelInfo reload", modelInfo);
-  console.log("tabParam", tabParam);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -78,6 +75,15 @@ const ModelDetailPage = ({
       setUserId(userId);
     }
   }, []);
+
+  const {
+    data: modelInfo,
+    setData: setModelInfo,
+    loading: modelInfoLoading,
+    error: modelInfoError,
+    refetch,
+  } = useFetchModelInfo(params.userId, params.modelName);
+
   useEffect(() => {
     const fetchModelInfo = async () => {
       setIsChecking(true);
@@ -86,7 +92,6 @@ const ModelDetailPage = ({
           params.userId,
           params.modelName
         );
-        setModelInfo(response.registered_model);
         if (response.message === "Not allowed to access this model") {
           setHasAccess(false);
         } else {
@@ -179,7 +184,7 @@ const ModelDetailPage = ({
             <span className="sr-only">Back</span>
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold">{modelInfo?.name}</h1>
+        <h1 className="text-2xl font-bold">{modelInfo?.alt_name}</h1>
       </div>
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
@@ -189,7 +194,8 @@ const ModelDetailPage = ({
               <TabsTrigger value="scripts">Scripts</TabsTrigger>
               <TabsTrigger value="versions">Versions</TabsTrigger>
             </TabsList>
-            {/* <TabsContent value="code" className="border-none p-0 pt-4">
+            {/*
+             <TabsContent value="code" className="border-none p-0 pt-4">
               {modelInfo ? (
                 <CodeTab model={modelInfo} />
               ) : (
@@ -213,10 +219,9 @@ const ModelDetailPage = ({
           </Tabs>
         </div>
         <div>
-          <ModelOverviewCard
-            model={modelInfo}
-            // refetch={refetch}
-          />
+          {modelInfo && (
+            <ModelOverviewCard model={modelInfo} refetch={refetch} />
+          )}
         </div>
       </div>
     </div>

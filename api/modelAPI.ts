@@ -1,3 +1,4 @@
+import { UpdateModelData } from "@/types/model";
 import axiosInstance from "./axiosInstance";
 
 const modelApi = {
@@ -52,18 +53,19 @@ const modelApi = {
     );
     return response.data;
   },
-  updateModelInfo: async (userId: string, updateData: any) => {
-    const response = await axiosInstance.put(
+  updateModelInfo: async (userId: string, updateData: UpdateModelData) => {
+    const response = await axiosInstance.patch(
       `/${userId}/models/update`,
       updateData
     );
     return response.data;
   },
-  deleteModelInfo: async (userId: string, modelName: any) => {
-    const response = await axiosInstance.delete(
-      `/${userId}/models/delete`,
-      modelName
-    );
+  deleteModelInfo: async (userId: string, name: string) => {
+    const response = await axiosInstance.delete(`/${userId}/models/delete`, {
+      data: {
+        name,
+      },
+    });
     return response.data;
   },
   setModelSchedule: async (userId: string, formData: any) => {

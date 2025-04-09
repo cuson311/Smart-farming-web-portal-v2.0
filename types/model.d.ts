@@ -23,6 +23,7 @@ export interface Model {
   owner_id: string;
   __v: number;
   alt_name: string;
+  tags?: Tag[];
   isFavorite?: boolean;
   latest_versions?: ModelVersion[];
   creation_timestamp?: string;
