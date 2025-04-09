@@ -3,11 +3,21 @@ import { Script } from "@/types/script";
 
 interface ScriptListProps {
   scripts: Script[];
-  toggleFavorite: (id: string, isFavorite: boolean) => void;
+  toggleFavorite: (
+    id: string,
+    isFavorite: boolean,
+    refetch?: () => void
+  ) => void;
   loading: boolean;
+  refetch?: () => void;
 }
 
-const ScriptList = ({ scripts, toggleFavorite, loading }: ScriptListProps) => {
+const ScriptList = ({
+  scripts,
+  toggleFavorite,
+  loading,
+  refetch,
+}: ScriptListProps) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
