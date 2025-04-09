@@ -12,10 +12,15 @@ import { Script } from "@/types/script";
 import { useParams } from "next/navigation";
 interface ScriptCardProps {
   script: Script;
-  toggleFavorite: (id: string, isFavorite: boolean) => void;
+  toggleFavorite: (
+    id: string,
+    isFavorite: boolean,
+    refetch?: () => void
+  ) => void;
+  refetch?: () => void;
 }
 
-const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
+const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
   const { userId } = useParams();
 
   return (
@@ -32,7 +37,7 @@ const ScriptCard = ({ script, toggleFavorite }: ScriptCardProps) => {
           variant="ghost"
           size="icon"
           className="h-8 w-8"
-          onClick={() => toggleFavorite(script._id, script.isFavorite)}
+          onClick={() => toggleFavorite(script._id, script.isFavorite, refetch)}
         >
           <Star
             className={
