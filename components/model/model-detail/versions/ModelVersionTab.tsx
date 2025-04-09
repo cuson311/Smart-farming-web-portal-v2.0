@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -10,9 +9,8 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Plus } from "lucide-react";
+import { Clock } from "lucide-react";
 import { convertTimestamp } from "@/utils/dateUtils";
 
 // Assuming you'll create this API client in a similar way
@@ -32,8 +30,6 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
   const [versionLoading, setVersionLoading] = useState(false);
   const [versionError, setVersionError] = useState<any>(false);
   const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({});
-
-  console.log("versions", versions);
 
   useEffect(() => {
     if (!userId || !modelName) {
@@ -136,7 +132,7 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
               </Card>
             </div>
           ))}
-          {filteredVersions.length === 0 && (
+          {filteredVersions?.length === 0 && (
             <div className="text-center text-muted-foreground py-4">
               No versions found in the selected date range
             </div>

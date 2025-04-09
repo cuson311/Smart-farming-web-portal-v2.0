@@ -18,6 +18,7 @@ import { Model } from "@/types/model";
 import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOverviewCard";
 import { useFetchModelInfo } from "@/hooks/useFetchModel";
 import ModelVersionTab from "@/components/model/model-detail/versions/ModelVersionTab";
+import ScriptModelTab from "@/components/model/model-detail/scripts/ScriptModelTab";
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
@@ -204,16 +205,16 @@ const ModelDetailPage = ({
                 </p>
               )}
             </TabsContent>
-            {/*
-            <TabsContent value="comments" className="border-none p-0 pt-4">
+            <TabsContent value="scripts" className="border-none p-0 pt-4">
               {modelInfo ? (
-                <CommentsTab model={modelInfo} />
+                <ScriptModelTab model={modelInfo} />
               ) : (
                 <p className="text-sm text-muted-foreground">
                   Loading model details...
                 </p>
               )}
             </TabsContent>
+            {/*
             <TabsContent value="versions" className="border-none p-0 pt-4">
               <VersionCompareTab />
             </TabsContent> */}

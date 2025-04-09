@@ -53,3 +53,13 @@ export interface DeleteModelTagData {
   name: string;
   key: string;
 }
+
+export interface ScriptModel {
+  _id: string;
+  version: string;
+  model_id: string;
+  model_version: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
