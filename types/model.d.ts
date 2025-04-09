@@ -42,3 +42,14 @@ export interface UpdateModelData {
   name: string;
   description: string;
 }
+
+export interface SetModelTagData {
+  name: string;
+  key: string;
+  value: string;
+}
+
+export interface DeleteModelTagData {
+  name: string;
+  key: string;
+}
