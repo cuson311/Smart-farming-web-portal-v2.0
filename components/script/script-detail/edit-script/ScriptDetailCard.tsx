@@ -9,6 +9,8 @@ import DeleteScriptModal from "./DeleteScriptModal";
 import scriptApi from "@/api/scriptAPI";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useFetchProfile } from "@/hooks/useFetchUser";
 
 const ScriptDetailsCard = ({
   script,
@@ -24,6 +26,13 @@ const ScriptDetailsCard = ({
   }>();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  // Fetch the owner's profile using the existing hook
+  const {
+    data: ownerProfile,
+    loading: isProfileLoading,
+    refetch: refetchOwnerProfile,
+  } = useFetchProfile(userId);
 
   const handleEditConfirm = async (updatedScript: any) => {
     try {
@@ -68,6 +77,16 @@ const ScriptDetailsCard = ({
     }
   };
 
+  // Get initials for avatar fallback
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
+      .toUpperCase()
+      .substring(0, 2);
+  };
+
   return (
     <>
       <Card>
@@ -75,6 +94,34 @@ const ScriptDetailsCard = ({
           <CardTitle>Script Details</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
+          {/* Owner Information Section */}
+          <div>
+            <h3 className="mb-1 text-sm font-medium">Owner</h3>
+            <div className="flex items-center gap-2 mt-2">
+              {isProfileLoading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-muted animate-pulse"></div>
+                  <div className="h-4 w-24 bg-muted animate-pulse rounded"></div>
+                </div>
+              ) : (
+                <>
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage
+                      src={ownerProfile?.profile_image}
+                      alt={ownerProfile?.username || "User"}
+                    />
+                    <AvatarFallback>
+                      {getInitials(ownerProfile?.username || "User")}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm font-medium">
+                    {ownerProfile?.username || "Unknown User"}
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+
           <DetailItem
             label="Description"
             value={

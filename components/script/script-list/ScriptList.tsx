@@ -7,8 +7,13 @@ import { useState } from "react";
 
 interface ScriptListProps {
   scripts: Script[];
-  toggleFavorite: (id: string, isFavorite: boolean) => void;
+  toggleFavorite: (
+    id: string,
+    isFavorite: boolean,
+    refetch?: () => void
+  ) => void;
   loading: boolean;
+  refetch?: () => void;
 }
 
 const ITEMS_PER_PAGE = 6;
