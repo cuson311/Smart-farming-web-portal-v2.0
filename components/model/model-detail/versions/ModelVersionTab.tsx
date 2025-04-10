@@ -16,7 +16,7 @@ import { convertTimestamp } from "@/utils/dateUtils";
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
 import { Model, ModelVersion } from "@/types/model";
-import { DatePickerWithRange } from "@/components/ui/DataPickerWithRange";
+import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
 
 const ModelVersionTab = ({ model }: { model: Model }) => {
   const params = useParams();

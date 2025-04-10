@@ -97,13 +97,6 @@ const EditModelModal = ({
     setEditingTagIndex(null);
   };
 
-  const handleTagKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Only allow key changes when not editing an existing tag
-    if (!isEditingTag) {
-      setTagKey(e.target.value);
-    }
-  };
-
   const handleTagValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTagValue(e.target.value);
   };
@@ -347,7 +340,6 @@ const EditModelModal = ({
                     <Input
                       id="tagKey"
                       value={tagKey}
-                      onChange={handleTagKeyChange}
                       placeholder="Enter tag key"
                       disabled={isTagProcessing || isEditingTag}
                     />
