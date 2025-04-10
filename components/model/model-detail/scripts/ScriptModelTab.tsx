@@ -9,12 +9,23 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Clock } from "lucide-react";
 import { convertTimestamp } from "@/utils/dateUtils";
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
 import { Model, ScriptModel } from "@/types/model";
-import { DatePickerWithRange } from "@/components/ui/DataPickerWithRange";
+import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
+import Pagination from "@/components/ui/pagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 const ScriptModelTab = ({ model }: { model: Model }) => {
   const params = useParams();
@@ -24,10 +35,16 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
   const modelId: string = model._id;
 
   const [scripts, setScripts] = useState<ScriptModel[]>([]);
-  const [filteredVersions, setFilteredVersions] = useState<ScriptModel[]>([]);
+  const [filteredScripts, setFilteredScripts] = useState<ScriptModel[]>();
   const [scriptLoading, setScriptLoading] = useState(false);
   const [scriptError, setScriptError] = useState<any>(false);
   const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+  const [sortField, setSortField] = useState<"createdAt" | "updatedAt">(
+    "createdAt"
+  );
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   console.log("scripts", scripts);
 
@@ -43,10 +60,10 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
       try {
         const response = await modelApi.getScriptsModel(userId, modelId);
         setScripts(response);
-        setFilteredVersions(response.model_versions);
+        setFilteredScripts(response.model_versions);
       } catch (err) {
-        setScriptError("Error fetching model");
-        console.error("Error fetching model:", err);
+        setScriptError("Error fetching model scripts");
+        console.error("Error fetching model scripts:", err);
       } finally {
         setScriptLoading(false);
       }
@@ -58,7 +75,8 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
   // Filter scripts based on date range
   useEffect(() => {
     if (!dateRange.from || !dateRange.to) {
-      setFilteredVersions(scripts);
+      setFilteredScripts(scripts);
+      setCurrentPage(1); // Reset to first page when date range changes
       return;
     }
 
@@ -67,27 +85,81 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
       return versionDate >= dateRange.from! && versionDate <= dateRange.to!;
     });
 
-    setFilteredVersions(filtered);
+    setFilteredScripts(filtered);
+    setCurrentPage(1); // Reset to first page when filtering
   }, [dateRange, scripts]);
+
+  // Sort the filtered scripts
+  const sortedScripts = [...(filteredScripts || [])].sort((a, b) => {
+    const dateA = new Date(a[sortField]).getTime();
+    const dateB = new Date(b[sortField]).getTime();
+    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+  });
+
+  const totalPages = Math.ceil(sortedScripts.length / itemsPerPage);
+  const paginatedVersions = sortedScripts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleDateRangeChange = (range: { from?: Date; to?: Date }) => {
     setDateRange(range);
   };
 
-  console.log("version", scripts);
+  const handleSortChange = (
+    field: "createdAt" | "updatedAt",
+    order: "asc" | "desc"
+  ) => {
+    setSortField(field);
+    setSortOrder(order);
+    setCurrentPage(1); // Reset to first page when sorting changes
+  };
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
           <CardTitle className="mb-2">Associated Scripts</CardTitle>
-          <CardDescription>Scripts that use this model</CardDescription>
+          <CardDescription>Scripts belong to this model</CardDescription>
         </div>
-        <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
+        <div className="flex flex-col gap-4 items-end">
+          <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
+          <div className="flex items-center gap-2">
+            <Label>Sort by:</Label>
+            <Select
+              value={sortField}
+              onValueChange={(value: "createdAt" | "updatedAt") =>
+                handleSortChange(value, sortOrder)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select field" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="createdAt">Creation Date</SelectItem>
+                <SelectItem value="updatedAt">Last Update</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select
+              value={sortOrder}
+              onValueChange={(value: "asc" | "desc") =>
+                handleSortChange(sortField, value)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select order" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="desc">Latest First</SelectItem>
+                <SelectItem value="asc">Oldest First</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className="pt-6">
         <div className="flex flex-col space-y-8">
-          {filteredVersions?.map((item, index) => (
+          {paginatedVersions?.map((item: ScriptModel, index: number) => (
             <div key={index}>
               <div className="flex items-center justify-between gap-2 mb-2">
                 <span className="font-semibold">Version {item.version}</span>
@@ -121,17 +193,25 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
                       Lasted Update:
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {convertTimestamp(item.createdAt)}
+                      {convertTimestamp(item.updatedAt)}
                     </span>
                   </div>
                 </CardContent>
               </Card>
             </div>
           ))}
-          {filteredVersions?.length === 0 && (
+          {filteredScripts?.length === 0 && (
             <div className="text-center text-muted-foreground py-4">
               No scripts found in the selected date range
             </div>
+          )}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              className="mt-4"
+            />
           )}
         </div>
       </CardContent>

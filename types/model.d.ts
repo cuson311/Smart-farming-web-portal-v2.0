@@ -1,3 +1,4 @@
+import { ModelSchedule } from "./model.d";
 export interface Tag {
   key: string;
   value: string;
@@ -62,4 +63,21 @@ export interface ScriptModel {
   createdAt: string;
   updatedAt: string;
   __v: number;
+}
+
+export interface ModelSchedule {
+  enableSchedule: boolean;
+  _id: string;
+}
+
+export interface NewModelScheduleData {
+  model_id: string;
+  cron_string: string;
+}
+
+export interface ModelSchedulePlan {
+  time: string;
+  model_id: string;
+  name: string;
+  description: string;
 }

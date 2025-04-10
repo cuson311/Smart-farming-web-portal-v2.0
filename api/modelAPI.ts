@@ -1,5 +1,6 @@
 import {
   DeleteModelTagData,
+  NewModelScheduleData,
   SetModelTagData,
   UpdateModelData,
 } from "@/types/model";
@@ -72,7 +73,7 @@ const modelApi = {
     });
     return response.data;
   },
-  setModelSchedule: async (userId: string, formData: any) => {
+  setModelSchedule: async (userId: string, formData: NewModelScheduleData) => {
     const response = await axiosInstance.post(
       `/${userId}/models/set-schedule`,
       formData
@@ -82,6 +83,29 @@ const modelApi = {
   getModelSchedule: async (userId: string, modelId: string) => {
     const response = await axiosInstance.get(
       `/${userId}/models/get-schedule?model_id=${modelId}`
+    );
+    return response.data;
+  },
+  getModelSchedulePlan: async (
+    userId: string,
+    start_date: string,
+    end_date: string
+  ) => {
+    const response = await axiosInstance.get(
+      `/${userId}/models/get-schedule-plan?start_date=${start_date}&end_date=${end_date}`
+    );
+    return response.data;
+  },
+  setEnableSchedule: async (
+    userId: string,
+    modelId: string,
+    enableSchedule: boolean
+  ) => {
+    const response = await axiosInstance.patch(
+      `/${userId}/models/set-enable-schedule?model_id=${modelId}`,
+      {
+        enableSchedule,
+      }
     );
     return response.data;
   },

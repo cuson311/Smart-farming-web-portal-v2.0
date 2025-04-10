@@ -7,18 +7,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-
-import CodeTab from "@/components/script/script-detail/Code";
-import CommentsTab from "@/components/script/script-detail/Comment";
-import VersionCompareTab from "@/components/script/script-detail/VersionCompare/VersionCompare";
-import ScriptDetailsCard from "@/components/script/script-detail/edit-script/ScriptDetailCard";
 import { useEffect, useState } from "react";
 import modelApi from "@/api/modelAPI";
-import { Model } from "@/types/model";
 import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOverviewCard";
 import { useFetchModelInfo } from "@/hooks/useFetchModel";
 import ModelVersionTab from "@/components/model/model-detail/versions/ModelVersionTab";
 import ScriptModelTab from "@/components/model/model-detail/scripts/ScriptModelTab";
+import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
@@ -62,10 +57,10 @@ const ModelDetailPage = ({
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
 
-  const validTabs = ["overview", "scripts", "versions", "schedule"];
+  const validTabs = ["scripts", "versions", "schedule"];
   // Changed this line to require a tab parameter that is valid
   const isValidTab = tabParam && validTabs.includes(tabParam);
-  const tabName = isValidTab ? tabParam : "overview";
+  const tabName = isValidTab ? tabParam : "scripts";
 
   const [hasAccess, setHasAccess] = useState<boolean>(false);
   const [isChecking, setIsChecking] = useState<boolean>(true);
@@ -192,9 +187,9 @@ const ModelDetailPage = ({
         <div className="lg:col-span-2">
           <Tabs value={tabName} onValueChange={handleTabChange}>
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="scripts">Scripts</TabsTrigger>
               <TabsTrigger value="versions">Versions</TabsTrigger>
+              <TabsTrigger value="schedule">Schedule</TabsTrigger>
             </TabsList>
             <TabsContent value="versions" className="border-none p-0 pt-4">
               {modelInfo ? (
@@ -214,10 +209,15 @@ const ModelDetailPage = ({
                 </p>
               )}
             </TabsContent>
-            {/*
-            <TabsContent value="versions" className="border-none p-0 pt-4">
-              <VersionCompareTab />
-            </TabsContent> */}
+            <TabsContent value="schedule" className="border-none p-0 pt-4">
+              {modelInfo ? (
+                <ScheduleModelTab model={modelInfo} />
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Loading model details...
+                </p>
+              )}
+            </TabsContent>
           </Tabs>
         </div>
         <div>

@@ -65,7 +65,7 @@ const ModelCard = ({ model, toggleFavorite }: ModelCardProp) => {
         </div>
         <Button variant="ghost" size="sm" asChild>
           <Link
-            href={`/dashboard/${userId}/models/${model.alt_name}/?tab=overview`}
+            href={`/dashboard/${userId}/models/${model.alt_name}/?tab=scripts`}
           >
             View
           </Link>
