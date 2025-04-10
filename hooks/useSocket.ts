@@ -34,17 +34,68 @@ export const useSocket = () => {
         if (typeof window !== 'undefined') {
             const id = localStorage.getItem('userId');
             setUserId(id);
-            setSocket(initializeSocket());
-        }
-    }, []);
 
-    // Fetch notifications after userId is available
+            // Clear socket and notifications when userId changes or becomes null
+            if (!id) {
+                setNotifications([]);
+                if (socket) {
+                    socket.disconnect();
+                }
+            }
+
+            // Initialize new socket connection with new userId
+            const newSocket = initializeSocket();
+            setSocket(newSocket);
+
+            // Listen for logout events to clear notifications
+            const handleLogout = () => {
+                setNotifications([]);
+                setRing(false);
+                setUserId(null);
+            };
+
+            window.addEventListener('logoutSuccess', handleLogout);
+
+            return () => {
+                window.removeEventListener('logoutSuccess', handleLogout);
+                if (newSocket) {
+                    newSocket.disconnect();
+                }
+            };
+        }
+    }, []); // Run only once on mount
+
+    // Listen for login event to update userId
     useEffect(() => {
-        if (!userId) return;
+        const handleLoginSuccess = () => {
+            const id = localStorage.getItem('userId');
+            setUserId(id);
+            setNotifications([]); // Clear previous user's notifications
+
+            // Reconnect socket with new userId
+            if (socket) {
+                socket.disconnect();
+            }
+            setSocket(initializeSocket());
+        };
+
+        window.addEventListener('loginSuccess', handleLoginSuccess);
+
+        return () => {
+            window.removeEventListener('loginSuccess', handleLoginSuccess);
+        };
+    }, [socket]);
+
+    // Fetch notifications after userId is available or changes
+    useEffect(() => {
+        if (!userId) {
+            setNotifications([]);
+            return;
+        }
 
         const fetchNotification = async () => {
             try {
-                const data = await notificationApi.allNotification(userId || '');
+                const data = await notificationApi.allNotification(userId);
                 setNotifications(data);
             } catch (err) {
                 console.error("Error fetching notification:", err);

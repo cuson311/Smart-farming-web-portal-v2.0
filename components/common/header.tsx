@@ -62,30 +62,16 @@ const Header = () => {
 
     // Set up event listener for login/logout events
     window.addEventListener("storage", checkLoginStatus);
+    window.addEventListener("logoutSuccess", checkLoginStatus);
+    window.addEventListener("loginSuccess", checkLoginStatus);
 
     // Clean up
     return () => {
       window.removeEventListener("storage", checkLoginStatus);
+      window.removeEventListener("logoutSuccess", checkLoginStatus);
+      window.removeEventListener("loginSuccess", checkLoginStatus);
     };
   }, [pathname]); // Re-run on pathname changes to catch login redirects
-
-  // Custom event listener for login success
-  useEffect(() => {
-    const handleLoginSuccess = () => {
-      if (typeof window !== "undefined") {
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("userId") || "";
-        setIsLoggedIn(!!token);
-        setUserId(userId);
-      }
-    };
-
-    window.addEventListener("loginSuccess", handleLoginSuccess);
-
-    return () => {
-      window.removeEventListener("loginSuccess", handleLoginSuccess);
-    };
-  }, []);
 
   const dashboardRoutes = [
     {
@@ -241,7 +227,7 @@ const Header = () => {
                     .reverse()
                     .map((notification: UserNotify) => (
                       <DropdownMenuItem
-                        key={notification._id}
+                        key={notification._id || `temp-${Date.now()}`}
                         className="flex flex-col items-start p-3 hover:bg-accent"
                       >
                         <div className="flex w-full gap-2">
@@ -250,7 +236,7 @@ const Header = () => {
                           </div>
                           <p className="font-medium">
                             <span className="font-semibold">
-                              {notification.from?.username}
+                              {notification.from?.username || "Someone"}
                             </span>{" "}
                             shared{" "}
                             {notification.script_id?.name
