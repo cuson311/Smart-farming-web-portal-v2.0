@@ -39,8 +39,8 @@ const Header = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Use the socket hook instead of directly managing notifications here
-  const { notifications, ring, setRing } = useSocket();
+  // Use the socket hook
+  const { notifications, socket, ring, setRing } = useSocket();
 
   // Only fetch profile when userId exists and user is logged in
   const { data: user } = useFetchProfile(isLoggedIn ? userId : "");
@@ -221,7 +221,7 @@ const Header = () => {
                 }`}
               >
                 <Bell className="h-4 w-4" />
-                {notifications.length > 0 && (
+                {notifications && notifications.length > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                     {notifications.length}
                   </span>
@@ -232,7 +232,7 @@ const Header = () => {
             <DropdownMenuContent align="end" className="w-72">
               <div className="p-2 font-medium border-b">Notifications</div>
               <div className="max-h-96 overflow-auto">
-                {notifications.length === 0 ? (
+                {!notifications || notifications.length === 0 ? (
                   <div className="p-4 text-center text-gray-500">
                     No notifications
                   </div>
@@ -305,7 +305,7 @@ const Header = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/models">
+                <Link href={`/dashboard/${userId}/models`}>
                   <Database className="mr-2 h-4 w-4" />
                   Models
                 </Link>
