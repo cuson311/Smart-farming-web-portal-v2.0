@@ -5,11 +5,19 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
 import { useFetchActivities } from "@/hooks/useFetchUser";
 import { UserActivity } from "@/types/user";
+import Pagination from "@/components/ui/pagination";
+
+// Number of activity months to display per page
+const ITEMS_PER_PAGE = 1;
+
+// Maximum number of items to show per activity type
+const MAX_ITEMS_TO_DISPLAY = 3;
 
 type ActivityItem = {
   _id: string;
@@ -103,6 +111,13 @@ const ActivitySection = () => {
   const [loading, setLoading] = useState(true);
   const { userId } = useParams() as { userId: string };
   const [curYear, setCurYear] = useState(new Date().getFullYear().toString());
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Track displayed item counts for each activity type and month
+  const [displayCounts, setDisplayCounts] = useState<{
+    [key: string]: { scripts: number; models: number; comments: number };
+  }>({});
+
   const {
     data: activitiesData,
     loading: activitiesLoading,
@@ -114,12 +129,53 @@ const ActivitySection = () => {
       try {
         const processedActivities = processActivityData(activitiesData);
         setGroupedActivities(processedActivities);
+
+        // Initialize display counts for all months
+        const initialDisplayCounts: {
+          [key: string]: {
+            scripts: number;
+            models: number;
+            comments: number;
+          };
+        } = {};
+
+        Object.keys(processedActivities).forEach((month) => {
+          initialDisplayCounts[month] = {
+            scripts: MAX_ITEMS_TO_DISPLAY,
+            models: MAX_ITEMS_TO_DISPLAY,
+            comments: MAX_ITEMS_TO_DISPLAY,
+          };
+        });
+
+        setDisplayCounts(initialDisplayCounts);
       } catch (error) {
         console.error("Failed to process activity data:", error);
       }
       setLoading(false);
     }
   }, [activitiesData, activitiesLoading]);
+
+  // Show more items for a specific activity type in a specific month
+  const showMore = (month: string, type: "scripts" | "models" | "comments") => {
+    setDisplayCounts((prev) => ({
+      ...prev,
+      [month]: {
+        ...prev[month],
+        [type]: prev[month][type] + MAX_ITEMS_TO_DISPLAY,
+      },
+    }));
+  };
+
+  // Show fewer items (reset to default display count)
+  const showLess = (month: string, type: "scripts" | "models" | "comments") => {
+    setDisplayCounts((prev) => ({
+      ...prev,
+      [month]: {
+        ...prev[month],
+        [type]: MAX_ITEMS_TO_DISPLAY,
+      },
+    }));
+  };
 
   // Function to get appropriate icon and color for each activity type
   const getActivityStyle = (type: string) => {
@@ -242,6 +298,13 @@ const ActivitySection = () => {
       : text;
   };
 
+  // Calculate pagination
+  const activityMonths = Object.keys(groupedActivities);
+  const totalPages = Math.ceil(activityMonths.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentMonths = activityMonths.slice(startIndex, endIndex);
+
   if (loading) {
     return (
       <Card>
@@ -278,12 +341,46 @@ const ActivitySection = () => {
     <Card>
       <CardHeader>
         <CardTitle>Activity Log</CardTitle>
-        <CardDescription>Activities by month</CardDescription>
+        <CardDescription>
+          Showing {startIndex + 1} to{" "}
+          {Math.min(endIndex, activityMonths.length)} of {activityMonths.length}{" "}
+          activity months
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {Object.entries(groupedActivities).map(([monthYear, activities]) => {
+          {currentMonths.map((monthYear) => {
+            const activities = groupedActivities[monthYear];
             const counts = getActivityCounts(activities);
+            const monthDisplayCount = displayCounts[monthYear] || {
+              scripts: MAX_ITEMS_TO_DISPLAY,
+              models: MAX_ITEMS_TO_DISPLAY,
+              comments: MAX_ITEMS_TO_DISPLAY,
+            };
+
+            // Get limited items based on display count
+            const scriptItems = activities
+              .filter((a) => a.type === "script")
+              .slice(0, monthDisplayCount.scripts);
+
+            const modelItems = activities
+              .filter((a) => a.type === "model")
+              .slice(0, monthDisplayCount.models);
+
+            const commentItems = activities
+              .filter((a) => a.type === "comment")
+              .slice(0, monthDisplayCount.comments);
+
+            // Count total items of each type
+            const totalScripts = activities.filter(
+              (a) => a.type === "script"
+            ).length;
+            const totalModels = activities.filter(
+              (a) => a.type === "model"
+            ).length;
+            const totalComments = activities.filter(
+              (a) => a.type === "comment"
+            ).length;
 
             return (
               <div key={monthYear} className="rounded-lg border p-4">
@@ -308,7 +405,7 @@ const ActivitySection = () => {
                     )}
                   </div>
 
-                  {/* Activity list */}
+                  {/* Activity list with expandable sections */}
                   <div className="space-y-3">
                     {counts.script > 0 && (
                       <div className="flex items-start gap-2">
@@ -318,16 +415,36 @@ const ActivitySection = () => {
                         <div>
                           <p className="text-sm font-medium">Scripts</p>
                           <div className="mt-1 flex flex-wrap gap-1">
-                            {activities
-                              .filter((a) => a.type === "script")
-                              .map((activity) => (
-                                <span
-                                  key={activity._id}
-                                  className="inline-block rounded bg-blue-50 dark:bg-blue-900/20 px-2 py-1 text-xs"
-                                >
-                                  {activity.name}
-                                </span>
-                              ))}
+                            {scriptItems.map((activity) => (
+                              <span
+                                key={activity._id}
+                                className="inline-block rounded bg-blue-50 dark:bg-blue-900/20 px-2 py-1 text-xs"
+                              >
+                                {activity.name}
+                              </span>
+                            ))}
+
+                            {totalScripts > monthDisplayCount.scripts ? (
+                              <button
+                                onClick={() => showMore(monthYear, "scripts")}
+                                className="inline-block rounded bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 px-2 py-1 text-xs transition-colors cursor-pointer"
+                              >
+                                +
+                                {Math.min(
+                                  MAX_ITEMS_TO_DISPLAY,
+                                  totalScripts - monthDisplayCount.scripts
+                                )}{" "}
+                                more
+                              </button>
+                            ) : monthDisplayCount.scripts >
+                              MAX_ITEMS_TO_DISPLAY ? (
+                              <button
+                                onClick={() => showLess(monthYear, "scripts")}
+                                className="inline-block rounded bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 px-2 py-1 text-xs transition-colors cursor-pointer"
+                              >
+                                Show less
+                              </button>
+                            ) : null}
                           </div>
                         </div>
                       </div>
@@ -341,16 +458,36 @@ const ActivitySection = () => {
                         <div>
                           <p className="text-sm font-medium">Models</p>
                           <div className="mt-1 flex flex-wrap gap-1">
-                            {activities
-                              .filter((a) => a.type === "model")
-                              .map((activity) => (
-                                <span
-                                  key={activity._id}
-                                  className="inline-block rounded bg-purple-50 dark:bg-purple-900/20 px-2 py-1 text-xs"
-                                >
-                                  {activity.name}
-                                </span>
-                              ))}
+                            {modelItems.map((activity) => (
+                              <span
+                                key={activity._id}
+                                className="inline-block rounded bg-purple-50 dark:bg-purple-900/20 px-2 py-1 text-xs"
+                              >
+                                {activity.name}
+                              </span>
+                            ))}
+
+                            {totalModels > monthDisplayCount.models ? (
+                              <button
+                                onClick={() => showMore(monthYear, "models")}
+                                className="inline-block rounded bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 px-2 py-1 text-xs transition-colors cursor-pointer"
+                              >
+                                +
+                                {Math.min(
+                                  MAX_ITEMS_TO_DISPLAY,
+                                  totalModels - monthDisplayCount.models
+                                )}{" "}
+                                more
+                              </button>
+                            ) : monthDisplayCount.models >
+                              MAX_ITEMS_TO_DISPLAY ? (
+                              <button
+                                onClick={() => showLess(monthYear, "models")}
+                                className="inline-block rounded bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 px-2 py-1 text-xs transition-colors cursor-pointer"
+                              >
+                                Show less
+                              </button>
+                            ) : null}
                           </div>
                         </div>
                       </div>
@@ -364,23 +501,43 @@ const ActivitySection = () => {
                         <div className="w-full">
                           <p className="text-sm font-medium mb-2">Comments</p>
                           <div className="space-y-2">
-                            {activities
-                              .filter((a) => a.type === "comment")
-                              .map((activity) => (
-                                <div
-                                  key={activity._id}
-                                  className="rounded-md border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 p-2"
-                                >
-                                  <div className="flex justify-between items-center mb-1">
-                                    <span className="text-xs font-medium text-primary">
-                                      {activity.script_id?.name}
-                                    </span>
-                                  </div>
-                                  <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                                    {truncateText(activity.content || "", 100)}
-                                  </p>
+                            {commentItems.map((activity) => (
+                              <div
+                                key={activity._id}
+                                className="rounded-md border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 p-2"
+                              >
+                                <div className="flex justify-between items-center mb-1">
+                                  <span className="text-xs font-medium text-primary">
+                                    {activity.script_id?.name}
+                                  </span>
                                 </div>
-                              ))}
+                                <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                                  {truncateText(activity.content || "", 100)}
+                                </p>
+                              </div>
+                            ))}
+
+                            {totalComments > monthDisplayCount.comments ? (
+                              <button
+                                onClick={() => showMore(monthYear, "comments")}
+                                className="text-xs text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 mt-1 flex items-center transition-colors cursor-pointer"
+                              >
+                                Show{" "}
+                                {Math.min(
+                                  MAX_ITEMS_TO_DISPLAY,
+                                  totalComments - monthDisplayCount.comments
+                                )}{" "}
+                                more comments
+                              </button>
+                            ) : monthDisplayCount.comments >
+                              MAX_ITEMS_TO_DISPLAY ? (
+                              <button
+                                onClick={() => showLess(monthYear, "comments")}
+                                className="text-xs text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 mt-1 flex items-center transition-colors cursor-pointer"
+                              >
+                                Show less comments
+                              </button>
+                            ) : null}
                           </div>
                         </div>
                       </div>
@@ -391,14 +548,17 @@ const ActivitySection = () => {
             );
           })}
         </div>
-        {Object.keys(groupedActivities).length > 5 && (
-          <div className="mt-4 flex justify-center">
-            <button className="rounded-md px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/30">
-              View all activities
-            </button>
-          </div>
-        )}
       </CardContent>
+      {totalPages > 1 && (
+        <CardFooter className="flex justify-center border-t pt-4">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            className="mt-4"
+          />
+        </CardFooter>
+      )}
     </Card>
   );
 };

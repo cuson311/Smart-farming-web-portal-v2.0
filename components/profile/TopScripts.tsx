@@ -4,11 +4,15 @@ import { useFetchTopScripts } from "@/hooks/useFetchUser";
 import { useParams } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
+import Pagination from "../ui/pagination";
+
+const ITEMS_PER_PAGE = 6;
 
 const TopScriptList = () => {
   const { userId } = useParams() as { userId: string };
   const { toast } = useToast();
   const [authUserId, setAuthUserId] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -23,6 +27,12 @@ const TopScriptList = () => {
     error: scriptError,
     refetch,
   } = useFetchTopScripts(userId);
+
+  // Calculate pagination values
+  const totalPages = scripts ? Math.ceil(scripts.length / ITEMS_PER_PAGE) : 0;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentScripts = scripts ? scripts.slice(startIndex, endIndex) : [];
 
   if (scriptLoading) {
     return (
@@ -42,6 +52,7 @@ const TopScriptList = () => {
       </div>
     );
   }
+
   const toggleFavorite = async (id: string, isFavorite: boolean) => {
     const action = isFavorite ? "remove" : "add";
     try {
@@ -62,15 +73,27 @@ const TopScriptList = () => {
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {scripts.map((script) => (
-        <ScriptCard
-          key={script._id}
-          script={script}
-          toggleFavorite={toggleFavorite}
+    <div className="space-y-6">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {currentScripts.map((script) => (
+          <ScriptCard
+            key={script._id}
+            script={script}
+            toggleFavorite={toggleFavorite}
+          />
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          className="mt-4"
         />
-      ))}
+      )}
     </div>
   );
 };
+
 export default TopScriptList;

@@ -16,14 +16,17 @@ import notificationApi from "@/api/notificationAPI";
 import { useParams } from "next/navigation";
 import { UserNotify } from "@/types/user";
 import { formatDate } from "@/lib/formatDate";
+import Pagination from "@/components/ui/pagination";
+
+const ITEMS_PER_PAGE = 5;
 
 const Notifications = () => {
   const { userId } = useParams() as { userId: string };
   const [notifications, setNotifications] = useState<UserNotify[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    // Simulate fetching notifications
     const fetchNotifications = async () => {
       try {
         const response = await notificationApi.allNotification(userId);
@@ -36,7 +39,18 @@ const Notifications = () => {
     };
 
     fetchNotifications();
-  }, []);
+  }, [userId]);
+
+  // Sort notifications by date (newest first)
+  const sortedNotifications = [...notifications].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
+  // Calculate pagination
+  const totalPages = Math.ceil(sortedNotifications.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentNotifications = sortedNotifications.slice(startIndex, endIndex);
 
   return (
     <Card>
@@ -47,7 +61,10 @@ const Notifications = () => {
             ? "Loading notifications..."
             : notifications.length === 0
             ? "No notifications to display"
-            : "All notifications"}
+            : `Showing ${startIndex + 1} to ${Math.min(
+                endIndex,
+                notifications.length
+              )} of ${notifications.length} notifications`}
         </CardDescription>
       </CardHeader>
       <CardContent className="p-0">
@@ -72,13 +89,8 @@ const Notifications = () => {
             </p>
           </div>
         ) : (
-          notifications
-            .sort(
-              (a, b) =>
-                new Date(b.createdAt).getTime() -
-                new Date(a.createdAt).getTime()
-            )
-            .map((notification) => (
+          <>
+            {currentNotifications.map((notification) => (
               <div
                 key={notification._id}
                 className={`flex items-start gap-4 p-4 border-b hover:bg-accent/5 transition-colors bg-accent/10`}
@@ -103,9 +115,6 @@ const Notifications = () => {
                         with you
                       </p>
                       <p className="text-sm text-muted-foreground mt-1">
-                        {/* {formatDistanceToNow(new Date(notification.createdAt), {
-                          addSuffix: true,
-                        })} */}
                         {formatDate(notification.createdAt)}
                       </p>
                     </div>
@@ -116,10 +125,23 @@ const Notifications = () => {
                   </div>
                 </div>
               </div>
-            ))
+            ))}
+
+            {totalPages > 1 && (
+              <div className="flex justify-center p-4 border-t">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                  className="mt-2"
+                />
+              </div>
+            )}
+          </>
         )}
       </CardContent>
     </Card>
   );
 };
+
 export default Notifications;
