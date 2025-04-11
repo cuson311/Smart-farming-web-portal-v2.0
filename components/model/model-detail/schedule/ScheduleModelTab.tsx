@@ -31,8 +31,8 @@ import {
   NewModelScheduleData,
 } from "@/types/model";
 import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
-import { convertTimestamp } from "@/utils/dateUtils";
 import Pagination from "@/components/ui/pagination";
+import { formatDate } from "@/lib/formatDate";
 
 const SCHEDULE_OPTIONS = [
   {
@@ -174,7 +174,10 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
     if (range.from && range.to) {
       try {
         const formatDate = (date: Date) => {
-          return date.toISOString().split("T")[0]; // YYYY-MM-DD
+          return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+            2,
+            "0"
+          )}-${String(date.getDate()).padStart(2, "0")}`;
         };
 
         const fromDate = formatDate(range.from);
@@ -337,7 +340,7 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
                             {plan.name}
                           </span>
                         </div>
-                        {convertTimestamp(plan.time)}
+                        {formatDate(plan.time)}
                       </h3>
 
                       <h3 className="mb-1 text-sm font-medium line-clamp-2">
