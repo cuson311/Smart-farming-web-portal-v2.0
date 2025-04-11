@@ -10,6 +10,8 @@ export interface Script {
     favorite: number;
     location: string[];
     plant_type: string[];
+    createdAt: string,
+    updatedAt: string,
     isFavorite: boolean;
 };
 export interface NewScriptData {

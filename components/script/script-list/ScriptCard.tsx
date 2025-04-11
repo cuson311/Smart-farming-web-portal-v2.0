@@ -3,6 +3,7 @@ import { Code2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -10,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Script } from "@/types/script";
 import { useParams } from "next/navigation";
+import { formatDate } from "@/lib/formatDate";
+import { Badge } from "@/components/ui/badge";
 interface ScriptCardProps {
   script: Script;
   toggleFavorite: (
@@ -26,12 +29,14 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
   return (
     <Card key={script._id}>
       <CardHeader className="flex flex-row items-start justify-between pb-2">
-        <div className="space-y-1">
-          <CardTitle className="flex items-center gap-2">
-            <Code2 className="h-4 w-4" />
-            {script.name}
+        <div className="space-y-1 ">
+          <CardTitle className="flex items-center gap-2 w-full">
+            <Code2 className="h-4 w-4 flex-shrink-0" />
+            <span className="line-clamp-1">{script.name}</span>
           </CardTitle>
-          <CardDescription>{script.description}</CardDescription>
+          <CardDescription className="line-clamp-3">
+            {script.description ? script.description : "No description"}
+          </CardDescription>
         </div>
         <Button
           variant="ghost"
@@ -48,11 +53,24 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
           <span className="sr-only">Favorite</span>
         </Button>
       </CardHeader>
-
-      <CardFooter className="flex items-center justify-between">
-        <span className="rounded-full bg-muted px-2 py-1 text-xs font-medium">
+      <CardContent className="self-end w-full flex-shrink-0">
+        <Badge
+          variant={"outline"}
+          className={`${
+            script.privacy === "private"
+              ? "text-amber-500 dark:text-amber-400"
+              : "text-primary"
+          }`}
+        >
           {script.privacy ? script.privacy : "public"}
-        </span>
+        </Badge>
+      </CardContent>
+      <CardFooter className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
+          {script.updatedAt ? (
+            <span>Updated at {formatDate(script.updatedAt)}</span>
+          ) : null}
+        </div>
         <Button variant="ghost" size="sm" asChild>
           <Link
             href={`/dashboard/${script.owner_id}/scripts/${script._id}?tab=code`}
