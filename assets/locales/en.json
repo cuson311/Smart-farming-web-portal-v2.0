@@ -1,0 +1,215 @@
+{
+    "home": {
+        "hero": {
+            "title": "Smart Irrigation",
+            "subtitle": "Management Made Simple",
+            "description": "Optimize your irrigation systems with intelligent scripts and models. Save water, time, and resources with our advanced management platform.",
+            "getStarted": "Get Started",
+            "learnMore": "Learn More"
+        },
+        "features": {
+            "title": "Features",
+            "heading": "Everything You Need to Optimize Irrigation",
+            "description": "Our platform provides powerful tools to manage, monitor, and optimize your irrigation systems.",
+            "smartScripts": {
+                "title": "Smart Scripts",
+                "description": "Create and manage intelligent irrigation scripts that adapt to changing conditions."
+            },
+            "advancedModels": {
+                "title": "Advanced Models",
+                "description": "Develop sophisticated irrigation models based on soil, weather, and crop data."
+            },
+            "dataAnalytics": {
+                "title": "Data Analytics",
+                "description": "Gain insights from comprehensive analytics and reporting on water usage and efficiency."
+            },
+            "teamCollaboration": {
+                "title": "Team Collaboration",
+                "description": "Work together with your team to manage and optimize irrigation systems."
+            },
+            "securePlatform": {
+                "title": "Secure Platform",
+                "description": "Your data is protected with enterprise-grade security and encryption."
+            },
+            "waterConservation": {
+                "title": "Water Conservation",
+                "description": "Save water and reduce costs with intelligent irrigation management."
+            }
+        },
+        "testimonials": {
+            "title": "Testimonials",
+            "heading": "Trusted by Professionals Worldwide",
+            "description": "See what our customers are saying about our irrigation management platform.",
+            "testimonial1": {
+                "name": "John Doe",
+                "role": "Farm Manager",
+                "quote": "This platform has revolutionized how we manage irrigation on our farm. We've reduced water usage by 30% while improving crop yields."
+            },
+            "testimonial2": {
+                "name": "Jane Smith",
+                "role": "Agricultural Engineer",
+                "quote": "The ability to create custom irrigation models and scripts has been a game-changer for our operations. Highly recommended!"
+            },
+            "testimonial3": {
+                "name": "Robert Johnson",
+                "role": "Vineyard Owner",
+                "quote": "We've been using this platform for our vineyard irrigation for over a year now. The water savings and improved grape quality speak for themselves."
+            }
+        },
+        "pricing": {
+            "title": "Pricing",
+            "heading": "Simple, Transparent Pricing",
+            "description": "Choose the plan that's right for your irrigation management needs.",
+            "basic": {
+                "title": "Basic",
+                "subtitle": "For small farms and gardens",
+                "price": "$29",
+                "period": "/month",
+                "features": {
+                    "scripts": "Up to 5 irrigation scripts",
+                    "analytics": "Basic analytics",
+                    "support": "Email support"
+                },
+                "button": "Get Started"
+            },
+            "pro": {
+                "title": "Pro",
+                "subtitle": "For medium-sized farms",
+                "price": "$79",
+                "period": "/month",
+                "popular": "Popular",
+                "features": {
+                    "scripts": "Unlimited irrigation scripts",
+                    "analytics": "Advanced analytics",
+                    "models": "Custom models",
+                    "support": "Priority support"
+                },
+                "button": "Get Started"
+            },
+            "enterprise": {
+                "title": "Enterprise",
+                "subtitle": "For large agricultural operations",
+                "price": "$199",
+                "period": "/month",
+                "features": {
+                    "pro": "Everything in Pro",
+                    "manager": "Dedicated account manager",
+                    "integrations": "Custom integrations",
+                    "support": "24/7 phone support"
+                },
+                "button": "Contact Sales"
+            }
+        },
+        "cta": {
+            "heading": "Ready to Optimize Your Irrigation?",
+            "description": "Join thousands of professionals who are saving water and improving crop yields with our platform.",
+            "getStarted": "Get Started",
+            "contactSales": "Contact Sales"
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcome": "Welcome to your irrigation management dashboard.",
+        "stats": {
+            "totalScripts": {
+                "title": "Total Scripts",
+                "value": "24",
+                "change": "+2 from last week"
+            },
+            "totalModels": {
+                "title": "Total Models",
+                "value": "12",
+                "change": "+1 from last week"
+            },
+            "activeUsers": {
+                "title": "Active Users",
+                "value": "5",
+                "change": "+2 from last month"
+            },
+            "waterSaved": {
+                "title": "Water Saved",
+                "value": "28%",
+                "change": "+8% from last month"
+            }
+        },
+        "tabs": {
+            "recent": "Recent Scripts",
+            "activity": "Activity Log"
+        },
+        "navigation": {
+            "dashboard": "Dashboard",
+            "profile": "Profile",
+            "scripts": "Scripts",
+            "models": "Models",
+            "settings": "Settings"
+        }
+    },
+    "footer": {
+        "brand": "Irrigation Portal",
+        "description": "Smart irrigation management for modern agriculture.",
+        "product": {
+            "title": "Product",
+            "features": "Features",
+            "pricing": "Pricing",
+            "documentation": "Documentation"
+        },
+        "company": {
+            "title": "Company",
+            "about": "About",
+            "blog": "Blog",
+            "careers": "Careers"
+        },
+        "contact": {
+            "title": "Contact",
+            "email": "Email: info@irrigationportal.com",
+            "phone": "Phone: +1 (555) 123-4567",
+            "address": "Address: 123 Irrigation St, Farmville, CA 94123"
+        },
+        "copyright": "© 2023 Irrigation Portal. All rights reserved."
+    },
+    "login": {
+        "welcome": "Welcome Back",
+        "title": "Log in to your account",
+        "description": "Enter your credentials below to access your irrigation management dashboard",
+        "errors": {
+            "emptyFields": "Please fill in all fields",
+            "invalidCredentials": "Login failed. Please check your credentials and try again."
+        },
+        "form": {
+            "email": "Email",
+            "emailPlaceholder": "Username",
+            "password": "Password",
+            "passwordPlaceholder": "Password",
+            "forgotPassword": "Forgot password?",
+            "rememberMe": "Remember me for 30 days",
+            "submit": "Log in",
+            "orContinue": "Or continue with",
+            "google": "Google",
+            "microsoft": "Microsoft",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign up"
+        },
+        "hero": {
+            "title": "Smart Irrigation Management",
+            "description": "Optimize your irrigation systems with intelligent scripts and models. Save water, time, and resources."
+        }
+    },
+    "header": {
+        "brand": "Irrigation Portal",
+        "mobileMenu": "Toggle navigation menu",
+        "notifications": "Notifications",
+        "noNotifications": "No notifications",
+        "someone": "Someone",
+        "shared": "shared",
+        "something": "something",
+        "withYou": "with you",
+        "viewAllNotifications": "View all notifications",
+        "user": "User",
+        "logout": "Log out",
+        "features": "Features",
+        "testimonials": "Testimonials",
+        "pricing": "Pricing",
+        "contact": "Contact",
+        "getStarted": "Get Started"
+    }
+}

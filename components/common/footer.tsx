@@ -1,7 +1,11 @@
+"use client";
 import { Droplets } from "lucide-react";
 import Link from "next/link";
+import { useTranslation } from "@/context/ContextLanguage";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer id="contact" className="border-t bg-muted/50 py-12">
       <div className="container px-4 md:px-6">
@@ -9,21 +13,23 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 font-semibold">
               <Droplets className="h-6 w-6 text-primary" />
-              <span>Irrigation Portal</span>
+              <span>{t("footer.brand")}</span>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              Smart irrigation management for modern agriculture.
+              {t("footer.description")}
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold">Product</h3>
+            <h3 className="text-lg font-semibold">
+              {t("footer.product.title")}
+            </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
                 <Link
                   href="#features"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Features
+                  {t("footer.product.features")}
                 </Link>
               </li>
               <li>
@@ -31,7 +37,7 @@ const Footer = () => {
                   href="#pricing"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Pricing
+                  {t("footer.product.pricing")}
                 </Link>
               </li>
               <li>
@@ -39,20 +45,22 @@ const Footer = () => {
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Documentation
+                  {t("footer.product.documentation")}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold">Company</h3>
+            <h3 className="text-lg font-semibold">
+              {t("footer.company.title")}
+            </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
                 <Link
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  About
+                  {t("footer.company.about")}
                 </Link>
               </li>
               <li>
@@ -60,7 +68,7 @@ const Footer = () => {
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Blog
+                  {t("footer.company.blog")}
                 </Link>
               </li>
               <li>
@@ -68,31 +76,34 @@ const Footer = () => {
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Careers
+                  {t("footer.company.careers")}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold">Contact</h3>
+            <h3 className="text-lg font-semibold">
+              {t("footer.contact.title")}
+            </h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li className="text-muted-foreground">
-                Email: info@irrigationportal.com
+                {t("footer.contact.email")}
               </li>
               <li className="text-muted-foreground">
-                Phone: +1 (555) 123-4567
+                {t("footer.contact.phone")}
               </li>
               <li className="text-muted-foreground">
-                Address: 123 Irrigation St, Farmville, CA 94123
+                {t("footer.contact.address")}
               </li>
             </ul>
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>© 2023 Irrigation Portal. All rights reserved.</p>
+          <p>{t("footer.copyright")}</p>
         </div>
       </div>
     </footer>
   );
 };
+
 export default Footer;

@@ -1,3 +1,5 @@
+"use client";
+
 import { AvatarFallback } from "@/components/ui/avatar";
 import { AvatarImage } from "@/components/ui/avatar";
 import { Avatar } from "@/components/ui/avatar";
@@ -15,9 +17,10 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { useTranslation } from "@/context/ContextLanguage";
 
 export default function Home() {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
@@ -26,16 +29,14 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-4 animate-fade-up">
               <div className="inline-block rounded-lg bg-irrigation-100 dark:bg-irrigation-900 px-3 py-1 text-sm text-irrigation-800 dark:text-irrigation-300">
-                Introducing Irrigation Portal
+                {t("home.hero.title")}
               </div>
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-                Smart Irrigation{" "}
-                <span className="gradient-text">Management</span> Made Simple
+                {t("home.hero.title")}{" "}
+                <span className="gradient-text">{t("home.hero.subtitle")}</span>
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                Optimize your irrigation systems with intelligent scripts and
-                models. Save water, time, and resources with our advanced
-                management platform.
+                {t("home.hero.description")}
               </p>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <Button
@@ -44,12 +45,12 @@ export default function Home() {
                   className="bg-primary hover:bg-irrigation-700"
                 >
                   <Link href="/dashboard">
-                    Get Started
+                    {t("home.hero.getStarted")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link href="#features">Learn More</Link>
+                  <Link href="#features">{t("home.hero.learnMore")}</Link>
                 </Button>
               </div>
             </div>
@@ -74,15 +75,13 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="inline-block rounded-lg bg-irrigation-100 dark:bg-irrigation-900 px-3 py-1 text-sm text-irrigation-800 dark:text-irrigation-300">
-              Features
+              {t("home.features.title")}
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Everything You Need to{" "}
-              <span className="gradient-text">Optimize</span> Irrigation
+              {t("home.features.heading")}
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              Our platform provides powerful tools to manage, monitor, and
-              optimize your irrigation systems.
+              {t("home.features.description")}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
@@ -91,10 +90,11 @@ export default function Home() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-irrigation-100 dark:bg-irrigation-900">
                 <Sprout className="h-6 w-6 text-irrigation-600" />
               </div>
-              <h3 className="mt-4 text-xl font-bold">Smart Scripts</h3>
+              <h3 className="mt-4 text-xl font-bold">
+                {t("home.features.smartScripts.title")}
+              </h3>
               <p className="mt-2 text-muted-foreground">
-                Create and manage intelligent irrigation scripts that adapt to
-                changing conditions.
+                {t("home.features.smartScripts.description")}
               </p>
             </div>
             {/* Feature 2 */}
@@ -102,10 +102,11 @@ export default function Home() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-irrigation-100 dark:bg-irrigation-900">
                 <Database className="h-6 w-6 text-irrigation-600" />
               </div>
-              <h3 className="mt-4 text-xl font-bold">Advanced Models</h3>
+              <h3 className="mt-4 text-xl font-bold">
+                {t("home.features.advancedModels.title")}
+              </h3>
               <p className="mt-2 text-muted-foreground">
-                Develop sophisticated irrigation models based on soil, weather,
-                and crop data.
+                {t("home.features.advancedModels.description")}
               </p>
             </div>
             {/* Feature 3 */}
@@ -113,10 +114,11 @@ export default function Home() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-irrigation-100 dark:bg-irrigation-900">
                 <LineChart className="h-6 w-6 text-irrigation-600" />
               </div>
-              <h3 className="mt-4 text-xl font-bold">Data Analytics</h3>
+              <h3 className="mt-4 text-xl font-bold">
+                {t("home.features.dataAnalytics.title")}
+              </h3>
               <p className="mt-2 text-muted-foreground">
-                Gain insights from comprehensive analytics and reporting on
-                water usage and efficiency.
+                {t("home.features.dataAnalytics.description")}
               </p>
             </div>
             {/* Feature 4 */}
@@ -124,10 +126,11 @@ export default function Home() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-irrigation-100 dark:bg-irrigation-900">
                 <Users className="h-6 w-6 text-irrigation-600" />
               </div>
-              <h3 className="mt-4 text-xl font-bold">Team Collaboration</h3>
+              <h3 className="mt-4 text-xl font-bold">
+                {t("home.features.teamCollaboration.title")}
+              </h3>
               <p className="mt-2 text-muted-foreground">
-                Work together with your team to manage and optimize irrigation
-                systems.
+                {t("home.features.teamCollaboration.description")}
               </p>
             </div>
             {/* Feature 5 */}
@@ -135,10 +138,11 @@ export default function Home() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-irrigation-100 dark:bg-irrigation-900">
                 <Shield className="h-6 w-6 text-irrigation-600" />
               </div>
-              <h3 className="mt-4 text-xl font-bold">Secure Platform</h3>
+              <h3 className="mt-4 text-xl font-bold">
+                {t("home.features.securePlatform.title")}
+              </h3>
               <p className="mt-2 text-muted-foreground">
-                Your data is protected with enterprise-grade security and
-                encryption.
+                {t("home.features.securePlatform.description")}
               </p>
             </div>
             {/* Feature 6 */}
@@ -146,10 +150,11 @@ export default function Home() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-irrigation-100 dark:bg-irrigation-900">
                 <Droplets className="h-6 w-6 text-irrigation-600" />
               </div>
-              <h3 className="mt-4 text-xl font-bold">Water Conservation</h3>
+              <h3 className="mt-4 text-xl font-bold">
+                {t("home.features.waterConservation.title")}
+              </h3>
               <p className="mt-2 text-muted-foreground">
-                Save water and reduce costs with intelligent irrigation
-                management.
+                {t("home.features.waterConservation.description")}
               </p>
             </div>
           </div>
@@ -161,15 +166,13 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="inline-block rounded-lg bg-irrigation-100 dark:bg-irrigation-900 px-3 py-1 text-sm text-irrigation-800 dark:text-irrigation-300">
-              Testimonials
+              {t("home.testimonials.title")}
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Trusted by <span className="gradient-text">Professionals</span>{" "}
-              Worldwide
+              {t("home.testimonials.heading")}
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              See what our customers are saying about our irrigation management
-              platform.
+              {t("home.testimonials.description")}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
@@ -184,14 +187,16 @@ export default function Home() {
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="font-semibold">John Doe</h3>
-                  <p className="text-sm text-muted-foreground">Farm Manager</p>
+                  <h3 className="font-semibold">
+                    {t("home.testimonials.testimonial1.name")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {t("home.testimonials.testimonial1.role")}
+                  </p>
                 </div>
               </div>
               <p className="mt-4 text-muted-foreground">
-                "This platform has revolutionized how we manage irrigation on
-                our farm. We've reduced water usage by 30% while improving crop
-                yields."
+                {t("home.testimonials.testimonial1.quote")}
               </p>
             </div>
             {/* Testimonial 2 */}
@@ -205,15 +210,16 @@ export default function Home() {
                   <AvatarFallback>JS</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="font-semibold">Jane Smith</h3>
+                  <h3 className="font-semibold">
+                    {t("home.testimonials.testimonial2.name")}
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    Agricultural Engineer
+                    {t("home.testimonials.testimonial2.role")}
                   </p>
                 </div>
               </div>
               <p className="mt-4 text-muted-foreground">
-                "The ability to create custom irrigation models and scripts has
-                been a game-changer for our operations. Highly recommended!"
+                {t("home.testimonials.testimonial2.quote")}
               </p>
             </div>
             {/* Testimonial 3 */}
@@ -227,16 +233,16 @@ export default function Home() {
                   <AvatarFallback>RJ</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="font-semibold">Robert Johnson</h3>
+                  <h3 className="font-semibold">
+                    {t("home.testimonials.testimonial3.name")}
+                  </h3>
                   <p className="text-sm text-muted-foreground">
-                    Vineyard Owner
+                    {t("home.testimonials.testimonial3.role")}
                   </p>
                 </div>
               </div>
               <p className="mt-4 text-muted-foreground">
-                "We've been using this platform for our vineyard irrigation for
-                over a year now. The water savings and improved grape quality
-                speak for themselves."
+                {t("home.testimonials.testimonial3.quote")}
               </p>
             </div>
           </div>
@@ -248,110 +254,136 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="inline-block rounded-lg bg-irrigation-100 dark:bg-irrigation-900 px-3 py-1 text-sm text-irrigation-800 dark:text-irrigation-300">
-              Pricing
+              {t("home.pricing.title")}
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Simple, Transparent <span className="gradient-text">Pricing</span>
+              {t("home.pricing.heading")}
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              Choose the plan that's right for your irrigation management needs.
+              {t("home.pricing.description")}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-3">
             {/* Basic Plan */}
             <div className="pricing-card relative overflow-hidden rounded-lg border bg-background p-6">
               <div className="mb-4">
-                <h3 className="text-xl font-bold">Basic</h3>
+                <h3 className="text-xl font-bold">
+                  {t("home.pricing.basic.title")}
+                </h3>
                 <p className="text-muted-foreground">
-                  For small farms and gardens
+                  {t("home.pricing.basic.subtitle")}
                 </p>
               </div>
               <div className="mb-4">
-                <span className="text-3xl font-bold">$29</span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-3xl font-bold">
+                  {t("home.pricing.basic.price")}
+                </span>
+                <span className="text-muted-foreground">
+                  {t("home.pricing.basic.period")}
+                </span>
               </div>
               <ul className="mb-6 space-y-2">
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Up to 5 irrigation scripts</span>
+                  <span>{t("home.pricing.basic.features.scripts")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Basic analytics</span>
+                  <span>{t("home.pricing.basic.features.analytics")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Email support</span>
+                  <span>{t("home.pricing.basic.features.support")}</span>
                 </li>
               </ul>
-              <Button className="w-full">Get Started</Button>
+              <Button className="w-full">
+                {t("home.pricing.basic.button")}
+              </Button>
             </div>
             {/* Pro Plan */}
             <div className="pricing-card relative overflow-hidden rounded-lg border bg-background p-6 ring-2 ring-primary">
               <div className="absolute -top-4 right-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                Popular
+                {t("home.pricing.pro.popular")}
               </div>
               <div className="mb-4">
-                <h3 className="text-xl font-bold">Pro</h3>
-                <p className="text-muted-foreground">For medium-sized farms</p>
+                <h3 className="text-xl font-bold">
+                  {t("home.pricing.pro.title")}
+                </h3>
+                <p className="text-muted-foreground">
+                  {t("home.pricing.pro.subtitle")}
+                </p>
               </div>
               <div className="mb-4">
-                <span className="text-3xl font-bold">$79</span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-3xl font-bold">
+                  {t("home.pricing.pro.price")}
+                </span>
+                <span className="text-muted-foreground">
+                  {t("home.pricing.pro.period")}
+                </span>
               </div>
               <ul className="mb-6 space-y-2">
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Unlimited irrigation scripts</span>
+                  <span>{t("home.pricing.pro.features.scripts")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Advanced analytics</span>
+                  <span>{t("home.pricing.pro.features.analytics")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Custom models</span>
+                  <span>{t("home.pricing.pro.features.models")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Priority support</span>
+                  <span>{t("home.pricing.pro.features.support")}</span>
                 </li>
               </ul>
               <Button className="w-full bg-primary hover:bg-irrigation-700">
-                Get Started
+                {t("home.pricing.pro.button")}
               </Button>
             </div>
             {/* Enterprise Plan */}
             <div className="pricing-card relative overflow-hidden rounded-lg border bg-background p-6">
               <div className="mb-4">
-                <h3 className="text-xl font-bold">Enterprise</h3>
+                <h3 className="text-xl font-bold">
+                  {t("home.pricing.enterprise.title")}
+                </h3>
                 <p className="text-muted-foreground">
-                  For large agricultural operations
+                  {t("home.pricing.enterprise.subtitle")}
                 </p>
               </div>
               <div className="mb-4">
-                <span className="text-3xl font-bold">$199</span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-3xl font-bold">
+                  {t("home.pricing.enterprise.price")}
+                </span>
+                <span className="text-muted-foreground">
+                  {t("home.pricing.enterprise.period")}
+                </span>
               </div>
               <ul className="mb-6 space-y-2">
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Everything in Pro</span>
+                  <span>{t("home.pricing.enterprise.features.pro")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Dedicated account manager</span>
+                  <span>{t("home.pricing.enterprise.features.manager")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>Custom integrations</span>
+                  <span>
+                    {t("home.pricing.enterprise.features.integrations")}
+                  </span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>24/7 phone support</span>
+                  <span>{t("home.pricing.enterprise.features.support")}</span>
                 </li>
               </ul>
-              <Button className="w-full">Contact Sales</Button>
+              <Button className="w-full">
+                {t("home.pricing.enterprise.button")}
+              </Button>
             </div>
           </div>
         </div>
@@ -362,12 +394,10 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Ready to <span className="gradient-text">Optimize</span> Your
-              Irrigation?
+              {t("home.cta.heading")}
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              Join thousands of professionals who are saving water and improving
-              crop yields with our platform.
+              {t("home.cta.description")}
             </p>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button
@@ -376,12 +406,12 @@ export default function Home() {
                 className="bg-primary hover:bg-irrigation-700"
               >
                 <Link href="/dashboard">
-                  Get Started
+                  {t("home.cta.getStarted")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="#contact">Contact Sales</Link>
+                <Link href="#contact">{t("home.cta.contactSales")}</Link>
               </Button>
             </div>
           </div>

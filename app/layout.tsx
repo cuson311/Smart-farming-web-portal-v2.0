@@ -8,6 +8,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
+import { Provider } from "@/context/ContextLanguage";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +19,17 @@ export const metadata: Metadata = {
   generator: "v0.dev",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  async function getLocaleFromCookies(): Promise<string> {
+    const lang = await cookies()?.get("lang")?.value;
+    return lang ?? "vi";
+  }
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="vi" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
@@ -36,10 +42,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
-          <Footer />
-          <Toaster />
+          <Provider
+            value={{ locale: await getLocaleFromCookies(), languages: null }}
+          >
+            <Header />
+            {children}
+            <Footer />
+            <Toaster />
+          </Provider>
         </ThemeProvider>
       </body>
     </html>
