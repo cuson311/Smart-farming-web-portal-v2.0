@@ -11,6 +11,8 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useFetchProfile } from "@/hooks/useFetchUser";
+import { formatDate } from "@/lib/formatDate";
+import { Badge } from "@/components/ui/badge";
 
 const ScriptDetailsCard = ({
   script,
@@ -130,17 +132,31 @@ const ScriptDetailsCard = ({
                 : "There is no description"
             }
           />
-          {/* <DetailItem label="Created" value={script.createdAt} />
-          <DetailItem label="Last Updated" value={script.updatedAt} /> */}
 
           <div>
             <h3 className="mb-1 text-sm font-medium">Privacy</h3>
             <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-muted px-2 py-1 text-xs font-medium">
-                {script?.privacy}
-              </span>
+              <Badge
+                variant={"outline"}
+                className={`${
+                  script?.privacy === "private"
+                    ? "text-amber-500 dark:text-amber-400"
+                    : "text-primary"
+                }`}
+              >
+                {script?.privacy ? script?.privacy : "public"}
+              </Badge>
             </div>
           </div>
+
+          <DetailItem
+            label="Created"
+            value={formatDate(script?.createdAt ? script?.createdAt : "")}
+          />
+          <DetailItem
+            label="Last Updated"
+            value={formatDate(script?.updatedAt ? script?.updatedAt : "")}
+          />
 
           {typeof window !== "undefined" &&
             localStorage.getItem("userId") === userId && (
