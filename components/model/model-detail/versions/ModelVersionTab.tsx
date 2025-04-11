@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock } from "lucide-react";
-import { convertTimestamp } from "@/utils/dateUtils";
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
 import { Model, ModelVersion } from "@/types/model";
 import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
+import { formatDate } from "@/lib/formatDate";
 
 const ModelVersionTab = ({ model }: { model: Model }) => {
   const params = useParams();
@@ -101,7 +101,7 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
               <div className="flex items-center justify-between gap-2 mb-2">
                 <span className="font-semibold">Version {item.version}</span>
                 <span className="text-sm text-muted-foreground">
-                  Last Updated {convertTimestamp(item.last_updated_timestamp)}
+                  Last Updated {formatDate(item.last_updated_timestamp)}
                 </span>
               </div>
               <Card>

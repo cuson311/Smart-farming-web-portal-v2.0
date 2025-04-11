@@ -9,9 +9,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Clock } from "lucide-react";
-import { convertTimestamp } from "@/utils/dateUtils";
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
@@ -26,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { formatDate } from "@/lib/formatDate";
 
 const ScriptModelTab = ({ model }: { model: Model }) => {
   const params = useParams();
@@ -185,7 +183,7 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
                       Created At:
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {convertTimestamp(item.createdAt)}
+                      {formatDate(item.createdAt)}
                     </span>
                   </div>
                   <div className="flex gap-1">
@@ -193,7 +191,7 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
                       Lasted Update:
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {convertTimestamp(item.updatedAt)}
+                      {formatDate(item.updatedAt)}
                     </span>
                   </div>
                 </CardContent>
