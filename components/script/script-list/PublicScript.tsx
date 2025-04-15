@@ -1,5 +1,5 @@
-import { FormEvent, ChangeEvent } from "react";
-import { Search, X } from "lucide-react";
+import { FormEvent, ChangeEvent, useState } from "react";
+import { Search, X, SortAsc } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +10,14 @@ import { useToast } from "@/hooks/use-toast";
 import { useFetchScriptsList } from "@/hooks/useFetchUser";
 import { UserProfile } from "@/types/user";
 import { Script } from "@/types/script";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 // Search Results Component
 const SearchResults = ({
@@ -99,16 +107,20 @@ interface PublicScriptListProps {
     selectedUser: { id: string; name: string } | null;
   };
   updateState: (newState: Partial<PublicScriptListProps["state"]>) => void;
-  searchQuery: string; // Added searchQuery prop
+  searchQuery: string;
 }
 
 const PublicScriptList = ({
   toggleFavorite,
   state,
   updateState,
-  searchQuery, // Destructured searchQuery prop
+  searchQuery,
 }: PublicScriptListProps) => {
   const { toast } = useToast();
+  const [sortField, setSortField] = useState<"createdAt" | "updatedAt">(
+    "updatedAt"
+  );
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   // Destructure state for cleaner code
   const { userSearchTerm, searchResults, showSearchResults, selectedUser } =
@@ -130,7 +142,19 @@ const PublicScriptList = ({
     );
   };
 
-  const filteredScripts = filterScript(scripts);
+  // Filter and sort scripts
+  const processScripts = (scripts: Script[]) => {
+    const filtered = filterScript(scripts);
+
+    // Sort filtered scripts
+    return [...filtered].sort((a, b) => {
+      const dateA = new Date(a[sortField] || "").getTime();
+      const dateB = new Date(b[sortField] || "").getTime();
+      return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+    });
+  };
+
+  const processedScripts = processScripts(scripts);
 
   // Handle search term change
   const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -169,6 +193,15 @@ const PublicScriptList = ({
   // Handle favorite toggle with refetch
   const handleToggleFavorite = (id: string, isFavorite: boolean) => {
     toggleFavorite(id, isFavorite, refetchScripts);
+  };
+
+  // Handle sort change
+  const handleSortChange = (
+    field: "createdAt" | "updatedAt",
+    order: "asc" | "desc"
+  ) => {
+    setSortField(field);
+    setSortOrder(order);
   };
 
   return (
@@ -219,13 +252,46 @@ const PublicScriptList = ({
         )}
       </div>
 
-      {/* Display scripts for selected user */}
+      {/* Display scripts for selected user with sorting controls */}
       {selectedUser && (
-        <ScriptList
-          scripts={filteredScripts}
-          toggleFavorite={handleToggleFavorite}
-          loading={scriptLoading}
-        />
+        <>
+          <div className="flex items-center justify-end gap-2">
+            <Label>Sort by:</Label>
+            <Select
+              value={sortField}
+              onValueChange={(value: "createdAt" | "updatedAt") =>
+                handleSortChange(value, sortOrder)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select field" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="createdAt">Creation Date</SelectItem>
+                <SelectItem value="updatedAt">Last Update</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select
+              value={sortOrder}
+              onValueChange={(value: "asc" | "desc") =>
+                handleSortChange(sortField, value)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select order" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="desc">Latest First</SelectItem>
+                <SelectItem value="asc">Oldest First</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <ScriptList
+            scripts={processedScripts}
+            toggleFavorite={handleToggleFavorite}
+            loading={scriptLoading}
+          />
+        </>
       )}
 
       {/* Show message when no user is selected */}

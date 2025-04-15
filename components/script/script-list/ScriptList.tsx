@@ -3,7 +3,15 @@ import ScriptCard from "./ScriptCard";
 import { Script } from "@/types/script";
 import { CardSkeletonGrid } from "@/components/skeleton/CardSkeletonGrid";
 import Pagination from "@/components/ui/pagination";
-import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { useState, useMemo } from "react";
 
 interface ScriptListProps {
   scripts: Script[];
@@ -16,15 +24,42 @@ interface ScriptListProps {
   refetch?: () => void;
 }
 
-const ITEMS_PER_PAGE = 6;
-
-const ScriptList = ({ scripts, toggleFavorite, loading }: ScriptListProps) => {
+const ScriptList = ({
+  scripts,
+  toggleFavorite,
+  loading,
+  refetch,
+}: ScriptListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(scripts.length / ITEMS_PER_PAGE);
+  const [itemsPerPage] = useState(6);
+  const [sortField, setSortField] = useState<"createdAt" | "updatedAt">(
+    "updatedAt"
+  );
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentScripts = scripts.slice(startIndex, endIndex);
+  // Sort the scripts
+  const sortedScripts = useMemo(() => {
+    return [...scripts].sort((a, b) => {
+      const dateA = new Date(a[sortField] || "").getTime();
+      const dateB = new Date(b[sortField] || "").getTime();
+      return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+    });
+  }, [scripts, sortField, sortOrder]);
+
+  const totalPages = Math.ceil(sortedScripts.length / itemsPerPage);
+  const paginatedScripts = sortedScripts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleSortChange = (
+    field: "createdAt" | "updatedAt",
+    order: "asc" | "desc"
+  ) => {
+    setSortField(field);
+    setSortOrder(order);
+    setCurrentPage(1); // Reset to first page when sorting changes
+  };
 
   if (loading) {
     return (
@@ -47,8 +82,39 @@ const ScriptList = ({ scripts, toggleFavorite, loading }: ScriptListProps) => {
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-end gap-2">
+        <Label>Sort by:</Label>
+        <Select
+          value={sortField}
+          onValueChange={(value: "createdAt" | "updatedAt") =>
+            handleSortChange(value, sortOrder)
+          }
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select field" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="createdAt">Creation Date</SelectItem>
+            <SelectItem value="updatedAt">Last Update</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select
+          value={sortOrder}
+          onValueChange={(value: "asc" | "desc") =>
+            handleSortChange(sortField, value)
+          }
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select order" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="desc">Latest First</SelectItem>
+            <SelectItem value="asc">Oldest First</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {currentScripts.map((script) => (
+        {paginatedScripts.map((script) => (
           <ScriptCard
             key={script._id}
             script={script}
@@ -57,12 +123,13 @@ const ScriptList = ({ scripts, toggleFavorite, loading }: ScriptListProps) => {
         ))}
       </div>
       {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          className="mt-4"
-        />
+        <div className="flex justify-center mt-4">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       )}
     </div>
   );
