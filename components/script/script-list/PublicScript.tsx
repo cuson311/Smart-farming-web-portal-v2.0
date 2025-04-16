@@ -121,7 +121,10 @@ const PublicScriptList = ({
     "updatedAt"
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-
+  const defaultScriptListOptions = {
+    limit: "6",
+    page: "1",
+  };
   // Destructure state for cleaner code
   const { userSearchTerm, searchResults, showSearchResults, selectedUser } =
     state;
@@ -131,7 +134,7 @@ const PublicScriptList = ({
     data: scripts,
     loading: scriptLoading,
     refetch: refetchScripts,
-  } = useFetchScriptsList(selectedUser?.id || "");
+  } = useFetchScriptsList(selectedUser?.id || "", defaultScriptListOptions);
 
   // Filter scripts based on search query
   const filterScript = (scripts: Script[]) => {
@@ -167,9 +170,12 @@ const PublicScriptList = ({
     if (!userSearchTerm.trim()) return;
 
     try {
-      const response = await userApi.searchUser(userSearchTerm);
+      const response = await userApi.searchUser(userSearchTerm, {
+        page: "1",
+        limit: "5",
+      });
       updateState({
-        searchResults: response,
+        searchResults: response.data,
         showSearchResults: true,
       });
     } catch (error) {
@@ -254,44 +260,11 @@ const PublicScriptList = ({
 
       {/* Display scripts for selected user with sorting controls */}
       {selectedUser && (
-        <>
-          <div className="flex items-center justify-end gap-2">
-            <Label>Sort by:</Label>
-            <Select
-              value={sortField}
-              onValueChange={(value: "createdAt" | "updatedAt") =>
-                handleSortChange(value, sortOrder)
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select field" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="createdAt">Creation Date</SelectItem>
-                <SelectItem value="updatedAt">Last Update</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select
-              value={sortOrder}
-              onValueChange={(value: "asc" | "desc") =>
-                handleSortChange(sortField, value)
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select order" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="desc">Latest First</SelectItem>
-                <SelectItem value="asc">Oldest First</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <ScriptList
-            scripts={processedScripts}
-            toggleFavorite={handleToggleFavorite}
-            loading={scriptLoading}
-          />
-        </>
+        <ScriptList
+          scripts={processedScripts}
+          toggleFavorite={handleToggleFavorite}
+          loading={scriptLoading}
+        />
       )}
 
       {/* Show message when no user is selected */}

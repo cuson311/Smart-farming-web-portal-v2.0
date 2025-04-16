@@ -1,123 +1,207 @@
 import React, { useState, useEffect } from "react";
-import io, { Socket } from 'socket.io-client';
+import io, { Socket } from "socket.io-client";
 import notificationApi from "../api/notificationAPI";
+import { UserNotify } from "@/types/user";
 
-// Create a function to initialize the socket to handle SSR safely
-const initializeSocket = (): Socket | null => {
-    // Only initialize socket on the client side
-    if (typeof window !== 'undefined') {
-        const userId = localStorage.getItem('userId');
-
-        return io('http://localhost:3004', {
-            transports: ['websocket'],
-            reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 2000,
-            auth: { token: 'your_jwt_token' },
-            query: { userId },
-            timeout: 20000,
-            forceNew: false
-        });
-    }
-    return null;
-};
+interface NotificationQueryParams {
+    page?: string;
+    limit?: string;
+    notifyId?: string;
+}
 
 export const useSocket = () => {
-    const [notifications, setNotifications] = useState<any>([]);
+    const [notifications, setNotifications] = useState<UserNotify>({
+        data: [],
+        total: 0,
+        page: "",
+        totalPages: 0,
+    });
     const [ring, setRing] = useState(false);
     const [socket, setSocket] = useState<Socket | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
 
-    // Initialize socket and userId safely after component mounts
+    // Get userId from localStorage after component mount
     useEffect(() => {
-        // Only run in browser environment
-        if (typeof window !== 'undefined') {
-            const id = localStorage.getItem('userId');
-            setUserId(id);
-
-            // Clear socket and notifications when userId changes or becomes null
-            if (!id) {
-                setNotifications([]);
-                if (socket) {
-                    socket.disconnect();
-                }
-            }
-
-            // Initialize new socket connection with new userId
-            const newSocket = initializeSocket();
-            setSocket(newSocket);
-
-            // Listen for logout events to clear notifications
-            const handleLogout = () => {
-                setNotifications([]);
-                setRing(false);
-                setUserId(null);
-            };
-
-            window.addEventListener('logoutSuccess', handleLogout);
-
-            return () => {
-                window.removeEventListener('logoutSuccess', handleLogout);
-                if (newSocket) {
-                    newSocket.disconnect();
-                }
-            };
+        if (typeof window !== "undefined") {
+            const id = localStorage.getItem("userId");
+            if (id) setUserId(id);
         }
-    }, []); // Run only once on mount
+    }, []);
 
-    // Listen for login event to update userId
+    // Initialize socket when userId is available
     useEffect(() => {
-        const handleLoginSuccess = () => {
-            const id = localStorage.getItem('userId');
-            setUserId(id);
-            setNotifications([]); // Clear previous user's notifications
+        if (!userId) return;
 
-            // Reconnect socket with new userId
-            if (socket) {
-                socket.disconnect();
-            }
-            setSocket(initializeSocket());
-        };
+        // Close existing socket before creating a new one
+        if (socket) {
+            socket.disconnect();
+        }
 
-        window.addEventListener('loginSuccess', handleLoginSuccess);
+        const newSocket = io("http://localhost:3004", {
+            transports: ["websocket"],
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 2000,
+            auth: {
+                token: localStorage.getItem("token") || "your_jwt_token"
+            },
+            query: { userId },
+            timeout: 20000,
+            forceNew: true,
+        });
+
+        // Debug socket connection
+        newSocket.on("connect", () => {
+            console.log("Socket connected successfully");
+        });
+
+        newSocket.on("connect_error", (error) => {
+            console.error("Socket connection error:", error);
+        });
+
+        setSocket(newSocket);
 
         return () => {
-            window.removeEventListener('loginSuccess', handleLoginSuccess);
+            newSocket.disconnect();
+        };
+    }, [userId]);
+
+    // Listen for login events
+    useEffect(() => {
+        const handleLoginSuccess = () => {
+            const id = localStorage.getItem("userId");
+            setUserId(id);
+            setNotifications({
+                data: [],
+                total: 0,
+                page: "",
+                totalPages: 0,
+            });
+        };
+
+        window.addEventListener("loginSuccess", handleLoginSuccess);
+        return () => {
+            window.removeEventListener("loginSuccess", handleLoginSuccess);
+        };
+    }, []);
+
+    // Listen for logout events
+    useEffect(() => {
+        const handleLogout = () => {
+            setUserId(null);
+            setNotifications({
+                data: [],
+                total: 0,
+                page: "",
+                totalPages: 0,
+            });
+            setRing(false);
+            if (socket) socket.disconnect();
+        };
+
+        window.addEventListener("logoutSuccess", handleLogout);
+        return () => {
+            window.removeEventListener("logoutSuccess", handleLogout);
         };
     }, [socket]);
 
-    // Fetch notifications after userId is available or changes
+    // Fetch notification list
     useEffect(() => {
-        if (!userId) {
-            setNotifications([]);
-            return;
-        }
+        if (!userId) return;
 
-        const fetchNotification = async () => {
+        const fetchNotifications = async () => {
             try {
-                const data = await notificationApi.allNotification(userId);
-                setNotifications(data);
+                const response = await notificationApi.allNotification(userId, {
+                    page: "1",
+                    limit: "5",
+                });
+                setNotifications(response);
             } catch (err) {
                 console.error("Error fetching notification:", err);
             }
         };
 
-        fetchNotification();
+        fetchNotifications();
     }, [userId]);
 
-    // Set up socket listeners after socket is available
+    // Listen to socket events for new notifications
     useEffect(() => {
         if (!socket || !userId) return;
 
         // Listen for notifications from the server
         socket.on('receiveNotification', async (data) => {
-            const notify = await notificationApi.notification(userId, data.id);
-            setRing(true);
-            setNotifications((prev: any) => [...prev, notify]);
+            console.log("Received notification socket event:", data);
+            try {
+                if (!data || !data.id) {
+                    console.error("Invalid notification data received:", data);
+                    return;
+                }
+
+                // Fetch the specific notification using allNotification with notifyId
+                const result = await notificationApi.allNotification(userId, {
+                    notifyId: data.id,
+                    limit: "!",
+                    page: "1"
+                });
+
+                console.log("Fetched notification details:", result);
+
+                // Immediately set the ring animation
+                setRing(true);
+
+                // If we got valid notification data
+                if (result && result.data && result.data.length > 0) {
+                    // Get the new notification (should be first item)
+                    const newNotification = result.data[0];
+
+                    // Update notifications state in a way that maintains the UserNotify interface
+                    setNotifications(prev => {
+                        // First check if this notification is already in our list to avoid duplicates
+                        const alreadyExists = prev.data.some(item =>
+                            item._id === newNotification._id
+                        );
+
+                        if (alreadyExists) {
+                            console.log("Notification already exists, not adding duplicate");
+                            return prev;
+                        }
+
+                        console.log("Adding new notification to state");
+
+                        // Create a new object with updated values to ensure React detects the change
+                        return {
+                            ...prev,
+                            data: [newNotification, ...prev.data].slice(0, 5), // Keep top 5
+                            total: prev.total + 1, // Increment total count
+                        };
+                    });
+                } else {
+                    // If for some reason we couldn't get the notification detail,
+                    // refresh the full notification list as a fallback
+                    console.log("Couldn't fetch specific notification, refreshing all notifications");
+                    const response = await notificationApi.allNotification(userId, {
+                        page: "1",
+                        limit: "5",
+                    });
+                    setNotifications(response);
+                }
+            } catch (err) {
+                console.error("Error handling notification:", err);
+                // Attempt to refresh all notifications as a fallback
+                try {
+                    const response = await notificationApi.allNotification(userId, {
+                        page: "1",
+                        limit: "5",
+                    });
+                    setNotifications(response);
+                } catch (fallbackErr) {
+                    console.error("Error refreshing notifications:", fallbackErr);
+                }
+            }
         });
 
         return () => {
-            socket.off('receiveNotification'); // Cleanup on unmount
+            socket.off('receiveNotification');
         };
     }, [socket, userId]);
 

@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useCallback } from "react";
 import scriptApi from "../api/scriptAPI";
 import { Script } from "@/types/script";
+import { UserScriptRate } from "@/types/user";
 
 const useFetchScriptInfo = (userId: string, scriptId: string) => {
   const [data, setData] = useState<Script | null>(null);
@@ -73,4 +74,32 @@ const useFetchScriptFile = (userId: string, scriptId: string, version: number) =
   return { data, setData, loading, error, reload };
 };
 
-export { useFetchScriptInfo, useFetchScriptFile };
+const useFetchUserScriptRate = (userId: string, scriptId: string) => {
+  const [data, setData] = useState<UserScriptRate[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
+  const fetchScriptRate = useCallback(async () => {
+    if (!userId) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await scriptApi.getScriptRate(userId, scriptId);
+      setData(response);
+    } catch (err) {
+      console.error("Error fetching script rate:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId, scriptId]);
+
+  useEffect(() => {
+    fetchScriptRate();
+  }, [fetchScriptRate]);
+
+  return { data, loading, error, refetch: fetchScriptRate };
+};
+
+export { useFetchScriptInfo, useFetchScriptFile, useFetchUserScriptRate };

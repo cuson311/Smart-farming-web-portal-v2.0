@@ -10,6 +10,11 @@ export interface Script {
     favorite: number;
     location: string[];
     plant_type: string[];
+    rating: {
+        avg: number,
+        count: number,
+        _id: string
+    },
     createdAt: string,
     updatedAt: string,
     isFavorite: boolean;
@@ -20,3 +25,12 @@ export interface NewScriptData {
     privacy: "public" | "private";
     share_id: string[];
 }
+
+export type ScriptsListOptions = {
+    limit: string;
+    page: string;
+    locations?: string[];
+    plant_types?: string[];
+    sortBy?: string;
+    order?: 'asc' | 'desc';
+};
