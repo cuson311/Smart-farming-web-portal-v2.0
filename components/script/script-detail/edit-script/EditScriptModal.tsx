@@ -189,8 +189,11 @@ const EditScriptModal = ({
     if (!searchTerm.trim()) return;
 
     try {
-      const response = await userApi.searchUser(searchTerm);
-      setSearchResults(response);
+      const response = await userApi.searchUser(searchTerm, {
+        page: "1",
+        limit: "5",
+      });
+      setSearchResults(response.data);
       setShowSearchResults(true);
     } catch (error) {
       console.error("Error searching users:", error);

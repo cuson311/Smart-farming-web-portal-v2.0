@@ -55,7 +55,32 @@ const scriptApi = {
             { params: { path: `${userId}/script/${scriptId}/v${version.toFixed(1)}.json` } }
         );
         return response.data;
-    }
+    },
+
+    getScriptTotalRate: async (userId: string, scriptId: string) => {
+        const response = await axiosInstance.get(`${userId}/scripts/${scriptId}/total-rate`);
+        return response.data
+    },
+
+    getScriptRate: async (userId: string, scriptId: string) => {
+        const response = await axiosInstance.get(`${userId}/scripts/${scriptId}/rate`);
+        return response.data
+    },
+
+    createScriptRate: async (userId: string, scriptId: string, formData: any) => {
+        const response = await axiosInstance.post(`${userId}/scripts/${scriptId}/rate`, formData);
+        return response.data
+    },
+
+    updateScriptRate: async (userId: string, scriptId: string, formData: any) => {
+        const response = await axiosInstance.put(`${userId}/scripts/${scriptId}/rate`, formData);
+        return response.data
+    },
+
+    deleteScriptRate: async (userId: string, scriptId: string) => {
+        const response = await axiosInstance.delete(`${userId}/scripts/${scriptId}/rate`);
+        return response.data
+    },
 };
 
 export default scriptApi;

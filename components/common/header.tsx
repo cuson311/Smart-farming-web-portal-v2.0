@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useFetchProfile } from "@/hooks/useFetchUser";
-import { UserNotify } from "@/types/user";
+import { NotiInfo } from "@/types/user";
 import { useSocket } from "@/hooks/useSocket";
 
 const Header = () => {
@@ -39,7 +39,7 @@ const Header = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Use the socket hook
+  // Use the socket hook - moved inside the component body to ensure it's only used when component is mounted
   const { notifications, socket, ring, setRing } = useSocket();
 
   // Only fetch profile when userId exists and user is logged in
@@ -207,9 +207,9 @@ const Header = () => {
                 }`}
               >
                 <Bell className="h-4 w-4" />
-                {notifications && notifications.length > 0 && (
+                {notifications && notifications.total > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                    {notifications.length}
+                    {notifications.total}
                   </span>
                 )}
                 <span className="sr-only">Notifications</span>
@@ -218,35 +218,36 @@ const Header = () => {
             <DropdownMenuContent align="end" className="w-72">
               <div className="p-2 font-medium border-b">Notifications</div>
               <div className="max-h-96 overflow-auto">
-                {!notifications || notifications.length === 0 ? (
+                {!notifications || notifications.total === 0 ? (
                   <div className="p-4 text-center text-gray-500">
                     No notifications
                   </div>
                 ) : (
-                  [...notifications.slice(-5)]
-                    .reverse()
-                    .map((notification: UserNotify) => (
-                      <DropdownMenuItem
-                        key={notification._id || `temp-${Date.now()}`}
-                        className="flex flex-col items-start p-3 hover:bg-accent"
-                      >
-                        <div className="flex w-full gap-2">
-                          <div className="flex items-center">
-                            <Share2 className="h-5 w-5 text-blue-500" />
-                          </div>
-                          <p className="font-medium">
-                            <span className="font-semibold">
-                              {notification.from?.username || "Someone"}
-                            </span>{" "}
-                            shared{" "}
-                            {notification.script_id?.name
-                              ? notification.script_id?.name
-                              : "something"}{" "}
-                            with you
-                          </p>
+                  notifications.data.map((notification: NotiInfo) => (
+                    <DropdownMenuItem
+                      key={
+                        notification._id ||
+                        `temp-${Date.now()}-${Math.random()}`
+                      }
+                      className="flex flex-col items-start p-3 hover:bg-accent"
+                    >
+                      <div className="flex w-full gap-2">
+                        <div className="flex items-center">
+                          <Share2 className="h-5 w-5 text-blue-500" />
                         </div>
-                      </DropdownMenuItem>
-                    ))
+                        <p className="font-medium">
+                          <span className="font-semibold">
+                            {notification.from?.username || "Someone"}
+                          </span>{" "}
+                          shared{" "}
+                          {notification.script_id?.name
+                            ? notification.script_id?.name
+                            : "something"}{" "}
+                          with you
+                        </p>
+                      </div>
+                    </DropdownMenuItem>
+                  ))
                 )}
               </div>
               <DropdownMenuSeparator />
