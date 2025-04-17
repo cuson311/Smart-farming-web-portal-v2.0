@@ -1,9 +1,16 @@
+import qs from "qs";
 import axiosInstance from "./axiosInstance";
 
 const commentApi = {
-  getAllComments: async (userId: string, scriptId: string) => {
+  getAllComments: async (userId: string, scriptId: string, options?: {
+    page?: string;
+    limit?: string;
+    sortBy?: string;
+    order?: "asc" | "desc";
+  }) => {
+    const query = qs.stringify(options, { arrayFormat: 'repeat' });
     const response = await axiosInstance.get(
-      `/${userId}/scripts/${scriptId}/comments`
+      `/${userId}/scripts/${scriptId}/comments?${query}`
     );
     return response.data;
   },

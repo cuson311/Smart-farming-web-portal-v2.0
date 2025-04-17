@@ -111,10 +111,7 @@ export const useSocket = () => {
 
         const fetchNotifications = async () => {
             try {
-                const response = await notificationApi.allNotification(userId, {
-                    page: "1",
-                    limit: "5",
-                });
+                const response = await notificationApi.allNotification(userId);
                 setNotifications(response);
             } catch (err) {
                 console.error("Error fetching notification:", err);
@@ -140,8 +137,6 @@ export const useSocket = () => {
                 // Fetch the specific notification using allNotification with notifyId
                 const result = await notificationApi.allNotification(userId, {
                     notifyId: data.id,
-                    limit: "!",
-                    page: "1"
                 });
 
                 console.log("Fetched notification details:", result);
@@ -179,20 +174,14 @@ export const useSocket = () => {
                     // If for some reason we couldn't get the notification detail,
                     // refresh the full notification list as a fallback
                     console.log("Couldn't fetch specific notification, refreshing all notifications");
-                    const response = await notificationApi.allNotification(userId, {
-                        page: "1",
-                        limit: "5",
-                    });
+                    const response = await notificationApi.allNotification(userId);
                     setNotifications(response);
                 }
             } catch (err) {
                 console.error("Error handling notification:", err);
                 // Attempt to refresh all notifications as a fallback
                 try {
-                    const response = await notificationApi.allNotification(userId, {
-                        page: "1",
-                        limit: "5",
-                    });
+                    const response = await notificationApi.allNotification(userId);
                     setNotifications(response);
                 } catch (fallbackErr) {
                     console.error("Error refreshing notifications:", fallbackErr);

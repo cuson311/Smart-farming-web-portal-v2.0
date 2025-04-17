@@ -29,7 +29,7 @@ const userApi = {
 
   scriptsList: async (
     userId: string,
-    options: ScriptsListOptions
+    options?: ScriptsListOptions
   ) => {
     const query = qs.stringify(options, { arrayFormat: 'repeat' });
     const response = await axiosInstance.get(`/${userId}/scripts?${query}`);
@@ -41,26 +41,26 @@ const userApi = {
     return response.data;
   },
 
-  searchUser: async (searchUserTerm: string, options: {
-    page: string;
-    limit: string;
+  searchUser: async (searchUserTerm: string, options?: {
+    page?: string;
+    limit?: string;
     sortBy?: string;
     order?: "asc" | "desc";
   }) => {
     const response = await axiosInstance.get(`/users/search`, {
       params: {
         username: searchUserTerm,
-        page: options.page,
-        limit: options.limit,
-        sortBy: options.sortBy,
-        order: options.order,
+        page: options?.page,
+        limit: options?.limit,
+        sortBy: options?.sortBy,
+        order: options?.order,
       },
     });
     console.log("Search Result: ", response.data);
     return response.data;
   },
 
-  bookmarkList: async (userId: string, options: ScriptsListOptions) => {
+  bookmarkList: async (userId: string, options?: ScriptsListOptions) => {
     const query = qs.stringify(options, { arrayFormat: 'repeat' });
     const response = await axiosInstance.get(`/${userId}/favorite-script?${query}`);
     return response.data;
@@ -74,7 +74,7 @@ const userApi = {
     return response.data;
   },
 
-  sharedScript: async (userId: string, options: ScriptsListOptions) => {
+  sharedScript: async (userId: string, options?: ScriptsListOptions) => {
     const query = qs.stringify(options, { arrayFormat: 'repeat' });
     const response = await axiosInstance.get(`/${userId}/shared-script?${query}`);
     return response.data;

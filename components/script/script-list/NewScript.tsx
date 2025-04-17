@@ -233,10 +233,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     if (!searchTerm.trim()) return;
 
     try {
-      const response = await userApi.searchUser(searchTerm, {
-        page: "1",
-        limit: "5",
-      });
+      const response = await userApi.searchUser(searchTerm);
       setSearchResults(response.data);
       setShowSearchResults(true);
     } catch (error) {

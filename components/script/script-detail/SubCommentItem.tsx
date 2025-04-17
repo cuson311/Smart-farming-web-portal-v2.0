@@ -37,13 +37,13 @@ import { useParams } from "next/navigation";
 const SubCommentItem = ({
   script,
   comment,
-  getAllComments,
-  getAllSubComments,
+  refetchAllComments,
+  refetchAllSubComments,
 }: {
   script: Script;
   comment: ScriptComment;
-  getAllComments: () => void;
-  getAllSubComments: () => void;
+  refetchAllComments: () => void;
+  refetchAllSubComments: () => void;
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
@@ -78,8 +78,8 @@ const SubCommentItem = ({
         editContent
       );
 
-      await getAllComments();
-      await getAllSubComments();
+      refetchAllComments();
+      refetchAllSubComments();
 
       toast({
         title: "Successful!",
@@ -109,8 +109,8 @@ const SubCommentItem = ({
   const handleConfirmDelete = async () => {
     try {
       await commentApi.deleteComment(script.owner_id, script._id, comment._id);
-      await getAllComments();
-      await getAllSubComments();
+      refetchAllComments();
+      refetchAllSubComments();
 
       setIsDeleteDialogOpen(false);
 

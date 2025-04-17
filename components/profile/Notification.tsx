@@ -46,7 +46,7 @@ const Notifications = () => {
     data: notifications,
     loading: isNotiLoading,
     refetch: refetchNoti,
-  } = useFetchNotifications(userId, { page: "1", limit: "5" });
+  } = useFetchNotifications(userId);
 
   // useEffect(() => {
   //   refetchNoti();

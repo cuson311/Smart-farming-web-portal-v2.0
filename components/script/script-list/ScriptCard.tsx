@@ -51,7 +51,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
             {script.description ? script.description : "No description"}
           </CardDescription>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center flex-shrink-0">
           <Button
             variant="ghost"
             size="icon"
@@ -69,7 +69,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
 
           <span className="text-sm text-muted-foreground">
             {script.favorite || 0}{" "}
-            {(script.favorite || 0) === 1 ? "favorite" : "favorites"}
+            {(script.favorite || 0) <= 1 ? "favorite" : "favorites"}
           </span>
         </div>
       </CardHeader>

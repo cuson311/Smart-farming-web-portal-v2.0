@@ -27,8 +27,8 @@ export interface NewScriptData {
 }
 
 export type ScriptsListOptions = {
-    limit: string;
-    page: string;
+    limit?: string;
+    page?: string;
     locations?: string[];
     plant_types?: string[];
     sortBy?: string;

@@ -2,7 +2,7 @@ import { NotificationQueryParams } from "@/types/user";
 import axiosInstance from "./axiosInstance";
 
 const notificationApi = {
-    allNotification: async (userId: string, query: NotificationQueryParams) => {
+    allNotification: async (userId: string, query?: NotificationQueryParams) => {
         const response = await axiosInstance.get(`/notification/${userId}`, {
             params: query,
         });
