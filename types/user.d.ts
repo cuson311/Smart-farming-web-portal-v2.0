@@ -61,8 +61,8 @@ export type UserNotify = {
 
 export type NotificationQueryParams = {
     notifyId?: string;
-    page: string;
-    limit: string;
+    page?: string;
+    limit?: string;
     sortBy?: string;
     order?: 'asc' | 'desc';
 }

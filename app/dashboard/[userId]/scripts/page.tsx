@@ -70,10 +70,10 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
   const tabParam = searchParams.get("tab");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
-  const defaultScriptListOptions = {
-    limit: "6",
-    page: "1",
-  };
+  // const defaultScriptListOptions = {
+  //   limit: "6",
+  //   page: "1",
+  // };
 
   // Updated publicScriptState to not include scriptSearchQuery
   const [publicScriptState, setPublicScriptState] = useState({
@@ -107,19 +107,19 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
     data: allScripts,
     loading: allScriptsListLoading,
     refetch: refetchAllScripts,
-  } = useFetchScriptsList(params.userId, defaultScriptListOptions);
+  } = useFetchScriptsList(params.userId);
 
   const {
     data: sharedScripts,
     loading: sharedScriptsListLoading,
     refetch: refetchSharedScripts,
-  } = useFetchSharedScripts(userId, defaultScriptListOptions);
+  } = useFetchSharedScripts(userId);
 
   const {
     data: favoriteScripts,
     loading: favoriteScriptsListLoading,
     refetch: refetchFavoriteScripts,
-  } = useFetchBookmarkList(userId, defaultScriptListOptions);
+  } = useFetchBookmarkList(userId);
 
   const filterScript = (scripts: Script[]) => {
     return scripts.filter(

@@ -41,11 +41,11 @@ import { formatDistanceToNow } from "date-fns";
 const CommentItem = ({
   script,
   comment,
-  getAllComments,
+  refetchAllComments,
 }: {
   script: Script;
   comment: ScriptComment;
-  getAllComments: () => void;
+  refetchAllComments: () => void;
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
@@ -64,25 +64,15 @@ const CommentItem = ({
       setUserId(userId);
     }
   }, []);
-  const { data: allSubComments, setData: setAllSubComments } =
-    useFetchSubComments(script.owner_id, script._id, comment._id);
-
-  const getAllSubComments = async () => {
-    try {
-      const response = await commentApi.getAllSubComments(
-        script.owner_id,
-        script._id,
-        comment._id
-      );
-      setAllSubComments(response);
-    } catch (error) {
-      console.error("Error getting subcomments:", error);
-    }
-  };
+  const {
+    data: allSubComments,
+    setData: setAllSubComments,
+    refetch: refetchAllSubComments,
+  } = useFetchSubComments(script.owner_id, script._id, comment._id);
 
   useEffect(() => {
     if (comment._id) {
-      getAllSubComments();
+      refetchAllSubComments();
     }
   }, [comment._id]);
 
@@ -105,7 +95,7 @@ const CommentItem = ({
         editContent
       );
 
-      await getAllComments();
+      refetchAllComments();
 
       toast({
         title: "Successful!",
@@ -120,7 +110,7 @@ const CommentItem = ({
         variant: "destructive",
       });
     }
-    await getAllSubComments();
+    refetchAllSubComments();
     setIsEditing(false);
   };
 
@@ -136,8 +126,8 @@ const CommentItem = ({
   const handleConfirmDelete = async () => {
     try {
       await commentApi.deleteComment(script.owner_id, script._id, comment._id);
-      await getAllComments();
-      await getAllSubComments();
+      refetchAllComments();
+      refetchAllSubComments();
 
       setIsDeleteDialogOpen(false);
 
@@ -180,7 +170,7 @@ const CommentItem = ({
         replyCommentData
       );
 
-      await getAllComments();
+      refetchAllComments();
       toast({
         title: "Successful!",
         description: "Reply comment successfully",
@@ -194,7 +184,7 @@ const CommentItem = ({
         variant: "destructive",
       });
     }
-    await getAllSubComments();
+    refetchAllSubComments();
     setReplyContent("");
     setIsReplying(false);
     setShowSubComments(true); // Show subcomments after replying
@@ -232,7 +222,7 @@ const CommentItem = ({
   const toggleSubComments = () => {
     setShowSubComments(!showSubComments);
     if (!showSubComments) {
-      getAllSubComments();
+      refetchAllSubComments();
     }
   };
 
@@ -316,17 +306,17 @@ const CommentItem = ({
                   >
                     <TrashIcon size={16} />
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleOpenHistoryDialog}
-                    className="h-8 w-8 p-0"
-                    title="View edit history"
-                  >
-                    <HistoryIcon size={16} />
-                  </Button>
                 </>
               )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleOpenHistoryDialog}
+                className="h-8 w-8 p-0"
+                title="View edit history"
+              >
+                <HistoryIcon size={16} />
+              </Button>
               {allSubComments && allSubComments.length > 0 && (
                 <Button
                   variant="ghost"
@@ -372,8 +362,8 @@ const CommentItem = ({
                   key={subComment._id}
                   script={script}
                   comment={subComment}
-                  getAllComments={getAllComments}
-                  getAllSubComments={getAllSubComments}
+                  refetchAllComments={refetchAllComments}
+                  refetchAllSubComments={refetchAllSubComments}
                 />
               ))}
             </div>

@@ -121,10 +121,10 @@ const PublicScriptList = ({
     "updatedAt"
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const defaultScriptListOptions = {
-    limit: "6",
-    page: "1",
-  };
+  // const defaultScriptListOptions = {
+  //   limit: "6",
+  //   page: "1",
+  // };
   // Destructure state for cleaner code
   const { userSearchTerm, searchResults, showSearchResults, selectedUser } =
     state;
@@ -134,7 +134,7 @@ const PublicScriptList = ({
     data: scripts,
     loading: scriptLoading,
     refetch: refetchScripts,
-  } = useFetchScriptsList(selectedUser?.id || "", defaultScriptListOptions);
+  } = useFetchScriptsList(selectedUser?.id || "");
 
   // Filter scripts based on search query
   const filterScript = (scripts: Script[]) => {
@@ -170,10 +170,7 @@ const PublicScriptList = ({
     if (!userSearchTerm.trim()) return;
 
     try {
-      const response = await userApi.searchUser(userSearchTerm, {
-        page: "1",
-        limit: "5",
-      });
+      const response = await userApi.searchUser(userSearchTerm);
       updateState({
         searchResults: response.data,
         showSearchResults: true,

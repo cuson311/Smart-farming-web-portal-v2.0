@@ -92,7 +92,7 @@ const useFetchActivities = (userId: string, year: string) => {
     return { data, loading, error };
 };
 
-const useFetchScriptsList = (userId: string, options: ScriptsListOptions) => {
+const useFetchScriptsList = (userId: string, options?: ScriptsListOptions) => {
     const [data, setData] = useState<Script[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<unknown>(null);
@@ -150,7 +150,7 @@ const useFetchModelsList = (userId: string) => {
     return { data, loading, error, refetch: fetchModelsList };
 };
 
-const useFetchBookmarkList = (userId: string, options: ScriptsListOptions) => {
+const useFetchBookmarkList = (userId: string, options?: ScriptsListOptions) => {
     const [data, setData] = useState<Script[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<unknown>(null);
@@ -179,7 +179,7 @@ const useFetchBookmarkList = (userId: string, options: ScriptsListOptions) => {
     return { data, loading, error, refetch: fetchBookmarkList };
 };
 
-const useFetchSharedScripts = (userId: string, options: ScriptsListOptions) => {
+const useFetchSharedScripts = (userId: string, options?: ScriptsListOptions) => {
     const [data, setData] = useState<Script[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<unknown>(null);
@@ -207,7 +207,7 @@ const useFetchSharedScripts = (userId: string, options: ScriptsListOptions) => {
     return { data, loading, error, refetch: fetchSharedScript };
 };
 
-const useFetchNotifications = (userId: string, query: NotificationQueryParams) => {
+const useFetchNotifications = (userId: string, query?: NotificationQueryParams) => {
     const [data, setData] = useState<NotiInfo[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<unknown>(null);
