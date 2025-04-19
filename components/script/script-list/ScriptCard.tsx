@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Code2, Heart, Star } from "lucide-react";
+import { Code2, Heart, Star, MapPin, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,7 +28,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
   const { userId } = useParams();
 
   return (
-    <Card key={script._id}>
+    <Card key={script._id} className="flex flex-col h-full">
       <CardHeader className="flex flex-row items-start justify-between pb-2">
         <div className="space-y-1 ">
           <CardTitle className="flex items-center gap-2 w-full">
@@ -68,15 +68,78 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
           </Button>
 
           <span className="text-sm text-muted-foreground">
-            {script.favorite || 0}{" "}
-            {(script.favorite || 0) <= 1 ? "favorite" : "favorites"}
+            {script.favorite || 0}
           </span>
         </div>
       </CardHeader>
-      <CardContent className="space-y-2 py-0">
+
+      <CardContent className="space-y-2 py-0 flex-grow">
+        {/* Metadata container with fixed height */}
+        <div className="min-h-16">
+          {/* Location badges - always render the container */}
+          <div className="flex flex-wrap gap-1 mb-1 min-h-6">
+            {script.location && script.location.length > 0 ? (
+              <>
+                <div className="flex items-center mr-1">
+                  <MapPin className="h-3 w-3 text-gray-400 mr-1" />
+                  <span className="text-xs text-muted-foreground">
+                    Locations:
+                  </span>
+                </div>
+                {script.location.slice(0, 3).map((loc) => (
+                  <Badge key={loc} variant="outline" className="text-xs py-0">
+                    {loc}
+                  </Badge>
+                ))}
+                {script.location.length > 3 && (
+                  <Badge variant="outline" className="text-xs py-0">
+                    +{script.location.length - 3} more
+                  </Badge>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center mr-1">
+                <MapPin className="h-3 w-3 text-gray-400 dark:text-gray-500 mr-1" />
+                <span className="text-xs text-gray-400 dark:text-gray-500">
+                  No locations specified
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Plant type badges - always render the container */}
+          <div className="flex flex-wrap gap-1 mb-2 min-h-6">
+            {script.plant_type && script.plant_type.length > 0 ? (
+              <>
+                <div className="flex items-center mr-1">
+                  <Leaf className="h-3 w-3 text-gray-400 mr-1" />
+                  <span className="text-xs text-muted-foreground">Plants:</span>
+                </div>
+                {script.plant_type.slice(0, 3).map((type) => (
+                  <Badge key={type} variant="outline" className="text-xs py-0">
+                    {type}
+                  </Badge>
+                ))}
+                {script.plant_type.length > 3 && (
+                  <Badge variant="outline" className="text-xs py-0">
+                    +{script.plant_type.length - 3} more
+                  </Badge>
+                )}
+              </>
+            ) : (
+              <div className="flex items-center mr-1">
+                <Leaf className="h-3 w-3 text-gray-400 dark:text-gray-500 mr-1" />
+                <span className="text-xs text-gray-400 dark:text-gray-500">
+                  No plants specified
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
         <div className="flex items-center justify-end">
           <div className="flex items-center gap-2">
-            <div className="flex">
+            <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((star) => {
                 const value = script.rating?.avg ?? 0;
                 const isFullStar = star <= Math.floor(value);
@@ -84,7 +147,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
                   !isFullStar && star === Math.ceil(value) && value % 1 !== 0;
 
                 return (
-                  <div key={star} className="relative w-4 h-4">
+                  <div key={star} className="relative w-3 h-3">
                     {/* Base/empty star */}
                     <Star
                       size={16}
@@ -116,7 +179,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
+      <CardFooter className="flex items-center justify-between mt-auto">
         <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           {script.updatedAt ? (
             <span>Updated at {formatDate(script.updatedAt)}</span>

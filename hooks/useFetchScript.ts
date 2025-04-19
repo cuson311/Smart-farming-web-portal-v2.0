@@ -78,6 +78,7 @@ const useFetchUserScriptRate = (userId: string, scriptId: string) => {
   const [data, setData] = useState<UserScriptRate[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
+
   const fetchScriptRate = useCallback(async () => {
     if (!userId) return;
 
@@ -86,7 +87,13 @@ const useFetchUserScriptRate = (userId: string, scriptId: string) => {
 
     try {
       const response = await scriptApi.getScriptRate(userId, scriptId);
-      setData(response);
+
+      // If the response indicates no rate exists, set default value
+      if (!response || response.length === 0) {
+        setData([{ _id: "", user_id: userId, script_id: scriptId, rate: 0, __v: 0 }]);
+      } else {
+        setData(response);
+      }
     } catch (err) {
       console.error("Error fetching script rate:", err);
       setError(err);

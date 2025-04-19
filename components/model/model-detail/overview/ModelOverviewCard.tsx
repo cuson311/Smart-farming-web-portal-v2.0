@@ -82,9 +82,7 @@ const ModelOverviewCard = ({
           <DetailItem
             label="Description"
             value={
-              model?.description !== "" ? (
-                model?.description
-              ) : (
+              model?.description ?? (
                 <div className="text-sm text-muted-foreground italic">
                   No description.
                 </div>
