@@ -2,7 +2,17 @@
 
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Plus, Upload, FileText, Search, X, Globe, Lock } from "lucide-react";
+import {
+  Plus,
+  Upload,
+  FileText,
+  Search,
+  X,
+  Globe,
+  Lock,
+  MapPin,
+  Leaf,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -31,6 +41,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import scriptApi from "@/api/scriptAPI";
 import notificationApi from "@/api/notificationAPI";
 import userApi from "@/api/userAPI";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { vietnamProvinces, plantTypes } from "@/lib/constant";
 interface NewScriptDialogProps {
   onScriptCreated: () => void;
 }
@@ -132,6 +157,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     description: "",
     privacy: "public",
     share_id: [],
+    location: [],
+    plant_type: [],
   });
 
   // Added file data state from first file
@@ -142,6 +169,12 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
   const [searchResults, setSearchResults] = useState<SearchUser[]>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [sharedUsers, setSharedUsers] = useState<SearchUser[]>([]);
+
+  // Location and plant type selection states
+  const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
+  const [plantTypePopoverOpen, setPlantTypePopoverOpen] = useState(false);
+  const [locationSearchTerm, setLocationSearchTerm] = useState("");
+  const [plantTypeSearchTerm, setPlantTypeSearchTerm] = useState("");
 
   // Load default template when dialog opens
   useEffect(() => {
@@ -175,6 +208,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       description: "",
       privacy: "public",
       share_id: [],
+      location: [],
+      plant_type: [],
     });
     setFileData("");
     setSharedUsers([]);
@@ -259,6 +294,62 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     const updatedUsers = [...sharedUsers];
     updatedUsers.splice(index, 1);
     setSharedUsers(updatedUsers);
+  };
+
+  // Handle location selection
+  const handleLocationSelect = (location: string) => {
+    setNewScript((prev) => {
+      // Check if location is already selected
+      if (prev.location?.includes(location)) {
+        // Remove location if already selected
+        return {
+          ...prev,
+          location: prev.location.filter((loc) => loc !== location),
+        };
+      } else {
+        // Add location if not already selected
+        return {
+          ...prev,
+          location: [...(prev.location || []), location],
+        };
+      }
+    });
+  };
+
+  // Handle plant type selection
+  const handlePlantTypeSelect = (plantType: string) => {
+    setNewScript((prev) => {
+      // Check if plant type is already selected
+      if (prev.plant_type?.includes(plantType)) {
+        // Remove plant type if already selected
+        return {
+          ...prev,
+          plant_type: prev.plant_type.filter((type) => type !== plantType),
+        };
+      } else {
+        // Add plant type if not already selected
+        return {
+          ...prev,
+          plant_type: [...(prev.plant_type || []), plantType],
+        };
+      }
+    });
+  };
+
+  // Remove location
+  const handleRemoveLocation = (location: string) => {
+    setNewScript((prev) => ({
+      ...prev,
+      location: prev.location?.filter((loc) => loc !== location) || [],
+    }));
+  };
+
+  // Remove plant type
+  const handleRemovePlantType = (plantType: string) => {
+    setNewScript((prev) => ({
+      ...prev,
+      plant_type: prev.plant_type?.filter((type) => type !== plantType) || [],
+    }));
   };
 
   // Handle upload file function from first file
@@ -373,6 +464,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
         description: "",
         privacy: "public",
         share_id: [],
+        location: [],
+        plant_type: [],
       });
       setFileData("");
       setSharedUsers([]);
@@ -386,6 +479,20 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       });
     }
   };
+
+  // Filter provinces based on search term
+  const filteredProvinces = locationSearchTerm
+    ? vietnamProvinces.filter((province) =>
+        province.toLowerCase().includes(locationSearchTerm.toLowerCase())
+      )
+    : vietnamProvinces;
+
+  // Filter plant types based on search term
+  const filteredPlantTypes = plantTypeSearchTerm
+    ? plantTypes.filter((type) =>
+        type.toLowerCase().includes(plantTypeSearchTerm.toLowerCase())
+      )
+    : plantTypes;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -404,7 +511,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
         </DialogHeader>
         <form onSubmit={handleCreateScript}>
           <div className="grid gap-6 py-4">
-            {/* Form fields section - now in a single column */}
+            {/* Form fields section */}
             <div className="space-y-4">
               <div className="grid gap-2">
                 <Label htmlFor="name">Name</Label>
@@ -427,7 +534,161 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                 />
               </div>
 
-              {/* Privacy section - adapted from first file */}
+              {/* Location selection - NEW SECTION */}
+              <div className="grid gap-2">
+                <Label>Location (Optional)</Label>
+                <div className="flex flex-col space-y-2">
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {newScript.location?.map((location) => (
+                      <Badge key={location} className="py-1 px-3">
+                        {location}
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-4 w-4 p-0 ml-2"
+                          onClick={() => handleRemoveLocation(location)}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </Badge>
+                    ))}
+                  </div>
+                  <Popover
+                    open={locationPopoverOpen}
+                    onOpenChange={setLocationPopoverOpen}
+                    modal={true}
+                  >
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start"
+                        role="combobox"
+                      >
+                        <MapPin className="mr-2 h-4 w-4" />
+                        {newScript.location && newScript.location.length > 0
+                          ? `${newScript.location.length} locations selected`
+                          : "Select provinces"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[400px] p-0" align="start">
+                      <Command>
+                        <CommandInput
+                          placeholder="Search provinces..."
+                          value={locationSearchTerm}
+                          onValueChange={setLocationSearchTerm}
+                        />
+                        <CommandEmpty>No province found.</CommandEmpty>
+                        <CommandGroup>
+                          <ScrollArea className="h-64">
+                            {filteredProvinces.map((province) => (
+                              <CommandItem
+                                key={province}
+                                value={province}
+                                onSelect={() => handleLocationSelect(province)}
+                              >
+                                <div className="flex items-center gap-2 w-full">
+                                  <div
+                                    className={`h-4 w-4 border rounded-sm flex items-center justify-center ${
+                                      newScript.location?.includes(province)
+                                        ? "bg-primary border-primary"
+                                        : "border-input"
+                                    }`}
+                                  >
+                                    {newScript.location?.includes(province) && (
+                                      <X className="h-3 w-3 text-primary-foreground" />
+                                    )}
+                                  </div>
+                                  <span>{province}</span>
+                                </div>
+                              </CommandItem>
+                            ))}
+                          </ScrollArea>
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+
+              {/* Plant Type selection - NEW SECTION */}
+              <div className="grid gap-2">
+                <Label>Plant Type (Optional)</Label>
+                <div className="flex flex-col space-y-2">
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {newScript.plant_type?.map((plantType) => (
+                      <Badge key={plantType} className="py-1 px-3">
+                        {plantType}
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-4 w-4 p-0 ml-2"
+                          onClick={() => handleRemovePlantType(plantType)}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </Badge>
+                    ))}
+                  </div>
+                  <Popover
+                    open={plantTypePopoverOpen}
+                    onOpenChange={setPlantTypePopoverOpen}
+                    modal={true}
+                  >
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start"
+                        role="combobox"
+                      >
+                        <Leaf className="mr-2 h-4 w-4" />
+                        {newScript.plant_type && newScript.plant_type.length > 0
+                          ? `${newScript.plant_type.length} plant types selected`
+                          : "Select plant types"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[400px] p-0" align="start">
+                      <Command>
+                        <CommandInput
+                          placeholder="Search plant types..."
+                          value={plantTypeSearchTerm}
+                          onValueChange={setPlantTypeSearchTerm}
+                        />
+                        <CommandEmpty>No plant type found.</CommandEmpty>
+                        <CommandGroup>
+                          <ScrollArea className="h-64">
+                            {filteredPlantTypes.map((type) => (
+                              <CommandItem
+                                key={type}
+                                value={type}
+                                onSelect={() => handlePlantTypeSelect(type)}
+                              >
+                                <div className="flex items-center gap-2 w-full">
+                                  <div
+                                    className={`h-4 w-4 border rounded-sm flex items-center justify-center ${
+                                      newScript.plant_type?.includes(type)
+                                        ? "bg-primary border-primary"
+                                        : "border-input"
+                                    }`}
+                                  >
+                                    {newScript.plant_type?.includes(type) && (
+                                      <X className="h-3 w-3 text-primary-foreground" />
+                                    )}
+                                  </div>
+                                  <span>{type}</span>
+                                </div>
+                              </CommandItem>
+                            ))}
+                          </ScrollArea>
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+
+              {/* Privacy section */}
               <div className="space-y-4">
                 <Label>Privacy</Label>
                 <RadioGroup
@@ -567,8 +828,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                       input.click();
                     }}
                   >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Upload
+                    <Upload className="mr-2 h-4 w-4" />
+                    Upload JSON
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -585,7 +846,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                   </DropdownMenu>
                 </div>
               </div>
-              {/* Increased height of the editor */}
+
+              {/* Code editor - same from first file */}
               <Editor
                 height="400px"
                 language="json"

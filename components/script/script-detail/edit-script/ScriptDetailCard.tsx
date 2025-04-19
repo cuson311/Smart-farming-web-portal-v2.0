@@ -13,8 +13,54 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useFetchProfile } from "@/hooks/useFetchUser";
 import { formatDate } from "@/lib/formatDate";
 import { Badge } from "@/components/ui/badge";
-import { Star, Trash2 } from "lucide-react";
+import { Star, Trash2, MapPin, Leaf, X } from "lucide-react";
 import { useFetchUserScriptRate } from "@/hooks/useFetchScript";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog";
+
+// New component for showing all items in a modal
+const ItemsListModal = ({
+  open,
+  onClose,
+  title,
+  items,
+  icon,
+}: {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  items: string[];
+  icon: React.ReactNode;
+}) => {
+  return (
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            {icon}
+            <span>{title}</span>
+          </DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-wrap gap-2 mt-4">
+          {items.map((item, index) => (
+            <Badge key={index} variant="outline" className="text-xs">
+              {item}
+            </Badge>
+          ))}
+        </div>
+        <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </DialogClose>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const ScriptDetailsCard = ({
   script,
@@ -34,6 +80,10 @@ const ScriptDetailsCard = ({
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isCurrentUserOwner, setIsCurrentUserOwner] = useState(false);
   const [localUserRating, setLocalUserRating] = useState<number>(0);
+
+  // New state for modals
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [isPlantTypeModalOpen, setIsPlantTypeModalOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -245,6 +295,64 @@ const ScriptDetailsCard = ({
             }
           />
 
+          {/* Location Section - UPDATED */}
+          <div>
+            <h3 className="mb-2 text-sm font-medium">Location</h3>
+            <div className="flex flex-wrap gap-1">
+              {script?.location && script.location.length > 0 ? (
+                <>
+                  {script.location.slice(0, 3).map((loc, index) => (
+                    <Badge key={index} variant="outline" className="text-xs">
+                      {loc}
+                    </Badge>
+                  ))}
+                  {script.location.length > 3 && (
+                    <Badge
+                      variant="outline"
+                      className="cursor-pointer"
+                      onClick={() => setIsLocationModalOpen(true)}
+                    >
+                      +{script.location.length - 3} more
+                    </Badge>
+                  )}
+                </>
+              ) : (
+                <span className="text-sm text-muted-foreground">
+                  No locations specified
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Plant Type Section - UPDATED */}
+          <div>
+            <h3 className="mb-2 text-sm font-medium">Plant Type</h3>
+            <div className="flex flex-wrap gap-1">
+              {script?.plant_type && script.plant_type.length > 0 ? (
+                <>
+                  {script.plant_type.slice(0, 3).map((type, index) => (
+                    <Badge key={index} variant="outline" className="text-xs">
+                      {type}
+                    </Badge>
+                  ))}
+                  {script.plant_type.length > 3 && (
+                    <Badge
+                      variant="outline"
+                      className="cursor-pointer"
+                      onClick={() => setIsPlantTypeModalOpen(true)}
+                    >
+                      +{script.plant_type.length - 3} more
+                    </Badge>
+                  )}
+                </>
+              ) : (
+                <span className="text-sm text-muted-foreground">
+                  No plants specified
+                </span>
+              )}
+            </div>
+          </div>
+
           <div>
             <h3 className="mb-1 text-sm font-medium">Privacy</h3>
             <div className="flex flex-wrap gap-2">
@@ -308,7 +416,7 @@ const ScriptDetailsCard = ({
             </div>
           </div>
 
-          {/* User Rating Section with Delete Option - Using localUserRating instead of API data directly */}
+          {/* User Rating Section with Delete Option */}
           <div>
             <h3 className="mb-1 text-sm font-medium">Your Rating</h3>
             <div className="flex items-center gap-2">
@@ -386,6 +494,27 @@ const ScriptDetailsCard = ({
           )}
         </CardContent>
       </Card>
+
+      {/* Modals for showing all items */}
+      {script?.location && (
+        <ItemsListModal
+          open={isLocationModalOpen}
+          onClose={() => setIsLocationModalOpen(false)}
+          title="All Locations"
+          items={script.location}
+          icon={<MapPin className="h-4 w-4" />}
+        />
+      )}
+
+      {script?.plant_type && (
+        <ItemsListModal
+          open={isPlantTypeModalOpen}
+          onClose={() => setIsPlantTypeModalOpen(false)}
+          title="All Plant Types"
+          items={script.plant_type}
+          icon={<Leaf className="h-4 w-4" />}
+        />
+      )}
 
       <EditScriptModal
         open={isEditModalOpen}
