@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, FormEvent, ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 import { Search, ArrowLeft, ShieldAlert, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,249 +14,38 @@ import {
 } from "@/hooks/useFetchUser";
 import NewScriptDialog from "@/components/script/script-list/NewScript";
 import ScriptList from "@/components/script/script-list/ScriptList";
-import { Script } from "@/types/script";
+import { Script, ScriptsListOptions } from "@/types/script";
 import userApi from "@/api/userAPI";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { UserProfile } from "@/types/user";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import PublicScriptList from "@/components/script/script-list/PublicScript";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { vietnamProvinces, plantTypes } from "@/lib/constant";
+import { Badge } from "@/components/ui/badge";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { CheckIcon } from "lucide-react";
 
-// Search Results Component
-const SearchResults = ({
-  searchResults,
-  handleSelectUser,
-  handleCloseResults,
-}: {
-  searchResults: UserProfile[];
-  handleSelectUser: (userId: string, username: string) => void;
-  handleCloseResults: () => void;
-}) => {
-  return searchResults.length > 0 ? (
-    <Card className="w-full max-h-64 overflow-y-auto relative mt-2">
-      <CardContent className="p-4">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Search Results</span>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-6 w-6"
-            onClick={handleCloseResults}
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Results List */}
-        <div className="space-y-2">
-          {searchResults.map((user, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between p-2 rounded-md hover:bg-accent cursor-pointer"
-              onClick={() => handleSelectUser(user._id, user.username)}
-            >
-              <div className="flex items-center gap-2">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={user.profile_image} />
-                  <AvatarFallback>{user.username[0] || "?"}</AvatarFallback>
-                </Avatar>
-                <div className="text-sm">
-                  <p className="font-medium">
-                    {user.username || "Unknown User"}
-                  </p>
-                </div>
-              </div>
-              <Button variant="outline" size="sm">
-                View Scripts
-              </Button>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  ) : (
-    <Card className="w-full relative mt-2">
-      <CardContent className="p-4">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Search Results</span>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-6 w-6"
-            onClick={handleCloseResults}
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="flex items-center justify-center py-4">
-          <p className="text-sm text-muted-foreground">No users found</p>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-// PublicScriptList Component
-interface PublicScriptListProps {
-  toggleFavorite: (
-    id: string,
-    isFavorite: boolean,
-    refetch?: () => void
-  ) => void;
-  state: {
-    userSearchTerm: string;
-    searchResults: UserProfile[];
-    showSearchResults: boolean;
-    selectedUser: { id: string; name: string } | null;
-  };
-  updateState: (newState: Partial<PublicScriptListProps["state"]>) => void;
-  searchQuery: string;
-}
-
-const PublicScriptList = ({
-  toggleFavorite,
-  state,
-  updateState,
-  searchQuery,
-}: PublicScriptListProps) => {
-  const { toast } = useToast();
-
-  // Destructure state for cleaner code
-  const { userSearchTerm, searchResults, showSearchResults, selectedUser } =
-    state;
-
-  // Use the hook with the selected user's ID
-  const {
-    data: scripts,
-    loading: scriptLoading,
-    refetch: refetchScripts,
-  } = useFetchScriptsList(selectedUser?.id || "");
-
-  // Filter scripts based on search query
-  const filterScript = (scripts: Script[]) => {
-    return scripts.filter(
-      (script: Script) =>
-        script.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        script.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  };
-
-  const filteredScripts = filterScript(scripts);
-
-  // Handle search term change
-  const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
-    updateState({ userSearchTerm: e.target.value });
-  };
-
-  // Handle search user
-  const handleSearchUser = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!userSearchTerm.trim()) return;
-
-    try {
-      const response = await userApi.searchUser(userSearchTerm);
-      updateState({
-        searchResults: response,
-        showSearchResults: true,
-      });
-    } catch (error) {
-      console.error("Error searching users:", error);
-      toast({
-        title: "Search failed",
-        description: "Failed to search users. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Handle selecting a user from search results
-  const handleSelectUser = (userId: string, username: string) => {
-    updateState({
-      selectedUser: { id: userId, name: username },
-      showSearchResults: false,
-    });
-  };
-
-  // Handle favorite toggle with refetch
-  const handleToggleFavorite = (id: string, isFavorite: boolean) => {
-    toggleFavorite(id, isFavorite, refetchScripts);
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="space-y-4">
-        <div className="flex flex-col gap-2">
-          {selectedUser ? (
-            <p className="text-muted-foreground">
-              Showing scripts by {selectedUser.name}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="ml-2 h-6 py-0"
-                onClick={() => updateState({ selectedUser: null })}
-              >
-                <X className="h-3 w-3 mr-1" />
-                Clear
-              </Button>
-            </p>
-          ) : null}
-        </div>
-
-        <div className="flex gap-2">
-          <Input
-            value={userSearchTerm}
-            onChange={handleSearchTermChange}
-            placeholder="Search for users"
-            className="flex-1"
-          />
-          <Button
-            type="button"
-            size="default"
-            onClick={handleSearchUser}
-            variant="secondary"
-          >
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
-        </div>
-
-        {/* Search results */}
-        {showSearchResults && (
-          <SearchResults
-            searchResults={searchResults}
-            handleSelectUser={handleSelectUser}
-            handleCloseResults={() => updateState({ showSearchResults: false })}
-          />
-        )}
-      </div>
-
-      {/* Display scripts for selected user */}
-      {selectedUser && (
-        <ScriptList
-          scripts={filteredScripts}
-          toggleFavorite={handleToggleFavorite}
-          loading={scriptLoading}
-        />
-      )}
-
-      {/* Show message when no user is selected */}
-      {!selectedUser && !showSearchResults && (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="mx-auto w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-            <Search className="h-8 w-8 text-muted-foreground" />
-          </div>
-          <h3 className="text-lg font-medium">Search for public scripts</h3>
-          <p className="text-muted-foreground mt-2">
-            Find users to discover their public scripts
-          </p>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// This component will be rendered on invalid tab routes
+// NotFoundComponent
 const NotFoundComponent = () => {
   const router = useRouter();
   const [userId, setUserId] = useState<string>("");
@@ -297,6 +86,101 @@ const NotFoundComponent = () => {
   );
 };
 
+// Multi-select component with search
+const MultiSelect = ({
+  options,
+  selectedValues,
+  onChange,
+  placeholder,
+  emptyMessage = "No options found.",
+  label,
+}: {
+  options: string[];
+  selectedValues: string[];
+  onChange: (values: string[]) => void;
+  placeholder: string;
+  emptyMessage?: string;
+  label: string;
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const handleSelect = (value: string) => {
+    if (selectedValues.includes(value)) {
+      onChange(selectedValues.filter((item) => item !== value));
+    } else {
+      onChange([...selectedValues, value]);
+    }
+  };
+
+  const handleRemoveValue = (value: string) => {
+    onChange(selectedValues.filter((item) => item !== value));
+  };
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>{label}</Label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <div className="flex flex-wrap gap-1 min-h-10 w-[300px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 cursor-pointer">
+            {selectedValues.length > 0 ? (
+              <div className="flex flex-wrap gap-1">
+                {selectedValues.map((value) => (
+                  <Badge key={value} variant="secondary" className="mr-1 mb-1">
+                    {value}
+                    <button
+                      className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveValue(value);
+                      }}
+                    >
+                      <X className="h-3 w-3" />
+                      <span className="sr-only">Remove {value}</span>
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+            ) : (
+              <span className="text-muted-foreground">{placeholder}</span>
+            )}
+          </div>
+        </PopoverTrigger>
+        <PopoverContent className="w-[300px] p-0">
+          <Command>
+            <CommandInput placeholder={`Search ${label.toLowerCase()}...`} />
+            <CommandEmpty>{emptyMessage}</CommandEmpty>
+            <CommandGroup className="max-h-64 overflow-auto">
+              {options.map((option) => (
+                <CommandItem
+                  key={option}
+                  value={option}
+                  onSelect={() => handleSelect(option)}
+                >
+                  <div className="flex items-center">
+                    <div
+                      className={cn(
+                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border",
+                        selectedValues.includes(option)
+                          ? "bg-primary text-primary-foreground"
+                          : "opacity-50"
+                      )}
+                    >
+                      {selectedValues.includes(option) && (
+                        <CheckIcon className="h-3 w-3" />
+                      )}
+                    </div>
+                    <span>{option}</span>
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+};
+
 // ScriptsPage Component
 const ScriptsPage = ({ params }: { params: { userId: string } }) => {
   const { toast } = useToast();
@@ -306,7 +190,19 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
 
-  // Updated publicScriptState to not include scriptSearchQuery
+  // Change to arrays to support multiple selections
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [selectedPlantTypes, setSelectedPlantTypes] = useState<string[]>([]);
+  const [privacyFilter, setPrivacyFilter] = useState<string>("all");
+
+  const [scriptListOptions, setScriptListOptions] =
+    useState<ScriptsListOptions>({
+      sortBy: "updatedAt",
+      order: "desc",
+      locations: [],
+      plant_types: [],
+    });
+
   const [publicScriptState, setPublicScriptState] = useState({
     userSearchTerm: "",
     searchResults: [] as UserProfile[],
@@ -314,17 +210,98 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
     selectedUser: null as { id: string; name: string } | null,
   });
 
-  // Define valid tabs
   const validTabs = ["all", "favorites", "shared-scripts", "public-scripts"];
-
-  // Changed this line to require a tab parameter that is valid
   const isValidTab = tabParam && validTabs.includes(tabParam);
   const tabName = isValidTab ? tabParam : "code";
+  const disablePrivacyFilter =
+    tabName === "public-scripts" || tabName === "shared-scripts";
 
-  // Handle tab change by updating query parameter
   const handleTabChange = (value: string) => {
     const newUrl = `/dashboard/${params.userId}/scripts?tab=${value}`;
     router.replace(newUrl);
+  };
+
+  // Updated to apply filters with proper backend API parameter structure
+  const handleFiltersChange = () => {
+    // Start with base options
+    const newOptions: ScriptsListOptions = {
+      sortBy: scriptListOptions.sortBy,
+      order: scriptListOptions.order,
+    };
+
+    // Only add properties that have values
+    if (selectedLocations.length > 0) {
+      newOptions.locations = selectedLocations;
+    }
+
+    if (selectedPlantTypes.length > 0) {
+      newOptions.plant_types = selectedPlantTypes;
+    }
+
+    // Only add privacy if it's not "all" or null and not on public-scripts tab
+    if (privacyFilter && privacyFilter !== "all" && !disablePrivacyFilter) {
+      newOptions.privacy = privacyFilter;
+    }
+
+    setScriptListOptions(newOptions);
+
+    // Refetch all data with new filters
+    refetchAllScripts(newOptions);
+    refetchSharedScripts(newOptions);
+    refetchFavoriteScripts(newOptions);
+  };
+
+  // Debounced search effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleFiltersChange();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Effect for filter changes
+  useEffect(() => {
+    handleFiltersChange();
+  }, [selectedLocations, selectedPlantTypes, privacyFilter]);
+
+  // Effect for tab changes - reset privacy filter when switching to public-scripts
+  useEffect(() => {
+    if (disablePrivacyFilter && privacyFilter !== "all") {
+      setPrivacyFilter("all");
+    }
+  }, [tabName]);
+
+  const handleSortChange = (
+    field: "createdAt" | "updatedAt",
+    order: "asc" | "desc"
+  ) => {
+    const newOptions = {
+      ...scriptListOptions,
+      sortBy: field,
+      order: order,
+    };
+    setScriptListOptions(newOptions);
+    refetchAllScripts(newOptions);
+    refetchSharedScripts(newOptions);
+    refetchFavoriteScripts(newOptions);
+  };
+
+  const clearFilters = () => {
+    setSelectedLocations([]);
+    setSelectedPlantTypes([]);
+    setPrivacyFilter("all");
+
+    // Update options and refetch
+    const newOptions = {
+      ...scriptListOptions,
+      locations: [],
+      plant_types: [],
+    };
+    setScriptListOptions(newOptions);
+    refetchAllScripts(newOptions);
+    refetchSharedScripts(newOptions);
+    refetchFavoriteScripts(newOptions);
   };
 
   useEffect(() => {
@@ -338,31 +315,19 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
     data: allScripts,
     loading: allScriptsListLoading,
     refetch: refetchAllScripts,
-  } = useFetchScriptsList(params.userId);
+  } = useFetchScriptsList(params.userId, scriptListOptions);
 
   const {
     data: sharedScripts,
     loading: sharedScriptsListLoading,
     refetch: refetchSharedScripts,
-  } = useFetchSharedScripts(userId);
+  } = useFetchSharedScripts(userId, scriptListOptions);
 
   const {
     data: favoriteScripts,
     loading: favoriteScriptsListLoading,
     refetch: refetchFavoriteScripts,
-  } = useFetchBookmarkList(userId);
-
-  const filterScript = (scripts: Script[]) => {
-    return scripts.filter(
-      (script: Script) =>
-        script.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        script.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  };
-
-  const filteredAllScripts = filterScript(allScripts);
-  const filteredSharedScripts = filterScript(sharedScripts);
-  const filteredFavoriteScripts = filterScript(favoriteScripts);
+  } = useFetchBookmarkList(userId, scriptListOptions);
 
   const toggleFavorite = async (
     id: string,
@@ -376,10 +341,10 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
         title: "Favorite updated",
         description: "Script favorite status has been updated.",
       });
-      refetchAllScripts();
-      refetchSharedScripts();
-      refetchFavoriteScripts();
-      refetch?.();
+      refetchAllScripts(scriptListOptions);
+      refetchSharedScripts(scriptListOptions);
+      refetchFavoriteScripts(scriptListOptions);
+      if (refetch) refetch();
     } catch (error) {
       toast({
         title: "Error",
@@ -389,7 +354,6 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
     }
   };
 
-  // Handler for updating publicScriptState
   const updatePublicScriptState = (
     newState: Partial<typeof publicScriptState>
   ) => {
@@ -399,7 +363,6 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
     }));
   };
 
-  // If invalid tab, render NotFound component
   if (!isValidTab) {
     return <NotFoundComponent />;
   }
@@ -409,7 +372,6 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold">Scripts</h1>
         <div className="flex items-center gap-2">
-          {/* Make search input visible for all tabs */}
           <div className="relative flex-1">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
@@ -420,50 +382,151 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <NewScriptDialog onScriptCreated={refetchAllScripts} />
+          <NewScriptDialog
+            onScriptCreated={() => refetchAllScripts(scriptListOptions)}
+          />
         </div>
       </div>
-      <Tabs value={tabName} onValueChange={handleTabChange}>
-        <TabsList>
-          <TabsTrigger value="all">All Scripts</TabsTrigger>
-          <TabsTrigger value="favorites">Favorites</TabsTrigger>
-          <TabsTrigger value="shared-scripts">Shared Scripts</TabsTrigger>
-          <TabsTrigger value="public-scripts">Public Scripts</TabsTrigger>
-        </TabsList>
 
-        <TabsContent value="all" className="border-none p-0 pt-4">
-          <ScriptList
-            scripts={filteredAllScripts}
-            toggleFavorite={toggleFavorite}
-            loading={allScriptsListLoading}
+      {/* Filter section */}
+      <div className="flex flex-col md:flex-row items-center justify-between bg-muted/30 rounded-lg p-4">
+        <div className="flex flex-wrap gap-4 w-full md:w-auto">
+          {/* Multi-select Location Filter */}
+          <MultiSelect
+            options={vietnamProvinces}
+            selectedValues={selectedLocations}
+            onChange={setSelectedLocations}
+            placeholder="Select locations"
+            label="Locations"
           />
-        </TabsContent>
 
-        <TabsContent value="favorites" className="border-none p-0 pt-4">
-          <ScriptList
-            scripts={filteredFavoriteScripts}
-            toggleFavorite={toggleFavorite}
-            loading={favoriteScriptsListLoading}
+          {/* Multi-select Plant Type Filter */}
+          <MultiSelect
+            options={plantTypes}
+            selectedValues={selectedPlantTypes}
+            onChange={setSelectedPlantTypes}
+            placeholder="Select plant types"
+            label="Plant Types"
           />
-        </TabsContent>
 
-        <TabsContent value="shared-scripts" className="border-none p-0 pt-4">
-          <ScriptList
-            scripts={filteredSharedScripts}
-            toggleFavorite={toggleFavorite}
-            loading={sharedScriptsListLoading}
-          />
-        </TabsContent>
+          {/* Privacy Filter - Only show if not on public-scripts tab */}
+          {!disablePrivacyFilter && (
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="privacy-filter">Privacy</Label>
+              <Select
+                value={privacyFilter || "all"}
+                onValueChange={(value) => setPrivacyFilter(value)}
+              >
+                <SelectTrigger id="privacy-filter" className="w-[180px]">
+                  <SelectValue placeholder="All privacy types" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="public">Public</SelectItem>
+                  <SelectItem value="private">Private</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
-        <TabsContent value="public-scripts" className="border-none p-0 pt-4">
-          <PublicScriptList
-            toggleFavorite={toggleFavorite}
-            state={publicScriptState}
-            updateState={updatePublicScriptState}
-            searchQuery={searchQuery}
-          />
-        </TabsContent>
-      </Tabs>
+          {(selectedLocations.length > 0 ||
+            selectedPlantTypes.length > 0 ||
+            (privacyFilter !== "all" && !disablePrivacyFilter)) && (
+            <div className="flex items-center">
+              <button
+                onClick={clearFilters}
+                className="px-4 py-2 text-sm text-primary hover:underline"
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Sort */}
+        <div className="flex items-center gap-2 flex-nowrap mt-4 md:mt-0">
+          <Label className="whitespace-nowrap">Sort by:</Label>
+          <Select
+            value={scriptListOptions.sortBy}
+            onValueChange={(value: "createdAt" | "updatedAt") =>
+              handleSortChange(value, scriptListOptions.order as "asc" | "desc")
+            }
+          >
+            <SelectTrigger className="min-w-[180px]">
+              <SelectValue placeholder="Select field" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="createdAt">Creation Date</SelectItem>
+              <SelectItem value="updatedAt">Last Update</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select
+            value={scriptListOptions.order}
+            onValueChange={(value: "asc" | "desc") =>
+              handleSortChange(
+                scriptListOptions.sortBy as "updatedAt" | "createdAt",
+                value
+              )
+            }
+          >
+            <SelectTrigger className="min-w-[180px]">
+              <SelectValue placeholder="Select order" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="desc">Latest First</SelectItem>
+              <SelectItem value="asc">Oldest First</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="flex flex-col space-y-4">
+        <Tabs value={tabName} onValueChange={handleTabChange}>
+          <TabsList>
+            <TabsTrigger value="all">All Scripts</TabsTrigger>
+            <TabsTrigger value="favorites">Favorites</TabsTrigger>
+            <TabsTrigger value="shared-scripts">Shared Scripts</TabsTrigger>
+            <TabsTrigger value="public-scripts">Public Scripts</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="all">
+            <ScriptList
+              scripts={allScripts.data}
+              toggleFavorite={toggleFavorite}
+              loading={allScriptsListLoading}
+              refetch={() => refetchAllScripts(scriptListOptions)}
+            />
+          </TabsContent>
+
+          <TabsContent value="favorites">
+            <ScriptList
+              scripts={favoriteScripts.data}
+              toggleFavorite={toggleFavorite}
+              loading={favoriteScriptsListLoading}
+              refetch={() => refetchFavoriteScripts(scriptListOptions)}
+            />
+          </TabsContent>
+
+          <TabsContent value="shared-scripts">
+            <ScriptList
+              scripts={sharedScripts.data}
+              toggleFavorite={toggleFavorite}
+              loading={sharedScriptsListLoading}
+              refetch={() => refetchSharedScripts(scriptListOptions)}
+            />
+          </TabsContent>
+
+          <TabsContent value="public-scripts">
+            <PublicScriptList
+              toggleFavorite={toggleFavorite}
+              state={publicScriptState}
+              updateState={updatePublicScriptState}
+              filterOptions={scriptListOptions}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };

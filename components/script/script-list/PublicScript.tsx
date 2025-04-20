@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent } from "react";
+import { FormEvent, ChangeEvent, useState, useEffect } from "react";
 import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import userApi from "@/api/userAPI";
 import { useToast } from "@/hooks/use-toast";
 import { useFetchScriptsList } from "@/hooks/useFetchUser";
 import { UserProfile } from "@/types/user";
-import { Script } from "@/types/script";
+import { Script, ScriptsListOptions } from "@/types/script";
 
 // Search Results Component
 const SearchResults = ({
@@ -99,14 +99,14 @@ interface PublicScriptListProps {
     selectedUser: { id: string; name: string } | null;
   };
   updateState: (newState: Partial<PublicScriptListProps["state"]>) => void;
-  searchQuery: string; // Added searchQuery prop
+  filterOptions: ScriptsListOptions;
 }
 
 const PublicScriptList = ({
   toggleFavorite,
   state,
   updateState,
-  searchQuery, // Destructured searchQuery prop
+  filterOptions,
 }: PublicScriptListProps) => {
   const { toast } = useToast();
 
@@ -114,23 +114,19 @@ const PublicScriptList = ({
   const { userSearchTerm, searchResults, showSearchResults, selectedUser } =
     state;
 
-  // Use the hook with the selected user's ID
+  // Use the hook with the selected user's ID and provided filter options
   const {
     data: scripts,
     loading: scriptLoading,
     refetch: refetchScripts,
-  } = useFetchScriptsList(selectedUser?.id || "");
+  } = useFetchScriptsList(selectedUser?.id || "", filterOptions);
 
-  // Filter scripts based on search query
-  const filterScript = (scripts: Script[]) => {
-    return scripts.filter(
-      (script: Script) =>
-        script.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        script.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  };
-
-  const filteredScripts = filterScript(scripts);
+  // Update fetch when filter options change
+  useEffect(() => {
+    if (selectedUser) {
+      refetchScripts(filterOptions);
+    }
+  }, [filterOptions, selectedUser]);
 
   // Handle search term change
   const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -145,7 +141,7 @@ const PublicScriptList = ({
     try {
       const response = await userApi.searchUser(userSearchTerm);
       updateState({
-        searchResults: response,
+        searchResults: response.data,
         showSearchResults: true,
       });
     } catch (error) {
@@ -166,47 +162,41 @@ const PublicScriptList = ({
     });
   };
 
-  // Handle favorite toggle with refetch
-  const handleToggleFavorite = (id: string, isFavorite: boolean) => {
-    toggleFavorite(id, isFavorite, refetchScripts);
-  };
-
   return (
     <div className="space-y-6">
       <div className="space-y-4">
         <div className="flex flex-col gap-2">
           {selectedUser ? (
-            <p className="text-muted-foreground">
-              Showing scripts by {selectedUser.name}
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-muted-foreground">
+                Showing scripts by {selectedUser.name}
+              </p>
               <Button
                 variant="ghost"
                 size="sm"
-                className="ml-2 h-6 py-0"
+                className="h-6 py-0"
                 onClick={() => updateState({ selectedUser: null })}
               >
                 <X className="h-3 w-3 mr-1" />
                 Clear
               </Button>
-            </p>
+            </div>
           ) : null}
         </div>
 
         <div className="flex gap-2">
-          <Input
-            value={userSearchTerm}
-            onChange={handleSearchTermChange}
-            placeholder="Search for users"
-            className="flex-1"
-          />
-          <Button
-            type="button"
-            size="default"
-            onClick={handleSearchUser}
-            variant="secondary"
-          >
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
+          <form onSubmit={handleSearchUser} className="flex gap-2 w-full">
+            <Input
+              value={userSearchTerm}
+              onChange={handleSearchTermChange}
+              placeholder="Search for users"
+              className="flex-1"
+            />
+            <Button type="submit" size="default" variant="secondary">
+              <Search className="h-4 w-4 mr-2" />
+              Search
+            </Button>
+          </form>
         </div>
 
         {/* Search results */}
@@ -222,9 +212,12 @@ const PublicScriptList = ({
       {/* Display scripts for selected user */}
       {selectedUser && (
         <ScriptList
-          scripts={filteredScripts}
-          toggleFavorite={handleToggleFavorite}
+          scripts={scripts.data}
+          toggleFavorite={(id, isFavorite) =>
+            toggleFavorite(id, isFavorite, () => refetchScripts(filterOptions))
+          }
           loading={scriptLoading}
+          refetch={() => refetchScripts(filterOptions)}
         />
       )}
 

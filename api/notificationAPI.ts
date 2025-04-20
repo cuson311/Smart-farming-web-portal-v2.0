@@ -1,14 +1,10 @@
+import { NotificationQueryParams } from "@/types/user";
 import axiosInstance from "./axiosInstance";
 
 const notificationApi = {
-    allNotification: async (userId: string) => {
-        const response = await axiosInstance.get(`/notification/${userId}`)
-        return response.data;
-    },
-
-    notification: async (userId: string, notifyId: string) => {
+    allNotification: async (userId: string, query?: NotificationQueryParams) => {
         const response = await axiosInstance.get(`/notification/${userId}`, {
-            params: { notifyId }
+            params: query,
         });
         return response.data;
     },
@@ -20,6 +16,11 @@ const notificationApi = {
             script_id: script_id
         });
         return response.data;
+    },
+
+    deleteNotification: async (notiId: string) => {
+        const response = await axiosInstance.delete(`/notification/${notiId}`)
+        return response.data
     }
 };
 

@@ -24,19 +24,11 @@ const CommentsTab = ({ script }: { script: Script }) => {
   const { userId } = useParams();
   const user_Id: string = Array.isArray(userId) ? userId[0] : userId;
 
-  const { data: allComments, setData: setAllComments } = useFetchComments(
-    user_Id,
-    script._id
-  );
-
-  const getAllComments = async () => {
-    try {
-      const response = await commentApi.getAllComments(user_Id, script._id);
-      setAllComments(response);
-    } catch (error) {
-      console.error("Error getting comments:", error);
-    }
-  };
+  const {
+    data: allComments,
+    setData: setAllComments,
+    refetch: refetchAllComments,
+  } = useFetchComments(user_Id, script._id);
 
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +48,7 @@ const CommentsTab = ({ script }: { script: Script }) => {
       console.log("New comment", response);
       setNewComment("");
 
-      await getAllComments();
+      refetchAllComments();
 
       // Show Snackbar on success
       toast({
@@ -101,7 +93,7 @@ const CommentsTab = ({ script }: { script: Script }) => {
                   key={comment._id}
                   script={script}
                   comment={comment}
-                  getAllComments={getAllComments}
+                  refetchAllComments={refetchAllComments}
                 />
               ))
             ) : (

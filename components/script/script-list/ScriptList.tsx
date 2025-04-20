@@ -1,30 +1,40 @@
 import { ScriptCardSkeleton } from "@/components/skeleton/ScriptCardSkeleton";
 import ScriptCard from "./ScriptCard";
-import { Script } from "@/types/script";
+import { Script, ScriptsListOptions } from "@/types/script";
 import { CardSkeletonGrid } from "@/components/skeleton/CardSkeletonGrid";
 import Pagination from "@/components/ui/pagination";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ScriptListProps {
   scripts: Script[];
   toggleFavorite: (
     id: string,
     isFavorite: boolean,
-    refetch?: () => void
+    refetch: (options?: ScriptsListOptions) => void
   ) => void;
   loading: boolean;
-  refetch?: () => void;
+  refetch: (options?: ScriptsListOptions) => void;
 }
 
-const ITEMS_PER_PAGE = 6;
-
-const ScriptList = ({ scripts, toggleFavorite, loading }: ScriptListProps) => {
+const ScriptList = ({
+  scripts,
+  toggleFavorite,
+  loading,
+  refetch,
+}: ScriptListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(scripts.length / ITEMS_PER_PAGE);
+  const [itemsPerPage] = useState(6);
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentScripts = scripts.slice(startIndex, endIndex);
+  // Reset to page 1 if scripts array changes length
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [scripts.length]);
+
+  const totalPages = Math.ceil(scripts.length / itemsPerPage);
+  const paginatedScripts = scripts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   if (loading) {
     return (
@@ -34,35 +44,38 @@ const ScriptList = ({ scripts, toggleFavorite, loading }: ScriptListProps) => {
     );
   }
 
-  if (!scripts || scripts.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-        <h3 className="mb-2 text-lg font-semibold">No scripts found</h3>
-        <p className="text-sm text-muted-foreground">
-          Create a new script or try a different search query.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {currentScripts.map((script) => (
-          <ScriptCard
-            key={script._id}
-            script={script}
-            toggleFavorite={toggleFavorite}
-          />
-        ))}
-      </div>
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          className="mt-4"
-        />
+      {!scripts || scripts.length === 0 ? (
+        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
+          <h3 className="mb-2 text-lg font-semibold">No scripts found</h3>
+          <p className="text-sm text-muted-foreground">
+            Try adjusting your filters or try a different search query.
+          </p>
+        </div>
+      ) : (
+        <>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {paginatedScripts.map((script) => (
+              <ScriptCard
+                key={script._id}
+                script={script}
+                toggleFavorite={(id, isFavorite) =>
+                  toggleFavorite(id, isFavorite, refetch)
+                }
+              />
+            ))}
+          </div>
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-4">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

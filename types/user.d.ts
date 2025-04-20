@@ -34,7 +34,7 @@ export type UserActivity = {
     };
 };
 
-export type UserNotify = {
+export type NotiInfo = {
     _id: string;
     type: string;
     from: {
@@ -50,4 +50,27 @@ export type UserNotify = {
     createdAt: string;
     updatedAt: string;
     __v: number;
+}
+
+export type UserNotify = {
+    data: NotiInfo[];
+    total: number,
+    page: string,
+    totalPages: number,
+}
+
+export type NotificationQueryParams = {
+    notifyId?: string;
+    page?: string;
+    limit?: string;
+    sortBy?: string;
+    order?: 'asc' | 'desc';
+}
+
+export type UserScriptRate = {
+    _id: string,
+    user_id: string,
+    script_id: string,
+    rate: number,
+    __v: number
 }
