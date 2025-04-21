@@ -11,30 +11,30 @@ import ActivitySection from "@/components/profile/Activity";
 import Notifications from "@/components/profile/Notification";
 import TopScriptList from "@/components/profile/TopScripts";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = () => {
   const router = useRouter();
+  const t = useTranslations("profile.notFound");
+
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" onClick={() => router.back()}>
           <ArrowLeft className="h-4 w-4" />
-          <span className="sr-only">Back</span>
+          <span className="sr-only">{t("back")}</span>
         </Button>
-        <h1 className="text-2xl font-bold">Page Not Found</h1>
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
       </div>
 
       <Alert variant="destructive" className="bg-destructive/10">
         <ShieldAlert className="h-5 w-5" />
-        <AlertTitle className="mb-2">Invalid Tab</AlertTitle>
-        <AlertDescription>
-          The requested tab does not exist. Please select a valid tab or return
-          to the dashboard.
-        </AlertDescription>
+        <AlertTitle className="mb-2">{t("invalidTab")}</AlertTitle>
+        <AlertDescription>{t("description")}</AlertDescription>
         <div className="mt-4">
           <Button asChild>
-            <Link href="/dashboard">Return to Dashboard</Link>
+            <Link href="/dashboard">{t("returnToDashboard")}</Link>
           </Button>
         </div>
       </Alert>
@@ -47,6 +47,7 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
   const [isOwner, setIsOwner] = useState(false);
+  const t = useTranslations("profile");
 
   // Check if the current user is the profile owner
   useEffect(() => {
@@ -85,16 +86,18 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
   return (
     <div className="grid gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Profile</h1>
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
       </div>
       <Tabs value={tabName} onValueChange={handleTabChange}>
         <TabsList>
-          <TabsTrigger value="profile">Profile</TabsTrigger>
-          <TabsTrigger value="activity">Activity</TabsTrigger>
+          <TabsTrigger value="profile">{t("tabs.profile")}</TabsTrigger>
+          <TabsTrigger value="activity">{t("tabs.activity")}</TabsTrigger>
           {isOwner && (
-            <TabsTrigger value="notifications">Notifications</TabsTrigger>
+            <TabsTrigger value="notifications">
+              {t("tabs.notifications")}
+            </TabsTrigger>
           )}
-          <TabsTrigger value="top-scripts">Top Scripts</TabsTrigger>
+          <TabsTrigger value="top-scripts">{t("tabs.topScripts")}</TabsTrigger>
         </TabsList>
         <TabsContent value="profile" className="space-y-6">
           <Profile />

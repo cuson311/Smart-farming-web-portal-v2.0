@@ -42,13 +42,9 @@ const Header = () => {
   const [isLoading, setIsLoading] = useState(true);
   const t = useTranslations("header");
 
-  // Use the socket hook - moved inside the component body to ensure it's only used when component is mounted
   const { notifications, socket, ring, setRing } = useSocket();
-
-  // Only fetch profile when userId exists and user is logged in
   const { data: user } = useFetchProfile(isLoggedIn ? userId : "");
 
-  // Check login status on component mount and pathname change
   useEffect(() => {
     const checkLoginStatus = () => {
       if (typeof window !== "undefined") {
@@ -63,18 +59,16 @@ const Header = () => {
 
     checkLoginStatus();
 
-    // Set up event listener for login/logout events
     window.addEventListener("storage", checkLoginStatus);
     window.addEventListener("logoutSuccess", checkLoginStatus);
     window.addEventListener("loginSuccess", checkLoginStatus);
 
-    // Clean up
     return () => {
       window.removeEventListener("storage", checkLoginStatus);
       window.removeEventListener("logoutSuccess", checkLoginStatus);
       window.removeEventListener("loginSuccess", checkLoginStatus);
     };
-  }, [pathname]); // Re-run on pathname changes to catch login redirects
+  }, [pathname]);
 
   const dashboardRoutes = [
     {
@@ -116,7 +110,6 @@ const Header = () => {
       localStorage.removeItem("profileImage");
       localStorage.removeItem("curUsername");
 
-      // Dispatch custom event to update other components
       window.dispatchEvent(new Event("logoutSuccess"));
     }
 
@@ -124,14 +117,12 @@ const Header = () => {
     router.replace("/");
   };
 
-  // Reset notification ring when dropdown is opened
   const handleNotificationOpen = () => {
     if (ring) {
       setRing(false);
     }
   };
 
-  // Render loading state
   if (isLoading) {
     return (
       <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">

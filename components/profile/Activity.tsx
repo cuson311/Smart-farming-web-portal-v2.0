@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 import { useFetchActivities } from "@/hooks/useFetchUser";
 import { UserActivity } from "@/types/user";
 import Pagination from "@/components/ui/pagination";
+import { useTranslations } from "next-intl";
 
 // Number of activity months to display per page
 const ITEMS_PER_PAGE = 1;
@@ -105,6 +106,7 @@ const processActivityData = (activitiesData: UserActivity[]) => {
 };
 
 const ActivitySection = () => {
+  const t = useTranslations("profile");
   const [groupedActivities, setGroupedActivities] = useState<GroupedActivities>(
     {}
   );
@@ -309,8 +311,8 @@ const ActivitySection = () => {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Activity Log</CardTitle>
-          <CardDescription>Loading activities...</CardDescription>
+          <CardTitle>{t("activity.title")}</CardTitle>
+          <CardDescription>{t("activity.loading")}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6">
@@ -325,12 +327,12 @@ const ActivitySection = () => {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Activity Log</CardTitle>
-          <CardDescription>Activities by month</CardDescription>
+          <CardTitle>{t("activity.title")}</CardTitle>
+          <CardDescription>{t("activity.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-6 text-muted-foreground">
-            No activities found for {curYear}
+            {t("activity.noActivities", { year: curYear })}
           </div>
         </CardContent>
       </Card>
@@ -340,11 +342,13 @@ const ActivitySection = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Activity Log</CardTitle>
+        <CardTitle>{t("activity.title")}</CardTitle>
         <CardDescription>
-          Showing {startIndex + 1} to{" "}
-          {Math.min(endIndex, activityMonths.length)} of {activityMonths.length}{" "}
-          activity months
+          {t("activity.pagination", {
+            start: startIndex + 1,
+            end: Math.min(endIndex, activityMonths.length),
+            total: activityMonths.length,
+          })}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -390,17 +394,23 @@ const ActivitySection = () => {
                   <div className="flex flex-wrap gap-2">
                     {counts.script > 0 && (
                       <div className="inline-flex items-center gap-1 rounded-full bg-blue-100 dark:bg-blue-900/30 px-3 py-1 text-xs text-blue-600 dark:text-blue-400">
-                        <span>{counts.script} Scripts</span>
+                        <span>
+                          {counts.script} {t("activity.scripts")}
+                        </span>
                       </div>
                     )}
                     {counts.model > 0 && (
                       <div className="inline-flex items-center gap-1 rounded-full bg-purple-100 dark:bg-purple-900/30 px-3 py-1 text-xs text-purple-600 dark:text-purple-400">
-                        <span>{counts.model} Models</span>
+                        <span>
+                          {counts.model} {t("activity.models")}
+                        </span>
                       </div>
                     )}
                     {counts.comment > 0 && (
                       <div className="inline-flex items-center gap-1 rounded-full bg-green-100 dark:bg-green-900/30 px-3 py-1 text-xs text-green-600 dark:text-green-400">
-                        <span>{counts.comment} Comments</span>
+                        <span>
+                          {counts.comment} {t("activity.comments")}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -413,7 +423,9 @@ const ActivitySection = () => {
                           {getActivityStyle("script").icon}
                         </div>
                         <div>
-                          <p className="text-sm font-medium">Scripts</p>
+                          <p className="text-sm font-medium">
+                            {t("activity.scripts")}
+                          </p>
                           <div className="mt-1 flex flex-wrap gap-1">
                             {scriptItems.map((activity) => (
                               <span
@@ -434,7 +446,7 @@ const ActivitySection = () => {
                                   MAX_ITEMS_TO_DISPLAY,
                                   totalScripts - monthDisplayCount.scripts
                                 )}{" "}
-                                more
+                                {t("activity.showMore")}
                               </button>
                             ) : monthDisplayCount.scripts >
                               MAX_ITEMS_TO_DISPLAY ? (
@@ -442,7 +454,7 @@ const ActivitySection = () => {
                                 onClick={() => showLess(monthYear, "scripts")}
                                 className="inline-block rounded bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 px-2 py-1 text-xs transition-colors cursor-pointer"
                               >
-                                Show less
+                                {t("activity.showLess")}
                               </button>
                             ) : null}
                           </div>
@@ -456,7 +468,9 @@ const ActivitySection = () => {
                           {getActivityStyle("model").icon}
                         </div>
                         <div>
-                          <p className="text-sm font-medium">Models</p>
+                          <p className="text-sm font-medium">
+                            {t("activity.models")}
+                          </p>
                           <div className="mt-1 flex flex-wrap gap-1">
                             {modelItems.map((activity) => (
                               <span
@@ -477,7 +491,7 @@ const ActivitySection = () => {
                                   MAX_ITEMS_TO_DISPLAY,
                                   totalModels - monthDisplayCount.models
                                 )}{" "}
-                                more
+                                {t("activity.showMore")}
                               </button>
                             ) : monthDisplayCount.models >
                               MAX_ITEMS_TO_DISPLAY ? (
@@ -485,7 +499,7 @@ const ActivitySection = () => {
                                 onClick={() => showLess(monthYear, "models")}
                                 className="inline-block rounded bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 px-2 py-1 text-xs transition-colors cursor-pointer"
                               >
-                                Show less
+                                {t("activity.showLess")}
                               </button>
                             ) : null}
                           </div>
@@ -499,7 +513,9 @@ const ActivitySection = () => {
                           {getActivityStyle("comment").icon}
                         </div>
                         <div className="w-full">
-                          <p className="text-sm font-medium mb-2">Comments</p>
+                          <p className="text-sm font-medium mb-2">
+                            {t("activity.comments")}
+                          </p>
                           <div className="space-y-2">
                             {commentItems.map((activity) => (
                               <div
@@ -522,12 +538,12 @@ const ActivitySection = () => {
                                 onClick={() => showMore(monthYear, "comments")}
                                 className="text-xs text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 mt-1 flex items-center transition-colors cursor-pointer"
                               >
-                                Show{" "}
+                                {t("activity.showMore")}{" "}
                                 {Math.min(
                                   MAX_ITEMS_TO_DISPLAY,
                                   totalComments - monthDisplayCount.comments
                                 )}{" "}
-                                more comments
+                                {t("activity.comments")}
                               </button>
                             ) : monthDisplayCount.comments >
                               MAX_ITEMS_TO_DISPLAY ? (
@@ -535,7 +551,8 @@ const ActivitySection = () => {
                                 onClick={() => showLess(monthYear, "comments")}
                                 className="text-xs text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 mt-1 flex items-center transition-colors cursor-pointer"
                               >
-                                Show less comments
+                                {t("activity.showLess")}{" "}
+                                {t("activity.comments")}
                               </button>
                             ) : null}
                           </div>

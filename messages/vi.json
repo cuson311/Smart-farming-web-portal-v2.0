@@ -1,215 +1,341 @@
 {
     "home": {
-        "hero": {
-            "title": "Tưới tiêu Thông minh",
-            "subtitle": "Quản lý Đơn giản",
-            "description": "Tối ưu hóa hệ thống tưới tiêu của bạn với các kịch bản và mô hình thông minh. Tiết kiệm nước, thời gian và tài nguyên với nền tảng quản lý tiên tiến của chúng tôi.",
-            "getStarted": "Bắt đầu",
-            "learnMore": "Tìm hiểu thêm"
+      "hero": {
+        "title": "Thủy lợi thông minh",
+        "subtitle": "Quản lý thực hiện đơn giản",
+        "description": "Tối ưu hóa các hệ thống tưới của bạn với các tập lệnh và mô hình thông minh. ",
+        "getStarted": "Bắt đầu",
+        "learnMore": "Tìm hiểu thêm"
+      },
+      "features": {
+        "title": "Đặc trưng",
+        "heading": "Mọi thứ bạn cần để tối ưu hóa tưới",
+        "description": "Nền tảng của chúng tôi cung cấp các công cụ mạnh mẽ để quản lý, giám sát và tối ưu hóa các hệ thống tưới của bạn.",
+        "smartScripts": {
+          "title": "Kịch bản thông minh",
+          "description": "Tạo và quản lý các tập lệnh tưới thông minh thích ứng với các điều kiện thay đổi."
         },
-        "features": {
-            "title": "Tính năng",
-            "heading": "Mọi thứ bạn cần để Tối ưu hóa Tưới tiêu",
-            "description": "Nền tảng của chúng tôi cung cấp các công cụ mạnh mẽ để quản lý, giám sát và tối ưu hóa hệ thống tưới tiêu của bạn.",
-            "smartScripts": {
-                "title": "Kịch bản Thông minh",
-                "description": "Tạo và quản lý các kịch bản tưới tiêu thông minh thích ứng với điều kiện thay đổi."
-            },
-            "advancedModels": {
-                "title": "Mô hình Nâng cao",
-                "description": "Phát triển các mô hình tưới tiêu tinh vi dựa trên dữ liệu đất, thời tiết và cây trồng."
-            },
-            "dataAnalytics": {
-                "title": "Phân tích Dữ liệu",
-                "description": "Thu thập thông tin chi tiết từ phân tích và báo cáo toàn diện về việc sử dụng nước và hiệu quả."
-            },
-            "teamCollaboration": {
-                "title": "Cộng tác Nhóm",
-                "description": "Làm việc cùng với nhóm của bạn để quản lý và tối ưu hóa hệ thống tưới tiêu."
-            },
-            "securePlatform": {
-                "title": "Nền tảng Bảo mật",
-                "description": "Dữ liệu của bạn được bảo vệ với bảo mật và mã hóa cấp doanh nghiệp."
-            },
-            "waterConservation": {
-                "title": "Tiết kiệm Nước",
-                "description": "Tiết kiệm nước và giảm chi phí với quản lý tưới tiêu thông minh."
-            }
+        "advancedModels": {
+          "title": "Mô hình nâng cao",
+          "description": "Phát triển các mô hình thủy lợi tinh vi dựa trên đất, thời tiết và dữ liệu cây trồng."
         },
-        "testimonials": {
-            "title": "Đánh giá",
-            "heading": "Được tin tưởng bởi các Chuyên gia trên toàn thế giới",
-            "description": "Xem những gì khách hàng của chúng tôi nói về nền tảng quản lý tưới tiêu.",
-            "testimonial1": {
-                "name": "John Doe",
-                "role": "Quản lý Trang trại",
-                "quote": "Nền tảng này đã cách mạng hóa cách chúng tôi quản lý tưới tiêu trên trang trại. Chúng tôi đã giảm 30% lượng nước sử dụng trong khi cải thiện năng suất cây trồng."
-            },
-            "testimonial2": {
-                "name": "Jane Smith",
-                "role": "Kỹ sư Nông nghiệp",
-                "quote": "Khả năng tạo mô hình và kịch bản tưới tiêu tùy chỉnh đã thay đổi hoàn toàn hoạt động của chúng tôi. Rất được khuyến nghị!"
-            },
-            "testimonial3": {
-                "name": "Robert Johnson",
-                "role": "Chủ Vườn nho",
-                "quote": "Chúng tôi đã sử dụng nền tảng này cho việc tưới tiêu vườn nho hơn một năm nay. Việc tiết kiệm nước và chất lượng nho được cải thiện nói lên tất cả."
-            }
+        "dataAnalytics": {
+          "title": "Phân tích dữ liệu",
+          "description": "Có được hiểu biết sâu sắc từ các phân tích toàn diện và báo cáo về việc sử dụng nước và hiệu quả."
         },
-        "pricing": {
-            "title": "Giá cả",
-            "heading": "Giá cả Đơn giản, Minh bạch",
-            "description": "Chọn gói phù hợp với nhu cầu quản lý tưới tiêu của bạn.",
-            "basic": {
-                "title": "Cơ bản",
-                "subtitle": "Dành cho trang trại và vườn nhỏ",
-                "price": "$29",
-                "period": "/tháng",
-                "features": {
-                    "scripts": "Tối đa 5 kịch bản tưới tiêu",
-                    "analytics": "Phân tích cơ bản",
-                    "support": "Hỗ trợ qua email"
-                },
-                "button": "Bắt đầu"
-            },
-            "pro": {
-                "title": "Chuyên nghiệp",
-                "subtitle": "Dành cho trang trại cỡ trung",
-                "price": "$79",
-                "period": "/tháng",
-                "popular": "Phổ biến",
-                "features": {
-                    "scripts": "Kịch bản tưới tiêu không giới hạn",
-                    "analytics": "Phân tích nâng cao",
-                    "models": "Mô hình tùy chỉnh",
-                    "support": "Hỗ trợ ưu tiên"
-                },
-                "button": "Bắt đầu"
-            },
-            "enterprise": {
-                "title": "Doanh nghiệp",
-                "subtitle": "Dành cho hoạt động nông nghiệp quy mô lớn",
-                "price": "$199",
-                "period": "/tháng",
-                "features": {
-                    "pro": "Mọi tính năng của gói Pro",
-                    "manager": "Quản lý tài khoản chuyên dụng",
-                    "integrations": "Tích hợp tùy chỉnh",
-                    "support": "Hỗ trợ qua điện thoại 24/7"
-                },
-                "button": "Liên hệ Bán hàng"
-            }
+        "teamCollaboration": {
+          "title": "Hợp tác nhóm",
+          "description": "Làm việc cùng với nhóm của bạn để quản lý và tối ưu hóa các hệ thống tưới."
         },
-        "cta": {
-            "heading": "Sẵn sàng Tối ưu hóa Tưới tiêu?",
-            "description": "Tham gia cùng hàng ngàn chuyên gia đang tiết kiệm nước và cải thiện năng suất cây trồng với nền tảng của chúng tôi.",
-            "getStarted": "Bắt đầu",
-            "contactSales": "Liên hệ Bán hàng"
+        "securePlatform": {
+          "title": "Nền tảng an toàn",
+          "description": "Dữ liệu của bạn được bảo vệ với bảo mật và mã hóa cấp độ doanh nghiệp."
+        },
+        "waterConservation": {
+          "title": "Bảo tồn nước",
+          "description": "Tiết kiệm nước và giảm chi phí với quản lý tưới thông minh."
         }
+      },
+      "testimonials": {
+        "title": "Lời chứng thực",
+        "heading": "Được tin tưởng bởi các chuyên gia trên toàn thế giới",
+        "description": "Xem những gì khách hàng của chúng tôi đang nói về nền tảng quản lý thủy lợi của chúng tôi.",
+        "testimonial1": {
+          "name": "John Doe",
+          "role": "Quản lý trang trại",
+          "quote": "Nền tảng này đã cách mạng hóa cách chúng ta quản lý tưới trong trang trại của chúng ta. "
+        },
+        "testimonial2": {
+          "name": "Jane Smith",
+          "role": "Kỹ sư nông nghiệp",
+          "quote": "Khả năng tạo các mô hình và tập lệnh tưới tùy chỉnh là một người thay đổi trò chơi cho các hoạt động của chúng tôi. "
+        },
+        "testimonial3": {
+          "name": "Robert Johnson",
+          "role": "Chủ vườn nho",
+          "quote": "Chúng tôi đã sử dụng nền tảng này cho việc tưới vườn nho của chúng tôi trong hơn một năm nay. "
+        }
+      },
+      "pricing": {
+        "title": "Giá cả",
+        "heading": "Đơn giản, giá cả minh bạch",
+        "description": "Chọn kế hoạch phù hợp với nhu cầu quản lý thủy lợi của bạn.",
+        "basic": {
+          "title": "Nền tảng",
+          "subtitle": "Cho các trang trại và vườn nhỏ",
+          "price": "$ 29",
+          "period": "/tháng",
+          "features": {
+            "scripts": "Lên đến 5 tập lệnh tưới",
+            "analytics": "Phân tích cơ bản",
+            "support": "Hỗ trợ email"
+          },
+          "button": "Bắt đầu"
+        },
+        "pro": {
+          "title": "Pro",
+          "subtitle": "Cho các trang trại cỡ trung bình",
+          "price": "$ 79",
+          "period": "/tháng",
+          "popular": "Phổ biến",
+          "features": {
+            "scripts": "Các kịch bản thủy lợi không giới hạn",
+            "analytics": "Phân tích nâng cao",
+            "models": "Mô hình tùy chỉnh",
+            "support": "Hỗ trợ ưu tiên"
+          },
+          "button": "Bắt đầu"
+        },
+        "enterprise": {
+          "title": "Doanh nghiệp",
+          "subtitle": "Đối với các hoạt động nông nghiệp lớn",
+          "price": "$ 199",
+          "period": "/tháng",
+          "features": {
+            "pro": "Mọi thứ trong pro",
+            "manager": "Quản lý tài khoản chuyên dụng",
+            "integrations": "Tích hợp tùy chỉnh",
+            "support": "Hỗ trợ điện thoại 24/7"
+          },
+          "button": "Liên hệ bán hàng"
+        }
+      },
+      "cta": {
+        "heading": "Sẵn sàng để tối ưu hóa việc tưới tiêu của bạn?",
+        "description": "Tham gia hàng ngàn chuyên gia đang tiết kiệm nước và cải thiện năng suất cây trồng với nền tảng của chúng tôi.",
+        "getStarted": "Bắt đầu",
+        "contactSales": "Liên hệ bán hàng"
+      }
     },
     "dashboard": {
-        "title": "Bảng điều khiển",
-        "welcome": "Chào mừng bạn đến với bảng điều khiển quản lý tưới tiêu.",
-        "stats": {
-            "totalScripts": {
-                "title": "Tổng số Kịch bản",
-                "value": "24",
-                "change": "+2 so với tuần trước"
-            },
-            "totalModels": {
-                "title": "Tổng số Mô hình",
-                "value": "12",
-                "change": "+1 so với tuần trước"
-            },
-            "activeUsers": {
-                "title": "Người dùng Hoạt động",
-                "value": "5",
-                "change": "+2 so với tháng trước"
-            },
-            "waterSaved": {
-                "title": "Nước Tiết kiệm",
-                "value": "28%",
-                "change": "+8% so với tháng trước"
-            }
+      "title": "Bảng điều khiển",
+      "welcome": "Chào mừng bạn đến với bảng điều khiển quản lý thủy lợi của bạn.",
+      "stats": {
+        "totalScripts": {
+          "title": "Tổng số kịch bản",
+          "value": "24",
+          "change": "+2 từ tuần trước"
         },
-        "tabs": {
-            "recent": "Kịch bản Gần đây",
-            "activity": "Nhật ký Hoạt động"
+        "totalModels": {
+          "title": "Tổng số mô hình",
+          "value": "12",
+          "change": "+1 từ tuần trước"
         },
-        "navigation": {
-            "dashboard": "Bảng điều khiển",
-            "profile": "Hồ sơ",
-            "scripts": "Kịch bản",
-            "models": "Mô hình",
-            "settings": "Cài đặt"
+        "activeUsers": {
+          "title": "Người dùng hoạt động",
+          "value": "5",
+          "change": "+2 từ tháng trước"
+        },
+        "waterSaved": {
+          "title": "Nước lưu",
+          "value": "28%",
+          "change": "+8% từ tháng trước"
         }
+      },
+      "tabs": {
+        "recent": "Kịch bản gần đây",
+        "activity": "Nhật ký hoạt động"
+      },
+      "navigation": {
+        "dashboard": "Bảng điều khiển",
+        "profile": "Hồ sơ",
+        "scripts": "Kịch bản",
+        "models": "Mô hình",
+        "settings": "Cài đặt"
+      }
     },
     "footer": {
-        "brand": "Cổng Thông tin Tưới tiêu",
-        "description": "Quản lý tưới tiêu thông minh cho nông nghiệp hiện đại.",
-        "product": {
-            "title": "Sản phẩm",
-            "features": "Tính năng",
-            "pricing": "Giá cả",
-            "documentation": "Tài liệu"
-        },
-        "company": {
-            "title": "Công ty",
-            "about": "Giới thiệu",
-            "blog": "Blog",
-            "careers": "Tuyển dụng"
-        },
-        "contact": {
-            "title": "Liên hệ",
-            "email": "Email: info@irrigationportal.com",
-            "phone": "Điện thoại: +1 (555) 123-4567",
-            "address": "Địa chỉ: 123 Đường Tưới tiêu, Farmville, CA 94123"
-        },
-        "copyright": "© 2023 Cổng Thông tin Tưới tiêu. Đã đăng ký bản quyền."
+      "brand": "Irrigation Portal",
+      "description": "Quản lý tưới thông minh cho nông nghiệp hiện đại.",
+      "product": {
+        "title": "Sản phẩm",
+        "features": "Đặc trưng",
+        "pricing": "Giá cả",
+        "documentation": "Tài liệu"
+      },
+      "company": {
+        "title": "Công ty",
+        "about": "Về",
+        "blog": "Blog",
+        "careers": "Sự nghiệp"
+      },
+      "contact": {
+        "title": "Liên hệ",
+        "email": "Email: info@irratorportal.com",
+        "phone": "Điện thoại: +1 (555) 123-4567",
+        "address": "Địa chỉ: 123 Thủy lợi St, Farmville, CA 94123"
+      },
+      "copyright": "© 2023 Irrigation Portal. "
     },
     "login": {
-        "welcome": "Chào mừng trở lại",
-        "title": "Đăng nhập vào tài khoản của bạn",
-        "description": "Nhập thông tin đăng nhập của bạn để truy cập bảng điều khiển quản lý tưới tiêu",
-        "errors": {
-            "emptyFields": "Vui lòng điền đầy đủ thông tin",
-            "invalidCredentials": "Đăng nhập thất bại. Vui lòng kiểm tra thông tin đăng nhập và thử lại."
-        },
-        "form": {
-            "email": "Email",
-            "emailPlaceholder": "Tên đăng nhập",
-            "password": "Mật khẩu",
-            "passwordPlaceholder": "Mật khẩu",
-            "forgotPassword": "Quên mật khẩu?",
-            "rememberMe": "Ghi nhớ đăng nhập trong 30 ngày",
-            "submit": "Đăng nhập",
-            "orContinue": "Hoặc tiếp tục với",
-            "google": "Google",
-            "microsoft": "Microsoft",
-            "noAccount": "Chưa có tài khoản?",
-            "signUp": "Đăng ký"
-        },
-        "hero": {
-            "title": "Quản lý Tưới tiêu Thông minh",
-            "description": "Tối ưu hóa hệ thống tưới tiêu của bạn với các kịch bản và mô hình thông minh. Tiết kiệm nước, thời gian và tài nguyên."
-        }
+      "welcome": "Chào mừng trở lại",
+      "title": "Đăng nhập vào tài khoản của bạn",
+      "description": "Nhập thông tin đăng nhập của bạn bên dưới để truy cập bảng điều khiển quản lý tưới của bạn",
+      "errors": {
+        "emptyFields": "Vui lòng điền vào tất cả các trường",
+        "invalidCredentials": "Đăng nhập không thành công. "
+      },
+      "form": {
+        "email": "E-mail",
+        "emailPlaceholder": "Tên người dùng",
+        "password": "Mật khẩu",
+        "passwordPlaceholder": "Mật khẩu",
+        "forgotPassword": "Quên mật khẩu?",
+        "rememberMe": "Nhớ tôi trong 30 ngày",
+        "submit": "Đăng nhập",
+        "orContinue": "Hoặc tiếp tục với",
+        "google": "Google",
+        "microsoft": "Microsoft",
+        "noAccount": "Không có tài khoản?",
+        "signUp": "Đăng ký"
+      },
+      "hero": {
+        "title": "Quản lý tưới thông minh",
+        "description": "Tối ưu hóa các hệ thống tưới của bạn với các tập lệnh và mô hình thông minh. "
+      }
     },
     "header": {
-        "brand": "Cổng Thông tin Tưới tiêu",
-        "mobileMenu": "Chuyển đổi menu điều hướng",
+      "brand": "Cổng thông tin tưới tiêu",
+      "mobileMenu": "Chuyển đổi menu điều hướng",
+      "notifications": "Thông báo",
+      "noNotifications": "Không có thông báo",
+      "someone": "Ai đó",
+      "shared": "đã chia sẻ",
+      "something": "một nội dung",
+      "withYou": "với bạn",
+      "viewAllNotifications": "Xem tất cả thông báo",
+      "user": "Người dùng",
+      "logout": "Đăng xuất",
+      "features": "Tính năng",
+      "testimonials": "Đánh giá",
+      "pricing": "Giá cả",
+      "contact": "Liên hệ",
+      "getStarted": "Bắt đầu",
+      "navigation": {
+        "dashboard": "Bảng điều khiển",
+        "profile": "Hồ sơ",
+        "scripts": "Kịch bản",
+        "models": "Mô hình",
+        "settings": "Cài đặt"
+      }
+    },
+    "Index": {
+      "title": "Chào mừng đến với Cổng thông minh nông nghiệp thông minh",
+      "description": "Giải pháp quản lý canh tác toàn diện của bạn"
+    },
+    "Navigation": {
+      "dashboard": "Bảng điều khiển",
+      "profile": "Hồ sơ",
+      "settings": "Cài đặt",
+      "logout": "Đăng xuất"
+    },
+    "Common": {
+      "loading": "Đang tải...",
+      "error": "Một lỗi đã xảy ra",
+      "success": "Hoạt động thành công",
+      "pageNotFound": "Không tìm thấy trang",
+      "backToHome": "Trở về nhà"
+    },
+    "profile": {
+      "title": "Hồ sơ",
+      "tabs": {
+        "profile": "Hồ sơ",
+        "activity": "Hoạt động",
         "notifications": "Thông báo",
-        "noNotifications": "Không có thông báo",
-        "someone": "Ai đó",
-        "shared": "đã chia sẻ",
-        "something": "một cái gì đó",
-        "withYou": "với bạn",
-        "viewAllNotifications": "Xem tất cả thông báo",
-        "user": "Người dùng",
-        "logout": "Đăng xuất",
-        "features": "Tính năng",
-        "testimonials": "Đánh giá",
-        "pricing": "Giá cả",
-        "contact": "Liên hệ",
-        "getStarted": "Bắt đầu"
+        "topScripts": "Kịch bản hàng đầu"
+      },
+      "notFound": {
+        "title": "Không tìm thấy trang",
+        "back": "Mặt sau",
+        "invalidTab": "Tab không hợp lệ",
+        "description": "Tab được yêu cầu không tồn tại. Vui lòng chọn một tab hợp lệ hoặc quay lại bảng điều khiển.",
+        "returnToDashboard": "Quay trở lại bảng điều khiển"
+      },
+      "activity": {
+        "title": "Nhật ký hoạt động",
+        "description": "Hoạt động theo tháng",
+        "loading": "Đang tải hoạt động...",
+        "noActivities": "Không tìm thấy hoạt động nào trong năm {year}",
+        "pagination": "Hiển thị {start} đến {end} trong tổng số {total} tháng hoạt động",
+        "scripts": "Kịch bản",
+        "models": "Mô hình",
+        "comments": "Bình luận",
+        "showMore": "thêm",
+        "showLess": "Ẩn bớt"
+      },
+      "edit": {
+        "title": "Chỉnh sửa hồ sơ",
+        "description": "Cập nhật thông tin hồ sơ của bạn bên dưới",
+        "avatar": {
+          "change": "Thay đổi ảnh đại diện",
+          "upload": "Tải lên ảnh đại diện mới",
+          "error": "Lỗi khi tải lên ảnh đại diện",
+          "success": "Cập nhật ảnh đại diện thành công"
+        },
+        "form": {
+          "username": "Tên người dùng",
+          "bio": "Tiểu sử",
+          "socialLinks": "Liên kết xã hội",
+          "addLink": "Thêm liên kết",
+          "removeLink": "Xóa",
+          "saveChanges": "Lưu thay đổi",
+          "cancel": "Hủy",
+          "saving": "Đang lưu..."
+        },
+        "success": "Cập nhật hồ sơ thành công",
+        "error": "Cập nhật hồ sơ thất bại"
+      },
+      "view": {
+        "following": "Đang theo dõi",
+        "followers": "Người theo dõi",
+        "editProfile": "Chỉnh sửa hồ sơ",
+        "noBio": "Chưa có tiểu sử",
+        "noLinks": "Chưa có liên kết xã hội"
+      },
+      "notifications": {
+        "title": "Thông báo",
+        "description": {
+          "loading": "Đang tải thông báo...",
+          "empty": "Không có thông báo nào để hiển thị",
+          "pagination": "Hiển thị {start} đến {end} trong tổng số {total} thông báo"
+        },
+        "delete": {
+          "title": "Xóa thông báo",
+          "description": "Bạn có chắc chắn muốn xóa thông báo này? Hành động này không thể hoàn tác.",
+          "cancel": "Hủy",
+          "confirm": "Xóa",
+          "deleting": "Đang xóa...",
+          "success": "Xóa thông báo thành công",
+          "error": "Xóa thông báo thất bại"
+        },
+        "notification": {
+          "shared": "{username} đã chia sẻ {scriptName} với bạn",
+          "default": "{username} đã chia sẻ một nội dung với bạn"
+        }
+      },
+      "topScripts": {
+        "title": "Kịch bản hàng đầu",
+        "loading": "Đang tải kịch bản...",
+        "empty": {
+          "title": "Không tìm thấy kịch bản",
+          "description": "Tạo kịch bản mới hoặc thử tìm kiếm với từ khóa khác."
+        },
+        "filters": {
+          "rating": "Được đánh giá cao nhất",
+          "favorite": "Được yêu thích nhất"
+        },
+        "favorite": {
+          "success": "Đã cập nhật trạng thái yêu thích kịch bản",
+          "error": "Cập nhật trạng thái yêu thích thất bại"
+        }
+      }
+    },
+    "theme": {
+      "toggle": {
+        "title": "Chuyển đổi giao diện",
+        "light": "Sáng",
+        "dark": "Tối",
+        "system": "Hệ thống"
+      }
     }
-}
+  }

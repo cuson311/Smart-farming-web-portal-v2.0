@@ -210,7 +210,14 @@
         "testimonials": "Testimonials",
         "pricing": "Pricing",
         "contact": "Contact",
-        "getStarted": "Get Started"
+        "getStarted": "Get Started",
+        "navigation": {
+            "dashboard": "Dashboard",
+            "profile": "Profile",
+            "scripts": "Scripts",
+            "models": "Models",
+            "settings": "Settings"
+        }
     },
     "Index": {
         "title": "Welcome to Smart Farming Portal",
@@ -228,5 +235,107 @@
         "success": "Operation successful",
         "pageNotFound": "Page not found",
         "backToHome": "Back to Home"
+    },
+    "profile": {
+        "title": "Profile",
+        "tabs": {
+            "profile": "Profile",
+            "activity": "Activity",
+            "notifications": "Notifications",
+            "topScripts": "Top Scripts"
+        },
+        "notFound": {
+            "title": "Page Not Found",
+            "back": "Back",
+            "invalidTab": "Invalid Tab",
+            "description": "The requested tab does not exist. Please select a valid tab or return to the dashboard.",
+            "returnToDashboard": "Return to Dashboard"
+        },
+        "activity": {
+            "title": "Activity Log",
+            "description": "Activities by month",
+            "loading": "Loading activities...",
+            "noActivities": "No activities found for {year}",
+            "pagination": "Showing {start} to {end} of {total} activity months",
+            "scripts": "Scripts",
+            "models": "Models",
+            "comments": "Comments",
+            "showMore": "more",
+            "showLess": "Show less"
+        },
+        "edit": {
+            "title": "Edit Profile",
+            "description": "Update your profile information below",
+            "avatar": {
+                "change": "Change Avatar",
+                "upload": "Upload new avatar",
+                "error": "Error uploading avatar",
+                "success": "Avatar updated successfully"
+            },
+            "form": {
+                "username": "Username",
+                "bio": "Bio",
+                "socialLinks": "Social Links",
+                "addLink": "Add Link",
+                "removeLink": "Remove",
+                "saveChanges": "Save Changes",
+                "cancel": "Cancel",
+                "saving": "Saving..."
+            },
+            "success": "Profile updated successfully",
+            "error": "Failed to update profile"
+        },
+        "view": {
+            "following": "Following",
+            "followers": "Followers",
+            "editProfile": "Edit Profile",
+            "noBio": "No bio available",
+            "noLinks": "No social links available"
+        },
+        "notifications": {
+      "title": "Notifications",
+      "description": {
+        "loading": "Loading notifications...",
+        "empty": "No notifications to display",
+        "pagination": "Showing {start} to {end} of {total} notifications"
+      },
+      "delete": {
+        "title": "Delete Notification",
+        "description": "Are you sure you want to delete this notification? This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete",
+        "deleting": "Deleting...",
+        "success": "Notification deleted successfully",
+        "error": "Failed to delete notification"
+      },
+      "notification": {
+        "shared": "{username} shared {scriptName} with you",
+            "default": "{username} shared something with you"
+          }
+        },
+        "topScripts": {
+            "title": "Top Scripts",
+            "loading": "Loading scripts...",
+            "empty": {
+                "title": "No scripts found",
+                "description": "Create a new script or try a different search query."
+            },
+            "filters": {
+                "rating": "Top Rated",
+                "favorite": "Most Favorited"
+            },
+            "favorite": {
+                "success": "Script favorite status has been updated",
+                "error": "Failed to update favorite status"
+            }
+        }
+    },
+    "theme": {
+        "toggle": {
+            "title": "Toggle theme",
+            "light": "Light",
+            "dark": "Dark",
+            "system": "System"
+        }
     }
 }

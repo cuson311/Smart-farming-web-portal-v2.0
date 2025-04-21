@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { GlobeIcon, CheckIcon } from "lucide-react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useLocale } from "next-intl";
 
 interface Language {
@@ -28,12 +28,17 @@ export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const handleLanguageChange = (newLocale: string) => {
     // Remove the current locale from the pathname
     const pathWithoutLocale = pathname.replace(`/${locale}`, "");
-    // Navigate to the new locale path
-    router.push(`/${newLocale}${pathWithoutLocale}`);
+    // Get current query parameters
+    const queryString = searchParams.toString();
+    // Navigate to the new locale path with preserved query parameters
+    router.push(
+      `/${newLocale}${pathWithoutLocale}${queryString ? `?${queryString}` : ""}`
+    );
   };
 
   return (
