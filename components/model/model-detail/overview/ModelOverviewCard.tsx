@@ -1,4 +1,5 @@
 import React, { useState, ReactNode } from "react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,13 +27,14 @@ const ModelOverviewCard = ({
   }>();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const t = useTranslations("dashboard.models");
 
   const handleEditConfirm = async (updatedModel: UpdateModelData) => {
     try {
       await modelApi.updateModelInfo(userId, updatedModel);
       toast({
-        title: "Successful!",
-        description: "Update model info successfully",
+        title: t("toast.updateSuccess"),
+        description: t("toast.updateSuccess"),
         variant: "default",
       });
       setIsEditModalOpen(false);
@@ -40,8 +42,8 @@ const ModelOverviewCard = ({
     } catch (error) {
       console.error("Error updating model:", error);
       toast({
-        title: "Error",
-        description: "Failed to update model",
+        title: t("toast.updateError"),
+        description: t("toast.updateError"),
         variant: "destructive",
       });
     }
@@ -51,8 +53,8 @@ const ModelOverviewCard = ({
     try {
       await modelApi.deleteModelInfo(userId, model.alt_name);
       toast({
-        title: "Successful!",
-        description: "Model deleted successfully",
+        title: t("deleteModel.success"),
+        description: t("deleteModel.success"),
         variant: "default",
       });
       setIsDeleteModalOpen(false);
@@ -61,8 +63,8 @@ const ModelOverviewCard = ({
     } catch (error) {
       console.error("Error deleting model:", error);
       toast({
-        title: "Error",
-        description: "Failed to delete model",
+        title: t("deleteModel.error"),
+        description: t("deleteModel.error"),
         variant: "destructive",
       });
     }
@@ -72,25 +74,25 @@ const ModelOverviewCard = ({
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Model Details</CardTitle>
+          <CardTitle>{t("modelDetails.title")}</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           <DetailItem
-            label="Name"
+            label={t("modelDetails.name")}
             value={model?.alt_name !== "" ? model.alt_name : model.name}
           />
           <DetailItem
-            label="Description"
+            label={t("modelDetails.description")}
             value={
               model?.description ?? (
                 <div className="text-sm text-muted-foreground italic">
-                  No description.
+                  {t("modelDetails.noDescription")}
                 </div>
               )
             }
           />
           <DetailItem
-            label="Created"
+            label={t("modelDetails.created")}
             value={
               model?.creation_timestamp
                 ? formatDate(model?.creation_timestamp)
@@ -98,7 +100,7 @@ const ModelOverviewCard = ({
             }
           />
           <DetailItem
-            label="Last Updated"
+            label={t("modelDetails.lastUpdated")}
             value={
               model?.last_updated_timestamp
                 ? formatDate(model?.last_updated_timestamp)
@@ -107,7 +109,7 @@ const ModelOverviewCard = ({
           />
 
           <DetailItem
-            label="Tags"
+            label={t("modelDetails.tags")}
             value={
               model?.tags ? (
                 model.tags.map((tag: Tag) => (
@@ -117,7 +119,7 @@ const ModelOverviewCard = ({
                 ))
               ) : (
                 <div className="text-sm text-muted-foreground italic">
-                  No tags found.
+                  {t("modelDetails.noTags")}
                 </div>
               )
             }
@@ -128,21 +130,23 @@ const ModelOverviewCard = ({
               <>
                 <Separator />
                 <div className="grid gap-2">
-                  <h3 className="text-sm font-medium">Actions</h3>
+                  <h3 className="text-sm font-medium">
+                    {t("modelDetails.actions")}
+                  </h3>
                   <div className="grid grid-cols-2 gap-2">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => setIsEditModalOpen(true)}
                     >
-                      Edit Model
+                      {t("modelDetails.editModel")}
                     </Button>
                     <Button
                       variant="destructive"
                       size="sm"
                       onClick={() => setIsDeleteModalOpen(true)}
                     >
-                      Delete
+                      {t("modelDetails.deleteModel")}
                     </Button>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import { Model } from "@/types/model";
 import ModelCardSkeleton from "../../skeleton/ModelCardSkeleton";
 import { CardSkeletonGrid } from "@/components/skeleton/CardSkeletonGrid";
 import Pagination from "@/components/ui/pagination";
+import { useTranslations } from "next-intl";
 import {
   Select,
   SelectContent,
@@ -16,11 +17,11 @@ import { useState, useMemo } from "react";
 
 interface ModelListProps {
   models: Model[];
-  toggleFavorite: (id: string, isFavorite: boolean) => void;
   loading: boolean;
 }
 
-const ModelList = ({ models, toggleFavorite, loading }: ModelListProps) => {
+const ModelList = ({ models, loading }: ModelListProps) => {
+  const t = useTranslations("dashboard.models");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
   const [sortField, setSortField] = useState<
@@ -63,9 +64,9 @@ const ModelList = ({ models, toggleFavorite, loading }: ModelListProps) => {
   if (!models || models.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-        <h3 className="mb-2 text-lg font-semibold">No models found</h3>
+        <h3 className="mb-2 text-lg font-semibold">{t("emptyState.title")}</h3>
         <p className="text-sm text-muted-foreground">
-          Create a new model or try a different search query.
+          {t("emptyState.description")}
         </p>
       </div>
     );
@@ -74,7 +75,7 @@ const ModelList = ({ models, toggleFavorite, loading }: ModelListProps) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-end gap-2">
-        <Label>Sort by:</Label>
+        <Label>{t("sortBy")}:</Label>
         <Select
           value={sortField}
           onValueChange={(
@@ -82,11 +83,15 @@ const ModelList = ({ models, toggleFavorite, loading }: ModelListProps) => {
           ) => handleSortChange(value, sortOrder)}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select field" />
+            <SelectValue placeholder={t("selectField")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="creation_timestamp">Creation Date</SelectItem>
-            <SelectItem value="last_updated_timestamp">Last Update</SelectItem>
+            <SelectItem value="creation_timestamp">
+              {t("creationDate")}
+            </SelectItem>
+            <SelectItem value="last_updated_timestamp">
+              {t("lastUpdate")}
+            </SelectItem>
           </SelectContent>
         </Select>
         <Select
@@ -96,21 +101,17 @@ const ModelList = ({ models, toggleFavorite, loading }: ModelListProps) => {
           }
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select order" />
+            <SelectValue placeholder={t("selectOrder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="desc">Latest First</SelectItem>
-            <SelectItem value="asc">Oldest First</SelectItem>
+            <SelectItem value="desc">{t("latestFirst")}</SelectItem>
+            <SelectItem value="asc">{t("oldestFirst")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {paginatedModels.map((model) => (
-          <ModelCard
-            key={model._id}
-            model={model}
-            toggleFavorite={toggleFavorite}
-          />
+          <ModelCard key={model._id} model={model} />
         ))}
       </div>
       {totalPages > 1 && (

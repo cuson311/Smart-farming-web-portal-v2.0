@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -69,6 +70,7 @@ const ScriptDetailsCard = ({
   script: Script | null;
   refetch: () => void;
 }) => {
+  const t = useTranslations("dashboard.scripts.detail");
   const router = useRouter();
   const { userId, scriptId } = useParams<{
     userId: string;
@@ -130,8 +132,8 @@ const ScriptDetailsCard = ({
       await scriptApi.updateScriptInfo(userId, scriptId, updatedScript);
       console.log("Script updated:", updatedScript);
       toast({
-        title: "Successful!",
-        description: "Update script info successfully",
+        title: t("toast.updateSuccess"),
+        description: t("toast.updateSuccessDescription"),
         variant: "default",
       });
       setIsEditModalOpen(false);
@@ -139,8 +141,8 @@ const ScriptDetailsCard = ({
     } catch (error) {
       console.error("Error updating script:", error);
       toast({
-        title: "Error",
-        description: "Failed to update script",
+        title: t("toast.updateError"),
+        description: t("toast.updateErrorDescription"),
         variant: "destructive",
       });
     }
@@ -151,8 +153,8 @@ const ScriptDetailsCard = ({
       await scriptApi.deleteScriptInfo(userId, scriptId);
       await scriptApi.deleteScriptFiles(userId, scriptId);
       toast({
-        title: "Successful!",
-        description: "Script deleted successfully",
+        title: t("toast.deleteSuccess"),
+        description: t("toast.deleteSuccessDescription"),
         variant: "default",
       });
       setIsDeleteModalOpen(false);
@@ -161,8 +163,8 @@ const ScriptDetailsCard = ({
     } catch (error) {
       console.error("Error deleting script:", error);
       toast({
-        title: "Error",
-        description: "Failed to delete script",
+        title: t("toast.deleteError"),
+        description: t("toast.deleteErrorDescription"),
         variant: "destructive",
       });
     }
@@ -171,28 +173,22 @@ const ScriptDetailsCard = ({
   // Function to update rating
   const handleRatingChange = async (newRating: number) => {
     try {
-      // Only proceed if the rating actually changed
       if (newRating !== localUserRating) {
-        // Optimistically update UI
         setLocalUserRating(newRating);
-
-        // Call API to update rating
         await scriptApi.createScriptRate(userId, scriptId, {
           rate: newRating,
         });
 
         toast({
-          title: "Rating Updated",
-          description: "Your rating has been saved",
+          title: t("toast.ratingSuccess"),
+          description: t("toast.ratingSuccessDescription"),
           variant: "default",
         });
 
-        // Refresh script data to get updated average rating
         refetch();
         refetchUserRate();
       }
     } catch (error) {
-      // Revert local state on error
       if (userRating && userRating.length > 0) {
         setLocalUserRating(userRating[0]?.rate || 0);
       } else {
@@ -201,8 +197,8 @@ const ScriptDetailsCard = ({
 
       console.error("Error updating rating:", error);
       toast({
-        title: "Error",
-        description: "Failed to update rating",
+        title: t("toast.ratingError"),
+        description: t("toast.ratingErrorDescription"),
         variant: "destructive",
       });
     }
@@ -211,31 +207,25 @@ const ScriptDetailsCard = ({
   // Function to delete user's rating
   const handleDeleteRating = async () => {
     try {
-      // Optimistically update the UI
       setLocalUserRating(0);
-
-      // Call API to delete the rating
       await scriptApi.deleteScriptRate(authUserId, scriptId);
 
       toast({
-        title: "Rating Removed",
-        description: "Your rating has been removed successfully",
+        title: t("toast.ratingDeleteSuccess"),
+        description: t("toast.ratingDeleteSuccessDescription"),
         variant: "default",
       });
 
-      // Refresh script data to get updated average rating
       refetch();
-      // refetchUserRate();
     } catch (error) {
-      // Revert on error
       if (userRating && userRating.length > 0) {
         setLocalUserRating(userRating[0]?.rate || 0);
       }
 
       console.error("Error deleting rating:", error);
       toast({
-        title: "Error",
-        description: "Failed to remove rating",
+        title: t("toast.ratingDeleteError"),
+        description: t("toast.ratingDeleteErrorDescription"),
         variant: "destructive",
       });
     }
@@ -255,12 +245,13 @@ const ScriptDetailsCard = ({
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Script Details</CardTitle>
+          <CardTitle>{t("scriptDetails.title")}</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
-          {/* Owner Information Section */}
           <div>
-            <h3 className="mb-1 text-sm font-medium">Owner</h3>
+            <h3 className="mb-1 text-sm font-medium">
+              {t("scriptDetails.owner")}
+            </h3>
             <div className="flex items-center gap-2 mt-2">
               {isProfileLoading ? (
                 <div className="flex items-center gap-2">
@@ -287,17 +278,18 @@ const ScriptDetailsCard = ({
           </div>
 
           <DetailItem
-            label="Description"
+            label={t("scriptDetails.description")}
             value={
               script?.description !== ""
                 ? script?.description
-                : "There is no description"
+                : t("scriptDetails.noDescription")
             }
           />
 
-          {/* Location Section - UPDATED */}
           <div>
-            <h3 className="mb-2 text-sm font-medium">Location</h3>
+            <h3 className="mb-2 text-sm font-medium">
+              {t("scriptDetails.location")}
+            </h3>
             <div className="flex flex-wrap gap-1">
               {script?.location && script.location.length > 0 ? (
                 <>
@@ -318,15 +310,16 @@ const ScriptDetailsCard = ({
                 </>
               ) : (
                 <span className="text-sm text-muted-foreground">
-                  No locations specified
+                  {t("scriptDetails.noLocations")}
                 </span>
               )}
             </div>
           </div>
 
-          {/* Plant Type Section - UPDATED */}
           <div>
-            <h3 className="mb-2 text-sm font-medium">Plant Type</h3>
+            <h3 className="mb-2 text-sm font-medium">
+              {t("scriptDetails.plantType")}
+            </h3>
             <div className="flex flex-wrap gap-1">
               {script?.plant_type && script.plant_type.length > 0 ? (
                 <>
@@ -347,31 +340,36 @@ const ScriptDetailsCard = ({
                 </>
               ) : (
                 <span className="text-sm text-muted-foreground">
-                  No plants specified
+                  {t("scriptDetails.noPlants")}
                 </span>
               )}
             </div>
           </div>
 
           <div>
-            <h3 className="mb-1 text-sm font-medium">Privacy</h3>
+            <h3 className="mb-1 text-sm font-medium">
+              {t("scriptDetails.privacy")}
+            </h3>
             <div className="flex flex-wrap gap-2">
               <Badge
                 variant={"outline"}
-                className={`${
+                className={`text-nowrap ${
                   script?.privacy === "private"
                     ? "text-amber-500 dark:text-amber-400"
                     : "text-primary"
                 }`}
               >
-                {script?.privacy ? script?.privacy : "public"}
+                {script?.privacy && script.privacy === "private"
+                  ? t("scriptDetails.private")
+                  : t("scriptDetails.public")}
               </Badge>
             </div>
           </div>
 
-          {/* Average Rating Section */}
           <div>
-            <h3 className="mb-1 text-sm font-medium">Average Rating</h3>
+            <h3 className="mb-1 text-sm font-medium">
+              {t("scriptDetails.averageRating")}
+            </h3>
             <div className="flex items-center gap-2">
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((star) => {
@@ -382,13 +380,11 @@ const ScriptDetailsCard = ({
 
                   return (
                     <div key={star} className="relative w-4 h-4">
-                      {/* Base/empty star */}
                       <Star
                         size={20}
                         className="absolute text-gray-300 dark:text-gray-600"
                       />
 
-                      {/* Full or partial star overlay */}
                       {(isFullStar || isPartialStar) && (
                         <div
                           className="absolute inset-0 overflow-hidden"
@@ -411,14 +407,19 @@ const ScriptDetailsCard = ({
               <span className="text-sm text-muted-foreground">
                 {script?.rating.avg ? script.rating.avg.toFixed(1) : "0"} (
                 {script?.rating.count || 0}{" "}
-                {(script?.rating.count || 0) <= 1 ? "rating" : "ratings"})
+                {t("scriptDetails.rating", {
+                  value: script?.rating.avg || 0,
+                  count: script?.rating.count || 0,
+                })}
+                )
               </span>
             </div>
           </div>
 
-          {/* User Rating Section with Delete Option */}
           <div>
-            <h3 className="mb-1 text-sm font-medium">Your Rating</h3>
+            <h3 className="mb-1 text-sm font-medium">
+              {t("scriptDetails.yourRating")}
+            </h3>
             <div className="flex items-center gap-2">
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -438,20 +439,17 @@ const ScriptDetailsCard = ({
               </div>
               <span className="text-sm text-muted-foreground">
                 {localUserRating > 0
-                  ? `You rated ${localUserRating} ${
-                      localUserRating === 1 ? "star" : "stars"
-                    }`
-                  : "Rate this script"}
+                  ? t("scriptDetails.youRated", { value: localUserRating })
+                  : t("scriptDetails.rateScript")}
               </span>
 
-              {/* Delete Rating Button - Only show if user has rated */}
               {localUserRating > 0 && (
                 <Button
                   variant="ghost"
                   size="icon"
                   className="h-4 w-4 ml-1 text-muted-foreground hover:text-destructive"
                   onClick={handleDeleteRating}
-                  title="Delete your rating"
+                  title={t("scriptDetails.deleteRating")}
                 >
                   <Trash2 size={16} />
                 </Button>
@@ -460,11 +458,11 @@ const ScriptDetailsCard = ({
           </div>
 
           <DetailItem
-            label="Created"
+            label={t("scriptDetails.created")}
             value={formatDate(script?.createdAt ? script?.createdAt : "")}
           />
           <DetailItem
-            label="Last Updated"
+            label={t("scriptDetails.lastUpdated")}
             value={formatDate(script?.updatedAt ? script?.updatedAt : "")}
           />
 
@@ -472,21 +470,23 @@ const ScriptDetailsCard = ({
             <>
               <Separator />
               <div className="grid gap-2">
-                <h3 className="text-sm font-medium">Actions</h3>
+                <h3 className="text-sm font-medium">
+                  {t("scriptDetails.actions")}
+                </h3>
                 <div className="grid grid-cols-2 gap-2">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setIsEditModalOpen(true)}
                   >
-                    Edit Script
+                    {t("scriptDetails.editScript")}
                   </Button>
                   <Button
                     variant="destructive"
                     size="sm"
                     onClick={() => setIsDeleteModalOpen(true)}
                   >
-                    Delete
+                    {t("delete")}
                   </Button>
                 </div>
               </div>
@@ -495,7 +495,6 @@ const ScriptDetailsCard = ({
         </CardContent>
       </Card>
 
-      {/* Modals for showing all items */}
       {script?.location && (
         <ItemsListModal
           open={isLocationModalOpen}

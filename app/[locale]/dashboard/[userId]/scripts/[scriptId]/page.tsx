@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, ShieldAlert } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,28 +19,26 @@ import scriptApi from "@/api/scriptAPI";
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
+  const t = useTranslations("dashboard.scripts.detail");
   const router = useRouter();
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" onClick={() => router.back()}>
           <ArrowLeft className="h-4 w-4" />
-          <span className="sr-only">Back</span>
+          <span className="sr-only">{t("back")}</span>
         </Button>
-        <h1 className="text-2xl font-bold">Page Not Found</h1>
+        <h1 className="text-2xl font-bold">{t("notFound.title")}</h1>
       </div>
 
       <Alert variant="destructive" className="bg-destructive/10">
         <ShieldAlert className="h-5 w-5" />
-        <AlertTitle className="mb-2">Invalid Tab</AlertTitle>
-        <AlertDescription>
-          The requested tab does not exist. Please select a valid tab or return
-          to your scripts.
-        </AlertDescription>
+        <AlertTitle className="mb-2">{t("notFound.invalidTab")}</AlertTitle>
+        <AlertDescription>{t("notFound.description")}</AlertDescription>
         <div className="mt-4">
           <Button asChild>
             <Link href={`/dashboard/${userId}/scripts?tab=all`}>
-              Return to My Scripts
+              {t("notFound.returnButton")}
             </Link>
           </Button>
         </div>
@@ -53,12 +52,12 @@ const ScriptDetailPage = ({
 }: {
   params: { userId: string; scriptId: string };
 }) => {
+  const t = useTranslations("dashboard.scripts.detail");
   const router = useRouter();
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
 
   const validTabs = ["code", "comments", "versions"];
-  // Changed this line to require a tab parameter that is valid
   const isValidTab = tabParam && validTabs.includes(tabParam);
   const tabName = isValidTab ? tabParam : "code";
 
@@ -106,40 +105,36 @@ const ScriptDetailPage = ({
     fetchScriptInfo();
   }, [params.userId, params.scriptId]);
 
-  // If no tab param or invalid tab, render NotFound component
   if (!isValidTab) {
     return <NotFoundComponent userId={userId} />;
   }
 
-  // Handle tab change by updating query parameter
   const handleTabChange = (value: string) => {
     const newUrl = `/dashboard/${params.userId}/scripts/${params.scriptId}?tab=${value}`;
     router.replace(newUrl);
   };
 
-  // Access denied UI
   if (!hasAccess && !isChecking) {
     return (
       <div className="grid gap-6">
         <div className="flex items-center gap-4">
           <Button variant="ghost" onClick={() => router.back()}>
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back</span>
+            <span className="sr-only">{t("back")}</span>
           </Button>
-          <h1 className="text-2xl font-bold">Script Access</h1>
+          <h1 className="text-2xl font-bold">{t("accessDenied.title")}</h1>
         </div>
 
         <Alert variant="destructive" className="bg-destructive/10">
           <ShieldAlert className="h-5 w-5" />
-          <AlertTitle className="mb-2">Access Denied</AlertTitle>
-          <AlertDescription>
-            You don't have permission to view this script. Please contact the
-            script owner if you believe this is an error.
-          </AlertDescription>
+          <AlertTitle className="mb-2">
+            {t("accessDenied.alertTitle")}
+          </AlertTitle>
+          <AlertDescription>{t("accessDenied.description")}</AlertDescription>
           <div className="mt-4">
             <Button asChild>
               <Link href={`/dashboard/${userId}/scripts?tab=all`}>
-                Return to My Scripts
+                {t("accessDenied.returnButton")}
               </Link>
             </Button>
           </div>
@@ -148,33 +143,29 @@ const ScriptDetailPage = ({
     );
   }
 
-  // Loading state
   if (isChecking) {
     return (
       <div className="grid gap-6">
         <div className="flex items-center gap-4">
           <Button variant="ghost" onClick={() => router.back()}>
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back</span>
+            <span className="sr-only">{t("back")}</span>
           </Button>
-          <h1 className="text-2xl font-bold">Loading...</h1>
+          <h1 className="text-2xl font-bold">{t("loading")}</h1>
         </div>
         <div className="flex items-center justify-center p-12">
-          <p className="text-sm text-muted-foreground">
-            Checking access permissions...
-          </p>
+          <p className="text-sm text-muted-foreground">{t("checkingAccess")}</p>
         </div>
       </div>
     );
   }
 
-  // Normal view with access
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" onClick={() => router.back()}>
           <ArrowLeft className="h-4 w-4" />
-          <span className="sr-only">Back</span>
+          <span className="sr-only">{t("back")}</span>
         </Button>
         <h1 className="text-2xl font-bold">{scriptInfo?.name}</h1>
       </div>
@@ -182,16 +173,16 @@ const ScriptDetailPage = ({
         <div className="lg:col-span-2">
           <Tabs value={tabName} onValueChange={handleTabChange}>
             <TabsList>
-              <TabsTrigger value="code">Code</TabsTrigger>
-              <TabsTrigger value="comments">Comments</TabsTrigger>
-              <TabsTrigger value="versions">Versions</TabsTrigger>
+              <TabsTrigger value="code">{t("tabs.code")}</TabsTrigger>
+              <TabsTrigger value="comments">{t("tabs.comments")}</TabsTrigger>
+              <TabsTrigger value="versions">{t("tabs.versions")}</TabsTrigger>
             </TabsList>
             <TabsContent value="code" className="border-none p-0 pt-4">
               {scriptInfo ? (
                 <CodeTab script={scriptInfo} />
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  Loading script details...
+                  {t("loadingDetails")}
                 </p>
               )}
             </TabsContent>
@@ -200,7 +191,7 @@ const ScriptDetailPage = ({
                 <CommentsTab script={scriptInfo} />
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  Loading script details...
+                  {t("loadingDetails")}
                 </p>
               )}
             </TabsContent>

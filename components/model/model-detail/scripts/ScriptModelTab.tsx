@@ -9,6 +9,8 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
@@ -26,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { formatDate } from "@/lib/formatDate";
 
 const ScriptModelTab = ({ model }: { model: Model }) => {
+  const t = useTranslations("dashboard.models.scripts");
   const params = useParams();
   const userId: string = Array.isArray(params.userId)
     ? params.userId[0]
@@ -62,6 +65,9 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
       } catch (err) {
         setScriptError("Error fetching model scripts");
         console.error("Error fetching model scripts:", err);
+        toast.error(t("toast.fetchError"), {
+          description: t("toast.fetchErrorDesc"),
+        });
       } finally {
         setScriptLoading(false);
       }
@@ -117,13 +123,13 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardTitle className="mb-2">Associated Scripts</CardTitle>
-          <CardDescription>Scripts belong to this model</CardDescription>
+          <CardTitle className="mb-2">{t("title")}</CardTitle>
+          <CardDescription>{t("description")}</CardDescription>
         </div>
         <div className="flex flex-col gap-4 items-end">
           <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
           <div className="flex items-center gap-2">
-            <Label>Sort by:</Label>
+            <Label>{t("sortBy")}</Label>
             <Select
               value={sortField}
               onValueChange={(value: "createdAt" | "updatedAt") =>
@@ -134,8 +140,12 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
                 <SelectValue placeholder="Select field" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="createdAt">Creation Date</SelectItem>
-                <SelectItem value="updatedAt">Last Update</SelectItem>
+                <SelectItem value="createdAt">
+                  {t("sortFields.creationDate")}
+                </SelectItem>
+                <SelectItem value="updatedAt">
+                  {t("sortFields.lastUpdate")}
+                </SelectItem>
               </SelectContent>
             </Select>
             <Select
@@ -148,8 +158,12 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
                 <SelectValue placeholder="Select order" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="desc">Latest First</SelectItem>
-                <SelectItem value="asc">Oldest First</SelectItem>
+                <SelectItem value="desc">
+                  {t("sortFields.latestFirst")}
+                </SelectItem>
+                <SelectItem value="asc">
+                  {t("sortFields.oldestFirst")}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -160,19 +174,23 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
           {paginatedVersions?.map((item: ScriptModel, index: number) => (
             <div key={index}>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="font-semibold">Version {item.version}</span>
+                <span className="font-semibold">
+                  {t("version")} {item.version}
+                </span>
               </div>
               <Card>
                 <CardContent className="p-4 grid grid-cols-2 gap-2">
                   <div className="flex gap-1">
-                    <span className="mb-1 text-sm font-medium">Version:</span>
+                    <span className="mb-1 text-sm font-medium">
+                      {t("version")}:
+                    </span>
                     <span className="text-sm text-muted-foreground">
                       {item.version}
                     </span>
                   </div>
                   <div className="flex gap-1">
                     <span className="mb-1 text-sm font-medium">
-                      Model Version:
+                      {t("modelVersion")}:
                     </span>
                     <span className="text-sm text-muted-foreground">
                       {item.model_version}
@@ -180,7 +198,7 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
                   </div>
                   <div className="flex gap-1">
                     <span className="mb-1 text-sm font-medium">
-                      Created At:
+                      {t("createdAt")}:
                     </span>
                     <span className="text-sm text-muted-foreground">
                       {formatDate(item.createdAt)}
@@ -188,7 +206,7 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
                   </div>
                   <div className="flex gap-1">
                     <span className="mb-1 text-sm font-medium">
-                      Lasted Update:
+                      {t("lastUpdate")}:
                     </span>
                     <span className="text-sm text-muted-foreground">
                       {formatDate(item.updatedAt)}
@@ -200,7 +218,7 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
           ))}
           {filteredScripts?.length === 0 && (
             <div className="text-center text-muted-foreground py-4">
-              No scripts found in the selected date range
+              {t("noScripts")}
             </div>
           )}
           {totalPages > 1 && (

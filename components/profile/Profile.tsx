@@ -32,6 +32,7 @@ import userApi from "@/api/userAPI";
 // Import for Avatar Editor Modal
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import AvatarEditor from "react-avatar-editor";
+import { useTranslations } from "next-intl";
 
 // Component to display the correct icon based on link type
 const LinkIcon = ({ type }: { type: string }) => {
@@ -56,6 +57,7 @@ const LinkIcon = ({ type }: { type: string }) => {
 };
 
 const ProfileCard = () => {
+  const t = useTranslations("profile");
   const { toast } = useToast();
   // Get userId
   const { userId } = useParams() as { userId: string };
@@ -222,8 +224,8 @@ const ProfileCard = () => {
       if (file.size > 5000000) {
         // 5MB
         toast({
-          title: "File too large",
-          description: "The image will be compressed to prevent upload errors.",
+          title: t("edit.avatar.error"),
+          description: t("edit.avatar.upload"),
           variant: "default",
         });
       }
@@ -277,8 +279,8 @@ const ProfileCard = () => {
 
       // Show success message
       toast({
-        title: "Profile updated",
-        description: "Your profile has been updated successfully.",
+        title: t("edit.success"),
+        description: t("edit.success"),
       });
 
       // Refetch the profile data to update the view
@@ -292,15 +294,14 @@ const ProfileCard = () => {
       // Handle 413 error specifically
       if (error.response && error.response.status === 413) {
         toast({
-          title: "Image too large",
-          description:
-            "The profile image is too large. Please try a smaller image or lower quality.",
+          title: t("edit.avatar.error"),
+          description: t("edit.avatar.error"),
           variant: "destructive",
         });
       } else {
         toast({
-          title: "Error",
-          description: "Failed to update profile. Please try again.",
+          title: t("edit.error"),
+          description: t("edit.error"),
           variant: "destructive",
         });
       }
@@ -315,7 +316,7 @@ const ProfileCard = () => {
       <Card>
         <CardContent className="p-6">
           <div className="flex justify-center items-center h-64">
-            <p>Loading profile data...</p>
+            <p>{t("Common.loading")}</p>
           </div>
         </CardContent>
       </Card>
@@ -328,9 +329,7 @@ const ProfileCard = () => {
       <Card>
         <CardContent className="p-6">
           <div className="flex justify-center items-center h-64">
-            <p className="text-red-500">
-              Error loading profile. Please try again.
-            </p>
+            <p className="text-red-500">{t("Common.error")}</p>
           </div>
         </CardContent>
       </Card>
@@ -357,26 +356,33 @@ const ProfileCard = () => {
               <h2 className="text-2xl font-bold mt-2">{profile?.username}</h2>
 
               {/* Bio */}
-              <p className="text-sm text-muted-foreground">{profile?.bio}</p>
+              <p className="text-sm text-muted-foreground">
+                {profile?.bio || t("view.noBio")}
+              </p>
 
               {/* Following and Followers */}
               <div className="flex flex-col md:flex-row gap-2">
                 <div className="flex items-center">
                   <Eye className="h-4 w-4 text-muted-foreground" />
                   <span className="ml-2 text-sm text-muted-foreground">
-                    Following: {profile?.following || 0}
+                    {t("view.following")}: {profile?.following || 0}
                   </span>
                 </div>
                 <div className="flex items-center md:ml-6">
                   <User className="h-4 w-4 text-muted-foreground" />
                   <span className="ml-2 text-sm text-muted-foreground">
-                    Followers: {profile?.follower || 0}
+                    {t("view.followers")}: {profile?.follower || 0}
                   </span>
                 </div>
               </div>
 
               {/* Links */}
               <div className="space-y-2">
+                {profile?.links?.length === 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    {t("view.noLinks")}
+                  </p>
+                )}
                 {profile?.links?.map((item, index) => {
                   if (!item.link || item.link.length === 0) return null;
                   return (
@@ -406,7 +412,7 @@ const ProfileCard = () => {
                     className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700"
                     onClick={() => setIsEditMode(true)}
                   >
-                    Edit Profile
+                    {t("view.editProfile")}
                   </Button>
                 </div>
               )}
@@ -421,8 +427,8 @@ const ProfileCard = () => {
   return (
     <Card className="border-b-8 border-primary/20">
       <CardHeader>
-        <CardTitle>Edit Profile</CardTitle>
-        <CardDescription>Update your profile information below</CardDescription>
+        <CardTitle>{t("edit.title")}</CardTitle>
+        <CardDescription>{t("edit.description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -435,7 +441,7 @@ const ProfileCard = () => {
             <div className="flex items-center gap-2">
               <Label htmlFor="avatar-upload" className="cursor-pointer">
                 <Button variant="outline" size="sm" type="button" asChild>
-                  <span>Change Avatar</span>
+                  <span>{t("edit.avatar.change")}</span>
                 </Button>
               </Label>
               <Input
@@ -451,7 +457,7 @@ const ProfileCard = () => {
           {/* Basic Info Section */}
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">{t("edit.form.username")}</Label>
               <Input
                 id="username"
                 name="username"
@@ -461,7 +467,7 @@ const ProfileCard = () => {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="bio">Bio</Label>
+              <Label htmlFor="bio">{t("edit.form.bio")}</Label>
               <Textarea
                 id="bio"
                 name="bio"
@@ -475,14 +481,14 @@ const ProfileCard = () => {
           {/* Social Links Section */}
           <div className="grid gap-4">
             <div className="flex items-center justify-between">
-              <Label>Social Links</Label>
+              <Label>{t("edit.form.socialLinks")}</Label>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={addLink}
               >
-                Add Link
+                {t("edit.form.addLink")}
               </Button>
             </div>
 
@@ -510,7 +516,7 @@ const ProfileCard = () => {
                       <LinkIcon type={link.type} />
                       <Input
                         className="border-0 p-0 focus-visible:ring-0"
-                        placeholder={`Enter your ${link.type} link`}
+                        placeholder={t("edit.form.addLink")}
                         value={link.link || ""}
                         onChange={(e) =>
                           handleLinkChange(index, e.target.value)
@@ -523,7 +529,7 @@ const ProfileCard = () => {
                       size="sm"
                       onClick={() => removeLink(index)}
                     >
-                      Remove
+                      {t("edit.form.removeLink")}
                     </Button>
                   </div>
                 ))}
@@ -538,10 +544,12 @@ const ProfileCard = () => {
               onClick={() => setIsEditMode(false)}
               disabled={isSubmitting}
             >
-              Cancel
+              {t("edit.form.cancel")}
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : "Save Changes"}
+              {isSubmitting
+                ? t("edit.form.saving")
+                : t("edit.form.saveChanges")}
             </Button>
           </div>
         </form>
@@ -588,7 +596,7 @@ const ProfileCard = () => {
                 variant="outline"
                 onClick={() => setIsAvatarModalOpen(false)}
               >
-                Cancel
+                {t("edit.form.cancel")}
               </Button>
               <Button
                 type="button"
@@ -598,14 +606,14 @@ const ProfileCard = () => {
                     handleAvatarConfirm(croppedImage);
                   } else {
                     toast({
-                      title: "Error",
-                      description: "Failed to process image. Please try again.",
+                      title: t("Common.error"),
+                      description: t("edit.avatar.error"),
                       variant: "destructive",
                     });
                   }
                 }}
               >
-                Save
+                {t("edit.form.saveChanges")}
               </Button>
             </div>
           </div>

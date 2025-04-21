@@ -4,6 +4,7 @@ import { Script, ScriptsListOptions } from "@/types/script";
 import { CardSkeletonGrid } from "@/components/skeleton/CardSkeletonGrid";
 import Pagination from "@/components/ui/pagination";
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface ScriptListProps {
   scripts: Script[];
@@ -22,6 +23,7 @@ const ScriptList = ({
   loading,
   refetch,
 }: ScriptListProps) => {
+  const t = useTranslations("dashboard.scripts.list");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
 
@@ -48,9 +50,11 @@ const ScriptList = ({
     <div className="space-y-4">
       {!scripts || scripts.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-          <h3 className="mb-2 text-lg font-semibold">No scripts found</h3>
+          <h3 className="mb-2 text-lg font-semibold">
+            {t("emptyState.title")}
+          </h3>
           <p className="text-sm text-muted-foreground">
-            Try adjusting your filters or try a different search query.
+            {t("emptyState.description")}
           </p>
         </div>
       ) : (

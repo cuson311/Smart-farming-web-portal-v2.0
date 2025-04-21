@@ -7,6 +7,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Code2, Database, Home, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+
 interface DashboardLayoutProps {
   children: React.ReactNode;
 }
@@ -14,6 +16,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname();
   const [userId, setUserId] = useState<string>("");
+  const t = useTranslations("dashboard");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -25,31 +28,31 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const routes = [
     {
       href: "/dashboard",
-      label: "Dashboard",
+      label: t("navigation.dashboard"),
       icon: Home,
       active: pathname === "/dashboard",
     },
     {
       href: `/dashboard/${userId}/profile?tab=profile`,
-      label: "Profile",
+      label: t("navigation.profile"),
       icon: User,
       active: pathname.includes(`/dashboard/${userId}/profile`),
     },
     {
       href: `/dashboard/${userId}/scripts?tab=all`,
-      label: "Scripts",
+      label: t("navigation.scripts"),
       icon: Code2,
       active: pathname.includes(`/dashboard/${userId}/scripts`),
     },
     {
       href: `/dashboard/${userId}/models`,
-      label: "Models",
+      label: t("navigation.models"),
       icon: Database,
       active: pathname.includes(`/dashboard/${userId}/models`),
     },
     {
       href: "/dashboard/settings",
-      label: "Settings",
+      label: t("navigation.settings"),
       icon: Settings,
       active: pathname === "/dashboard/settings",
     },

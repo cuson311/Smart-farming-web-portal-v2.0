@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,22 +23,23 @@ const DeleteScriptModal = ({
   onConfirm,
   scriptName = "this script",
 }: DeleteScriptModalProps) => {
+  const t = useTranslations("dashboard.scripts.detail");
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Delete Script</DialogTitle>
+          <DialogTitle>{t("deleteDialog.title")}</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete <strong>{scriptName}</strong>? This
-            action cannot be undone.
+            {t("deleteDialog.description", { name: scriptName })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex gap-2 pt-4">
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button variant="destructive" onClick={onConfirm}>
-            Delete
+            {t("delete")}
           </Button>
         </DialogFooter>
       </DialogContent>

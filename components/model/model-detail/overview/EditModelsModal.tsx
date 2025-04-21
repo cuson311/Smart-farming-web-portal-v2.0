@@ -25,6 +25,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import modelApi from "@/api/modelAPI";
+import { useTranslations } from "next-intl";
 
 interface Tag {
   key: string;
@@ -46,6 +47,7 @@ const EditModelModal = ({
   model,
   title = "Edit Model",
 }: EditModelModalProps) => {
+  const t = useTranslations("dashboard.models");
   // Form Data
   const [formData, setFormData] = useState({
     name: "",
@@ -106,8 +108,8 @@ const EditModelModal = ({
 
     if (tagKey.trim() === "" || tagValue.trim() === "") {
       toast({
-        title: "Missing information",
-        description: "Please provide both key and value for the tag.",
+        title: t("editModel.missingInfo"),
+        description: t("editModel.tagMissingInfo"),
         variant: "destructive",
       });
       return;
@@ -116,8 +118,8 @@ const EditModelModal = ({
     const userId = localStorage.getItem("userId");
     if (!userId) {
       toast({
-        title: "Authentication error",
-        description: "You must be logged in to manage tags.",
+        title: t("editModel.missingInfo"),
+        description: t("editModel.provideName"),
         variant: "destructive",
       });
       return;
@@ -143,8 +145,8 @@ const EditModelModal = ({
         // Check for duplicate keys
         if (formData.tags.some((tag) => tag.key === tagKey.trim())) {
           toast({
-            title: "Duplicate tag",
-            description: "A tag with this key already exists.",
+            title: t("editModel.duplicateTag"),
+            description: t("editModel.duplicateTagDesc"),
             variant: "destructive",
           });
           setIsTagProcessing(false);
@@ -181,20 +183,25 @@ const EditModelModal = ({
       }
 
       toast({
-        title: isEditingTag ? "Tag updated" : "Tag added",
-        description: `Tag ${tagKey.trim()} has been ${
-          isEditingTag ? "updated" : "added"
-        } successfully.`,
+        title: isEditingTag
+          ? t("editModel.tagUpdated")
+          : t("editModel.tagAdded"),
+        description: t(
+          isEditingTag
+            ? "editModel.tagUpdateSuccess"
+            : "editModel.tagAddSuccess",
+          { key: tagKey.trim() }
+        ),
       });
 
       resetTagInputs();
     } catch (error) {
       console.error("Error managing tag:", error);
       toast({
-        title: "Tag operation failed",
-        description: `Failed to ${
-          isEditingTag ? "update" : "add"
-        } tag. Please try again.`,
+        title: t("editModel.tagOperationFailed"),
+        description: t(
+          isEditingTag ? "editModel.tagUpdateFailed" : "editModel.tagAddFailed"
+        ),
         variant: "destructive",
       });
     } finally {
@@ -268,8 +275,8 @@ const EditModelModal = ({
   const handleSubmit = async () => {
     if (!formData.name) {
       toast({
-        title: "Missing information",
-        description: "Please provide a name for your model.",
+        title: t("editModel.missingInfo"),
+        description: t("editModel.provideName"),
         variant: "destructive",
       });
       return;
@@ -297,7 +304,7 @@ const EditModelModal = ({
           className="sm:max-w-[65%] max-h-[80vh] overflow-y-auto"
         >
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle>{t("editModel.title")}</DialogTitle>
           </DialogHeader>
 
           {/* Model Info */}
@@ -305,54 +312,54 @@ const EditModelModal = ({
             <div className="space-y-4">
               <div className="grid gap-2">
                 <Label htmlFor="name" className="font-medium">
-                  Model Name
+                  {t("editModel.modelName")}
                 </Label>
                 <Input
                   disabled={true}
                   id="name"
                   value={formData.name}
                   onChange={(e) => handleChange("name", e.target.value)}
-                  placeholder="Enter model name"
+                  placeholder={t("editModel.modelName")}
                 />
               </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="description" className="font-medium">
-                  Description
+                  {t("editModel.description")}
                 </Label>
                 <Textarea
                   id="description"
                   value={formData.description}
                   onChange={(e) => handleChange("description", e.target.value)}
-                  placeholder="Enter model description (optional)"
+                  placeholder={t("editModel.descriptionPlaceholder")}
                   rows={4}
                 />
               </div>
 
               {/* Tags Section */}
               <div className="grid gap-2">
-                <Label className="font-medium">Tags</Label>
+                <Label className="font-medium">{t("editModel.tags")}</Label>
                 <div className="flex gap-4">
                   <div className="flex items-center gap-2 flex-1">
                     <Label htmlFor="tagKey" className="text-s">
-                      Key
+                      {t("editModel.tagKey")}
                     </Label>
                     <Input
                       id="tagKey"
                       value={tagKey}
-                      placeholder="Enter tag key"
+                      placeholder={t("editModel.tagKeyPlaceholder")}
                       disabled={isTagProcessing || isEditingTag}
                     />
                   </div>
                   <div className="flex items-center gap-2 flex-1">
                     <Label htmlFor="tagValue" className="text-s">
-                      Value
+                      {t("editModel.tagValue")}
                     </Label>
                     <Input
                       id="tagValue"
                       value={tagValue}
                       onChange={handleTagValueChange}
-                      placeholder="Enter tag value"
+                      placeholder={t("editModel.tagValuePlaceholder")}
                       disabled={isTagProcessing}
                     />
                   </div>
@@ -423,10 +430,10 @@ const EditModelModal = ({
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>
-              Cancel
+              {t("editModel.cancel")}
             </Button>
             <Button type="submit" onClick={handleSubmit}>
-              Confirm
+              {t("editModel.confirm")}
             </Button>
           </DialogFooter>
         </DialogContent>

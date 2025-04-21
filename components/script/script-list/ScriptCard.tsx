@@ -13,6 +13,7 @@ import { Script } from "@/types/script";
 import { useParams } from "next/navigation";
 import { formatDate } from "@/lib/formatDate";
 import { Badge } from "@/components/ui/badge";
+import { useTranslations } from "next-intl";
 
 interface ScriptCardProps {
   script: Script;
@@ -25,6 +26,7 @@ interface ScriptCardProps {
 }
 
 const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
+  const t = useTranslations("dashboard.scripts.list.card");
   const { userId } = useParams();
 
   return (
@@ -37,18 +39,20 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
             <span className="flex items-center justify-center">
               <Badge
                 variant={"outline"}
-                className={`${
+                className={`text-nowrap ${
                   script.privacy === "private"
                     ? "text-amber-500 dark:text-amber-400"
                     : "text-primary"
                 }`}
               >
-                {script.privacy ? script.privacy : "public"}
+                {script.privacy && script.privacy === "private"
+                  ? t("private")
+                  : t("public")}
               </Badge>
             </span>
           </CardTitle>
           <CardDescription className="line-clamp-3">
-            {script.description ? script.description : "No description"}
+            {script.description ? script.description : t("noDescription")}
           </CardDescription>
         </div>
         <div className="flex items-center flex-shrink-0">
@@ -64,7 +68,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
               className={script.isFavorite ? "fill-red-500 text-red-500" : ""}
               size={16}
             />
-            <span className="sr-only">Favorite</span>
+            <span className="sr-only">{t("favorite")}</span>
           </Button>
 
           <span className="text-sm text-muted-foreground">
@@ -83,7 +87,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
                 <div className="flex items-center mr-1">
                   <MapPin className="h-3 w-3 text-gray-400 mr-1" />
                   <span className="text-xs text-muted-foreground">
-                    Locations:
+                    {t("locations")}
                   </span>
                 </div>
                 {script.location.slice(0, 3).map((loc) => (
@@ -93,7 +97,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
                 ))}
                 {script.location.length > 3 && (
                   <Badge variant="outline" className="text-xs py-0">
-                    +{script.location.length - 3} more
+                    {t("more", { count: script.location.length - 3 })}
                   </Badge>
                 )}
               </>
@@ -101,7 +105,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
               <div className="flex items-center mr-1">
                 <MapPin className="h-3 w-3 text-gray-400 dark:text-gray-500 mr-1" />
                 <span className="text-xs text-gray-400 dark:text-gray-500">
-                  No locations specified
+                  {t("noLocations")}
                 </span>
               </div>
             )}
@@ -113,7 +117,9 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
               <>
                 <div className="flex items-center mr-1">
                   <Leaf className="h-3 w-3 text-gray-400 mr-1" />
-                  <span className="text-xs text-muted-foreground">Plants:</span>
+                  <span className="text-xs text-muted-foreground">
+                    {t("plants")}
+                  </span>
                 </div>
                 {script.plant_type.slice(0, 3).map((type) => (
                   <Badge key={type} variant="outline" className="text-xs py-0">
@@ -122,7 +128,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
                 ))}
                 {script.plant_type.length > 3 && (
                   <Badge variant="outline" className="text-xs py-0">
-                    +{script.plant_type.length - 3} more
+                    {t("more", { count: script.plant_type.length - 3 })}
                   </Badge>
                 )}
               </>
@@ -130,7 +136,7 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
               <div className="flex items-center mr-1">
                 <Leaf className="h-3 w-3 text-gray-400 dark:text-gray-500 mr-1" />
                 <span className="text-xs text-gray-400 dark:text-gray-500">
-                  No plants specified
+                  {t("noPlants")}
                 </span>
               </div>
             )}
@@ -182,14 +188,16 @@ const ScriptCard = ({ script, toggleFavorite, refetch }: ScriptCardProps) => {
       <CardFooter className="flex items-center justify-between mt-auto">
         <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           {script.updatedAt ? (
-            <span>Updated at {formatDate(script.updatedAt)}</span>
+            <span>
+              {t("updatedAt", { date: formatDate(script.updatedAt) })}
+            </span>
           ) : null}
         </div>
         <Button variant="ghost" size="sm" asChild>
           <Link
             href={`/dashboard/${script.owner_id}/scripts/${script._id}?tab=code`}
           >
-            View
+            {t("view")}
           </Link>
         </Button>
       </CardFooter>

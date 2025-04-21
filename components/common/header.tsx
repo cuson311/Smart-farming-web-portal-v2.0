@@ -30,6 +30,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useFetchProfile } from "@/hooks/useFetchUser";
 import { NotiInfo } from "@/types/user";
 import { useSocket } from "@/hooks/useSocket";
+import { LanguageSwitcher } from "../language-switcher";
+import { useTranslations } from "next-intl";
 
 const Header = () => {
   const router = useRouter();
@@ -38,14 +40,11 @@ const Header = () => {
   const [userId, setUserId] = useState<string>("");
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const t = useTranslations("header");
 
-  // Use the socket hook - moved inside the component body to ensure it's only used when component is mounted
   const { notifications, socket, ring, setRing } = useSocket();
-
-  // Only fetch profile when userId exists and user is logged in
   const { data: user } = useFetchProfile(isLoggedIn ? userId : "");
 
-  // Check login status on component mount and pathname change
   useEffect(() => {
     const checkLoginStatus = () => {
       if (typeof window !== "undefined") {
@@ -60,47 +59,45 @@ const Header = () => {
 
     checkLoginStatus();
 
-    // Set up event listener for login/logout events
     window.addEventListener("storage", checkLoginStatus);
     window.addEventListener("logoutSuccess", checkLoginStatus);
     window.addEventListener("loginSuccess", checkLoginStatus);
 
-    // Clean up
     return () => {
       window.removeEventListener("storage", checkLoginStatus);
       window.removeEventListener("logoutSuccess", checkLoginStatus);
       window.removeEventListener("loginSuccess", checkLoginStatus);
     };
-  }, [pathname]); // Re-run on pathname changes to catch login redirects
+  }, [pathname]);
 
   const dashboardRoutes = [
     {
       href: "/dashboard",
-      label: "Dashboard",
+      label: t("navigation.dashboard"),
       icon: Home,
       active: pathname === "/dashboard",
     },
     {
       href: `/dashboard/${userId}/profile?tab=profile`,
-      label: "Profile",
+      label: t("navigation.profile"),
       icon: User,
       active: pathname.includes(`/dashboard/${userId}/profile`),
     },
     {
       href: `/dashboard/${userId}/scripts?tab=all`,
-      label: "Scripts",
+      label: t("navigation.scripts"),
       icon: Code2,
       active: pathname.includes(`/dashboard/${userId}/scripts`),
     },
     {
       href: "/dashboard/models",
-      label: "Models",
+      label: t("navigation.models"),
       icon: Database,
       active: pathname.includes("/dashboard/models"),
     },
     {
       href: "/dashboard/settings",
-      label: "Settings",
+      label: t("navigation.settings"),
       icon: Settings,
       active: pathname === "/dashboard/settings",
     },
@@ -113,7 +110,6 @@ const Header = () => {
       localStorage.removeItem("profileImage");
       localStorage.removeItem("curUsername");
 
-      // Dispatch custom event to update other components
       window.dispatchEvent(new Event("logoutSuccess"));
     }
 
@@ -121,14 +117,12 @@ const Header = () => {
     router.replace("/");
   };
 
-  // Reset notification ring when dropdown is opened
   const handleNotificationOpen = () => {
     if (ring) {
       setRing(false);
     }
   };
 
-  // Render loading state
   if (isLoading) {
     return (
       <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
@@ -136,7 +130,7 @@ const Header = () => {
           <Link href="/">
             <div className="flex items-center gap-2">
               <Droplets className="h-6 w-6 text-primary" />
-              <span>Irrigation Portal</span>
+              <span>{t("brand")}</span>
             </div>
           </Link>
         </div>
@@ -155,7 +149,7 @@ const Header = () => {
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="mr-2 md:hidden">
                 <ChevronDown className="h-4 w-4" />
-                <span className="sr-only">Toggle navigation menu</span>
+                <span className="sr-only">{t("mobileMenu")}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-72 bg-background">
@@ -163,7 +157,7 @@ const Header = () => {
                 <Link href="/">
                   <div className="flex items-center gap-2">
                     <Droplets className="h-6 w-6 text-primary" />
-                    <span className="font-semibold">Irrigation Portal</span>
+                    <span className="font-semibold">{t("brand")}</span>
                   </div>
                 </Link>
               </div>
@@ -190,12 +184,12 @@ const Header = () => {
         )}
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <Droplets className="h-6 w-6 text-primary" />
-          <span>Irrigation Portal</span>
+          <span>{t("brand")}</span>
         </Link>
       </div>
-
       {isLoggedIn ? (
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <ThemeToggle />
           <DropdownMenu onOpenChange={handleNotificationOpen}>
             <DropdownMenuTrigger asChild>
@@ -212,15 +206,17 @@ const Header = () => {
                     {notifications.total}
                   </span>
                 )}
-                <span className="sr-only">Notifications</span>
+                <span className="sr-only">{t("notifications")}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-72">
-              <div className="p-2 font-medium border-b">Notifications</div>
+              <div className="p-2 font-medium border-b">
+                {t("notifications")}
+              </div>
               <div className="max-h-96 overflow-auto">
                 {!notifications || notifications.total === 0 ? (
                   <div className="p-4 text-center text-gray-500">
-                    No notifications
+                    {t("noNotifications")}
                   </div>
                 ) : (
                   notifications.data.map((notification: NotiInfo) => (
@@ -237,13 +233,13 @@ const Header = () => {
                         </div>
                         <p className="font-medium">
                           <span className="font-semibold">
-                            {notification.from?.username || "Someone"}
+                            {notification.from?.username || t("someone")}
                           </span>{" "}
-                          shared{" "}
+                          {t("shared")}{" "}
                           {notification.script_id?.name
                             ? notification.script_id?.name
-                            : "something"}{" "}
-                          with you
+                            : t("something")}{" "}
+                          {t("withYou")}
                         </p>
                       </div>
                     </DropdownMenuItem>
@@ -253,7 +249,7 @@ const Header = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild className="justify-center font-medium">
                 <Link href={`/dashboard/${userId}/profile?tab=notifications`}>
-                  View all notifications
+                  {t("viewAllNotifications")}
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -268,7 +264,7 @@ const Header = () => {
                 <Avatar className="h-8 w-8">
                   <AvatarImage
                     src={user?.profile_image || "/placeholder-user.jpg"}
-                    alt={user?.username || "User"}
+                    alt={user?.username || t("user")}
                   />
                   <AvatarFallback>
                     {user?.username
@@ -282,31 +278,31 @@ const Header = () => {
               <DropdownMenuItem asChild>
                 <Link href={`/dashboard/${userId}/profile?tab=profile`}>
                   <User className="mr-2 h-4 w-4" />
-                  Profile
+                  {t("navigation.profile")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href={`/dashboard/${userId}/scripts?tab=all`}>
                   <Code2 className="mr-2 h-4 w-4" />
-                  Scripts
+                  {t("navigation.scripts")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href={`/dashboard/${userId}/models`}>
                   <Database className="mr-2 h-4 w-4" />
-                  Models
+                  {t("navigation.models")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/settings">
                   <Settings className="mr-2 h-4 w-4" />
-                  Settings
+                  {t("navigation.settings")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignout}>
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                <span>{t("logout")}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -318,31 +314,32 @@ const Header = () => {
               href="#features"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Features
+              {t("features")}
             </Link>
             <Link
               href="#testimonials"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Testimonials
+              {t("testimonials")}
             </Link>
             <Link
               href="#pricing"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Pricing
+              {t("pricing")}
             </Link>
             <Link
               href="#contact"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Contact
+              {t("contact")}
             </Link>
           </nav>
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             <ThemeToggle />
             <Button asChild>
-              <Link href="/dashboard">Get Started</Link>
+              <Link href="/dashboard">{t("getStarted")}</Link>
             </Button>
           </div>
         </>

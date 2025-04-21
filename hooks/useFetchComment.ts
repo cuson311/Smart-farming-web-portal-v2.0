@@ -2,12 +2,16 @@ import { useState, useEffect, useCallback } from "react";
 import commentApi from "../api/commentAPI";
 import { ScriptComment } from "@/types/comment";
 
-const useFetchComments = (userId: string, scriptId: string, query?: {
-  page?: string;
-  limit?: string;
-  sortBy?: string;
-  order?: "asc" | "desc";
-}) => {
+const useFetchComments = (
+  userId: string,
+  scriptId: string,
+  query?: {
+    page?: string;
+    limit?: string;
+    sortBy?: string;
+    order?: "asc" | "desc";
+  }
+) => {
   const [data, setData] = useState<ScriptComment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
@@ -36,7 +40,11 @@ const useFetchComments = (userId: string, scriptId: string, query?: {
   return { data, setData, loading, error, refetch: fetchAllComment };
 };
 
-const useFetchSubComments = (userId: string, scriptId: string, commentId: string) => {
+const useFetchSubComments = (
+  userId: string,
+  scriptId: string,
+  commentId: string
+) => {
   const [data, setData] = useState<ScriptComment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
@@ -48,7 +56,11 @@ const useFetchSubComments = (userId: string, scriptId: string, commentId: string
     setError(null);
 
     try {
-      const res = await commentApi.getAllSubComments(userId, scriptId, commentId);
+      const res = await commentApi.getAllSubComments(
+        userId,
+        scriptId,
+        commentId
+      );
       setData(res);
     } catch (err) {
       console.error("Error fetching sub comments:", err);
@@ -62,11 +74,14 @@ const useFetchSubComments = (userId: string, scriptId: string, commentId: string
     fetchAllSubComment();
   }, [fetchAllSubComment]);
 
-
   return { data, setData, loading, error, refetch: fetchAllSubComment };
 };
 
-const useFetchCommentHistory = (userId: string, scriptId: string, commentId: string) => {
+const useFetchCommentHistory = (
+  userId: string,
+  scriptId: string,
+  commentId: string
+) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

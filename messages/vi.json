@@ -1,0 +1,787 @@
+{
+    "home": {
+      "hero": {
+        "title": "Thủy lợi thông minh",
+        "subtitle": "Quản lý thực hiện đơn giản",
+        "description": "Tối ưu hóa các hệ thống tưới của bạn với các tập lệnh và mô hình thông minh. ",
+        "getStarted": "Bắt đầu",
+        "learnMore": "Tìm hiểu thêm"
+      },
+      "features": {
+        "title": "Đặc trưng",
+        "heading": "Mọi thứ bạn cần để tối ưu hóa tưới",
+        "description": "Nền tảng của chúng tôi cung cấp các công cụ mạnh mẽ để quản lý, giám sát và tối ưu hóa các hệ thống tưới của bạn.",
+        "smartScripts": {
+          "title": "Kịch bản thông minh",
+          "description": "Tạo và quản lý các tập lệnh tưới thông minh thích ứng với các điều kiện thay đổi."
+        },
+        "advancedModels": {
+          "title": "Mô hình nâng cao",
+          "description": "Phát triển các mô hình thủy lợi tinh vi dựa trên đất, thời tiết và dữ liệu cây trồng."
+        },
+        "dataAnalytics": {
+          "title": "Phân tích dữ liệu",
+          "description": "Có được hiểu biết sâu sắc từ các phân tích toàn diện và báo cáo về việc sử dụng nước và hiệu quả."
+        },
+        "teamCollaboration": {
+          "title": "Hợp tác nhóm",
+          "description": "Làm việc cùng với nhóm của bạn để quản lý và tối ưu hóa các hệ thống tưới."
+        },
+        "securePlatform": {
+          "title": "Nền tảng an toàn",
+          "description": "Dữ liệu của bạn được bảo vệ với bảo mật và mã hóa cấp độ doanh nghiệp."
+        },
+        "waterConservation": {
+          "title": "Bảo tồn nước",
+          "description": "Tiết kiệm nước và giảm chi phí với quản lý tưới thông minh."
+        }
+      },
+      "testimonials": {
+        "title": "Lời chứng thực",
+        "heading": "Được tin tưởng bởi các chuyên gia trên toàn thế giới",
+        "description": "Xem những gì khách hàng của chúng tôi đang nói về nền tảng quản lý thủy lợi của chúng tôi.",
+        "testimonial1": {
+          "name": "John Doe",
+          "role": "Quản lý trang trại",
+          "quote": "Nền tảng này đã cách mạng hóa cách chúng ta quản lý tưới trong trang trại của chúng ta. "
+        },
+        "testimonial2": {
+          "name": "Jane Smith",
+          "role": "Kỹ sư nông nghiệp",
+          "quote": "Khả năng tạo các mô hình và tập lệnh tưới tùy chỉnh là một người thay đổi trò chơi cho các hoạt động của chúng tôi. "
+        },
+        "testimonial3": {
+          "name": "Robert Johnson",
+          "role": "Chủ vườn nho",
+          "quote": "Chúng tôi đã sử dụng nền tảng này cho việc tưới vườn nho của chúng tôi trong hơn một năm nay. "
+        }
+      },
+      "pricing": {
+        "title": "Giá cả",
+        "heading": "Đơn giản, giá cả minh bạch",
+        "description": "Chọn kế hoạch phù hợp với nhu cầu quản lý thủy lợi của bạn.",
+        "basic": {
+          "title": "Nền tảng",
+          "subtitle": "Cho các trang trại và vườn nhỏ",
+          "price": "$ 29",
+          "period": "/tháng",
+          "features": {
+            "scripts": "Lên đến 5 tập lệnh tưới",
+            "analytics": "Phân tích cơ bản",
+            "support": "Hỗ trợ email"
+          },
+          "button": "Bắt đầu"
+        },
+        "pro": {
+          "title": "Pro",
+          "subtitle": "Cho các trang trại cỡ trung bình",
+          "price": "$ 79",
+          "period": "/tháng",
+          "popular": "Phổ biến",
+          "features": {
+            "scripts": "Các kịch bản thủy lợi không giới hạn",
+            "analytics": "Phân tích nâng cao",
+            "models": "Mô hình tùy chỉnh",
+            "support": "Hỗ trợ ưu tiên"
+          },
+          "button": "Bắt đầu"
+        },
+        "enterprise": {
+          "title": "Doanh nghiệp",
+          "subtitle": "Đối với các hoạt động nông nghiệp lớn",
+          "price": "$ 199",
+          "period": "/tháng",
+          "features": {
+            "pro": "Mọi thứ trong pro",
+            "manager": "Quản lý tài khoản chuyên dụng",
+            "integrations": "Tích hợp tùy chỉnh",
+            "support": "Hỗ trợ điện thoại 24/7"
+          },
+          "button": "Liên hệ bán hàng"
+        }
+      },
+      "cta": {
+        "heading": "Sẵn sàng để tối ưu hóa việc tưới tiêu của bạn?",
+        "description": "Tham gia hàng ngàn chuyên gia đang tiết kiệm nước và cải thiện năng suất cây trồng với nền tảng của chúng tôi.",
+        "getStarted": "Bắt đầu",
+        "contactSales": "Liên hệ bán hàng"
+      }
+    },
+    "dashboard": {
+      "title": "Bảng điều khiển",
+      "welcome": "Chào mừng bạn đến với bảng điều khiển quản lý thủy lợi của bạn.",
+      "stats": {
+        "totalScripts": {
+          "title": "Tổng số kịch bản",
+          "value": "24",
+          "change": "+2 từ tuần trước"
+        },
+        "totalModels": {
+          "title": "Tổng số mô hình",
+          "value": "12",
+          "change": "+1 từ tuần trước"
+        },
+        "activeUsers": {
+          "title": "Người dùng hoạt động",
+          "value": "5",
+          "change": "+2 từ tháng trước"
+        },
+        "waterSaved": {
+          "title": "Nước lưu",
+          "value": "28%",
+          "change": "+8% từ tháng trước"
+        }
+      },
+      "tabs": {
+        "recent": "Kịch bản gần đây",
+        "activity": "Nhật ký hoạt động"
+      },
+      "navigation": {
+        "dashboard": "Bảng điều khiển",
+        "profile": "Hồ sơ",
+        "scripts": "Kịch bản",
+        "models": "Mô hình",
+        "settings": "Cài đặt"
+      },
+      "scripts": {
+        "title": "Kịch bản",
+        "searchPlaceholder": "Tìm kiếm kịch bản...",
+        "selectLocations": "Chọn địa điểm",
+        "locations": "Địa điểm",
+        "selectPlantTypes": "Chọn loại cây trồng",
+        "plantTypes": "Loại cây trồng",
+        "privacy": "Quyền riêng tư",
+        "allPrivacyTypes": "Tất cả quyền riêng tư",
+        "all": "Tất cả",
+        "public": "Công khai",
+        "private": "Riêng tư",
+        "clearFilters": "Xóa bộ lọc",
+        "sortBy": "Sắp xếp theo",
+        "selectField": "Chọn trường",
+        "creationDate": "Ngày tạo",
+        "lastUpdate": "Cập nhật gần nhất",
+        "selectOrder": "Chọn thứ tự",
+        "latestFirst": "Mới nhất trước",
+        "oldestFirst": "Cũ nhất trước",
+        "allScripts": "Tất cả kịch bản",
+        "favorites": "Yêu thích",
+        "sharedScripts": "Kịch bản được chia sẻ",
+        "publicScripts": "Kịch bản công khai",
+        "noOptionsFound": "Không tìm thấy tùy chọn",
+        "favorite": {
+          "success": "Đã cập nhật yêu thích",
+          "error": "Cập nhật yêu thích thất bại"
+        },
+        "emptyState": {
+          "title": "Chưa có kịch bản nào",
+          "description": "Bắt đầu bằng cách tạo kịch bản tưới đầu tiên của bạn.",
+          "createButton": "Tạo kịch bản mới"
+        },
+        "newScript": {
+          "newScriptButton": "Kịch bản mới",
+          "dialogTitle": "Tạo kịch bản mới",
+          "dialogDescription": "Thêm một kịch bản tưới tiêu mới vào bộ sưu tập của bạn.",
+          "nameLabel": "Tên",
+          "namePlaceholder": "Nhập tên kịch bản",
+          "descriptionLabel": "Mô tả",
+          "descriptionPlaceholder": "Nhập mô tả kịch bản (tùy chọn)",
+          "locationLabel": "Địa điểm",
+          "selectProvinces": "Chọn tỉnh",
+          "searchProvinces": "Tìm kiếm tỉnh...",
+          "locationsSelected": "Địa điểm đã chọn",
+          "plantTypeLabel": "Loại cây trồng",
+          "selectPlantTypes": "Chọn loại cây trồng",
+          "searchPlantTypes": "Tìm kiếm loại cây trồng...",
+          "plantTypesSelected": "Loại cây trồng đã chọn",
+          "privacyLabel": "Quyền riêng tư",
+          "publicLabel": "Công khai",
+          "publicDescription": "Tất cả người dùng đều có thể xem kịch bản này.",
+          "privateLabel": "Riêng tư",      
+          "privateDescription": "Chỉ có bạn và những người được chia sẻ mới có thể xem kịch bản này.",
+          "sharedUsersLabel": "Chia sẻ với:",
+          "searchUsersPlaceholder": "Tìm kiếm người dùng...",
+          "searchButton": "Tìm kiếm",
+          "scriptJsonLabel": "File JSON kịch bản",
+          "uploadJsonButton":"Tải file JSON",
+          "templateButton": "Mẫu JSON",
+          "cancelButton": "Hủy",
+          "createButton": "Tạo kịch bản",
+          "noPlantTypeFound": "Không tìm thấy loại cây nào",
+          "noProvinceFound": "Không tìm thấy tỉnh nào",
+          "noUserFound": "Không tìm thấy người dùng nào",
+          "searchResults": "Kết quả tìm kiếm"
+        },
+        "detail": {
+          "delete": "Xóa",
+          "back": "Quay lại",
+          "loading": "Đang tải...",
+          "checkingAccess": "Đang kiểm tra quyền truy cập...",
+          "notFound": {
+            "title": "Không tìm thấy trang",
+            "invalidTab": "Tab không hợp lệ",
+            "description": "Tab được yêu cầu không tồn tại. Vui lòng chọn một tab hợp lệ hoặc quay lại danh sách kịch bản của bạn.",
+            "returnButton": "Quay lại danh sách kịch bản"
+          },
+          "accessDenied": {
+            "title": "Truy cập kịch bản",
+            "alertTitle": "Từ chối truy cập",
+            "description": "Bạn không có quyền xem kịch bản này. Vui lòng liên hệ với chủ sở hữu kịch bản nếu bạn cho rằng đây là lỗi.",
+            "returnButton": "Quay lại danh sách kịch bản"
+          },
+          "tabs": {
+            "code": "Mã nguồn",
+            "comments": "Bình luận",
+            "versions": "Phiên bản"
+          },
+          "loadingDetails": "Đang tải chi tiết kịch bản...",
+          "scriptDetails": {
+            "public": "Công khai",
+            "private": "Riêng tư",
+            "title": "Chi tiết kịch bản",
+            "owner": "Chủ sở hữu",
+            "description": "Mô tả",
+            "noDescription": "Không có mô tả",
+            "location": "Vị trí",
+            "noLocations": "Không có vị trí được chỉ định",
+            "plantType": "Loại cây trồng",
+            "noPlants": "Không có cây trồng được chỉ định",
+            "privacy": "Quyền riêng tư",
+            "averageRating": "Đánh giá trung bình",
+            "rating": "{value} ({count} {count, plural, one {đánh giá} other {đánh giá}})",
+            "yourRating": "Đánh giá của bạn",
+            "rateScript": "Đánh giá kịch bản này",
+            "youRated": "Bạn đã đánh giá {value} {value, plural, one {sao} other {sao}}",
+            "deleteRating": "Xóa đánh giá của bạn",
+            "created": "Đã tạo",
+            "lastUpdated": "Cập nhật lần cuối",
+            "actions": "Hành động",
+            "editScript": "Chỉnh sửa kịch bản",
+            "delete": "Xóa",
+            "allLocations": "Tất cả vị trí",
+            "allPlantTypes": "Tất cả loại cây trồng"
+          },
+          "code": {
+            "title": "Mã kịch bản",
+            "version": "Phiên bản {version}",
+            "currentVersion": "Phiên bản hiện tại: {version}",
+            "reload": "Tải lại",
+            "download": "Tải xuống",
+            "newVersion": "Phiên bản mới",
+            "upload": "Tải lên",
+            "save": "Lưu",
+            "deleteVersion": "Xóa phiên bản",
+            "enableEditing": "Bật chế độ chỉnh sửa",
+            "disableEditing": "Tắt chế độ chỉnh sửa",
+            "deleteDialog": {
+              "title": "Xóa phiên bản",
+              "description": "Bạn có chắc chắn muốn xóa phiên bản {version}? Hành động này không thể hoàn tác.",
+              "cancel": "Hủy",
+              "confirm": "Xóa"
+            }
+          },
+          "comments": {
+            "title": "Bình luận",
+            "description": "Thảo luận về kịch bản này với nhóm của bạn",
+            "addComment": "Thêm bình luận...",
+            "postComment": "Đăng bình luận",
+            "noComments": "Chưa có bình luận nào.",
+            "searchResults": "Kết quả tìm kiếm",
+            "unknownUser": "Người dùng không xác định",
+            "viewScripts": "Xem kịch bản",
+            "reply": "Trả lời",
+            "edit": "Chỉnh sửa",
+            "delete": "Xóa",
+            "history": "Xem lịch sử chỉnh sửa",
+            "showReplies": "Hiện trả lời ({count})",
+            "hideReplies": "Ẩn trả lời",
+            "writeReply": "Viết trả lời...",
+            "cancel": "Hủy",
+            "save": "Lưu",
+            "deleteDialog": {
+              "title": "Xóa {type}",
+              "description": "Bạn có chắc chắn muốn xóa {type} này? Hành động này không thể hoàn tác.",
+              "cancel": "Hủy",
+              "confirm": "Xóa"
+            },
+            "historyDialog": {
+              "title": "Lịch sử chỉnh sửa {type}",
+              "description": "Xem lịch sử chỉnh sửa của {type} này",
+              "edit": "Chỉnh sửa {number}",
+              "noHistory": "Không có lịch sử chỉnh sửa cho {type} này",
+              "close": "Đóng"
+            },
+            "toast": {
+              "addSuccess": "Đã thêm bình luận thành công",
+              "addError": "Không thể thêm bình luận",
+              "editSuccess": "Đã chỉnh sửa {type} thành công",
+              "editError": "Không thể chỉnh sửa {type}",
+              "deleteSuccess": "Đã xóa {type} thành công",
+              "deleteError": "Không thể xóa {type}"
+            }
+          },
+          "versionCompare": {
+            "title": "So sánh phiên bản",
+            "selectVersion": "Chọn phiên bản"
+          }
+        },
+        "list": {
+          "loading": "Đang tải kịch bản...",
+          "emptyState": {
+            "title": "Không tìm thấy kịch bản nào",
+            "description": "Hãy điều chỉnh bộ lọc hoặc thử tìm kiếm với từ khóa khác."
+          },
+          "card": {
+            "noDescription": "Không có mô tả",
+            "locations": "Địa điểm:",
+            "noLocations": "Chưa có địa điểm",
+            "plants": "Cây trồng:",
+            "noPlants": "Chưa có cây trồng",
+            "more": "+{count} khác",
+            "favorite": "Yêu thích",
+            "updatedAt": "Cập nhật lúc {date}",
+            "view": "Xem",
+            "private": "Riêng tư",
+            "public": "Công khai"
+          },
+          "public": {
+            "searchPlaceholder": "Tìm kiếm người dùng",
+            "searchButton": "Tìm kiếm",
+            "showingScriptsBy": "Hiển thị kịch bản của {name}",
+            "clear": "Xóa",
+            "searchResults": "Kết quả tìm kiếm",
+            "noUsersFound": "Không tìm thấy người dùng",
+            "viewScripts": "Xem kịch bản",
+            "unknownUser": "Người dùng không xác định",
+            "emptyState": {
+              "title": "Tìm kiếm kịch bản công khai",
+              "description": "Tìm người dùng để khám phá các kịch bản công khai của họ"
+            },
+            "toast": {
+              "searchFailed": "Tìm kiếm thất bại",
+              "searchFailedDesc": "Không thể tìm kiếm người dùng. Vui lòng thử lại."
+            }
+          }
+        }
+      },
+      "models": {
+        "title": "Mô hình",
+        "searchPlaceholder": "Tìm kiếm mô hình...",
+        "favoriteUpdated": "Đã cập nhật yêu thích",
+        "favoriteUpdatedDescription": "Trạng thái yêu thích của mô hình đã được cập nhật.",
+        "error": "Lỗi",
+        "favoriteUpdateFailed": "Không thể cập nhật trạng thái yêu thích.",
+        "tabs": {
+          "all": "Tất cả mô hình",
+          "favorites": "Yêu thích"
+        },
+        "newModel": {
+          "createButton": "Tạo mô hình",
+          "dialogTitle": "Tạo mô hình mới",
+          "dialogDescription": "Thêm một mô hình mới vào bộ sưu tập của bạn.",
+          "nameLabel": "Tên",
+          "namePlaceholder": "Nhập tên mô hình",
+          "descriptionLabel": "Mô tả",
+          "descriptionPlaceholder": "Nhập mô tả mô hình (tùy chọn)",
+          "tagsLabel": "Thẻ",
+          "tagKeyLabel": "Khóa",
+          "tagValueLabel": "Giá trị",
+          "tagKeyPlaceholder": "Nhập khóa thẻ",
+          "tagValuePlaceholder": "Nhập giá trị thẻ",
+          "missingInfo": "Thiếu thông tin",
+          "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
+          "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+          "duplicateTag": "Thẻ trùng lặp",
+          "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+          "cancelButton": "Hủy",
+          "submitButton": "Tạo",
+          "toast": {
+            "missingInfo": "Thiếu thông tin",
+            "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
+            "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+            "duplicateTag": "Thẻ trùng lặp",
+            "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+            "authError": "Lỗi xác thực",
+            "loginRequired": "Bạn phải đăng nhập để tạo mô hình.",
+            "createSuccess": "Đã tạo mô hình",
+            "createSuccessDesc": "Mô hình \"{name}\" đã được tạo thành công.",
+            "createError": "Tạo thất bại",
+            "createErrorDesc": "Không thể tạo mô hình. Vui lòng thử lại."
+          }
+        },
+        "modelDetails": {
+          "title": "Chi tiết mô hình",
+          "name": "Tên",
+          "description": "Mô tả",
+          "created": "Ngày tạo",
+          "lastUpdated": "Cập nhật lúc",
+          "tags": "Thẻ",
+          "noDescription": "Không có mô tả.",
+          "noTags": "Không có thẻ nào.",
+          "actions": "Thao tác",
+          "editModel": "Chỉnh sửa mô hình",
+          "deleteModel": "Xóa"
+        },
+        "editModel": {
+          "title": "Chỉnh sửa mô hình",
+          "modelName": "Tên mô hình",
+          "description": "Mô tả",
+          "descriptionPlaceholder": "Nhập mô tả mô hình (tùy chọn)",
+          "tags": "Thẻ",
+          "tagKey": "Khóa",
+          "tagValue": "Giá trị",
+          "tagKeyPlaceholder": "Nhập khóa thẻ",
+          "tagValuePlaceholder": "Nhập giá trị thẻ",
+          "cancel": "Hủy",
+          "confirm": "Xác nhận",
+          "missingInfo": "Thiếu thông tin",
+          "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
+          "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+          "duplicateTag": "Thẻ trùng lặp",
+          "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+          "tagUpdated": "Đã cập nhật thẻ",
+          "tagAdded": "Đã thêm thẻ",
+          "tagUpdateSuccess": "Thẻ {key} đã được cập nhật thành công.",
+          "tagAddSuccess": "Thẻ {key} đã được thêm thành công.",
+          "tagOperationFailed": "Thao tác thẻ thất bại",
+          "tagUpdateFailed": "Không thể cập nhật thẻ. Vui lòng thử lại.",
+          "tagAddFailed": "Không thể thêm thẻ. Vui lòng thử lại.",
+          "tagRemoved": "Đã xóa thẻ",
+          "tagRemoveSuccess": "Thẻ {key} đã được xóa thành công.",
+          "tagRemoveFailed": "Không thể xóa thẻ. Vui lòng thử lại."
+        },
+        "deleteModel": {
+          "title": "Xóa mô hình",
+          "description": "Bạn có chắc chắn muốn xóa {modelName}? Hành động này không thể hoàn tác.",
+          "cancel": "Hủy",
+          "confirm": "Xóa",
+          "success": "Đã xóa mô hình thành công",
+          "error": "Không thể xóa mô hình"
+        },
+        "toast": {
+          "updateSuccess": "Cập nhật thông tin mô hình thành công",
+          "updateError": "Không thể cập nhật mô hình",
+          "deleteSuccess": "Đã xóa mô hình thành công",
+          "deleteError": "Không thể xóa mô hình"
+        },
+        "emptyState": {
+          "title": "Không tìm thấy mô hình",
+          "description": "Tạo mô hình mới hoặc thử tìm kiếm khác."
+        },
+        "sortBy": "Sắp xếp theo",
+        "selectField": "Chọn trường",
+        "selectOrder": "Chọn thứ tự",
+        "creationDate": "Ngày tạo",
+        "lastUpdate": "Cập nhật lúc",
+        "latestFirst": "Mới nhất trước",
+        "oldestFirst": "Cũ nhất trước",
+        "cloneModel": "Sao chép",
+        "version": "Phiên bản",
+        "scheduled": "Đã lên lịch",
+        "notScheduled": "Chưa lên lịch",
+        "updatedAt": "Cập nhật lúc",
+        "view": "Xem",
+        "schedule": {
+          "title": "Lịch trình mô hình",
+          "description": "Cấu hình thời gian cập nhật tự động cho mô hình này",
+          "enableSchedule": "Bật lịch trình",
+          "scheduleType": "Loại lịch trình",
+          "customCron": {
+            "label": "Biểu thức Cron tùy chỉnh",
+            "placeholder": "0 0 * * *",
+            "description": "Sử dụng định dạng biểu thức cron (ví dụ: \"0 0 * * *\" cho hàng ngày lúc nửa đêm)"
+          },
+          "setSchedule": "Đặt lịch trình",
+          "scheduleOptions": {
+            "daily": {
+              "label": "Hàng ngày",
+              "description": "Chạy một lần mỗi ngày vào lúc nửa đêm"
+            },
+            "weekly": {
+              "label": "Hàng tuần",
+              "description": "Chạy một lần mỗi tuần vào Chủ nhật"
+            },
+            "monthly": {
+              "label": "Hàng tháng",
+              "description": "Chạy một lần mỗi tháng vào ngày 1"
+            },
+            "hourly": {
+              "label": "Hàng giờ",
+              "description": "Chạy một lần mỗi giờ"
+            },
+            "custom": {
+              "label": "Tùy chỉnh",
+              "description": "Đặt lịch trình tùy chỉnh"
+            }
+          },
+          "plan": {
+            "title": "Kế hoạch lịch trình",
+            "descriptionSection": "Xem các lần chạy sắp tới cho mô hình này",
+            "sortBy": "Sắp xếp theo:",
+            "oldestFirst": "Cũ nhất trước",
+            "latestFirst": "Mới nhất trước",
+            "name": "Tên:",
+            "description": "Mô tả:",
+            "noRuns": "Không tìm thấy lịch trình trong khoảng thời gian đã chọn"
+          },
+          "toast": {
+            "enterCron": "Vui lòng nhập biểu thức cron",
+            "setSuccess": "Đặt lịch trình thành công",
+            "setError": "Không thể đặt lịch trình",
+            "enableSuccess": "Bật lịch trình thành công",
+            "enableError": "Không thể bật lịch trình",
+            "fetchError": "Không thể tải lịch trình",
+            "planFetchError": "Không thể tải kế hoạch lịch trình"
+          }
+        },
+        "scripts": {
+          "title": "Kịch bản liên quan",
+          "description": "Các kịch bản thuộc về mô hình này",
+          "sortBy": "Sắp xếp theo:",
+          "sortFields": {
+            "creationDate": "Ngày tạo",
+            "lastUpdate": "Cập nhật lúc",
+            "latestFirst": "Mới nhất trước",
+            "oldestFirst": "Cũ nhất trước"
+          },
+          "version": "Phiên bản",
+          "modelVersion": "Phiên bản mô hình",
+          "createdAt": "Ngày tạo",
+          "lastUpdate": "Cập nhật lúc",
+          "noScripts": "Không tìm thấy kịch bản trong khoảng thời gian đã chọn"
+        },
+        "versions": {
+          "title": "Lịch sử phiên bản",
+          "descriptionSection": "Theo dõi các thay đổi và cập nhật cho mô hình tưới này",
+          "version": "Phiên bản",
+          "lastUpdated": "Cập nhật lúc",
+          "name": "Tên:",
+          "description": "Mô tả:",
+          "noDescription": "Không có mô tả",
+          "tags": "Thẻ:",
+          "noVersions": "Không tìm thấy phiên bản trong khoảng thời gian đã chọn"
+        }
+      }
+    },
+    "footer": {
+      "brand": "Irrigation Portal",
+      "description": "Quản lý tưới thông minh cho nông nghiệp hiện đại.",
+      "product": {
+        "title": "Sản phẩm",
+        "features": "Đặc trưng",
+        "pricing": "Giá cả",
+        "documentation": "Tài liệu"
+      },
+      "company": {
+        "title": "Công ty",
+        "about": "Về",
+        "blog": "Blog",
+        "careers": "Sự nghiệp"
+      },
+      "contact": {
+        "title": "Liên hệ",
+        "email": "Email: info@irratorportal.com",
+        "phone": "Điện thoại: +1 (555) 123-4567",
+        "address": "Địa chỉ: 123 Thủy lợi St, Farmville, CA 94123"
+      },
+      "copyright": "© 2023 Irrigation Portal. "
+    },
+    "login": {
+      "welcome": "Chào mừng trở lại",
+      "title": "Đăng nhập vào tài khoản của bạn",
+      "description": "Nhập thông tin đăng nhập của bạn bên dưới để truy cập bảng điều khiển quản lý tưới của bạn",
+      "errors": {
+        "emptyFields": "Vui lòng điền vào tất cả các trường",
+        "invalidCredentials": "Đăng nhập không thành công. "
+      },
+      "form": {
+        "email": "Tên đăng nhập",
+        "emailPlaceholder": "Tên người dùng",
+        "password": "Mật khẩu",
+        "passwordPlaceholder": "Mật khẩu",
+        "forgotPassword": "Quên mật khẩu?",
+        "rememberMe": "Nhớ tôi trong 30 ngày",
+        "submit": "Đăng nhập",
+        "orContinue": "Hoặc tiếp tục với",
+        "google": "Google",
+        "microsoft": "Microsoft",
+        "noAccount": "Không có tài khoản?",
+        "signUp": "Đăng ký"
+      },
+      "hero": {
+        "title": "Quản lý tưới thông minh",
+        "description": "Tối ưu hóa các hệ thống tưới của bạn với các tập lệnh và mô hình thông minh. "
+      }
+    },
+    "header": {
+      "brand": "Cổng thông tin tưới tiêu",
+      "mobileMenu": "Chuyển đổi menu điều hướng",
+      "notifications": "Thông báo",
+      "noNotifications": "Không có thông báo",
+      "someone": "Ai đó",
+      "shared": "đã chia sẻ",
+      "something": "một nội dung",
+      "withYou": "với bạn",
+      "viewAllNotifications": "Xem tất cả thông báo",
+      "user": "Người dùng",
+      "logout": "Đăng xuất",
+      "features": "Tính năng",
+      "testimonials": "Đánh giá",
+      "pricing": "Giá cả",
+      "contact": "Liên hệ",
+      "getStarted": "Bắt đầu",
+      "navigation": {
+        "dashboard": "Bảng điều khiển",
+        "profile": "Hồ sơ",
+        "scripts": "Kịch bản",
+        "models": "Mô hình",
+        "settings": "Cài đặt"
+      }
+    },
+    "Index": {
+      "title": "Chào mừng đến với Cổng thông minh nông nghiệp thông minh",
+      "description": "Giải pháp quản lý canh tác toàn diện của bạn"
+    },
+    "Navigation": {
+      "dashboard": "Bảng điều khiển",
+      "profile": "Hồ sơ",
+      "settings": "Cài đặt",
+      "logout": "Đăng xuất"
+    },
+    "Common": {
+      "loading": "Đang tải...",
+      "error": "Một lỗi đã xảy ra",
+      "success": "Hoạt động thành công",
+      "pageNotFound": "Không tìm thấy trang",
+      "backToHome": "Trở về nhà"
+    },
+    "profile": {
+      "title": "Hồ sơ",
+      "tabs": {
+        "profile": "Hồ sơ",
+        "activity": "Hoạt động",
+        "notifications": "Thông báo",
+        "topScripts": "Kịch bản hàng đầu"
+      },
+      "notFound": {
+        "title": "Không tìm thấy trang",
+        "back": "Mặt sau",
+        "invalidTab": "Tab không hợp lệ",
+        "description": "Tab được yêu cầu không tồn tại. Vui lòng chọn một tab hợp lệ hoặc quay lại bảng điều khiển.",
+        "returnToDashboard": "Quay trở lại bảng điều khiển"
+      },
+      "activity": {
+        "title": "Nhật ký hoạt động",
+        "description": "Hoạt động theo tháng",
+        "loading": "Đang tải hoạt động...",
+        "noActivities": "Không tìm thấy hoạt động nào trong năm {year}",
+        "pagination": "Hiển thị {start} đến {end} trong tổng số {total} tháng hoạt động",
+        "scripts": "Kịch bản",
+        "models": "Mô hình",
+        "comments": "Bình luận",
+        "showMore": "thêm",
+        "showLess": "Ẩn bớt"
+      },
+      "edit": {
+        "title": "Chỉnh sửa hồ sơ",
+        "description": "Cập nhật thông tin hồ sơ của bạn bên dưới",
+        "avatar": {
+          "change": "Thay đổi ảnh đại diện",
+          "upload": "Tải lên ảnh đại diện mới",
+          "error": "Lỗi khi tải lên ảnh đại diện",
+          "success": "Cập nhật ảnh đại diện thành công"
+        },
+        "form": {
+          "username": "Tên người dùng",
+          "bio": "Tiểu sử",
+          "socialLinks": "Liên kết xã hội",
+          "addLink": "Thêm liên kết",
+          "removeLink": "Xóa",
+          "saveChanges": "Lưu thay đổi",
+          "cancel": "Hủy",
+          "saving": "Đang lưu..."
+        },
+        "success": "Cập nhật hồ sơ thành công",
+        "error": "Cập nhật hồ sơ thất bại"
+      },
+      "view": {
+        "following": "Đang theo dõi",
+        "followers": "Người theo dõi",
+        "editProfile": "Chỉnh sửa hồ sơ",
+        "noBio": "Chưa có tiểu sử",
+        "noLinks": "Chưa có liên kết xã hội"
+      },
+      "notifications": {
+        "title": "Thông báo",
+        "description": {
+          "loading": "Đang tải thông báo...",
+          "empty": "Không có thông báo nào để hiển thị",
+          "pagination": "Hiển thị {start} đến {end} trong tổng số {total} thông báo"
+        },
+        "delete": {
+          "title": "Xóa thông báo",
+          "description": "Bạn có chắc chắn muốn xóa thông báo này? Hành động này không thể hoàn tác.",
+          "cancel": "Hủy",
+          "confirm": "Xóa",
+          "deleting": "Đang xóa...",
+          "success": "Xóa thông báo thành công",
+          "error": "Xóa thông báo thất bại"
+        },
+        "notification": {
+          "shared": "{username} đã chia sẻ {scriptName} với bạn",
+          "default": "{username} đã chia sẻ một nội dung với bạn"
+        }
+      },
+      "topScripts": {
+        "title": "Kịch bản hàng đầu",
+        "loading": "Đang tải kịch bản...",
+        "empty": {
+          "title": "Không tìm thấy kịch bản",
+          "description": "Tạo kịch bản mới hoặc thử tìm kiếm với từ khóa khác."
+        },
+        "filters": {
+          "rating": "Được đánh giá cao nhất",
+          "favorite": "Được yêu thích nhất"
+        },
+        "favorite": {
+          "success": "Đã cập nhật trạng thái yêu thích kịch bản",
+          "error": "Cập nhật trạng thái yêu thích thất bại"
+        }
+      }
+    },
+    "theme": {
+      "toggle": {
+        "title": "Chuyển đổi giao diện",
+        "light": "Sáng",
+        "dark": "Tối",
+        "system": "Hệ thống"
+      }
+    },
+    "common": {
+      "datePicker": {
+        "pickDateRange": "Chọn khoảng thời gian",
+        "months": {
+          "january": "Tháng 1",
+          "february": "Tháng 2",
+          "march": "Tháng 3",
+          "april": "Tháng 4",
+          "may": "Tháng 5",
+          "june": "Tháng 6",
+          "july": "Tháng 7",
+          "august": "Tháng 8",
+          "september": "Tháng 9",
+          "october": "Tháng 10",
+          "november": "Tháng 11",
+          "december": "Tháng 12"
+        },
+        "weekDays": {
+          "sunday": "CN",
+          "monday": "T2",
+          "tuesday": "T3",
+          "wednesday": "T4",
+          "thursday": "T5",
+          "friday": "T6",
+          "saturday": "T7"
+        }
+      }
+    }
+  }

@@ -30,10 +30,12 @@ import { formatDate } from "@/lib/formatDate";
 import Pagination from "@/components/ui/pagination";
 import { toast } from "@/hooks/use-toast";
 import { useFetchNotifications } from "@/hooks/useFetchUser";
+import { useTranslations } from "next-intl";
 
 const ITEMS_PER_PAGE = 5;
 
 const Notifications = () => {
+  const t = useTranslations("profile.notifications");
   const { userId } = useParams() as { userId: string };
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -69,13 +71,13 @@ const Notifications = () => {
 
       toast({
         title: "Success",
-        description: "Notification deleted successfully",
+        description: t("delete.success"),
       });
     } catch (error) {
       console.error("Failed to delete notification:", error);
       toast({
         title: "Error",
-        description: "Failed to delete notification",
+        description: t("delete.error"),
         variant: "destructive",
       });
     } finally {
@@ -100,16 +102,17 @@ const Notifications = () => {
     <>
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle>Notifications</CardTitle>
+          <CardTitle>{t("title")}</CardTitle>
           <CardDescription>
             {isNotiLoading
-              ? "Loading notifications..."
+              ? t("description.loading")
               : notifications.length === 0
-              ? "No notifications to display"
-              : `Showing ${startIndex + 1} to ${Math.min(
-                  endIndex,
-                  notifications.length
-                )} of ${notifications.length} notifications`}
+              ? t("description.empty")
+              : t("description.pagination", {
+                  start: startIndex + 1,
+                  end: Math.min(endIndex, notifications.length),
+                  total: notifications.length,
+                })}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
@@ -130,7 +133,7 @@ const Notifications = () => {
             <div className="flex flex-col items-center justify-center py-12">
               <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
               <p className="text-lg font-medium text-muted-foreground">
-                No notifications found
+                {t("description.empty")}
               </p>
             </div>
           ) : (
@@ -152,14 +155,14 @@ const Notifications = () => {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <p className="font-medium">
-                          <span className="font-semibold">
-                            {notification.from?.username}
-                          </span>{" "}
-                          shared{" "}
                           {notification.script_id?.name
-                            ? notification.script_id?.name
-                            : "something"}{" "}
-                          with you
+                            ? t("notification.shared", {
+                                username: notification.from?.username,
+                                scriptName: notification.script_id?.name,
+                              })
+                            : t("notification.default", {
+                                username: notification.from?.username,
+                              })}
                         </p>
                         <p className="text-sm text-muted-foreground mt-1">
                           {formatDate(notification.createdAt)}
@@ -202,20 +205,21 @@ const Notifications = () => {
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Notification</AlertDialogTitle>
+            <AlertDialogTitle>{t("delete.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this notification? This action
-              cannot be undone.
+              {t("delete.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting}>
+              {t("delete.cancel")}
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? t("delete.deleting") : t("delete.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

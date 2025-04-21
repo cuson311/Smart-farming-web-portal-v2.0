@@ -11,6 +11,7 @@ import {
   XIcon,
   CheckIcon,
   HistoryIcon,
+  MoreVertical,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -37,6 +38,13 @@ import { useFetchSubComments } from "@/hooks/useFetchComment";
 import SubCommentItem from "./SubCommentItem";
 import { useParams } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
+import { useTranslations } from "next-intl";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const CommentItem = ({
   script,
@@ -47,6 +55,7 @@ const CommentItem = ({
   comment: ScriptComment;
   refetchAllComments: () => void;
 }) => {
+  const t = useTranslations("dashboard.scripts.detail");
   const [isEditing, setIsEditing] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
@@ -98,15 +107,15 @@ const CommentItem = ({
       refetchAllComments();
 
       toast({
-        title: "Successful!",
-        description: "Edited comment successfully",
+        title: t("comments.toast.editSuccess"),
+        description: t("comments.toast.editSuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error editing comment:", error);
       toast({
-        title: "Failed!",
-        description: "Failed to edit comment",
+        title: t("comments.toast.editError"),
+        description: t("comments.toast.editErrorDescription"),
         variant: "destructive",
       });
     }
@@ -132,15 +141,15 @@ const CommentItem = ({
       setIsDeleteDialogOpen(false);
 
       toast({
-        title: "Successful!",
-        description: "Comment has been deleted successfully",
+        title: t("comments.toast.deleteSuccess"),
+        description: t("comments.toast.deleteSuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error deleting comment:", error);
       toast({
-        title: "Failed!",
-        description: "Failed to delete comment",
+        title: t("comments.toast.deleteError"),
+        description: t("comments.toast.deleteErrorDescription"),
         variant: "destructive",
       });
     }
@@ -257,7 +266,7 @@ const CommentItem = ({
               />
               <div className="flex justify-end gap-2">
                 <Button variant="outline" size="sm" onClick={handleCancelEdit}>
-                  <XIcon size={16} className="mr-1" /> Cancel
+                  <XIcon size={16} className="mr-1" /> {t("comments.cancel")}
                 </Button>
                 <Button
                   size="sm"
@@ -266,7 +275,7 @@ const CommentItem = ({
                     editContent === comment.content || editContent === ""
                   }
                 >
-                  <CheckIcon size={16} className="mr-1" /> Save
+                  <CheckIcon size={16} className="mr-1" /> {t("comments.save")}
                 </Button>
               </div>
             </div>
@@ -341,14 +350,14 @@ const CommentItem = ({
               />
               <div className="flex justify-end gap-2">
                 <Button variant="outline" size="sm" onClick={handleCancelReply}>
-                  <XIcon size={16} className="mr-1" /> Cancel
+                  <XIcon size={16} className="mr-1" /> {t("comments.cancel")}
                 </Button>
                 <Button
                   size="sm"
                   onClick={handleSubmitReply}
                   disabled={replyContent === ""}
                 >
-                  <ReplyIcon size={16} className="mr-1" /> Reply
+                  <ReplyIcon size={16} className="mr-1" /> {t("comments.reply")}
                 </Button>
               </div>
             </div>
@@ -378,21 +387,22 @@ const CommentItem = ({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Comment</AlertDialogTitle>
+            <AlertDialogTitle>
+              {t("comments.deleteDialog.title")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this comment? This action cannot
-              be undone.
+              {t("comments.deleteDialog.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleCloseDeleteDialog}>
-              Cancel
+              {t("comments.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
               className="bg-red-600 hover:bg-red-700"
             >
-              Delete
+              {t("comments.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

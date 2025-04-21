@@ -33,41 +33,10 @@ import {
 import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
 import Pagination from "@/components/ui/pagination";
 import { formatDate } from "@/lib/formatDate";
-
-const SCHEDULE_OPTIONS = [
-  {
-    label: "Daily",
-    value: "daily",
-    cron: "0 0 * * *",
-    description: "Run once a day at midnight",
-  },
-  {
-    label: "Weekly",
-    value: "weekly",
-    cron: "0 0 * * 0",
-    description: "Run once a week on Sunday",
-  },
-  {
-    label: "Monthly",
-    value: "monthly",
-    cron: "0 0 1 * *",
-    description: "Run once a month on the 1st",
-  },
-  {
-    label: "Hourly",
-    value: "hourly",
-    cron: "0 * * * *",
-    description: "Run once every hour",
-  },
-  {
-    label: "Custom",
-    value: "custom",
-    cron: "",
-    description: "Set a custom schedule",
-  },
-];
+import { useTranslations } from "next-intl";
 
 const ScheduleModelTab = ({ model }: { model: Model }) => {
+  const t = useTranslations("dashboard.models.schedule");
   const params = useParams();
   const userId: string = Array.isArray(params.userId)
     ? params.userId[0]
@@ -97,7 +66,6 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
       setSchedule(response);
       if (response.schedule) {
         setCronString(response.schedule);
-        // Try to match the cron string with predefined options
         const matchedOption = SCHEDULE_OPTIONS.find(
           (option) => option.cron === response.schedule
         );
@@ -111,7 +79,9 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
       }
     } catch (error) {
       console.error("Error fetching schedule:", error);
-      toast.error("Failed to fetch schedule");
+      toast.error(t("toast.fetchError"), {
+        description: t("toast.fetchErrorDesc"),
+      });
     }
   };
 
@@ -127,9 +97,42 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
     }
   };
 
+  const SCHEDULE_OPTIONS = [
+    {
+      label: t("scheduleOptions.daily.label"),
+      value: "daily",
+      cron: "0 0 * * *",
+      description: t("scheduleOptions.daily.description"),
+    },
+    {
+      label: t("scheduleOptions.weekly.label"),
+      value: "weekly",
+      cron: "0 0 * * 0",
+      description: t("scheduleOptions.weekly.description"),
+    },
+    {
+      label: t("scheduleOptions.monthly.label"),
+      value: "monthly",
+      cron: "0 0 1 * *",
+      description: t("scheduleOptions.monthly.description"),
+    },
+    {
+      label: t("scheduleOptions.hourly.label"),
+      value: "hourly",
+      cron: "0 * * * *",
+      description: t("scheduleOptions.hourly.description"),
+    },
+    {
+      label: t("scheduleOptions.custom.label"),
+      value: "custom",
+      cron: "",
+      description: t("scheduleOptions.custom.description"),
+    },
+  ];
+
   const handleSetSchedule = async () => {
     if (!cronString) {
-      toast.error("Please enter a cron expression");
+      toast.error(t("toast.enterCron"));
       return;
     }
 
@@ -141,10 +144,12 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
       };
       await modelApi.setModelSchedule(userId, scheduleData);
       await fetchSchedule();
-      toast.success("Schedule set successfully");
+      toast.success(t("toast.setSuccess"));
     } catch (error) {
       console.error("Error setting schedule:", error);
-      toast.error("Failed to set schedule");
+      toast.error(t("toast.setError"), {
+        description: t("toast.setErrorDesc"),
+      });
     } finally {
       setIsLoading(false);
     }
@@ -159,10 +164,12 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
         !schedule?.enableSchedule
       );
       await fetchSchedule();
-      toast.success("Schedule enabled successfully");
+      toast.success(t("toast.enableSuccess"));
     } catch (error) {
       console.error("Error enabling schedule:", error);
-      toast.error("Failed to enable schedule");
+      toast.error(t("toast.enableError"), {
+        description: t("toast.enableErrorDesc"),
+      });
     } finally {
       setIsLoading(false);
     }
@@ -170,7 +177,7 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
 
   const handleDateRangeChange = async (range: { from?: Date; to?: Date }) => {
     setDateRange(range);
-    setCurrentPage(1); // Reset to first page when date range changes
+    setCurrentPage(1);
     if (range.from && range.to) {
       try {
         const formatDate = (date: Date) => {
@@ -190,7 +197,9 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
         setSchedulePlan(response);
       } catch (error) {
         console.error("Error fetching schedule plan:", error);
-        toast.error("Failed to fetch schedule plan");
+        toast.error(t("toast.planFetchError"), {
+          description: t("toast.planFetchErrorDesc"),
+        });
       }
     }
   };
@@ -217,10 +226,8 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Model Schedule</CardTitle>
-          <CardDescription>
-            Configure when this model should be automatically updated
-          </CardDescription>
+          <CardTitle>{t("title")}</CardTitle>
+          <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center space-x-2">
@@ -229,12 +236,12 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
               onCheckedChange={handleEnableSchedule}
               disabled={isLoading}
             />
-            <Label>Enable Scheduling</Label>
+            <Label>{t("enableSchedule")}</Label>
           </div>
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Schedule Type</Label>
+              <Label>{t("scheduleType")}</Label>
               <RadioGroup
                 value={scheduleType}
                 onValueChange={handleScheduleTypeChange}
@@ -266,18 +273,17 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
 
             {showCustomInput && (
               <div className="space-y-2">
-                <Label>Custom Cron Expression</Label>
+                <Label>{t("customCron.label")}</Label>
                 <div className="flex space-x-2">
                   <Input
-                    placeholder="0 0 * * *"
+                    placeholder={t("customCron.placeholder")}
                     value={cronString}
                     onChange={(e) => setCronString(e.target.value)}
                     disabled={isLoading}
                   />
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Use cron expression format (e.g., "0 0 * * *" for daily at
-                  midnight)
+                  {t("customCron.description")}
                 </p>
               </div>
             )}
@@ -287,7 +293,7 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
               disabled={isLoading || !cronString}
               className="w-full"
             >
-              Set Schedule
+              {t("setSchedule")}
             </Button>
           </div>
         </CardContent>
@@ -296,15 +302,13 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
       <Card>
         <CardHeader className="flex flex-row justify-between">
           <div>
-            <CardTitle>Schedule Plan</CardTitle>
-            <CardDescription>
-              View upcoming scheduled runs for this model
-            </CardDescription>
+            <CardTitle>{t("plan.title")}</CardTitle>
+            <CardDescription>{t("plan.descriptionSection")}</CardDescription>
           </div>
           <div className="flex flex-col gap-4 items-end">
             <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
             <div className="flex items-center gap-2">
-              <Label>Sort by:</Label>
+              <Label>{t("plan.sortBy")}</Label>
               <Select
                 value={sortOrder}
                 onValueChange={(value: "asc" | "desc") =>
@@ -315,8 +319,8 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
                   <SelectValue placeholder="Select sort order" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="asc">Oldest First</SelectItem>
-                  <SelectItem value="desc">Latest First</SelectItem>
+                  <SelectItem value="asc">{t("plan.oldestFirst")}</SelectItem>
+                  <SelectItem value="desc">{t("plan.latestFirst")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -335,7 +339,7 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
                     <div className="flex-1 space-y-1">
                       <h3 className="flex flex-row justify-between mb-1 text-sm font-medium line-clamp-1">
                         <div>
-                          Name:{" "}
+                          {t("plan.name")}{" "}
                           <span className="text-sm text-muted-foreground">
                             {plan.name}
                           </span>
@@ -344,7 +348,7 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
                       </h3>
 
                       <h3 className="mb-1 text-sm font-medium line-clamp-2">
-                        Description:{" "}
+                        {t("plan.description")}{" "}
                         <span className="text-sm text-muted-foreground">
                           {plan.description}
                         </span>
@@ -364,9 +368,7 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
             ) : (
               <div className="text-center py-8">
                 <Calendar className="h-12 w-12 mx-auto text-muted-foreground/50" />
-                <p className="mt-2 text-muted-foreground">
-                  No scheduled runs found in the selected date range
-                </p>
+                <p className="mt-2 text-muted-foreground">{t("plan.noRuns")}</p>
               </div>
             )}
           </div>

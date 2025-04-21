@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 import { NewModelData } from "@/types/model";
 import modelApi from "@/api/modelAPI";
+import { useTranslations } from "next-intl";
 
 interface Tag {
   key: string;
@@ -31,6 +32,7 @@ interface NewModelDialogProps {
 }
 
 const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
+  const t = useTranslations("dashboard.models.newModel"); // Use translations for NewModelDialog
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [newModel, setNewModel] = useState<NewModelData>({
@@ -89,8 +91,8 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
 
     if (tagKey.trim() === "" || tagValue.trim() === "") {
       toast({
-        title: "Missing information",
-        description: "Please provide both key and value for the tag.",
+        title: t("toast.missingInfo"),
+        description: t("toast.tagMissingInfo"),
         variant: "destructive",
       });
       return;
@@ -112,8 +114,8 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
       // Check for duplicate keys
       if (newModel.tags.some((tag) => tag.key === tagKey.trim())) {
         toast({
-          title: "Duplicate tag",
-          description: "A tag with this key already exists.",
+          title: t("toast.duplicateTag"),
+          description: t("toast.duplicateTagDesc"),
           variant: "destructive",
         });
         return;
@@ -149,8 +151,8 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
 
     if (!newModel.name.trim()) {
       toast({
-        title: "Missing information",
-        description: "Please provide a name for your model.",
+        title: t("toast.missingInfo"),
+        description: t("toast.provideName"),
         variant: "destructive",
       });
       return;
@@ -160,8 +162,8 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
 
     if (!userId) {
       toast({
-        title: "Authentication error",
-        description: "You must be logged in to create a script.",
+        title: t("toast.authError"),
+        description: t("toast.loginRequired"),
         variant: "destructive",
       });
       return;
@@ -175,16 +177,16 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
       }
 
       toast({
-        title: "Model created",
-        description: `Model "${newModel.name}" has been created successfully.`,
+        title: t("toast.createSuccess"),
+        description: t("toast.createSuccessDesc", { name: newModel.name }),
       });
 
       handleCloseDialog();
     } catch (error) {
       console.error("Error creating model:", error);
       toast({
-        title: "Creation failed",
-        description: "Failed to create model. Please try again.",
+        title: t("toast.createError"),
+        description: t("toast.createErrorDesc"),
         variant: "destructive",
       });
     }
@@ -195,62 +197,60 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
       <DialogTrigger asChild>
         <Button>
           <Plus className="mr-2 h-4 w-4" />
-          New Model
+          {t("createButton")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Create New Model</DialogTitle>
-          <DialogDescription>
-            Add a new model to your collection.
-          </DialogDescription>
+          <DialogTitle>{t("dialogTitle")}</DialogTitle>
+          <DialogDescription>{t("dialogDescription")}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleCreateModel}>
           <div className="grid gap-6 py-4">
             <div className="space-y-4">
               <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">{t("nameLabel")}</Label>
                 <Input
                   id="name"
                   name="name"
                   value={newModel.name}
                   onChange={handleModelChange}
-                  placeholder="Enter model name"
+                  placeholder={t("namePlaceholder")}
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">{t("descriptionLabel")}</Label>
                 <Textarea
                   id="description"
                   name="description"
                   value={newModel.description}
                   onChange={handleModelChange}
-                  placeholder="Enter model description (optional)"
+                  placeholder={t("descriptionPlaceholder")}
                 />
               </div>
               <div className="grid gap-2">
-                <Label>Tags</Label>
+                <Label>{t("tagsLabel")}</Label>
                 <div className="flex gap-4">
                   <div className="flex items-center gap-2 flex-1">
-                    <Label htmlFor="tagKey" className="text-s">
-                      Key
+                    <Label htmlFor="tagKey" className="text-s text-nowrap">
+                      {t("tagKeyLabel")}
                     </Label>
                     <Input
                       id="tagKey"
                       value={tagKey}
                       onChange={handleTagKeyChange}
-                      placeholder="Enter tag key"
+                      placeholder={t("tagKeyPlaceholder")}
                     />
                   </div>
                   <div className="flex items-center gap-2 flex-1">
-                    <Label htmlFor="tagValue" className="text-s">
-                      Value
+                    <Label htmlFor="tagValue" className="text-s text-nowrap">
+                      {t("tagValueLabel")}
                     </Label>
                     <Input
                       id="tagValue"
                       value={tagValue}
                       onChange={handleTagValueChange}
-                      placeholder="Enter tag value"
+                      placeholder={t("tagValuePlaceholder")}
                     />
                   </div>
                   <div className="flex items-end gap-2">
@@ -315,9 +315,9 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={handleCloseDialog}>
-              Cancel
+              {t("cancelButton")}
             </Button>
-            <Button type="submit">Create Model</Button>
+            <Button type="submit">{t("submitButton")}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

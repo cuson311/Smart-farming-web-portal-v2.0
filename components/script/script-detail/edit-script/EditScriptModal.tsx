@@ -42,6 +42,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { vietnamProvinces, plantTypes } from "@/lib/constant";
+import { useTranslations } from "next-intl";
 
 type SearchUser = {
   _id: string;
@@ -69,12 +70,15 @@ const SearchResults = ({
   sharedUserIds: string[];
   handleCloseResults: () => void;
 }) => {
+  const t = useTranslations("dashboard.scripts.detail");
+
   return searchResults.length > 0 ? (
     <Card className="w-full max-h-64 overflow-y-auto relative mt-2">
       <CardContent className="p-4">
-        {/* Header */}
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Search Results</span>
+          <span className="text-sm text-muted-foreground">
+            {t("searchResults")}
+          </span>
           <Button
             variant="ghost"
             size="icon"
@@ -85,7 +89,6 @@ const SearchResults = ({
           </Button>
         </div>
 
-        {/* Results List */}
         <div className="space-y-2">
           {searchResults.map((user, index) => (
             <div
@@ -99,7 +102,7 @@ const SearchResults = ({
                 </Avatar>
                 <div className="text-sm">
                   <p className="font-medium">
-                    {user.username || "Unknown User"}
+                    {user.username || t("unknownUser")}
                   </p>
                 </div>
               </div>
@@ -109,7 +112,7 @@ const SearchResults = ({
                 onClick={() => handleAddUser(index)}
                 disabled={sharedUserIds.includes(user._id)}
               >
-                {sharedUserIds.includes(user._id) ? "Added" : "Add"}
+                {sharedUserIds.includes(user._id) ? t("added") : t("add")}
               </Button>
             </div>
           ))}
@@ -120,7 +123,9 @@ const SearchResults = ({
     <Card className="w-full relative mt-2">
       <CardContent className="p-4">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Search Results</span>
+          <span className="text-sm text-muted-foreground">
+            {t("searchResults")}
+          </span>
           <Button
             variant="ghost"
             size="icon"
@@ -131,7 +136,7 @@ const SearchResults = ({
           </Button>
         </div>
         <div className="flex items-center justify-center py-4">
-          <p className="text-sm text-muted-foreground">No users found</p>
+          <p className="text-sm text-muted-foreground">{t("noUsersFound")}</p>
         </div>
       </CardContent>
     </Card>
@@ -145,6 +150,7 @@ const EditScriptModal = ({
   script,
   title = "Edit Script",
 }: EditScriptModalProps) => {
+  const t = useTranslations("dashboard.scripts.detail");
   // Form Data
   const [formData, setFormData] = useState({
     _id: "",
@@ -339,14 +345,13 @@ const EditScriptModal = ({
   const handleSubmit = async () => {
     if (!formData.name) {
       toast({
-        title: "Missing information",
-        description: "Please provide a name for your script.",
+        title: t("toast.missingInfo"),
+        description: t("toast.missingInfoDescription"),
         variant: "destructive",
       });
       return;
     }
 
-    // Ensure share_id is empty for public scripts
     if (formData.privacy === "public") {
       formData.share_id = [];
     }
@@ -354,23 +359,19 @@ const EditScriptModal = ({
     if (formData.privacy === "private") {
       const compareShareUser = (arr1: string[], arr2: string[]) => {
         if (arr1.length !== arr2.length) {
-          // Return elements that are in arr1 but not in arr2
           return arr1.filter((item) => !arr2.includes(item));
         }
 
         const sortedArr1 = arr1.slice().sort();
         const sortedArr2 = arr2.slice().sort();
 
-        // Return null if the arrays are the same
         if (sortedArr1.every((item, index) => item === sortedArr2[index])) {
-          return null; // Arrays are the same
+          return null;
         }
 
-        // Return the elements that are in arr1 but not in arr2
         return arr1.filter((item) => !arr2.includes(item));
       };
 
-      // Compare formData.share_id with oldUserShareId
       const newShareUserList = compareShareUser(
         formData.share_id,
         oldUserShareId
@@ -399,20 +400,20 @@ const EditScriptModal = ({
           <div className="space-y-4">
             <div className="grid gap-2">
               <Label htmlFor="name" className="font-medium">
-                Script Name
+                {t("scriptName")}
               </Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => handleChange("name", e.target.value)}
-                placeholder="Enter script name"
+                placeholder={t("enterScriptName")}
               />
             </div>
 
             {/* Copy URL Button - NEW SECTION */}
             {formData._id && (
               <div className="grid gap-2">
-                <Label className="font-medium">Script URL</Label>
+                <Label className="font-medium">{t("scriptUrl")}</Label>
                 <div className="flex items-center gap-2">
                   <Input
                     value={`${window.location}`}
@@ -438,20 +439,20 @@ const EditScriptModal = ({
 
             <div className="grid gap-2">
               <Label htmlFor="description" className="font-medium">
-                Description
+                {t("description")}
               </Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => handleChange("description", e.target.value)}
-                placeholder="Enter script description (optional)"
+                placeholder={t("enterDescription")}
                 rows={4}
               />
             </div>
 
             {/* Location selection */}
             <div className="grid gap-2">
-              <Label>Location (Optional)</Label>
+              <Label>{t("location")}</Label>
               <div className="flex flex-col space-y-2">
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.location?.map((location) => (
@@ -482,18 +483,20 @@ const EditScriptModal = ({
                     >
                       <MapPin className="mr-2 h-4 w-4" />
                       {formData.location && formData.location.length > 0
-                        ? `${formData.location.length} locations selected`
-                        : "Select provinces"}
+                        ? t("locationsSelected", {
+                            count: formData.location.length,
+                          })
+                        : t("selectProvinces")}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[400px] p-0" align="start">
                     <Command>
                       <CommandInput
-                        placeholder="Search provinces..."
+                        placeholder={t("searchProvinces")}
                         value={locationSearchTerm}
                         onValueChange={setLocationSearchTerm}
                       />
-                      <CommandEmpty>No province found.</CommandEmpty>
+                      <CommandEmpty>{t("noProvinceFound")}</CommandEmpty>
                       <CommandGroup>
                         <ScrollArea className="h-64">
                           {filteredProvinces.map((province) => (
@@ -528,7 +531,7 @@ const EditScriptModal = ({
 
             {/* Plant Type selection */}
             <div className="grid gap-2">
-              <Label>Plant Type (Optional)</Label>
+              <Label>{t("plantType")}</Label>
               <div className="flex flex-col space-y-2">
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.plant_type?.map((plantType) => (
@@ -559,18 +562,20 @@ const EditScriptModal = ({
                     >
                       <Leaf className="mr-2 h-4 w-4" />
                       {formData.plant_type && formData.plant_type.length > 0
-                        ? `${formData.plant_type.length} plant types selected`
-                        : "Select plant types"}
+                        ? t("plantTypesSelected", {
+                            count: formData.plant_type.length,
+                          })
+                        : t("selectPlantTypes")}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[400px] p-0" align="start">
                     <Command>
                       <CommandInput
-                        placeholder="Search plant types..."
+                        placeholder={t("searchPlantTypes")}
                         value={plantTypeSearchTerm}
                         onValueChange={setPlantTypeSearchTerm}
                       />
-                      <CommandEmpty>No plant type found.</CommandEmpty>
+                      <CommandEmpty>{t("noPlantTypeFound")}</CommandEmpty>
                       <CommandGroup>
                         <ScrollArea className="h-64">
                           {filteredPlantTypes.map((type) => (
@@ -605,7 +610,7 @@ const EditScriptModal = ({
 
             {/* Privacy section */}
             <div className="space-y-4">
-              <Label>Privacy</Label>
+              <Label>{t("privacy")}</Label>
               <RadioGroup
                 value={formData.privacy}
                 onValueChange={(value) => handleChange("privacy", value)}
@@ -617,11 +622,11 @@ const EditScriptModal = ({
                     <div className="flex items-center">
                       <Globe className="mr-2 h-4 w-4 text-blue-500" />
                       <Label htmlFor="public" className="font-medium">
-                        Public
+                        {t("public")}
                       </Label>
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">
-                      Anyone can view and fork this script
+                      {t("publicDescription")}
                     </p>
                   </div>
                 </div>
@@ -635,11 +640,11 @@ const EditScriptModal = ({
                     <div className="flex items-center">
                       <Lock className="mr-2 h-4 w-4 text-amber-500" />
                       <Label htmlFor="private" className="font-medium">
-                        Private
+                        {t("private")}
                       </Label>
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">
-                      Only you and people you share with can access
+                      {t("privateDescription")}
                     </p>
                   </div>
                 </div>
@@ -649,12 +654,12 @@ const EditScriptModal = ({
             {/* Shared users section - ONLY appears when privacy is set to private */}
             {formData.privacy === "private" && (
               <div className="space-y-4">
-                <Label>Shared Users</Label>
+                <Label>{t("sharedUsers")}</Label>
                 <div className="flex gap-2">
                   <Input
                     value={searchTerm}
                     onChange={handleSearchTermChange}
-                    placeholder="Search for users"
+                    placeholder={t("searchUsers")}
                     className="flex-1"
                   />
                   <Button
@@ -664,7 +669,7 @@ const EditScriptModal = ({
                     variant="secondary"
                   >
                     <Search className="h-4 w-4 mr-2" />
-                    Search
+                    {t("search")}
                   </Button>
                 </div>
 
@@ -681,7 +686,7 @@ const EditScriptModal = ({
                 {/* Shared users list */}
                 {sharedUsers.length > 0 && (
                   <div className="space-y-2">
-                    <Label className="text-sm">Shared with:</Label>
+                    <Label className="text-sm">{t("sharedWith")}</Label>
                     <div className="space-y-2">
                       {sharedUsers.map((user, index) => (
                         <div
@@ -697,11 +702,11 @@ const EditScriptModal = ({
                             </Avatar>
                             <div className="text-sm">
                               <p className="font-medium">
-                                {user.username || "Unknown User"}
+                                {user.username || t("unknownUser")}
                               </p>
                               {!oldUserShareId.includes(user._id) && (
                                 <span className="text-xs text-green-600">
-                                  New
+                                  {t("new")}
                                 </span>
                               )}
                             </div>
@@ -727,10 +732,10 @@ const EditScriptModal = ({
 
         <DialogFooter>
           <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button type="submit" onClick={handleSubmit}>
-            Confirm
+            {t("confirm")}
           </Button>
         </DialogFooter>
       </DialogContent>

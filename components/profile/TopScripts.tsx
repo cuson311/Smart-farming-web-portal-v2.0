@@ -5,10 +5,12 @@ import { useParams } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import Pagination from "../ui/pagination";
+import { useTranslations } from "next-intl";
 
 const ITEMS_PER_PAGE = 6;
 
 const TopScriptList = () => {
+  const t = useTranslations("profile.topScripts");
   const { userId } = useParams() as { userId: string };
   const { toast } = useToast();
   const [authUserId, setAuthUserId] = useState<string>("");
@@ -54,7 +56,7 @@ const TopScriptList = () => {
   if (scriptLoading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-muted-foreground">Loading scripts...</div>
+        <div className="text-muted-foreground">{t("loading")}</div>
       </div>
     );
   }
@@ -64,15 +66,15 @@ const TopScriptList = () => {
     try {
       await userApi.favoriteScript(authUserId, id, action);
       toast({
-        title: "Favorite updated",
-        description: "Script favorite status has been updated.",
+        title: "Success",
+        description: t("favorite.success"),
       });
       refetch();
     } catch (error) {
       console.error("Error update favorite scripts", error);
       toast({
         title: "Error",
-        description: "Failed to update favorite status.",
+        description: t("favorite.error"),
         variant: "destructive",
       });
     }
@@ -81,7 +83,7 @@ const TopScriptList = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold"></h2>
+        <h2 className="text-xl font-semibold">{t("title")}</h2>
         <div className="flex space-x-2 bg-secondary rounded-lg p-1">
           <button
             className={`px-3 py-1 text-sm rounded ${
@@ -91,7 +93,7 @@ const TopScriptList = () => {
             }`}
             onClick={() => handleFilterChange("rating")}
           >
-            Top Rated
+            {t("filters.rating")}
           </button>
           <button
             className={`px-3 py-1 text-sm rounded ${
@@ -101,16 +103,16 @@ const TopScriptList = () => {
             }`}
             onClick={() => handleFilterChange("favorite")}
           >
-            Most Favorited
+            {t("filters.favorite")}
           </button>
         </div>
       </div>
 
       {!scripts || scripts.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-          <h3 className="mb-2 text-lg font-semibold">No scripts found</h3>
+          <h3 className="mb-2 text-lg font-semibold">{t("empty.title")}</h3>
           <p className="text-sm text-muted-foreground">
-            Create a new script or try a different search query.
+            {t("empty.description")}
           </p>
         </div>
       ) : (
