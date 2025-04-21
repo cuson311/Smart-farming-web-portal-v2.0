@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useFetchScriptsList } from "@/hooks/useFetchUser";
 import { UserProfile } from "@/types/user";
 import { Script, ScriptsListOptions } from "@/types/script";
+import { useTranslations } from "next-intl";
 
 // Search Results Component
 const SearchResults = ({
@@ -21,12 +22,15 @@ const SearchResults = ({
   handleSelectUser: (userId: string, username: string) => void;
   handleCloseResults: () => void;
 }) => {
+  const t = useTranslations("dashboard.scripts.list.public");
   return searchResults.length > 0 ? (
     <Card className="w-full max-h-64 overflow-y-auto relative mt-2">
       <CardContent className="p-4">
         {/* Header */}
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Search Results</span>
+          <span className="text-sm text-muted-foreground">
+            {t("searchResults")}
+          </span>
           <Button
             variant="ghost"
             size="icon"
@@ -52,12 +56,12 @@ const SearchResults = ({
                 </Avatar>
                 <div className="text-sm">
                   <p className="font-medium">
-                    {user.username || "Unknown User"}
+                    {user.username || t("unknownUser")}
                   </p>
                 </div>
               </div>
               <Button variant="outline" size="sm">
-                View Scripts
+                {t("viewScripts")}
               </Button>
             </div>
           ))}
@@ -68,7 +72,9 @@ const SearchResults = ({
     <Card className="w-full relative mt-2">
       <CardContent className="p-4">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Search Results</span>
+          <span className="text-sm text-muted-foreground">
+            {t("searchResults")}
+          </span>
           <Button
             variant="ghost"
             size="icon"
@@ -79,7 +85,7 @@ const SearchResults = ({
           </Button>
         </div>
         <div className="flex items-center justify-center py-4">
-          <p className="text-sm text-muted-foreground">No users found</p>
+          <p className="text-sm text-muted-foreground">{t("noUsersFound")}</p>
         </div>
       </CardContent>
     </Card>
@@ -108,6 +114,7 @@ const PublicScriptList = ({
   updateState,
   filterOptions,
 }: PublicScriptListProps) => {
+  const t = useTranslations("dashboard.scripts.list.public");
   const { toast } = useToast();
 
   // Destructure state for cleaner code
@@ -147,8 +154,8 @@ const PublicScriptList = ({
     } catch (error) {
       console.error("Error searching users:", error);
       toast({
-        title: "Search failed",
-        description: "Failed to search users. Please try again.",
+        title: t("toast.searchFailed"),
+        description: t("toast.searchFailedDesc"),
         variant: "destructive",
       });
     }
@@ -169,7 +176,7 @@ const PublicScriptList = ({
           {selectedUser ? (
             <div className="flex flex-wrap items-center gap-2">
               <p className="text-muted-foreground">
-                Showing scripts by {selectedUser.name}
+                {t("showingScriptsBy", { name: selectedUser.name })}
               </p>
               <Button
                 variant="ghost"
@@ -178,7 +185,7 @@ const PublicScriptList = ({
                 onClick={() => updateState({ selectedUser: null })}
               >
                 <X className="h-3 w-3 mr-1" />
-                Clear
+                {t("clear")}
               </Button>
             </div>
           ) : null}
@@ -189,12 +196,12 @@ const PublicScriptList = ({
             <Input
               value={userSearchTerm}
               onChange={handleSearchTermChange}
-              placeholder="Search for users"
+              placeholder={t("searchPlaceholder")}
               className="flex-1"
             />
             <Button type="submit" size="default" variant="secondary">
               <Search className="h-4 w-4 mr-2" />
-              Search
+              {t("searchButton")}
             </Button>
           </form>
         </div>
@@ -227,9 +234,9 @@ const PublicScriptList = ({
           <div className="mx-auto w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
             <Search className="h-8 w-8 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-medium">Search for public scripts</h3>
+          <h3 className="text-lg font-medium">{t("emptyState.title")}</h3>
           <p className="text-muted-foreground mt-2">
-            Find users to discover their public scripts
+            {t("emptyState.description")}
           </p>
         </div>
       )}

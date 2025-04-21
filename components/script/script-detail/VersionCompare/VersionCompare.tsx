@@ -7,6 +7,7 @@ import * as monaco from "monaco-editor";
 import { useTheme } from "next-themes";
 import { Book } from "lucide-react";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 // Shadcn UI Components
 import { Button } from "@/components/ui/button";
@@ -45,6 +46,8 @@ const VersionCompareTab = () => {
     setEditorKey1((prev) => prev + 1);
     setEditorKey2((prev) => prev + 1);
   };
+
+  const t = useTranslations("dashboard.scripts.detail");
 
   // Fetch version
   const {
@@ -145,7 +148,7 @@ const VersionCompareTab = () => {
       <div className="container mx-auto px-4">
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Compare version</CardTitle>
+            <CardTitle>{t("versionCompare.title")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -155,7 +158,9 @@ const VersionCompareTab = () => {
                   <DropdownMenuTrigger asChild>
                     <Button variant="default" size="sm" className="w-fit">
                       <Book className="mr-2 h-4 w-4" />
-                      Version {version1 === -1.0 ? null : version1.toFixed(1)}
+                      {t("code.version", {
+                        version: version1 === -1.0 ? "" : version1.toFixed(1),
+                      })}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="min-w-[200px]">
@@ -173,7 +178,7 @@ const VersionCompareTab = () => {
                             reloadFileData1?.();
                           }}
                         >
-                          {`Version ${version.toFixed(1)}`}
+                          {t("code.version", { version: version.toFixed(1) })}
                         </DropdownMenuItem>
                       ))}
                   </DropdownMenuContent>
@@ -211,7 +216,9 @@ const VersionCompareTab = () => {
                   <DropdownMenuTrigger asChild>
                     <Button variant="default" size="sm" className="w-fit">
                       <Book className="mr-2 h-4 w-4" />
-                      Version {version2 === -1.0 ? null : version2.toFixed(1)}
+                      {t("code.version", {
+                        version: version2 === -1.0 ? "" : version2.toFixed(1),
+                      })}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="min-w-[200px]">
@@ -229,7 +236,7 @@ const VersionCompareTab = () => {
                             reloadFileData2?.();
                           }}
                         >
-                          {`Version ${version.toFixed(1)}`}
+                          {t("code.version", { version: version.toFixed(1) })}
                         </DropdownMenuItem>
                       ))}
                   </DropdownMenuContent>

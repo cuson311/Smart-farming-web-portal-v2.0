@@ -210,6 +210,157 @@
           "noProvinceFound": "Không tìm thấy tỉnh nào",
           "noUserFound": "Không tìm thấy người dùng nào",
           "searchResults": "Kết quả tìm kiếm"
+        },
+        "detail": {
+          "delete": "Xóa",
+          "back": "Quay lại",
+          "loading": "Đang tải...",
+          "checkingAccess": "Đang kiểm tra quyền truy cập...",
+          "notFound": {
+            "title": "Không tìm thấy trang",
+            "invalidTab": "Tab không hợp lệ",
+            "description": "Tab được yêu cầu không tồn tại. Vui lòng chọn một tab hợp lệ hoặc quay lại danh sách kịch bản của bạn.",
+            "returnButton": "Quay lại danh sách kịch bản"
+          },
+          "accessDenied": {
+            "title": "Truy cập kịch bản",
+            "alertTitle": "Từ chối truy cập",
+            "description": "Bạn không có quyền xem kịch bản này. Vui lòng liên hệ với chủ sở hữu kịch bản nếu bạn cho rằng đây là lỗi.",
+            "returnButton": "Quay lại danh sách kịch bản"
+          },
+          "tabs": {
+            "code": "Mã nguồn",
+            "comments": "Bình luận",
+            "versions": "Phiên bản"
+          },
+          "loadingDetails": "Đang tải chi tiết kịch bản...",
+          "scriptDetails": {
+            "public": "Công khai",
+            "private": "Riêng tư",
+            "title": "Chi tiết kịch bản",
+            "owner": "Chủ sở hữu",
+            "description": "Mô tả",
+            "noDescription": "Không có mô tả",
+            "location": "Vị trí",
+            "noLocations": "Không có vị trí được chỉ định",
+            "plantType": "Loại cây trồng",
+            "noPlants": "Không có cây trồng được chỉ định",
+            "privacy": "Quyền riêng tư",
+            "averageRating": "Đánh giá trung bình",
+            "rating": "{value} ({count} {count, plural, one {đánh giá} other {đánh giá}})",
+            "yourRating": "Đánh giá của bạn",
+            "rateScript": "Đánh giá kịch bản này",
+            "youRated": "Bạn đã đánh giá {value} {value, plural, one {sao} other {sao}}",
+            "deleteRating": "Xóa đánh giá của bạn",
+            "created": "Đã tạo",
+            "lastUpdated": "Cập nhật lần cuối",
+            "actions": "Hành động",
+            "editScript": "Chỉnh sửa kịch bản",
+            "delete": "Xóa",
+            "allLocations": "Tất cả vị trí",
+            "allPlantTypes": "Tất cả loại cây trồng"
+          },
+          "code": {
+            "title": "Mã kịch bản",
+            "version": "Phiên bản {version}",
+            "currentVersion": "Phiên bản hiện tại: {version}",
+            "reload": "Tải lại",
+            "download": "Tải xuống",
+            "newVersion": "Phiên bản mới",
+            "upload": "Tải lên",
+            "save": "Lưu",
+            "deleteVersion": "Xóa phiên bản",
+            "enableEditing": "Bật chế độ chỉnh sửa",
+            "disableEditing": "Tắt chế độ chỉnh sửa",
+            "deleteDialog": {
+              "title": "Xóa phiên bản",
+              "description": "Bạn có chắc chắn muốn xóa phiên bản {version}? Hành động này không thể hoàn tác.",
+              "cancel": "Hủy",
+              "confirm": "Xóa"
+            }
+          },
+          "comments": {
+            "title": "Bình luận",
+            "description": "Thảo luận về kịch bản này với nhóm của bạn",
+            "addComment": "Thêm bình luận...",
+            "postComment": "Đăng bình luận",
+            "noComments": "Chưa có bình luận nào.",
+            "searchResults": "Kết quả tìm kiếm",
+            "unknownUser": "Người dùng không xác định",
+            "viewScripts": "Xem kịch bản",
+            "reply": "Trả lời",
+            "edit": "Chỉnh sửa",
+            "delete": "Xóa",
+            "history": "Xem lịch sử chỉnh sửa",
+            "showReplies": "Hiện trả lời ({count})",
+            "hideReplies": "Ẩn trả lời",
+            "writeReply": "Viết trả lời...",
+            "cancel": "Hủy",
+            "save": "Lưu",
+            "deleteDialog": {
+              "title": "Xóa {type}",
+              "description": "Bạn có chắc chắn muốn xóa {type} này? Hành động này không thể hoàn tác.",
+              "cancel": "Hủy",
+              "confirm": "Xóa"
+            },
+            "historyDialog": {
+              "title": "Lịch sử chỉnh sửa {type}",
+              "description": "Xem lịch sử chỉnh sửa của {type} này",
+              "edit": "Chỉnh sửa {number}",
+              "noHistory": "Không có lịch sử chỉnh sửa cho {type} này",
+              "close": "Đóng"
+            },
+            "toast": {
+              "addSuccess": "Đã thêm bình luận thành công",
+              "addError": "Không thể thêm bình luận",
+              "editSuccess": "Đã chỉnh sửa {type} thành công",
+              "editError": "Không thể chỉnh sửa {type}",
+              "deleteSuccess": "Đã xóa {type} thành công",
+              "deleteError": "Không thể xóa {type}"
+            }
+          },
+          "versionCompare": {
+            "title": "So sánh phiên bản",
+            "selectVersion": "Chọn phiên bản"
+          }
+        },
+        "list": {
+          "loading": "Đang tải kịch bản...",
+          "emptyState": {
+            "title": "Không tìm thấy kịch bản nào",
+            "description": "Hãy điều chỉnh bộ lọc hoặc thử tìm kiếm với từ khóa khác."
+          },
+          "card": {
+            "noDescription": "Không có mô tả",
+            "locations": "Địa điểm:",
+            "noLocations": "Chưa có địa điểm",
+            "plants": "Cây trồng:",
+            "noPlants": "Chưa có cây trồng",
+            "more": "+{count} khác",
+            "favorite": "Yêu thích",
+            "updatedAt": "Cập nhật lúc {date}",
+            "view": "Xem",
+            "private": "Riêng tư",
+            "public": "Công khai"
+          },
+          "public": {
+            "searchPlaceholder": "Tìm kiếm người dùng",
+            "searchButton": "Tìm kiếm",
+            "showingScriptsBy": "Hiển thị kịch bản của {name}",
+            "clear": "Xóa",
+            "searchResults": "Kết quả tìm kiếm",
+            "noUsersFound": "Không tìm thấy người dùng",
+            "viewScripts": "Xem kịch bản",
+            "unknownUser": "Người dùng không xác định",
+            "emptyState": {
+              "title": "Tìm kiếm kịch bản công khai",
+              "description": "Tìm người dùng để khám phá các kịch bản công khai của họ"
+            },
+            "toast": {
+              "searchFailed": "Tìm kiếm thất bại",
+              "searchFailedDesc": "Không thể tìm kiếm người dùng. Vui lòng thử lại."
+            }
+          }
         }
       },
       "models": {

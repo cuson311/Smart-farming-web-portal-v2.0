@@ -211,6 +211,157 @@
                 "noProvinceFound": "No provinces found",
                 "noUserFound": "No users found",
                 "searchResults": "Search Results"
+            },
+            "detail": {
+                "delete": "Delete",
+                "back": "Back",
+                "loading": "Loading...",
+                "checkingAccess": "Checking access permissions...",
+                "notFound": {
+                    "title": "Page Not Found",
+                    "invalidTab": "Invalid Tab",
+                    "description": "The requested tab does not exist. Please select a valid tab or return to your scripts.",
+                    "returnButton": "Return to My Scripts"
+                },
+                "accessDenied": {
+                    "title": "Script Access",
+                    "alertTitle": "Access Denied",
+                    "description": "You don't have permission to view this script. Please contact the script owner if you believe this is an error.",
+                    "returnButton": "Return to My Scripts"
+                },
+                "tabs": {
+                    "code": "Code",
+                    "comments": "Comments",
+                    "versions": "Versions"
+                },
+                "loadingDetails": "Loading script details...",
+                "scriptDetails": {
+                    "public": "Public",
+                    "private": "Private",
+                    "title": "Script Details",
+                    "owner": "Owner",
+                    "description": "Description",
+                    "noDescription": "There is no description",
+                    "location": "Location",
+                    "noLocations": "No locations specified",
+                    "plantType": "Plant Type",
+                    "noPlants": "No plants specified",
+                    "privacy": "Privacy",
+                    "averageRating": "Average Rating",
+                    "rating": "{value} ({count} {count, plural, one {rating} other {ratings}})",
+                    "yourRating": "Your Rating",
+                    "rateScript": "Rate this script",
+                    "youRated": "You rated {value} {value, plural, one {star} other {stars}}",
+                    "deleteRating": "Delete your rating",
+                    "created": "Created",
+                    "lastUpdated": "Last Updated",
+                    "actions": "Actions",
+                    "editScript": "Edit Script",
+                    "delete": "Delete",
+                    "allLocations": "All Locations",
+                    "allPlantTypes": "All Plant Types"
+                },
+                "code": {
+                    "title": "Script Code",
+                    "version": "Version {version}",
+                    "currentVersion": "Current version: {version}",
+                    "reload": "Reload",
+                    "download": "Download",
+                    "newVersion": "New version",
+                    "upload": "Upload",
+                    "save": "Save",
+                    "deleteVersion": "Delete version",
+                    "enableEditing": "Enable editing",
+                    "disableEditing": "Disable editing",
+                    "deleteDialog": {
+                        "title": "Delete Version",
+                        "description": "Are you sure you want to delete version {version}? This action cannot be undone.",
+                        "cancel": "Cancel",
+                        "confirm": "Delete"
+                    }
+                },
+                "comments": {
+                    "title": "Comments",
+                    "description": "Discuss this script with your team",
+                    "addComment": "Add a comment...",
+                    "postComment": "Post Comment",
+                    "noComments": "No comments yet.",
+                    "searchResults": "Search Results",
+                    "unknownUser": "Unknown User",
+                    "viewScripts": "View Scripts",
+                    "reply": "Reply",
+                    "edit": "Edit",
+                    "delete": "Delete",
+                    "history": "View edit history",
+                    "showReplies": "Show replies ({count})",
+                    "hideReplies": "Hide replies",
+                    "writeReply": "Write a reply...",
+                    "cancel": "Cancel",
+                    "save": "Save",
+                    "deleteDialog": {
+                        "title": "Delete {type}",
+                        "description": "Are you sure you want to delete this {type}? This action cannot be undone.",
+                        "cancel": "Cancel",
+                        "confirm": "Delete"
+                    },
+                    "historyDialog": {
+                        "title": "{type} Edit History",
+                        "description": "View the edit history of this {type}",
+                        "edit": "Edit {number}",
+                        "noHistory": "No edit history available for this {type}",
+                        "close": "Close"
+                    },
+                    "toast": {
+                        "addSuccess": "Comment added successfully",
+                        "addError": "Failed to add comment",
+                        "editSuccess": "Edited {type} successfully",
+                        "editError": "Failed to edit {type}",
+                        "deleteSuccess": "{type} has been deleted successfully",
+                        "deleteError": "Failed to delete {type}"
+                    }
+                },
+                "versionCompare": {
+                    "title": "Compare version",
+                    "selectVersion": "Select version"
+                }
+            },
+            "list": {
+                "loading": "Loading scripts...",
+                "emptyState": {
+                    "title": "No scripts found",
+                    "description": "Try adjusting your filters or try a different search query."
+                },
+                "card": {
+                    "noDescription": "No description",
+                    "locations": "Locations:",
+                    "noLocations": "No locations specified",
+                    "plants": "Plants:",
+                    "noPlants": "No plants specified",
+                    "more": "+{count} more",
+                    "favorite": "Favorite",
+                    "updatedAt": "Updated at {date}",
+                    "view": "View",
+                    "private": "Private",
+                    "public": "Public"
+                },
+                "public": {
+                    "searchPlaceholder": "Search for users",
+                    "searchButton": "Search",
+                    "showingScriptsBy": "Showing scripts by {name}",
+                    "clear": "Clear",
+                    "searchResults": "Search Results",
+                    "noUsersFound": "No users found",
+                    "viewScripts": "View Scripts",
+                    "unknownUser": "Unknown User",
+                    "emptyState": {
+                        "title": "Search for public scripts",
+                        "description": "Find users to discover their public scripts"
+                    },
+                    "toast": {
+                        "searchFailed": "Search failed",
+                        "searchFailedDesc": "Failed to search users. Please try again."
+                    }
+                }
             }
         },
         "models": {

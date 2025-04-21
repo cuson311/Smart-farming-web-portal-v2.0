@@ -41,8 +41,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useFetchScriptFile } from "@/hooks/useFetchScript";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { toast } from "@/components/ui/use-toast";
 
 const CodeTab = ({ script }: { script: Script }) => {
+  const t = useTranslations("dashboard.scripts.detail");
   const { theme } = useTheme();
   const { userId } = useParams();
   const user_Id: string = Array.isArray(userId) ? userId[0] : userId;
@@ -75,24 +78,19 @@ const CodeTab = ({ script }: { script: Script }) => {
     if (!fileData) return;
 
     try {
-      // Get current versions array
       let newVersionArr = [...script.version];
 
       if (newFile) {
-        // Add new version to array
         newVersionArr.push(newVersion);
         newVersionArr = newVersionArr.sort((a, b) => b - a);
 
-        // Update script info with new versions array
         await scriptApi.updateScriptInfo(user_Id, script._id, {
           version: newVersionArr,
         });
 
-        // Update current version in state
         setCurVersion(newVersion);
         script.version = newVersionArr;
       } else if (stateVersion !== curVersion) {
-        // Rename file
         await scriptApi.renameFile(
           user_Id,
           script._id,
@@ -100,23 +98,19 @@ const CodeTab = ({ script }: { script: Script }) => {
           stateVersion
         );
 
-        // Update versions array - replace old version with new version
         newVersionArr = newVersionArr.map((item) =>
           item === curVersion ? stateVersion : item
         );
         newVersionArr = newVersionArr.sort((a, b) => b - a);
 
-        // Update script info with new versions array
         await scriptApi.updateScriptInfo(user_Id, script._id, {
           version: newVersionArr,
         });
 
-        // Update current version in state
         setCurVersion(stateVersion);
         script.version = newVersionArr;
       }
 
-      // Create a blob and file object
       const jsonBlob = new Blob([fileData], { type: "application/json" });
       const jsonFile = new File(
         [jsonBlob],
@@ -126,15 +120,24 @@ const CodeTab = ({ script }: { script: Script }) => {
         { type: "application/json" }
       );
 
-      // Create form data
       const formFileData = new FormData();
       formFileData.append("files", jsonFile);
       formFileData.append("remote_path", `/${userId}/script/${script._id}/`);
 
-      // Upload the file
       await scriptApi.uploadScriptFile(formFileData);
+
+      toast({
+        title: t("toast.saveSuccess"),
+        description: t("toast.saveSuccessDescription"),
+        variant: "default",
+      });
     } catch (error) {
       console.error("Error uploading file:", error);
+      toast({
+        title: t("toast.saveError"),
+        description: t("toast.saveErrorDescription"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -193,8 +196,19 @@ const CodeTab = ({ script }: { script: Script }) => {
         // Handle case with no versions left
         handleNewVersion();
       }
+
+      toast({
+        title: t("toast.deleteVersionSuccess"),
+        description: t("toast.deleteVersionSuccessDescription"),
+        variant: "default",
+      });
     } catch (error) {
       console.error("Error deleting version:", error);
+      toast({
+        title: t("toast.deleteVersionError"),
+        description: t("toast.deleteVersionErrorDescription"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -219,14 +233,14 @@ const CodeTab = ({ script }: { script: Script }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Code2 className="h-5 w-5" />
-            <CardTitle>Script Code</CardTitle>
+            <CardTitle>{t("code.title")}</CardTitle>
           </div>
           <div className="flex items-center gap-2">
             {/* Version selector */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
-                  Version {curVersion.toFixed(1)}
+                  {t("code.version", { version: curVersion.toFixed(1) })}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -240,7 +254,7 @@ const CodeTab = ({ script }: { script: Script }) => {
                         reloadFileData();
                       }}
                     >
-                      Version {version.toFixed(1)}
+                      {t("code.version", { version: version.toFixed(1) })}
                     </DropdownMenuItem>
                   ))}
               </DropdownMenuContent>
@@ -248,7 +262,9 @@ const CodeTab = ({ script }: { script: Script }) => {
           </div>
         </div>
         <CardDescription className="flex items-center justify-between">
-          <span>Current version: {curVersion.toFixed(1)}</span>
+          <span>
+            {t("code.currentVersion", { version: curVersion.toFixed(1) })}
+          </span>
 
           <div className="flex items-center gap-1">
             {/* Reload button */}
@@ -259,7 +275,7 @@ const CodeTab = ({ script }: { script: Script }) => {
                 setStateVersion(curVersion);
                 reloadFileData();
               }}
-              title="Reload"
+              title={t("code.reload")}
             >
               <RefreshCw className="h-4 w-4" />
             </Button>
@@ -269,7 +285,7 @@ const CodeTab = ({ script }: { script: Script }) => {
               variant="ghost"
               size="icon"
               onClick={handleDownload}
-              title="Download"
+              title={t("code.download")}
             >
               <Download className="h-4 w-4" />
             </Button>
@@ -285,7 +301,7 @@ const CodeTab = ({ script }: { script: Script }) => {
                         variant="ghost"
                         size="icon"
                         onClick={handleNewVersion}
-                        title="New version"
+                        title={t("code.newVersion")}
                       >
                         <Plus className="h-4 w-4" />
                       </Button>
@@ -295,7 +311,7 @@ const CodeTab = ({ script }: { script: Script }) => {
                         variant="ghost"
                         size="icon"
                         asChild
-                        title="Upload"
+                        title={t("code.upload")}
                       >
                         <label>
                           <Upload className="h-4 w-4" />
@@ -313,7 +329,7 @@ const CodeTab = ({ script }: { script: Script }) => {
                         variant="ghost"
                         size="icon"
                         onClick={() => handleSubmitFile()}
-                        title="Save"
+                        title={t("code.save")}
                       >
                         <Save className="h-4 w-4" />
                       </Button>
@@ -323,7 +339,7 @@ const CodeTab = ({ script }: { script: Script }) => {
                         variant="ghost"
                         size="icon"
                         onClick={() => setOpenDeleteDialog(true)}
-                        title="Delete version"
+                        title={t("code.deleteVersion")}
                       >
                         <Trash className="h-4 w-4" />
                       </Button>
@@ -336,7 +352,9 @@ const CodeTab = ({ script }: { script: Script }) => {
                     size="icon"
                     onClick={() => setDisableEditFile((prev) => !prev)}
                     title={
-                      disableEditFile ? "Enable editing" : "Disable editing"
+                      disableEditFile
+                        ? t("code.enableEditing")
+                        : t("code.disableEditing")
                     }
                   >
                     <Edit className="h-4 w-4" />
@@ -368,16 +386,17 @@ const CodeTab = ({ script }: { script: Script }) => {
       <AlertDialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Version</AlertDialogTitle>
+            <AlertDialogTitle>{t("code.deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete version {curVersion.toFixed(1)}?
-              This action cannot be undone.
+              {t("code.deleteDialog.description", {
+                version: curVersion.toFixed(1),
+              })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteVersion}>
-              Delete
+              {t("delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
