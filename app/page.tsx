@@ -18,8 +18,6 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
-  console.log("API endpoint", process.env.NEXT_PUBLIC_API_ENDPOINT);
-
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
