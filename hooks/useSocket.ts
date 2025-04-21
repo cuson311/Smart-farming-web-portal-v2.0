@@ -37,7 +37,7 @@ export const useSocket = () => {
             socket.disconnect();
         }
 
-        const newSocket = io("http://localhost:3004", {
+        const newSocket = io(`${process.env.NEXT_PUBLIC_API_ENDPOINT}`, {
             transports: ["websocket"],
             reconnection: true,
             reconnectionAttempts: 5,
