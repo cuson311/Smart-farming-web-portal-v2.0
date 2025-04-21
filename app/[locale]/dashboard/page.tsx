@@ -1,4 +1,3 @@
-"use client";
 import { Code2, Database, Droplets, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

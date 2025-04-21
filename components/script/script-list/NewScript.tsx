@@ -2,6 +2,7 @@
 
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl"; // Import next-intl
 import {
   Plus,
   Upload,
@@ -79,6 +80,7 @@ const SearchResults = ({
   sharedUserIds: string[];
   handleCloseResults: () => void;
 }) => {
+  const t = useTranslations("dashboard.scripts.newScript");
   return searchResults.length > 0 ? (
     <Card className="w-full max-h-64 overflow-y-auto relative mt-2">
       <CardContent className="p-4">
@@ -130,7 +132,9 @@ const SearchResults = ({
     <Card className="w-full relative mt-2">
       <CardContent className="p-4">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Search Results</span>
+          <span className="text-sm text-muted-foreground">
+            {t("searchResults")}
+          </span>
           <Button
             variant="ghost"
             size="icon"
@@ -141,7 +145,7 @@ const SearchResults = ({
           </Button>
         </div>
         <div className="flex items-center justify-center py-4">
-          <p className="text-sm text-muted-foreground">No users found</p>
+          <p className="text-sm text-muted-foreground">{t("noUserFound")}</p>
         </div>
       </CardContent>
     </Card>
@@ -150,6 +154,7 @@ const SearchResults = ({
 
 const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
   const { theme } = useTheme();
+  const t = useTranslations("dashboard.scripts.newScript"); // Use translations for this component
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [newScript, setNewScript] = useState<NewScriptData>({
@@ -499,44 +504,42 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       <DialogTrigger asChild>
         <Button>
           <Plus className="mr-2 h-4 w-4" />
-          New Script
+          {t("newScriptButton")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Create New Script</DialogTitle>
-          <DialogDescription>
-            Add a new irrigation script to your collection.
-          </DialogDescription>
+          <DialogTitle>{t("dialogTitle")}</DialogTitle>
+          <DialogDescription>{t("dialogDescription")}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleCreateScript}>
           <div className="grid gap-6 py-4">
             {/* Form fields section */}
             <div className="space-y-4">
               <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">{t("nameLabel")}</Label>
                 <Input
                   id="name"
                   name="name"
                   value={newScript.name}
                   onChange={handleNewScriptChange}
-                  placeholder="Enter script name"
+                  placeholder={t("namePlaceholder")}
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">{t("descriptionLabel")}</Label>
                 <Textarea
                   id="description"
                   name="description"
                   value={newScript.description}
                   onChange={handleNewScriptChange}
-                  placeholder="Enter script description (optional)"
+                  placeholder={t("descriptionPlaceholder")}
                 />
               </div>
 
               {/* Location selection - NEW SECTION */}
               <div className="grid gap-2">
-                <Label>Location (Optional)</Label>
+                <Label>{t("locationLabel")}</Label>
                 <div className="flex flex-col space-y-2">
                   <div className="flex flex-wrap gap-2 mb-2">
                     {newScript.location?.map((location) => (
@@ -567,18 +570,20 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                       >
                         <MapPin className="mr-2 h-4 w-4" />
                         {newScript.location && newScript.location.length > 0
-                          ? `${newScript.location.length} locations selected`
-                          : "Select provinces"}
+                          ? `${newScript.location.length} ${t(
+                              "locationsSelected"
+                            )}`
+                          : t("selectProvinces")}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-[400px] p-0" align="start">
                       <Command>
                         <CommandInput
-                          placeholder="Search provinces..."
+                          placeholder={t("searchProvinces")}
                           value={locationSearchTerm}
                           onValueChange={setLocationSearchTerm}
                         />
-                        <CommandEmpty>No province found.</CommandEmpty>
+                        <CommandEmpty>{t("noProvinceFound")}</CommandEmpty>
                         <CommandGroup>
                           <ScrollArea className="h-64">
                             {filteredProvinces.map((province) => (
@@ -613,7 +618,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
 
               {/* Plant Type selection - NEW SECTION */}
               <div className="grid gap-2">
-                <Label>Plant Type (Optional)</Label>
+                <Label>{t("plantTypeLabel")}</Label>
                 <div className="flex flex-col space-y-2">
                   <div className="flex flex-wrap gap-2 mb-2">
                     {newScript.plant_type?.map((plantType) => (
@@ -644,18 +649,20 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                       >
                         <Leaf className="mr-2 h-4 w-4" />
                         {newScript.plant_type && newScript.plant_type.length > 0
-                          ? `${newScript.plant_type.length} plant types selected`
-                          : "Select plant types"}
+                          ? `${newScript.plant_type.length} ${t(
+                              "plantTypesSelected"
+                            )}`
+                          : t("selectPlantTypes")}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-[400px] p-0" align="start">
                       <Command>
                         <CommandInput
-                          placeholder="Search plant types..."
+                          placeholder={t("searchPlantTypes")}
                           value={plantTypeSearchTerm}
                           onValueChange={setPlantTypeSearchTerm}
                         />
-                        <CommandEmpty>No plant type found.</CommandEmpty>
+                        <CommandEmpty>{t("noPlantTypeFound")}</CommandEmpty>
                         <CommandGroup>
                           <ScrollArea className="h-64">
                             {filteredPlantTypes.map((type) => (
@@ -690,7 +697,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
 
               {/* Privacy section */}
               <div className="space-y-4">
-                <Label>Privacy</Label>
+                <Label>{t("privacyLabel")}</Label>
                 <RadioGroup
                   value={newScript.privacy}
                   onValueChange={handlePrivacyChange}
@@ -706,11 +713,11 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                       <div className="flex items-center">
                         <Globe className="mr-2 h-4 w-4 text-blue-500" />
                         <Label htmlFor="public" className="font-medium">
-                          Public
+                          {t("publicLabel")}
                         </Label>
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Anyone can view and fork this script
+                        {t("publicDescription")}
                       </p>
                     </div>
                   </div>
@@ -724,11 +731,11 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                       <div className="flex items-center">
                         <Lock className="mr-2 h-4 w-4 text-amber-500" />
                         <Label htmlFor="private" className="font-medium">
-                          Private
+                          {t("privateLabel")}
                         </Label>
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Only you and people you share with can access
+                        {t("privateDescription")}
                       </p>
                     </div>
                   </div>
@@ -738,12 +745,12 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
               {/* Shared users section - ONLY appears when privacy is set to private */}
               {newScript.privacy === "private" && (
                 <div className="space-y-4">
-                  <Label>Shared Users</Label>
+                  <Label>{t("sharedUsersLabel")}</Label>
                   <div className="flex gap-2">
                     <Input
                       value={searchTerm}
                       onChange={handleSearchTermChange}
-                      placeholder="Search for users"
+                      placeholder={t("searchUsersPlaceholder")}
                       className="flex-1"
                     />
                     <Button
@@ -753,7 +760,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                       variant="secondary"
                     >
                       <Search className="h-4 w-4 mr-2" />
-                      Search
+                      {t("searchButton")}
                     </Button>
                   </div>
 
@@ -770,7 +777,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                   {/* Shared users list */}
                   {sharedUsers.length > 0 && (
                     <div className="space-y-2">
-                      <Label className="text-sm">Shared with:</Label>
+                      <Label className="text-sm">{t("sharedWithLabel")}</Label>
                       <div className="space-y-2">
                         {sharedUsers.map((user, index) => (
                           <div
@@ -811,7 +818,9 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
             {/* Script JSON section - now as a separate row spanning full width */}
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <Label className="text-lg font-medium">Script JSON</Label>
+                <Label className="text-lg font-medium">
+                  {t("scriptJsonLabel")}
+                </Label>
                 <div className="flex space-x-2">
                   <Button
                     type="button"
@@ -829,18 +838,18 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                     }}
                   >
                     <Upload className="mr-2 h-4 w-4" />
-                    Upload JSON
+                    {t("uploadJsonButton")}
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button type="button" size="sm" variant="outline">
                         <FileText className="h-4 w-4 mr-2" />
-                        Template
+                        {t("templateButton")}
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem onClick={fetchDefaultTemplate}>
-                        Default
+                        {t("defaultTemplate")}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -866,9 +875,9 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={handleCloseDialog}>
-              Cancel
+              {t("cancelButton")}
             </Button>
-            <Button type="submit">Create Script</Button>
+            <Button type="submit">{t("createButton")}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,22 +23,23 @@ const DeleteModelModal = ({
   onConfirm,
   modelName = "this model",
 }: DeleteModelModalProps) => {
+  const t = useTranslations("dashboard.models");
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Delete Script</DialogTitle>
+          <DialogTitle>{t("deleteModel.title")}</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete <strong>{modelName}</strong>? This
-            action cannot be undone.
+            {t("deleteModel.description", { modelName })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex gap-2 pt-4">
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            {t("deleteModel.cancel")}
           </Button>
           <Button variant="destructive" onClick={onConfirm}>
-            Delete
+            {t("deleteModel.confirm")}
           </Button>
         </DialogFooter>
       </DialogContent>

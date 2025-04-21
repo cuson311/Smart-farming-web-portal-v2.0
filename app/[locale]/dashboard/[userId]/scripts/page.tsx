@@ -44,11 +44,13 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { CheckIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // NotFoundComponent
 const NotFoundComponent = () => {
   const router = useRouter();
   const [userId, setUserId] = useState<string>("");
+  const t = useTranslations("Common");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -62,22 +64,19 @@ const NotFoundComponent = () => {
       <div className="flex items-center gap-4">
         <Button variant="ghost" onClick={() => router.back()}>
           <ArrowLeft className="h-4 w-4" />
-          <span className="sr-only">Back</span>
+          <span className="sr-only">{t("back")}</span>
         </Button>
-        <h1 className="text-2xl font-bold">Page Not Found</h1>
+        <h1 className="text-2xl font-bold">{t("pageNotFound")}</h1>
       </div>
 
       <Alert variant="destructive" className="bg-destructive/10">
         <ShieldAlert className="h-5 w-5" />
-        <AlertTitle className="mb-2">Invalid Tab</AlertTitle>
-        <AlertDescription>
-          The requested tab does not exist. Please select a valid tab or return
-          to the dashboard.
-        </AlertDescription>
+        <AlertTitle className="mb-2">{t("invalidTab")}</AlertTitle>
+        <AlertDescription>{t("invalidTabDescription")}</AlertDescription>
         <div className="mt-4">
           <Button asChild>
             <Link href={`/dashboard/${userId}/scripts?tab=all`}>
-              Return to my scripts
+              {t("returnToDashboard")}
             </Link>
           </Button>
         </div>
@@ -189,6 +188,7 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
   const tabParam = searchParams.get("tab");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
+  const t = useTranslations("dashboard.scripts");
 
   // Change to arrays to support multiple selections
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
@@ -338,8 +338,8 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
     try {
       await userApi.favoriteScript(userId, id, action);
       toast({
-        title: "Favorite updated",
-        description: "Script favorite status has been updated.",
+        title: t("favorite.success"),
+        description: t("favorite.success"),
       });
       refetchAllScripts(scriptListOptions);
       refetchSharedScripts(scriptListOptions);
@@ -347,8 +347,8 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
       if (refetch) refetch();
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update favorite status.",
+        title: t("favorite.error"),
+        description: t("favorite.error"),
         variant: "destructive",
       });
     }
@@ -370,13 +370,13 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
   return (
     <div className="grid gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-2xl font-bold">Scripts</h1>
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search scripts..."
+              placeholder={t("searchPlaceholder")}
               className="pl-8"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -396,8 +396,9 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
             options={vietnamProvinces}
             selectedValues={selectedLocations}
             onChange={setSelectedLocations}
-            placeholder="Select locations"
-            label="Locations"
+            placeholder={t("selectLocations")}
+            emptyMessage={t("noOptionsFound")}
+            label={t("locations")}
           />
 
           {/* Multi-select Plant Type Filter */}
@@ -405,25 +406,26 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
             options={plantTypes}
             selectedValues={selectedPlantTypes}
             onChange={setSelectedPlantTypes}
-            placeholder="Select plant types"
-            label="Plant Types"
+            placeholder={t("selectPlantTypes")}
+            emptyMessage={t("noOptionsFound")}
+            label={t("plantTypes")}
           />
 
           {/* Privacy Filter - Only show if not on public-scripts tab */}
           {!disablePrivacyFilter && (
             <div className="flex flex-col gap-2">
-              <Label htmlFor="privacy-filter">Privacy</Label>
+              <Label htmlFor="privacy-filter">{t("privacy")}</Label>
               <Select
                 value={privacyFilter || "all"}
                 onValueChange={(value) => setPrivacyFilter(value)}
               >
                 <SelectTrigger id="privacy-filter" className="w-[180px]">
-                  <SelectValue placeholder="All privacy types" />
+                  <SelectValue placeholder={t("allPrivacyTypes")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="public">Public</SelectItem>
-                  <SelectItem value="private">Private</SelectItem>
+                  <SelectItem value="all">{t("all")}</SelectItem>
+                  <SelectItem value="public">{t("public")}</SelectItem>
+                  <SelectItem value="private">{t("private")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -437,7 +439,7 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
                 onClick={clearFilters}
                 className="px-4 py-2 text-sm text-primary hover:underline"
               >
-                Clear filters
+                {t("clearFilters")}
               </button>
             </div>
           )}
@@ -445,7 +447,7 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
 
         {/* Sort */}
         <div className="flex items-center gap-2 flex-nowrap mt-4 md:mt-0">
-          <Label className="whitespace-nowrap">Sort by:</Label>
+          <Label className="whitespace-nowrap">{t("sortBy")}:</Label>
           <Select
             value={scriptListOptions.sortBy}
             onValueChange={(value: "createdAt" | "updatedAt") =>
@@ -453,11 +455,11 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
             }
           >
             <SelectTrigger className="min-w-[180px]">
-              <SelectValue placeholder="Select field" />
+              <SelectValue placeholder={t("selectField")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="createdAt">Creation Date</SelectItem>
-              <SelectItem value="updatedAt">Last Update</SelectItem>
+              <SelectItem value="createdAt">{t("creationDate")}</SelectItem>
+              <SelectItem value="updatedAt">{t("lastUpdate")}</SelectItem>
             </SelectContent>
           </Select>
 
@@ -471,11 +473,11 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
             }
           >
             <SelectTrigger className="min-w-[180px]">
-              <SelectValue placeholder="Select order" />
+              <SelectValue placeholder={t("selectOrder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="desc">Latest First</SelectItem>
-              <SelectItem value="asc">Oldest First</SelectItem>
+              <SelectItem value="desc">{t("latestFirst")}</SelectItem>
+              <SelectItem value="asc">{t("oldestFirst")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -484,10 +486,14 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
       <div className="flex flex-col space-y-4">
         <Tabs value={tabName} onValueChange={handleTabChange}>
           <TabsList>
-            <TabsTrigger value="all">All Scripts</TabsTrigger>
-            <TabsTrigger value="favorites">Favorites</TabsTrigger>
-            <TabsTrigger value="shared-scripts">Shared Scripts</TabsTrigger>
-            <TabsTrigger value="public-scripts">Public Scripts</TabsTrigger>
+            <TabsTrigger value="all">{t("allScripts")}</TabsTrigger>
+            <TabsTrigger value="favorites">{t("favorites")}</TabsTrigger>
+            <TabsTrigger value="shared-scripts">
+              {t("sharedScripts")}
+            </TabsTrigger>
+            <TabsTrigger value="public-scripts">
+              {t("publicScripts")}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="all">

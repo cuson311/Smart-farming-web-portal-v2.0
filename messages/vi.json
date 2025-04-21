@@ -142,6 +142,273 @@
         "scripts": "Kịch bản",
         "models": "Mô hình",
         "settings": "Cài đặt"
+      },
+      "scripts": {
+        "title": "Kịch bản",
+        "searchPlaceholder": "Tìm kiếm kịch bản...",
+        "selectLocations": "Chọn địa điểm",
+        "locations": "Địa điểm",
+        "selectPlantTypes": "Chọn loại cây trồng",
+        "plantTypes": "Loại cây trồng",
+        "privacy": "Quyền riêng tư",
+        "allPrivacyTypes": "Tất cả quyền riêng tư",
+        "all": "Tất cả",
+        "public": "Công khai",
+        "private": "Riêng tư",
+        "clearFilters": "Xóa bộ lọc",
+        "sortBy": "Sắp xếp theo",
+        "selectField": "Chọn trường",
+        "creationDate": "Ngày tạo",
+        "lastUpdate": "Cập nhật gần nhất",
+        "selectOrder": "Chọn thứ tự",
+        "latestFirst": "Mới nhất trước",
+        "oldestFirst": "Cũ nhất trước",
+        "allScripts": "Tất cả kịch bản",
+        "favorites": "Yêu thích",
+        "sharedScripts": "Kịch bản được chia sẻ",
+        "publicScripts": "Kịch bản công khai",
+        "noOptionsFound": "Không tìm thấy tùy chọn",
+        "favorite": {
+          "success": "Đã cập nhật yêu thích",
+          "error": "Cập nhật yêu thích thất bại"
+        },
+        "emptyState": {
+          "title": "Chưa có kịch bản nào",
+          "description": "Bắt đầu bằng cách tạo kịch bản tưới đầu tiên của bạn.",
+          "createButton": "Tạo kịch bản mới"
+        },
+        "newScript": {
+          "newScriptButton": "Kịch bản mới",
+          "dialogTitle": "Tạo kịch bản mới",
+          "dialogDescription": "Thêm một kịch bản tưới tiêu mới vào bộ sưu tập của bạn.",
+          "nameLabel": "Tên",
+          "namePlaceholder": "Nhập tên kịch bản",
+          "descriptionLabel": "Mô tả",
+          "descriptionPlaceholder": "Nhập mô tả kịch bản (tùy chọn)",
+          "locationLabel": "Địa điểm",
+          "selectProvinces": "Chọn tỉnh",
+          "searchProvinces": "Tìm kiếm tỉnh...",
+          "locationsSelected": "Địa điểm đã chọn",
+          "plantTypeLabel": "Loại cây trồng",
+          "selectPlantTypes": "Chọn loại cây trồng",
+          "searchPlantTypes": "Tìm kiếm loại cây trồng...",
+          "plantTypesSelected": "Loại cây trồng đã chọn",
+          "privacyLabel": "Quyền riêng tư",
+          "publicLabel": "Công khai",
+          "publicDescription": "Tất cả người dùng đều có thể xem kịch bản này.",
+          "privateLabel": "Riêng tư",      
+          "privateDescription": "Chỉ có bạn và những người được chia sẻ mới có thể xem kịch bản này.",
+          "sharedUsersLabel": "Chia sẻ với:",
+          "searchUsersPlaceholder": "Tìm kiếm người dùng...",
+          "searchButton": "Tìm kiếm",
+          "scriptJsonLabel": "File JSON kịch bản",
+          "uploadJsonButton":"Tải file JSON",
+          "templateButton": "Mẫu JSON",
+          "cancelButton": "Hủy",
+          "createButton": "Tạo kịch bản",
+          "noPlantTypeFound": "Không tìm thấy loại cây nào",
+          "noProvinceFound": "Không tìm thấy tỉnh nào",
+          "noUserFound": "Không tìm thấy người dùng nào",
+          "searchResults": "Kết quả tìm kiếm"
+        }
+      },
+      "models": {
+        "title": "Mô hình",
+        "searchPlaceholder": "Tìm kiếm mô hình...",
+        "favoriteUpdated": "Đã cập nhật yêu thích",
+        "favoriteUpdatedDescription": "Trạng thái yêu thích của mô hình đã được cập nhật.",
+        "error": "Lỗi",
+        "favoriteUpdateFailed": "Không thể cập nhật trạng thái yêu thích.",
+        "tabs": {
+          "all": "Tất cả mô hình",
+          "favorites": "Yêu thích"
+        },
+        "newModel": {
+          "createButton": "Tạo mô hình",
+          "dialogTitle": "Tạo mô hình mới",
+          "dialogDescription": "Thêm một mô hình mới vào bộ sưu tập của bạn.",
+          "nameLabel": "Tên",
+          "namePlaceholder": "Nhập tên mô hình",
+          "descriptionLabel": "Mô tả",
+          "descriptionPlaceholder": "Nhập mô tả mô hình (tùy chọn)",
+          "tagsLabel": "Thẻ",
+          "tagKeyLabel": "Khóa",
+          "tagValueLabel": "Giá trị",
+          "tagKeyPlaceholder": "Nhập khóa thẻ",
+          "tagValuePlaceholder": "Nhập giá trị thẻ",
+          "missingInfo": "Thiếu thông tin",
+          "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
+          "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+          "duplicateTag": "Thẻ trùng lặp",
+          "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+          "cancelButton": "Hủy",
+          "submitButton": "Tạo",
+          "toast": {
+            "missingInfo": "Thiếu thông tin",
+            "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
+            "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+            "duplicateTag": "Thẻ trùng lặp",
+            "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+            "authError": "Lỗi xác thực",
+            "loginRequired": "Bạn phải đăng nhập để tạo mô hình.",
+            "createSuccess": "Đã tạo mô hình",
+            "createSuccessDesc": "Mô hình \"{name}\" đã được tạo thành công.",
+            "createError": "Tạo thất bại",
+            "createErrorDesc": "Không thể tạo mô hình. Vui lòng thử lại."
+          }
+        },
+        "modelDetails": {
+          "title": "Chi tiết mô hình",
+          "name": "Tên",
+          "description": "Mô tả",
+          "created": "Ngày tạo",
+          "lastUpdated": "Cập nhật lúc",
+          "tags": "Thẻ",
+          "noDescription": "Không có mô tả.",
+          "noTags": "Không có thẻ nào.",
+          "actions": "Thao tác",
+          "editModel": "Chỉnh sửa mô hình",
+          "deleteModel": "Xóa"
+        },
+        "editModel": {
+          "title": "Chỉnh sửa mô hình",
+          "modelName": "Tên mô hình",
+          "description": "Mô tả",
+          "descriptionPlaceholder": "Nhập mô tả mô hình (tùy chọn)",
+          "tags": "Thẻ",
+          "tagKey": "Khóa",
+          "tagValue": "Giá trị",
+          "tagKeyPlaceholder": "Nhập khóa thẻ",
+          "tagValuePlaceholder": "Nhập giá trị thẻ",
+          "cancel": "Hủy",
+          "confirm": "Xác nhận",
+          "missingInfo": "Thiếu thông tin",
+          "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
+          "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+          "duplicateTag": "Thẻ trùng lặp",
+          "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+          "tagUpdated": "Đã cập nhật thẻ",
+          "tagAdded": "Đã thêm thẻ",
+          "tagUpdateSuccess": "Thẻ {key} đã được cập nhật thành công.",
+          "tagAddSuccess": "Thẻ {key} đã được thêm thành công.",
+          "tagOperationFailed": "Thao tác thẻ thất bại",
+          "tagUpdateFailed": "Không thể cập nhật thẻ. Vui lòng thử lại.",
+          "tagAddFailed": "Không thể thêm thẻ. Vui lòng thử lại.",
+          "tagRemoved": "Đã xóa thẻ",
+          "tagRemoveSuccess": "Thẻ {key} đã được xóa thành công.",
+          "tagRemoveFailed": "Không thể xóa thẻ. Vui lòng thử lại."
+        },
+        "deleteModel": {
+          "title": "Xóa mô hình",
+          "description": "Bạn có chắc chắn muốn xóa {modelName}? Hành động này không thể hoàn tác.",
+          "cancel": "Hủy",
+          "confirm": "Xóa",
+          "success": "Đã xóa mô hình thành công",
+          "error": "Không thể xóa mô hình"
+        },
+        "toast": {
+          "updateSuccess": "Cập nhật thông tin mô hình thành công",
+          "updateError": "Không thể cập nhật mô hình",
+          "deleteSuccess": "Đã xóa mô hình thành công",
+          "deleteError": "Không thể xóa mô hình"
+        },
+        "emptyState": {
+          "title": "Không tìm thấy mô hình",
+          "description": "Tạo mô hình mới hoặc thử tìm kiếm khác."
+        },
+        "sortBy": "Sắp xếp theo",
+        "selectField": "Chọn trường",
+        "selectOrder": "Chọn thứ tự",
+        "creationDate": "Ngày tạo",
+        "lastUpdate": "Cập nhật lúc",
+        "latestFirst": "Mới nhất trước",
+        "oldestFirst": "Cũ nhất trước",
+        "cloneModel": "Sao chép",
+        "version": "Phiên bản",
+        "scheduled": "Đã lên lịch",
+        "notScheduled": "Chưa lên lịch",
+        "updatedAt": "Cập nhật lúc",
+        "view": "Xem",
+        "schedule": {
+          "title": "Lịch trình mô hình",
+          "description": "Cấu hình thời gian cập nhật tự động cho mô hình này",
+          "enableSchedule": "Bật lịch trình",
+          "scheduleType": "Loại lịch trình",
+          "customCron": {
+            "label": "Biểu thức Cron tùy chỉnh",
+            "placeholder": "0 0 * * *",
+            "description": "Sử dụng định dạng biểu thức cron (ví dụ: \"0 0 * * *\" cho hàng ngày lúc nửa đêm)"
+          },
+          "setSchedule": "Đặt lịch trình",
+          "scheduleOptions": {
+            "daily": {
+              "label": "Hàng ngày",
+              "description": "Chạy một lần mỗi ngày vào lúc nửa đêm"
+            },
+            "weekly": {
+              "label": "Hàng tuần",
+              "description": "Chạy một lần mỗi tuần vào Chủ nhật"
+            },
+            "monthly": {
+              "label": "Hàng tháng",
+              "description": "Chạy một lần mỗi tháng vào ngày 1"
+            },
+            "hourly": {
+              "label": "Hàng giờ",
+              "description": "Chạy một lần mỗi giờ"
+            },
+            "custom": {
+              "label": "Tùy chỉnh",
+              "description": "Đặt lịch trình tùy chỉnh"
+            }
+          },
+          "plan": {
+            "title": "Kế hoạch lịch trình",
+            "descriptionSection": "Xem các lần chạy sắp tới cho mô hình này",
+            "sortBy": "Sắp xếp theo:",
+            "oldestFirst": "Cũ nhất trước",
+            "latestFirst": "Mới nhất trước",
+            "name": "Tên:",
+            "description": "Mô tả:",
+            "noRuns": "Không tìm thấy lịch trình trong khoảng thời gian đã chọn"
+          },
+          "toast": {
+            "enterCron": "Vui lòng nhập biểu thức cron",
+            "setSuccess": "Đặt lịch trình thành công",
+            "setError": "Không thể đặt lịch trình",
+            "enableSuccess": "Bật lịch trình thành công",
+            "enableError": "Không thể bật lịch trình",
+            "fetchError": "Không thể tải lịch trình",
+            "planFetchError": "Không thể tải kế hoạch lịch trình"
+          }
+        },
+        "scripts": {
+          "title": "Kịch bản liên quan",
+          "description": "Các kịch bản thuộc về mô hình này",
+          "sortBy": "Sắp xếp theo:",
+          "sortFields": {
+            "creationDate": "Ngày tạo",
+            "lastUpdate": "Cập nhật lúc",
+            "latestFirst": "Mới nhất trước",
+            "oldestFirst": "Cũ nhất trước"
+          },
+          "version": "Phiên bản",
+          "modelVersion": "Phiên bản mô hình",
+          "createdAt": "Ngày tạo",
+          "lastUpdate": "Cập nhật lúc",
+          "noScripts": "Không tìm thấy kịch bản trong khoảng thời gian đã chọn"
+        },
+        "versions": {
+          "title": "Lịch sử phiên bản",
+          "descriptionSection": "Theo dõi các thay đổi và cập nhật cho mô hình tưới này",
+          "version": "Phiên bản",
+          "lastUpdated": "Cập nhật lúc",
+          "name": "Tên:",
+          "description": "Mô tả:",
+          "noDescription": "Không có mô tả",
+          "tags": "Thẻ:",
+          "noVersions": "Không tìm thấy phiên bản trong khoảng thời gian đã chọn"
+        }
       }
     },
     "footer": {
@@ -176,7 +443,7 @@
         "invalidCredentials": "Đăng nhập không thành công. "
       },
       "form": {
-        "email": "E-mail",
+        "email": "Tên đăng nhập",
         "emailPlaceholder": "Tên người dùng",
         "password": "Mật khẩu",
         "passwordPlaceholder": "Mật khẩu",
@@ -336,6 +603,34 @@
         "light": "Sáng",
         "dark": "Tối",
         "system": "Hệ thống"
+      }
+    },
+    "common": {
+      "datePicker": {
+        "pickDateRange": "Chọn khoảng thời gian",
+        "months": {
+          "january": "Tháng 1",
+          "february": "Tháng 2",
+          "march": "Tháng 3",
+          "april": "Tháng 4",
+          "may": "Tháng 5",
+          "june": "Tháng 6",
+          "july": "Tháng 7",
+          "august": "Tháng 8",
+          "september": "Tháng 9",
+          "october": "Tháng 10",
+          "november": "Tháng 11",
+          "december": "Tháng 12"
+        },
+        "weekDays": {
+          "sunday": "CN",
+          "monday": "T2",
+          "tuesday": "T3",
+          "wednesday": "T4",
+          "thursday": "T5",
+          "friday": "T6",
+          "saturday": "T7"
+        }
       }
     }
   }

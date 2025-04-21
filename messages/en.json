@@ -142,6 +142,286 @@
             "scripts": "Scripts",
             "models": "Models",
             "settings": "Settings"
+        },
+        "scripts": {
+            "title": "Scripts",
+            "searchPlaceholder": "Search scripts...",
+            "selectLocations": "Select locations",
+            "locations": "Locations",
+            "selectPlantTypes": "Select plant types",
+            "plantTypes": "Plant Types",
+            "privacy": "Privacy",
+            "allPrivacyTypes": "All privacy types",
+            "all": "All",
+            "public": "Public",
+            "private": "Private",
+            "clearFilters": "Clear filters",
+            "sortBy": "Sort by",
+            "selectField": "Select field",
+            "creationDate": "Creation Date",
+            "lastUpdate": "Last Update",
+            "selectOrder": "Select order",
+            "latestFirst": "Latest First",
+            "oldestFirst": "Oldest First",
+            "allScripts": "All Scripts",
+            "favorites": "Favorites",
+            "sharedScripts": "Shared Scripts",
+            "publicScripts": "Public Scripts",
+            "noOptionsFound": "No options found.",
+            "favorite": {
+                "success": "Favorite updated",
+                "error": "Failed to update favorite status"
+            },
+            "emptyState": {
+                "title": "No scripts yet",
+                "description": "Get started by creating your first irrigation script.",
+                "createButton": "Create New Script"
+            },
+            "newScript": {
+                "newScriptButton": "New Script",
+                "dialogTitle": "Create New Script",
+                "dialogDescription": "Add a new irrigation script to your collection.",
+                "nameLabel": "Name",
+                "namePlaceholder": "Enter script name",
+                "descriptionLabel": "Description",
+                "descriptionPlaceholder": "Enter script description (optional)",
+                "locationLabel": "Location",
+                "locationPlaceholder": "Select location",
+                "selectProvinces": "Select provinces",
+                "searchProvinces": "Search provinces",
+                "locationsSelected": "Location selected",
+                "plantTypeLabel": "Plant Type",
+                "selectPlantTypes": "Select plant types",
+                "searchPlantTypes": "Search plant types",
+                "plantTypesSelected": "Plant type selected",
+                "privacyLabel": "Privacy",
+                "public": "Public",
+                "publicDescription": "Anyone can view and fork this script",
+                "private": "Private",
+                "privateDescription": "Only you and people you share with can access",
+                "sharedUsersLabel": "Shared with:",
+                "searchUsersPlaceholder": "Search users...",
+                "searchButton": "Search",
+                "scriptJsonLabel": "Script JSON",
+                "uploadJsonButton":"Upload JSON",
+                "templateButton": "Template",
+                "cancelButton": "Cancel",
+                "createButton": "Create Script",
+                "noPlantTypeFound": "No plant types found",
+                "noProvinceFound": "No provinces found",
+                "noUserFound": "No users found",
+                "searchResults": "Search Results"
+            }
+        },
+        "models": {
+            "title": "Models",
+            "searchPlaceholder": "Search models...",
+            "favoriteUpdated": "Favorite updated",
+            "favoriteUpdatedDescription": "Model favorite status has been updated.",
+            "error": "Error",
+            "favoriteUpdateFailed": "Failed to update favorite status.",
+            "tabs": {
+                "all": "All Models",
+                "favorites": "Favorites"
+            },
+            "newModel": {
+                "createButton": "Create Model",
+                "dialogTitle": "Create New Model",
+                "dialogDescription": "Add a new model to your collection.",
+                "nameLabel": "Name",
+                "namePlaceholder": "Enter model name",
+                "descriptionLabel": "Description",
+                "descriptionPlaceholder": "Enter model description (optional)",
+                "tagsLabel": "Tags",
+                "tagKeyLabel": "Key",
+                "tagValueLabel": "Value",
+                "tagKeyPlaceholder": "Enter tag key",
+                "tagValuePlaceholder": "Enter tag value",
+                "missingInfo": "Missing information",
+                "provideName": "Please provide a name for your model.",
+                "tagMissingInfo": "Please provide both key and value for the tag.",
+                "duplicateTag": "Duplicate tag",
+                "duplicateTagDesc": "A tag with this key already exists.",
+                "cancelButton": "Cancel",
+                "submitButton": "Create",
+                "toast": {
+                    "missingInfo": "Missing information",
+                    "provideName": "Please provide a name for your model.",
+                    "tagMissingInfo": "Please provide both key and value for the tag.",
+                    "duplicateTag": "Duplicate tag",
+                    "duplicateTagDesc": "A tag with this key already exists.",
+                    "authError": "Authentication error",
+                    "loginRequired": "You must be logged in to create a model.",
+                    "createSuccess": "Model created",
+                    "createSuccessDesc": "Model \"{name}\" has been created successfully.",
+                    "createError": "Creation failed",
+                    "createErrorDesc": "Failed to create model. Please try again."
+                }
+            },
+            "modelDetails": {
+                "title": "Model Details",
+                "name": "Name",
+                "description": "Description",
+                "created": "Created",
+                "lastUpdated": "Last Updated",
+                "tags": "Tags",
+                "noDescription": "No description.",
+                "noTags": "No tags found.",
+                "actions": "Actions",
+                "editModel": "Edit Model",
+                "deleteModel": "Delete"
+            },
+            "editModel": {
+                "title": "Edit Model",
+                "modelName": "Model Name",
+                "description": "Description",
+                "descriptionPlaceholder": "Enter model description (optional)",
+                "tags": "Tags",
+                "tagKey": "Key",
+                "tagValue": "Value",
+                "tagKeyPlaceholder": "Enter tag key",
+                "tagValuePlaceholder": "Enter tag value",
+                "cancel": "Cancel",
+                "confirm": "Confirm",
+                "missingInfo": "Missing information",
+                "provideName": "Please provide a name for your model.",
+                "tagMissingInfo": "Please provide both key and value for the tag.",
+                "duplicateTag": "Duplicate tag",
+                "duplicateTagDesc": "A tag with this key already exists.",
+                "tagUpdated": "Tag updated",
+                "tagAdded": "Tag added",
+                "tagUpdateSuccess": "Tag {key} has been updated successfully.",
+                "tagAddSuccess": "Tag {key} has been added successfully.",
+                "tagOperationFailed": "Tag operation failed",
+                "tagUpdateFailed": "Failed to update tag. Please try again.",
+                "tagAddFailed": "Failed to add tag. Please try again.",
+                "tagRemoved": "Tag removed",
+                "tagRemoveSuccess": "Tag {key} has been removed successfully.",
+                "tagRemoveFailed": "Failed to remove tag. Please try again."
+            },
+            "deleteModel": {
+                "title": "Delete Model",
+                "description": "Are you sure you want to delete {modelName}? This action cannot be undone.",
+                "cancel": "Cancel",
+                "confirm": "Delete",
+                "success": "Model deleted successfully",
+                "error": "Failed to delete model"
+            },
+            "toast": {
+                "updateSuccess": "Update model info successfully",
+                "updateError": "Failed to update model",
+                "deleteSuccess": "Model deleted successfully",
+                "deleteError": "Failed to delete model"
+            },
+            "emptyState": {
+                "title": "No models found",
+                "description": "Create a new model or try a different search query."
+            },
+            "sortBy": "Sort by",
+            "selectField": "Select field",
+            "selectOrder": "Select order",
+            "creationDate": "Creation Date",
+            "lastUpdate": "Last Update",
+            "latestFirst": "Latest First",
+            "oldestFirst": "Oldest First",
+            "cloneModel": "Clone",
+            "version": "Version",
+            "scheduled": "Scheduled",
+            "notScheduled": "Not Scheduled",
+            "updatedAt": "Updated at",
+            "view": "View",
+            "schedule": {
+                "title": "Model Schedule",
+                "description": "Configure when this model should be automatically updated",
+                "enableSchedule": "Enable Scheduling",
+                "scheduleType": "Schedule Type",
+                "customCron": {
+                    "label": "Custom Cron Expression",
+                    "placeholder": "0 0 * * *",
+                    "description": "Use cron expression format (e.g., \"0 0 * * *\" for daily at midnight)"
+                },
+                "setSchedule": "Set Schedule",
+                "scheduleOptions": {
+                    "daily": {
+                        "label": "Daily",
+                        "description": "Run once a day at midnight"
+                    },
+                    "weekly": {
+                        "label": "Weekly",
+                        "description": "Run once a week on Sunday"
+                    },
+                    "monthly": {
+                        "label": "Monthly",
+                        "description": "Run once a month on the 1st"
+                    },
+                    "hourly": {
+                        "label": "Hourly",
+                        "description": "Run once every hour"
+                    },
+                    "custom": {
+                        "label": "Custom",
+                        "description": "Set a custom schedule"
+                    }
+                },
+                "plan": {
+                    "title": "Schedule Plan",
+                    "descriptionSection": "View upcoming scheduled runs for this model",
+                    "sortBy": "Sort by:",
+                    "oldestFirst": "Oldest First",
+                    "latestFirst": "Latest First",
+                    "name": "Name:",
+                    "description": "Description:",
+                    "noRuns": "No scheduled runs found in the selected date range"
+                },
+                "toast": {
+                    "enterCron": "Please enter a cron expression",
+                    "setSuccess": "Schedule set successfully",
+                    "setError": "Failed to set schedule",
+                    "setErrorDesc": "Could not set the schedule. Please try again.",
+                    "enableSuccess": "Schedule status updated successfully",
+                    "enableError": "Failed to update schedule status",
+                    "enableErrorDesc": "Could not update the schedule status. Please try again.",
+                    "fetchError": "Failed to fetch schedule",
+                    "fetchErrorDesc": "Could not load the schedule. Please try again.",
+                    "planFetchError": "Failed to fetch schedule plan",
+                    "planFetchErrorDesc": "Could not load the schedule plan. Please try again."
+                }
+            },
+            "scripts": {
+                "title": "Associated Scripts",
+                "description": "Scripts belong to this model",
+                "sortBy": "Sort by:",
+                "sortFields": {
+                    "creationDate": "Creation Date",
+                    "lastUpdate": "Last Update",
+                    "latestFirst": "Latest First",
+                    "oldestFirst": "Oldest First"
+                },
+                "version": "Version",
+                "modelVersion": "Model Version",
+                "createdAt": "Created At",
+                "lastUpdate": "Last Update",
+                "noScripts": "No scripts found in the selected date range",
+                "toast": {
+                    "fetchError": "Error fetching model scripts",
+                    "fetchErrorDesc": "Failed to fetch model scripts. Please try again."
+                }
+            },
+            "versions": {
+                "title": "Version History",
+                "descriptionSection": "Track changes and updates to this irrigation model",
+                "version": "Version",
+                "lastUpdated": "Last Updated",
+                "name": "Name:",
+                "description": "Description:",
+                "noDescription": "No description",
+                "tags": "Tags:",
+                "noVersions": "No versions found in the selected date range",
+                "toast": {
+                    "fetchError": "Error fetching model versions",
+                    "fetchErrorDesc": "Failed to fetch model versions. Please try again."
+                }
+            }
         }
     },
     "footer": {
@@ -176,7 +456,7 @@
             "invalidCredentials": "Login failed. Please check your credentials and try again."
         },
         "form": {
-            "email": "Email",
+            "email": "Username",
             "emailPlaceholder": "Username",
             "password": "Password",
             "passwordPlaceholder": "Password",
@@ -336,6 +616,34 @@
             "light": "Light",
             "dark": "Dark",
             "system": "System"
+        }
+    },
+    "common": {
+        "datePicker": {
+            "pickDateRange": "Pick a date range",
+            "months": {
+                "january": "January",
+                "february": "February",
+                "march": "March",
+                "april": "April",
+                "may": "May",
+                "june": "June",
+                "july": "July",
+                "august": "August",
+                "september": "September",
+                "october": "October",
+                "november": "November",
+                "december": "December"
+            },
+            "weekDays": {
+                "sunday": "Su",
+                "monday": "Mo",
+                "tuesday": "Tu",
+                "wednesday": "We",
+                "thursday": "Th",
+                "friday": "Fr",
+                "saturday": "Sa"
+            }
         }
     }
 }
