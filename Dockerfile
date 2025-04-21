@@ -30,4 +30,4 @@ COPY --from=builder /app/node_modules ./node_modules
 EXPOSE 3002
 
 # Start the production server (entrypoint is usually index.js)
-CMD ["node", "index.js"]
+CMD ["node", "server.js"]
