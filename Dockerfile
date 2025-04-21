@@ -5,10 +5,12 @@ WORKDIR /app
 COPY . .
 
 # Declare build arg
-ARG ARG RAILWAY_NEXT_PUBLIC_API_ENDPOINT
+ARG RAILWAY_NEXT_PUBLIC_API_ENDPOINT
 
 # Set it as env var for use in build step
 ENV NEXT_PUBLIC_API_ENDPOINT=${RAILWAY_NEXT_PUBLIC_API_ENDPOINT}
+
+RUN echo "NEXT_PUBLIC_API_ENDPOINT is $NEXT_PUBLIC_API_ENDPOINT"
 
 # Install deps and build
 RUN npm install --legacy-peer-deps
