@@ -1,0 +1,24 @@
+# Node modules (you'll reinstall inside Docker anyway)
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Output folders
+.next
+out
+dist
+
+# Local env files (don’t put secrets in your image!)
+.env
+.env.local
+.env.development
+.env.production
+
+# Git
+.git
+.gitignore
+
+# IDE/editor stuff
+.vscode
+*.swp
+.DS_Store
