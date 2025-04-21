@@ -3,7 +3,12 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 COPY . .
-COPY .env.production .env
+
+# Declare build arg
+ARG ARG RAILWAY_NEXT_PUBLIC_API_ENDPOINT
+
+# Set it as env var for use in build step
+ENV NEXT_PUBLIC_API_ENDPOINT=${RAILWAY_NEXT_PUBLIC_API_ENDPOINT}
 
 # Install deps and build
 RUN npm install --legacy-peer-deps
