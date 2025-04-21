@@ -5,13 +5,13 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useTranslation } from "@/context/ContextLanguage";
 
 // Import the authApi (you'll need to create this file in your project)
 import authApi from "@/api/authAPI";
@@ -21,8 +21,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const { t } = useTranslation();
-
+  const t = useTranslations("login");
   const router = useRouter();
 
   // Check if user is already authenticated
@@ -45,7 +44,7 @@ export default function LoginPage() {
 
     try {
       if (username === "" || password === "") {
-        setError(t("login.errors.emptyFields"));
+        setError(t("errors.emptyFields"));
         return;
       }
 
@@ -58,7 +57,7 @@ export default function LoginPage() {
       window.dispatchEvent(new Event("loginSuccess"));
       router.push(`/dashboard`);
     } catch (err) {
-      setError(t("login.errors.invalidCredentials"));
+      setError(t("errors.invalidCredentials"));
     }
   };
 
@@ -71,12 +70,12 @@ export default function LoginPage() {
           <div className="mx-auto w-full max-w-[400px] space-y-6 px-4 md:px-6">
             <div className="space-y-2 text-center">
               <div className="inline-block rounded-lg bg-irrigation-100 px-3 py-1 text-sm text-irrigation-800">
-                {t("login.welcome")}
+                {t("welcome")}
               </div>
               <h1 className="text-3xl font-bold tracking-tighter">
-                {t("login.title")}
+                {t("title")}
               </h1>
-              <p className="text-muted-foreground">{t("login.description")}</p>
+              <p className="text-muted-foreground">{t("description")}</p>
             </div>
             <form onSubmit={handleLogin} className="space-y-4">
               {error && (
@@ -85,11 +84,11 @@ export default function LoginPage() {
                 </Alert>
               )}
               <div className="space-y-2">
-                <Label htmlFor="email">{t("login.form.email")}</Label>
+                <Label htmlFor="email">{t("form.email")}</Label>
                 <Input
                   id="username"
                   type="text"
-                  placeholder={t("login.form.emailPlaceholder")}
+                  placeholder={t("form.emailPlaceholder")}
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -97,19 +96,19 @@ export default function LoginPage() {
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">{t("login.form.password")}</Label>
+                  <Label htmlFor="password">{t("form.password")}</Label>
                   <Link
                     href="/forgot-password"
                     className="text-sm text-irrigation-600 hover:text-irrigation-700"
                   >
-                    {t("login.form.forgotPassword")}
+                    {t("form.forgotPassword")}
                   </Link>
                 </div>
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   required
-                  placeholder={t("login.form.passwordPlaceholder")}
+                  placeholder={t("form.passwordPlaceholder")}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -117,14 +116,14 @@ export default function LoginPage() {
               <div className="flex items-center space-x-2">
                 <Checkbox id="remember" />
                 <Label htmlFor="remember" className="text-sm font-normal">
-                  {t("login.form.rememberMe")}
+                  {t("form.rememberMe")}
                 </Label>
               </div>
               <Button
                 type="submit"
                 className="w-full bg-primary hover:bg-irrigation-700"
               >
-                {t("login.form.submit")}
+                {t("form.submit")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <div className="relative">
@@ -133,26 +132,26 @@ export default function LoginPage() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background px-2 text-muted-foreground">
-                    {t("login.form.orContinue")}
+                    {t("form.orContinue")}
                   </span>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <Button variant="outline" className="w-full">
-                  {t("login.form.google")}
+                  {t("form.google")}
                 </Button>
                 <Button variant="outline" className="w-full">
-                  {t("login.form.microsoft")}
+                  {t("form.microsoft")}
                 </Button>
               </div>
             </form>
             <div className="mt-4 text-center text-sm">
-              {t("login.form.noAccount")}{" "}
+              {t("form.noAccount")}{" "}
               <Link
                 href="/signup"
                 className="text-irrigation-600 hover:text-irrigation-700"
               >
-                {t("login.form.signUp")}
+                {t("form.signUp")}
               </Link>
             </div>
           </div>
@@ -171,11 +170,9 @@ export default function LoginPage() {
           <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-background/80 to-transparent z-20">
             <div className="max-w-md animate-fade-up">
               <h2 className="text-2xl font-bold mb-2 gradient-text">
-                {t("login.hero.title")}
+                {t("hero.title")}
               </h2>
-              <p className="text-muted-foreground">
-                {t("login.hero.description")}
-              </p>
+              <p className="text-muted-foreground">{t("hero.description")}</p>
             </div>
           </div>
         </div>

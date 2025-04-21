@@ -33,7 +33,11 @@ const useFetchScriptInfo = (userId: string, scriptId: string) => {
   return { data, setData, loading, error, refetch: fetchScriptInfo };
 };
 
-const useFetchScriptFile = (userId: string, scriptId: string, version: number) => {
+const useFetchScriptFile = (
+  userId: string,
+  scriptId: string,
+  version: number
+) => {
   const [data, setData] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,14 +45,16 @@ const useFetchScriptFile = (userId: string, scriptId: string, version: number) =
   //console.log("Version: ", version);
 
   const fetchData = useCallback(async () => {
-    // No fetch condition 
+    // No fetch condition
     if (!userId || !scriptId || version == null) return;
     if (version == -1.0) return;
 
     setLoading(true);
     setError(null);
     try {
-      const filePath = `${userId}%2Fscript%2F${scriptId}%2Fv${version.toFixed(1)}.json`;
+      const filePath = `${userId}%2Fscript%2F${scriptId}%2Fv${version.toFixed(
+        1
+      )}.json`;
       const data = await scriptApi.getScriptFile(filePath);
       //console.log("Fetching File data: ", data);
       setData(JSON.stringify(data, null, 2));
@@ -90,7 +96,9 @@ const useFetchUserScriptRate = (userId: string, scriptId: string) => {
 
       // If the response indicates no rate exists, set default value
       if (!response || response.length === 0) {
-        setData([{ _id: "", user_id: userId, script_id: scriptId, rate: 0, __v: 0 }]);
+        setData([
+          { _id: "", user_id: userId, script_id: scriptId, rate: 0, __v: 0 },
+        ]);
       } else {
         setData(response);
       }

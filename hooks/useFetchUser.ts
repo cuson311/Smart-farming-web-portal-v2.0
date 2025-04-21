@@ -1,266 +1,292 @@
 ﻿import { useState, useEffect, useCallback } from "react";
 import userApi from "../api/userAPI";
 import { Script, ScriptsListOptions, ScriptsResponse } from "@/types/script";
-import { NotificationQueryParams, NotiInfo, UserActivity, UserProfile } from "@/types/user";
+import {
+  NotificationQueryParams,
+  NotiInfo,
+  UserActivity,
+  UserProfile,
+} from "@/types/user";
 import { Model } from "@/types/model";
 import notificationApi from "@/api/notificationAPI";
 
 const useFetchProfile = (userId: string) => {
-    const [data, setData] = useState<UserProfile | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<unknown>(null);
+  const [data, setData] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
 
-    const fetchProfile = useCallback(async () => {
-        if (!userId) return;
+  const fetchProfile = useCallback(async () => {
+    if (!userId) return;
 
-        setLoading(true);
-        setError(null);
+    setLoading(true);
+    setError(null);
 
-        try {
-            const scripts = await userApi.profile(userId);
-            setData(scripts);
-        } catch (err) {
-            console.error("Error fetching top scripts:", err);
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [userId]);
+    try {
+      const scripts = await userApi.profile(userId);
+      setData(scripts);
+    } catch (err) {
+      console.error("Error fetching top scripts:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId]);
 
-    useEffect(() => {
-        fetchProfile();
-    }, [fetchProfile]);
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
 
-    return { data, loading, error, refetch: fetchProfile };
+  return { data, loading, error, refetch: fetchProfile };
 };
 
 const useFetchTopScripts = (userId: string, filterBy: string) => {
-    const [data, setData] = useState<Script[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<unknown>(null);
+  const [data, setData] = useState<Script[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
 
-    const fetchTopScripts = useCallback(async () => {
-        if (!userId) return;
+  const fetchTopScripts = useCallback(async () => {
+    if (!userId) return;
 
-        setLoading(true);
-        setError(null);
+    setLoading(true);
+    setError(null);
 
-        try {
-            const scripts = await userApi.topScripts(userId, filterBy);
-            setData(scripts);
-        } catch (err) {
-            console.error("Error fetching top scripts:", err);
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [userId, filterBy]);
+    try {
+      const scripts = await userApi.topScripts(userId, filterBy);
+      setData(scripts);
+    } catch (err) {
+      console.error("Error fetching top scripts:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId, filterBy]);
 
-    useEffect(() => {
-        fetchTopScripts();
-    }, [fetchTopScripts]);
+  useEffect(() => {
+    fetchTopScripts();
+  }, [fetchTopScripts]);
 
-    return { data, loading, error, refetch: fetchTopScripts };
+  return { data, loading, error, refetch: fetchTopScripts };
 };
 
 const useFetchActivities = (userId: string, year: string) => {
-    const [data, setData] = useState<UserActivity[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [data, setData] = useState<UserActivity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        if (!userId) return;
+  useEffect(() => {
+    if (!userId) return;
 
-        const fetchTopScripts = async () => {
-            setLoading(true);
-            setError(null);
+    const fetchTopScripts = async () => {
+      setLoading(true);
+      setError(null);
 
-            try {
-                const data = await userApi.activities(userId, year);
-                setData(data);
-            } catch (err) {
-                console.error("Error fetching Activities:", err);
-                // setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+      try {
+        const data = await userApi.activities(userId, year);
+        setData(data);
+      } catch (err) {
+        console.error("Error fetching Activities:", err);
+        // setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        fetchTopScripts();
-    }, [userId, year]);
+    fetchTopScripts();
+  }, [userId, year]);
 
-    return { data, loading, error };
+  return { data, loading, error };
 };
 
 const useFetchScriptsList = (userId: string, options?: ScriptsListOptions) => {
-    const [data, setData] = useState<ScriptsResponse>({
-        data: [],
-        total: 0,
-        page: 0,
-        totalPages: 0
-    });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<unknown>(null);
+  const [data, setData] = useState<ScriptsResponse>({
+    data: [],
+    total: 0,
+    page: 0,
+    totalPages: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
 
-    const fetchScriptsList = useCallback(
-        async (overrideOptions?: ScriptsListOptions) => {
-            if (!userId) return;
+  const fetchScriptsList = useCallback(
+    async (overrideOptions?: ScriptsListOptions) => {
+      if (!userId) return;
 
-            setLoading(true);
-            setError(null);
+      setLoading(true);
+      setError(null);
 
-            try {
-                const scripts = await userApi.scriptsList(userId, overrideOptions || options);
-                setData(scripts);
-            } catch (err) {
-                console.error("Error fetching scripts:", err);
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        },
-        [userId, JSON.stringify(options)]
-    );
+      try {
+        const scripts = await userApi.scriptsList(
+          userId,
+          overrideOptions || options
+        );
+        setData(scripts);
+      } catch (err) {
+        console.error("Error fetching scripts:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [userId, JSON.stringify(options)]
+  );
 
-    useEffect(() => {
-        fetchScriptsList();
-    }, [fetchScriptsList]);
+  useEffect(() => {
+    fetchScriptsList();
+  }, [fetchScriptsList]);
 
-    return { data, loading, error, refetch: fetchScriptsList };
+  return { data, loading, error, refetch: fetchScriptsList };
 };
 
 const useFetchModelsList = (userId: string) => {
-    const [data, setData] = useState<Model[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<unknown>(null);
+  const [data, setData] = useState<Model[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<unknown>(null);
 
-    const fetchModelsList = useCallback(async () => {
-        if (!userId) return;
+  const fetchModelsList = useCallback(async () => {
+    if (!userId) return;
 
-        setLoading(true);
-        setError(null);
+    setLoading(true);
+    setError(null);
 
-        try {
-            const models = await userApi.modelsList(userId);
-            setData(models);
-        } catch (err) {
-            console.error("Error fetching models:", err);
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [userId]);
+    try {
+      const models = await userApi.modelsList(userId);
+      setData(models);
+    } catch (err) {
+      console.error("Error fetching models:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId]);
 
-    useEffect(() => {
-        fetchModelsList();
-    }, [fetchModelsList]);
+  useEffect(() => {
+    fetchModelsList();
+  }, [fetchModelsList]);
 
-    return { data, loading, error, refetch: fetchModelsList };
+  return { data, loading, error, refetch: fetchModelsList };
 };
 
 const useFetchBookmarkList = (userId: string, options?: ScriptsListOptions) => {
-    const [data, setData] = useState<ScriptsResponse>({
-        data: [],
-        total: 0,
-        page: 0,
-        totalPages: 0
-    });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<unknown>(null);
+  const [data, setData] = useState<ScriptsResponse>({
+    data: [],
+    total: 0,
+    page: 0,
+    totalPages: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
 
-    const fetchBookmarkList = useCallback(async (overrideOptions?: ScriptsListOptions) => {
-        if (!userId) return;
+  const fetchBookmarkList = useCallback(
+    async (overrideOptions?: ScriptsListOptions) => {
+      if (!userId) return;
 
-        setLoading(true);
-        setError(null);
+      setLoading(true);
+      setError(null);
 
-        try {
-            const scripts = await userApi.bookmarkList(userId, overrideOptions || options);
-            setData(scripts);
-        } catch (err) {
-            console.error("Error fetching favorite scripts:", err);
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [userId, JSON.stringify(options)]);
+      try {
+        const scripts = await userApi.bookmarkList(
+          userId,
+          overrideOptions || options
+        );
+        setData(scripts);
+      } catch (err) {
+        console.error("Error fetching favorite scripts:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [userId, JSON.stringify(options)]
+  );
 
-    useEffect(() => {
-        fetchBookmarkList();
-    }, [fetchBookmarkList]);
+  useEffect(() => {
+    fetchBookmarkList();
+  }, [fetchBookmarkList]);
 
-    return { data, loading, error, refetch: fetchBookmarkList };
+  return { data, loading, error, refetch: fetchBookmarkList };
 };
 
-const useFetchSharedScripts = (userId: string, options?: ScriptsListOptions) => {
-    const [data, setData] = useState<ScriptsResponse>({
-        data: [],
-        total: 0,
-        page: 0,
-        totalPages: 0
-    });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<unknown>(null);
-    const fetchSharedScript = useCallback(async (overrideOptions?: ScriptsListOptions) => {
-        if (!userId) return;
+const useFetchSharedScripts = (
+  userId: string,
+  options?: ScriptsListOptions
+) => {
+  const [data, setData] = useState<ScriptsResponse>({
+    data: [],
+    total: 0,
+    page: 0,
+    totalPages: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
+  const fetchSharedScript = useCallback(
+    async (overrideOptions?: ScriptsListOptions) => {
+      if (!userId) return;
 
-        setLoading(true);
-        setError(null);
+      setLoading(true);
+      setError(null);
 
-        try {
-            const scripts = await userApi.sharedScript(userId, overrideOptions || options);
-            setData(scripts);
-        } catch (err) {
-            console.error("Error fetching shared scripts:", err);
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [userId, JSON.stringify(options)]);
+      try {
+        const scripts = await userApi.sharedScript(
+          userId,
+          overrideOptions || options
+        );
+        setData(scripts);
+      } catch (err) {
+        console.error("Error fetching shared scripts:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [userId, JSON.stringify(options)]
+  );
 
-    useEffect(() => {
-        fetchSharedScript();
-    }, [fetchSharedScript]);
+  useEffect(() => {
+    fetchSharedScript();
+  }, [fetchSharedScript]);
 
-    return { data, loading, error, refetch: fetchSharedScript };
+  return { data, loading, error, refetch: fetchSharedScript };
 };
 
-const useFetchNotifications = (userId: string, query?: NotificationQueryParams) => {
-    const [data, setData] = useState<NotiInfo[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<unknown>(null);
+const useFetchNotifications = (
+  userId: string,
+  query?: NotificationQueryParams
+) => {
+  const [data, setData] = useState<NotiInfo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
 
-    const fetchNotifications = useCallback(async () => {
-        if (!userId) return;
+  const fetchNotifications = useCallback(async () => {
+    if (!userId) return;
 
-        setLoading(true);
-        setError(null);
+    setLoading(true);
+    setError(null);
 
-        try {
-            const response = await notificationApi.allNotification(userId, query);
-            setData(response.data);
-        } catch (err) {
-            console.error("Error fetching favorite scripts:", err);
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [userId]);
+    try {
+      const response = await notificationApi.allNotification(userId, query);
+      setData(response.data);
+    } catch (err) {
+      console.error("Error fetching favorite scripts:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId]);
 
-    useEffect(() => {
-        fetchNotifications();
-    }, [fetchNotifications]);
+  useEffect(() => {
+    fetchNotifications();
+  }, [fetchNotifications]);
 
-    return { data, loading, error, refetch: fetchNotifications };
+  return { data, loading, error, refetch: fetchNotifications };
 };
 
 export {
-    useFetchProfile,
-    useFetchTopScripts,
-    useFetchActivities,
-    useFetchScriptsList,
-    useFetchModelsList,
-    useFetchBookmarkList,
-    useFetchSharedScripts,
-    useFetchNotifications
+  useFetchProfile,
+  useFetchTopScripts,
+  useFetchActivities,
+  useFetchScriptsList,
+  useFetchModelsList,
+  useFetchBookmarkList,
+  useFetchSharedScripts,
+  useFetchNotifications,
 };

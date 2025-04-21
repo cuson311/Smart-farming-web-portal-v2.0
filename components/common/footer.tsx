@@ -1,10 +1,10 @@
 "use client";
 import { Droplets } from "lucide-react";
 import Link from "next/link";
-import { useTranslation } from "@/context/ContextLanguage";
+import { useTranslations } from "next-intl";
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const t = useTranslations("footer");
 
   return (
     <footer id="contact" className="border-t bg-muted/50 py-12">
@@ -13,23 +13,21 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 font-semibold">
               <Droplets className="h-6 w-6 text-primary" />
-              <span>{t("footer.brand")}</span>
+              <span>{t("brand")}</span>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              {t("footer.description")}
+              {t("description")}
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold">
-              {t("footer.product.title")}
-            </h3>
+            <h3 className="text-lg font-semibold">{t("product.title")}</h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
                 <Link
                   href="#features"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {t("footer.product.features")}
+                  {t("product.features")}
                 </Link>
               </li>
               <li>
@@ -37,7 +35,7 @@ const Footer = () => {
                   href="#pricing"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {t("footer.product.pricing")}
+                  {t("product.pricing")}
                 </Link>
               </li>
               <li>
@@ -45,22 +43,20 @@ const Footer = () => {
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {t("footer.product.documentation")}
+                  {t("product.documentation")}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold">
-              {t("footer.company.title")}
-            </h3>
+            <h3 className="text-lg font-semibold">{t("company.title")}</h3>
             <ul className="mt-2 space-y-2 text-sm">
               <li>
                 <Link
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {t("footer.company.about")}
+                  {t("company.about")}
                 </Link>
               </li>
               <li>
@@ -68,7 +64,7 @@ const Footer = () => {
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {t("footer.company.blog")}
+                  {t("company.blog")}
                 </Link>
               </li>
               <li>
@@ -76,30 +72,22 @@ const Footer = () => {
                   href="#"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {t("footer.company.careers")}
+                  {t("company.careers")}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold">
-              {t("footer.contact.title")}
-            </h3>
+            <h3 className="text-lg font-semibold">{t("contact.title")}</h3>
             <ul className="mt-2 space-y-2 text-sm">
-              <li className="text-muted-foreground">
-                {t("footer.contact.email")}
-              </li>
-              <li className="text-muted-foreground">
-                {t("footer.contact.phone")}
-              </li>
-              <li className="text-muted-foreground">
-                {t("footer.contact.address")}
-              </li>
+              <li className="text-muted-foreground">{t("contact.email")}</li>
+              <li className="text-muted-foreground">{t("contact.phone")}</li>
+              <li className="text-muted-foreground">{t("contact.address")}</li>
             </ul>
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>{t("footer.copyright")}</p>
+          <p>{t("copyright")}</p>
         </div>
       </div>
     </footer>

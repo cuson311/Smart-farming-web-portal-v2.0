@@ -9,12 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { GlobeIcon, CheckIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-interface LanguageSwitcherProps {
-  lang: string;
-  turnOnLanguages: (lang: string) => void;
-}
+import { useRouter, usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 
 interface Language {
   code: string;
@@ -28,25 +24,36 @@ const languages: Language[] = [
   { code: "en", name: "English", nativeName: "English", flag: "🇺🇸" },
 ];
 
-export function LanguageSwitcher({
-  lang,
-  turnOnLanguages,
-}: LanguageSwitcherProps) {
+export function LanguageSwitcher() {
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleLanguageChange = (newLocale: string) => {
+    // Remove the current locale from the pathname
+    const pathWithoutLocale = pathname.replace(`/${locale}`, "");
+    // Navigate to the new locale path
+    router.push(`/${newLocale}${pathWithoutLocale}`);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="h-9 gap-1 px-2">
           <GlobeIcon className="h-4 w-4" />
           <span className="hidden md:inline-block">
-            {languages.find((l) => l.code === lang)?.nativeName}
+            {languages.find((l) => l.code === locale)?.nativeName}
           </span>
           <span className="inline-block md:hidden">
-            {languages.find((l) => l.code === lang)?.flag}
+            {languages.find((l) => l.code === locale)?.flag}
           </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[200px]">
-        <DropdownMenuRadioGroup value={lang} onValueChange={turnOnLanguages}>
+        <DropdownMenuRadioGroup
+          value={locale}
+          onValueChange={handleLanguageChange}
+        >
           {languages.map((language) => (
             <DropdownMenuRadioItem
               key={language.code}
@@ -58,7 +65,7 @@ export function LanguageSwitcher({
                   <span className="text-base">{language.flag}</span>
                   <span>{language.nativeName}</span>
                 </div>
-                {lang === language.code && (
+                {locale === language.code && (
                   <CheckIcon className="h-4 w-4 text-primary" />
                 )}
               </div>

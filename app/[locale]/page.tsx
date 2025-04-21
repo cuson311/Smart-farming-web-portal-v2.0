@@ -17,10 +17,10 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useTranslation } from "@/context/ContextLanguage";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
-  const { t } = useTranslation();
+  const t = useTranslations("home");
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
@@ -29,14 +29,14 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-4 animate-fade-up">
               <div className="inline-block rounded-lg bg-irrigation-100 dark:bg-irrigation-900 px-3 py-1 text-sm text-irrigation-800 dark:text-irrigation-300">
-                {t("home.hero.title")}
+                {t("hero.title")}
               </div>
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-                {t("home.hero.title")}{" "}
-                <span className="gradient-text">{t("home.hero.subtitle")}</span>
+                {t("hero.title")}{" "}
+                <span className="gradient-text">{t("hero.subtitle")}</span>
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                {t("home.hero.description")}
+                {t("hero.description")}
               </p>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <Button
@@ -45,12 +45,12 @@ export default function Home() {
                   className="bg-primary hover:bg-irrigation-700"
                 >
                   <Link href="/dashboard">
-                    {t("home.hero.getStarted")}
+                    {t("hero.getStarted")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link href="#features">{t("home.hero.learnMore")}</Link>
+                  <Link href="#features">{t("hero.learnMore")}</Link>
                 </Button>
               </div>
             </div>
@@ -75,13 +75,13 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="inline-block rounded-lg bg-irrigation-100 dark:bg-irrigation-900 px-3 py-1 text-sm text-irrigation-800 dark:text-irrigation-300">
-              {t("home.features.title")}
+              {t("features.title")}
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              {t("home.features.heading")}
+              {t("features.heading")}
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              {t("home.features.description")}
+              {t("features.description")}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
@@ -91,10 +91,10 @@ export default function Home() {
                 <Sprout className="h-6 w-6 text-irrigation-600" />
               </div>
               <h3 className="mt-4 text-xl font-bold">
-                {t("home.features.smartScripts.title")}
+                {t("features.smartScripts.title")}
               </h3>
               <p className="mt-2 text-muted-foreground">
-                {t("home.features.smartScripts.description")}
+                {t("features.smartScripts.description")}
               </p>
             </div>
             {/* Feature 2 */}
@@ -103,10 +103,10 @@ export default function Home() {
                 <Database className="h-6 w-6 text-irrigation-600" />
               </div>
               <h3 className="mt-4 text-xl font-bold">
-                {t("home.features.advancedModels.title")}
+                {t("features.advancedModels.title")}
               </h3>
               <p className="mt-2 text-muted-foreground">
-                {t("home.features.advancedModels.description")}
+                {t("features.advancedModels.description")}
               </p>
             </div>
             {/* Feature 3 */}
@@ -115,10 +115,10 @@ export default function Home() {
                 <LineChart className="h-6 w-6 text-irrigation-600" />
               </div>
               <h3 className="mt-4 text-xl font-bold">
-                {t("home.features.dataAnalytics.title")}
+                {t("features.dataAnalytics.title")}
               </h3>
               <p className="mt-2 text-muted-foreground">
-                {t("home.features.dataAnalytics.description")}
+                {t("features.dataAnalytics.description")}
               </p>
             </div>
             {/* Feature 4 */}
@@ -127,10 +127,10 @@ export default function Home() {
                 <Users className="h-6 w-6 text-irrigation-600" />
               </div>
               <h3 className="mt-4 text-xl font-bold">
-                {t("home.features.teamCollaboration.title")}
+                {t("features.teamCollaboration.title")}
               </h3>
               <p className="mt-2 text-muted-foreground">
-                {t("home.features.teamCollaboration.description")}
+                {t("features.teamCollaboration.description")}
               </p>
             </div>
             {/* Feature 5 */}
@@ -139,10 +139,10 @@ export default function Home() {
                 <Shield className="h-6 w-6 text-irrigation-600" />
               </div>
               <h3 className="mt-4 text-xl font-bold">
-                {t("home.features.securePlatform.title")}
+                {t("features.securePlatform.title")}
               </h3>
               <p className="mt-2 text-muted-foreground">
-                {t("home.features.securePlatform.description")}
+                {t("features.securePlatform.description")}
               </p>
             </div>
             {/* Feature 6 */}
@@ -151,10 +151,10 @@ export default function Home() {
                 <Droplets className="h-6 w-6 text-irrigation-600" />
               </div>
               <h3 className="mt-4 text-xl font-bold">
-                {t("home.features.waterConservation.title")}
+                {t("features.waterConservation.title")}
               </h3>
               <p className="mt-2 text-muted-foreground">
-                {t("home.features.waterConservation.description")}
+                {t("features.waterConservation.description")}
               </p>
             </div>
           </div>
@@ -166,13 +166,13 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="inline-block rounded-lg bg-irrigation-100 dark:bg-irrigation-900 px-3 py-1 text-sm text-irrigation-800 dark:text-irrigation-300">
-              {t("home.testimonials.title")}
+              {t("testimonials.title")}
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              {t("home.testimonials.heading")}
+              {t("testimonials.heading")}
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              {t("home.testimonials.description")}
+              {t("testimonials.description")}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
@@ -188,15 +188,15 @@ export default function Home() {
                 </Avatar>
                 <div>
                   <h3 className="font-semibold">
-                    {t("home.testimonials.testimonial1.name")}
+                    {t("testimonials.testimonial1.name")}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {t("home.testimonials.testimonial1.role")}
+                    {t("testimonials.testimonial1.role")}
                   </p>
                 </div>
               </div>
               <p className="mt-4 text-muted-foreground">
-                {t("home.testimonials.testimonial1.quote")}
+                {t("testimonials.testimonial1.quote")}
               </p>
             </div>
             {/* Testimonial 2 */}
@@ -211,15 +211,15 @@ export default function Home() {
                 </Avatar>
                 <div>
                   <h3 className="font-semibold">
-                    {t("home.testimonials.testimonial2.name")}
+                    {t("testimonials.testimonial2.name")}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {t("home.testimonials.testimonial2.role")}
+                    {t("testimonials.testimonial2.role")}
                   </p>
                 </div>
               </div>
               <p className="mt-4 text-muted-foreground">
-                {t("home.testimonials.testimonial2.quote")}
+                {t("testimonials.testimonial2.quote")}
               </p>
             </div>
             {/* Testimonial 3 */}
@@ -234,15 +234,15 @@ export default function Home() {
                 </Avatar>
                 <div>
                   <h3 className="font-semibold">
-                    {t("home.testimonials.testimonial3.name")}
+                    {t("testimonials.testimonial3.name")}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {t("home.testimonials.testimonial3.role")}
+                    {t("testimonials.testimonial3.role")}
                   </p>
                 </div>
               </div>
               <p className="mt-4 text-muted-foreground">
-                {t("home.testimonials.testimonial3.quote")}
+                {t("testimonials.testimonial3.quote")}
               </p>
             </div>
           </div>
@@ -254,13 +254,13 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="inline-block rounded-lg bg-irrigation-100 dark:bg-irrigation-900 px-3 py-1 text-sm text-irrigation-800 dark:text-irrigation-300">
-              {t("home.pricing.title")}
+              {t("pricing.title")}
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              {t("home.pricing.heading")}
+              {t("pricing.heading")}
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              {t("home.pricing.description")}
+              {t("pricing.description")}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-3">
@@ -268,121 +268,115 @@ export default function Home() {
             <div className="pricing-card relative overflow-hidden rounded-lg border bg-background p-6">
               <div className="mb-4">
                 <h3 className="text-xl font-bold">
-                  {t("home.pricing.basic.title")}
+                  {t("pricing.basic.title")}
                 </h3>
                 <p className="text-muted-foreground">
-                  {t("home.pricing.basic.subtitle")}
+                  {t("pricing.basic.subtitle")}
                 </p>
               </div>
               <div className="mb-4">
                 <span className="text-3xl font-bold">
-                  {t("home.pricing.basic.price")}
+                  {t("pricing.basic.price")}
                 </span>
                 <span className="text-muted-foreground">
-                  {t("home.pricing.basic.period")}
+                  {t("pricing.basic.period")}
                 </span>
               </div>
               <ul className="mb-6 space-y-2">
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.basic.features.scripts")}</span>
+                  <span>{t("pricing.basic.features.scripts")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.basic.features.analytics")}</span>
+                  <span>{t("pricing.basic.features.analytics")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.basic.features.support")}</span>
+                  <span>{t("pricing.basic.features.support")}</span>
                 </li>
               </ul>
-              <Button className="w-full">
-                {t("home.pricing.basic.button")}
-              </Button>
+              <Button className="w-full">{t("pricing.basic.button")}</Button>
             </div>
             {/* Pro Plan */}
             <div className="pricing-card relative overflow-hidden rounded-lg border bg-background p-6 ring-2 ring-primary">
               <div className="absolute -top-4 right-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                {t("home.pricing.pro.popular")}
+                {t("pricing.pro.popular")}
               </div>
               <div className="mb-4">
-                <h3 className="text-xl font-bold">
-                  {t("home.pricing.pro.title")}
-                </h3>
+                <h3 className="text-xl font-bold">{t("pricing.pro.title")}</h3>
                 <p className="text-muted-foreground">
-                  {t("home.pricing.pro.subtitle")}
+                  {t("pricing.pro.subtitle")}
                 </p>
               </div>
               <div className="mb-4">
                 <span className="text-3xl font-bold">
-                  {t("home.pricing.pro.price")}
+                  {t("pricing.pro.price")}
                 </span>
                 <span className="text-muted-foreground">
-                  {t("home.pricing.pro.period")}
+                  {t("pricing.pro.period")}
                 </span>
               </div>
               <ul className="mb-6 space-y-2">
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.pro.features.scripts")}</span>
+                  <span>{t("pricing.pro.features.scripts")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.pro.features.analytics")}</span>
+                  <span>{t("pricing.pro.features.analytics")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.pro.features.models")}</span>
+                  <span>{t("pricing.pro.features.models")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.pro.features.support")}</span>
+                  <span>{t("pricing.pro.features.support")}</span>
                 </li>
               </ul>
               <Button className="w-full bg-primary hover:bg-irrigation-700">
-                {t("home.pricing.pro.button")}
+                {t("pricing.pro.button")}
               </Button>
             </div>
             {/* Enterprise Plan */}
             <div className="pricing-card relative overflow-hidden rounded-lg border bg-background p-6">
               <div className="mb-4">
                 <h3 className="text-xl font-bold">
-                  {t("home.pricing.enterprise.title")}
+                  {t("pricing.enterprise.title")}
                 </h3>
                 <p className="text-muted-foreground">
-                  {t("home.pricing.enterprise.subtitle")}
+                  {t("pricing.enterprise.subtitle")}
                 </p>
               </div>
               <div className="mb-4">
                 <span className="text-3xl font-bold">
-                  {t("home.pricing.enterprise.price")}
+                  {t("pricing.enterprise.price")}
                 </span>
                 <span className="text-muted-foreground">
-                  {t("home.pricing.enterprise.period")}
+                  {t("pricing.enterprise.period")}
                 </span>
               </div>
               <ul className="mb-6 space-y-2">
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.enterprise.features.pro")}</span>
+                  <span>{t("pricing.enterprise.features.pro")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.enterprise.features.manager")}</span>
+                  <span>{t("pricing.enterprise.features.manager")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>
-                    {t("home.pricing.enterprise.features.integrations")}
-                  </span>
+                  <span>{t("pricing.enterprise.features.integrations")}</span>
                 </li>
                 <li className="flex items-center">
                   <Check className="mr-2 h-4 w-4 text-irrigation-500" />
-                  <span>{t("home.pricing.enterprise.features.support")}</span>
+                  <span>{t("pricing.enterprise.features.support")}</span>
                 </li>
               </ul>
               <Button className="w-full">
-                {t("home.pricing.enterprise.button")}
+                {t("pricing.enterprise.button")}
               </Button>
             </div>
           </div>
@@ -394,10 +388,10 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              {t("home.cta.heading")}
+              {t("cta.heading")}
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              {t("home.cta.description")}
+              {t("cta.description")}
             </p>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button
@@ -406,12 +400,12 @@ export default function Home() {
                 className="bg-primary hover:bg-irrigation-700"
               >
                 <Link href="/dashboard">
-                  {t("home.cta.getStarted")}
+                  {t("cta.getStarted")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="#contact">{t("home.cta.contactSales")}</Link>
+                <Link href="#contact">{t("cta.contactSales")}</Link>
               </Button>
             </div>
           </div>

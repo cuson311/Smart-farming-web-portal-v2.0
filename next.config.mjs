@@ -1,3 +1,7 @@
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
+
 let userConfig = undefined
 try {
   userConfig = await import('./v0-user-next.config')
@@ -42,4 +46,4 @@ if (userConfig) {
   }
 }
 
-export default nextConfig
+export default withNextIntl(nextConfig);

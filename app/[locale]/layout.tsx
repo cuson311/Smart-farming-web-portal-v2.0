@@ -2,15 +2,13 @@ import type React from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
-import "@/app/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
-import { Provider } from "@/context/ContextLanguage";
-import { cookies } from "next/headers";
-
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { routing } from "@/i18n/routing";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,15 +19,19 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
-  async function getLocaleFromCookies(): Promise<string> {
-    const lang = await cookies()?.get("lang")?.value;
-    return lang ?? "vi";
+  // Ensure that the incoming `locale` is valid
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    // notFound();
   }
+
   return (
-    <html lang="vi" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
@@ -42,14 +44,12 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Provider
-            value={{ locale: await getLocaleFromCookies(), languages: null }}
-          >
+          <NextIntlClientProvider>
             <Header />
             {children}
             <Footer />
             <Toaster />
-          </Provider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>
