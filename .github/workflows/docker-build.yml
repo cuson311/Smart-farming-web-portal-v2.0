@@ -25,3 +25,5 @@ jobs:
           context: .
           push: true
           tags: cuson108/smart-farming-web-portal:latest
+          build-args: |
+            NEXT_PUBLIC_API_ENDPOINT=${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}

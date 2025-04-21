@@ -4,13 +4,11 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 COPY . .
 
-# Declare build arg
-ARG RAILWAY_NEXT_PUBLIC_API_ENDPOINT
+# Declare the build argument for the API endpoint
+ARG NEXT_PUBLIC_API_ENDPOINT
 
-# Set it as env var for use in build step
-ENV NEXT_PUBLIC_API_ENDPOINT=${RAILWAY_NEXT_PUBLIC_API_ENDPOINT}
-
-RUN echo "NEXT_PUBLIC_API_ENDPOINT is $NEXT_PUBLIC_API_ENDPOINT"
+# Set the environment variable for Next.js to use at build time
+ENV NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
 
 # Install deps and build
 RUN npm install --legacy-peer-deps
