@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_ENDPOINT; // Replace with your Back-end API
-
+console.log("API endpoint", process.env.NEXT_PUBLIC_API_ENDPOINT)
 const axiosInstance = axios.create({
     baseURL: API_URL,
     headers: { "Content-Type": "application/json" },
