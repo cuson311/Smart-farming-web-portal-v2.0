@@ -13,6 +13,8 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+ENV NEXT_PUBLIC_API_ENDPOINT="https://lovely-smile-production.up.railway.app"
+
 # Copy the standalone build output
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
