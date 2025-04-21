@@ -3,6 +3,7 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 COPY . .
+COPY .env.production .env
 
 # Install deps and build
 RUN npm install --legacy-peer-deps
