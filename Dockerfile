@@ -5,7 +5,11 @@ WORKDIR /app
 COPY . .
 
 # Declare the build argument for the API endpoint
-# ARG NEXT_PUBLIC_API_ENDPOINT
+ARG NEXT_PUBLIC_API_ENDPOINT
+ARG NEXT_PUBLIC_SOCKET_ENDPOINT
+
+RUN echo $NEXT_PUBLIC_API_ENDPOINT
+RUN echo $NEXT_PUBLIC_SOCKET_ENDPOINT
 
 # Set the environment variable for Next.js to use at build time
 # ENV NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
