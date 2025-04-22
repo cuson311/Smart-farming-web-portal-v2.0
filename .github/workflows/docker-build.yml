@@ -25,3 +25,6 @@ jobs:
           context: .
           push: true
           tags: cuson108/smart-farming-web-portal:latest
+          build-args: |
+            NEXT_PUBLIC_API_ENDPOINT=https://lovely-smile-production.up.railway.app
+            NEXT_PUBLIC_SOCKET_ENDPOINT=crossover.proxy.rlwy.net:14760
