@@ -37,7 +37,7 @@ export const useSocket = () => {
       socket.disconnect();
     }
 
-    const newSocket = io(`${process.env.SOCKET_PUBLIC_API_ENDPOINT}`, {
+      const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_ENDPOINT}`, {
       transports: ["websocket"],
       reconnection: true,
       reconnectionAttempts: 5,
