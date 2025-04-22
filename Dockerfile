@@ -6,9 +6,11 @@ COPY . .
 
 # Declare the build argument for the API endpoint
 ARG NEXT_PUBLIC_API_ENDPOINT
+ARG SOCKET_PUBLIC_API_ENDPOINT
 
 # Set the environment variable for Next.js to use at build time
 ENV NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
+ENV SOCKET_PUBLIC_API_ENDPOINT=${SOCKET_PUBLIC_API_ENDPOINT}
 
 # Install deps and build
 RUN npm install --legacy-peer-deps
