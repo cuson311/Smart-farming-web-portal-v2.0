@@ -2,12 +2,17 @@ version: "3.9"
 
 services:
   smart-farming-portal:
-    image: cuson108/smart-farming-web-portal:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_ENDPOINT: "https://lovely-smile-production.up.railway.app"
+        NEXT_PUBLIC_SOCKET_ENDPOINT: "wss://lovely-smile-production.up.railway.app"
     container_name: smart-farming-portal
     ports:
       - "3000:3000"
     restart: unless-stopped
+    working_dir: /app
     environment:
       - NODE_ENV=production
-    working_dir: /app
-    command: npm start  # Or: next start -p 3000
+    command: npm start  # or npm start if package.json is set
