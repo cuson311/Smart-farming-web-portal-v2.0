@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  smart-farming-portal:
+    image: cuson108/smart-farming-web-portal:latest
+    container_name: smart-farming-portal
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    working_dir: /app
+    command: npm start  # Or: next start -p 3000
