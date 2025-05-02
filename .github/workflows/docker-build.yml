@@ -29,8 +29,17 @@ jobs:
             NEXT_PUBLIC_API_ENDPOINT=https://lovely-smile-production.up.railway.app
             NEXT_PUBLIC_SOCKET_ENDPOINT=wss://lovely-smile-production.up.railway.app
 
-      - name: 📦 Install sshpass
-        run: sudo apt-get update && sudo apt-get install -y sshpass
+      - name: 📥 Install OpenVPN and sshpass
+        run: sudo apt-get update && sudo apt-get install -y openvpn sshpass
+
+      - name: 🔐 Setup VPN config and connect
+        run: |
+          echo "${{ secrets.VPN_CONFIG }}" | base64 -d > vpn.ovpn
+          echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}" > auth.txt
+          sudo openvpn --config vpn.ovpn --auth-user-pass auth.txt --daemon
+
+      - name: ⏱️ Wait for VPN to connect
+        run: sleep 15
 
       - name: 🚀 Deploy via SSH using password
         run: |
