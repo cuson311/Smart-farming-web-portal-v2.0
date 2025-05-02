@@ -3,7 +3,7 @@
     "hero": {
       "title": "Tưới tiêu thông minh",
       "subtitle": "Quản lý thực hiện đơn giản",
-      "description": "Tối ưu hóa các hệ thống tưới của bạn với các tập lệnh và mô hình thông minh. ",
+      "description": "Tối ưu hóa các hệ thống tưới của bạn với các kịch bản và mô hình thông minh. ",
       "getStarted": "Bắt đầu",
       "learnMore": "Tìm hiểu thêm"
     },
@@ -13,7 +13,7 @@
       "description": "Nền tảng của chúng tôi cung cấp các công cụ mạnh mẽ để quản lý, giám sát và tối ưu hóa các hệ thống tưới của bạn.",
       "smartScripts": {
         "title": "Kịch bản thông minh",
-        "description": "Tạo và quản lý các tập lệnh tưới thông minh thích ứng với các điều kiện thay đổi."
+        "description": "Tạo và quản lý các kịch bản tưới thông minh thích ứng với các điều kiện thay đổi."
       },
       "advancedModels": {
         "title": "Mô hình nâng cao",
@@ -48,7 +48,7 @@
       "testimonial2": {
         "name": "Jane Smith",
         "role": "Kỹ sư nông nghiệp",
-        "quote": "Khả năng tạo các mô hình và tập lệnh tưới tùy chỉnh là một người thay đổi trò chơi cho các hoạt động của chúng tôi. "
+        "quote": "Khả năng tạo các mô hình và kịch bản tưới tùy chỉnh là một người thay đổi trò chơi cho các hoạt động của chúng tôi. "
       },
       "testimonial3": {
         "name": "Robert Johnson",
@@ -66,7 +66,7 @@
         "price": "$ 29",
         "period": "/tháng",
         "features": {
-          "scripts": "Lên đến 5 tập lệnh tưới",
+          "scripts": "Lên đến 5 kịch bản tưới",
           "analytics": "Phân tích cơ bản",
           "support": "Hỗ trợ email"
         },
@@ -609,7 +609,7 @@
     },
     "hero": {
       "title": "Quản lý tưới thông minh",
-      "description": "Tối ưu hóa các hệ thống tưới của bạn với các tập lệnh và mô hình thông minh. "
+      "description": "Tối ưu hóa các hệ thống tưới của bạn với các kịch bản và mô hình thông minh. "
     }
   },
   "header": {
