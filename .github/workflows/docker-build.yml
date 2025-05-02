@@ -1,12 +1,12 @@
-name: Build and Push Docker Image
+name: Build, Push Docker Image, and Deploy
 
 on:
   push:
     branches:
-      - main # or change to your branch name
+      - main
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +28,14 @@ jobs:
           build-args: |
             NEXT_PUBLIC_API_ENDPOINT=https://lovely-smile-production.up.railway.app
             NEXT_PUBLIC_SOCKET_ENDPOINT=wss://lovely-smile-production.up.railway.app
+
+      - name: 📦 Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: 🚀 Deploy via SSH using password
+        run: |
+          sshpass -p "${{ secrets.VM_PASSWORD }}" ssh -o StrictHostKeyChecking=no root@10.1.8.52 "
+            cd /home/ubuntu/Smart-farming-web-portal-v2.0 &&
+            git pull origin main &&
+            docker-compose up -d --build
+          "
