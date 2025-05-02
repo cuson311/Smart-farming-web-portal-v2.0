@@ -46,5 +46,5 @@ jobs:
           sshpass -p "${{ secrets.VM_PASSWORD }}" ssh -o StrictHostKeyChecking=no root@10.1.8.52 "
             cd /home/ubuntu/Smart-farming-web-portal-v2.0 &&
             git pull origin main &&
-            docker-compose up -d --build
+            docker compose up -d --build
           "
