@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 # Declare the build argument for the API endpoint
-ARG NEXT_PUBLIC_API_ENDPOINT=https://lovely-smile-production.up.railway.app
+ARG NEXT_PUBLIC_API_ENDPOINT=http://10.1.8.52:3002
 ARG NEXT_PUBLIC_SOCKET_ENDPOINT=crossover.proxy.rlwy.net:14760
 
 RUN echo $NEXT_PUBLIC_API_ENDPOINT
