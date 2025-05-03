@@ -1,12 +1,12 @@
-name: Build and Push Docker Image
+name: Build, Push Docker Image, and Deploy
 
 on:
   push:
     branches:
-      - main # or change to your branch name
+      - main
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,4 +26,26 @@ jobs:
           push: true
           tags: cuson108/smart-farming-web-portal:latest
           build-args: |
-            NEXT_PUBLIC_API_ENDPOINT=${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
+            NEXT_PUBLIC_API_ENDPOINT=http://10.1.8.52:3002
+            NEXT_PUBLIC_SOCKET_ENDPOINT=ws://10.1.8.52:3002
+
+      - name: 📥 Install OpenVPN and sshpass
+        run: sudo apt-get update && sudo apt-get install -y openvpn sshpass
+
+      - name: 🔐 Setup VPN config and connect
+        run: |
+          echo "${{ secrets.VPN_CONFIG }}" | base64 -d > vpn.ovpn
+          echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}" > auth.txt
+          sudo openvpn --config vpn.ovpn --auth-user-pass auth.txt --daemon
+
+      - name: ⏱️ Wait for VPN to connect
+        run: sleep 15
+
+      - name: 🚀 Deploy via SSH using password
+        run: |
+          sshpass -p "${{ secrets.VM_PASSWORD }}" ssh -o StrictHostKeyChecking=no root@10.1.8.52 "
+            cd /home/ubuntu/Smart-farming-web-portal-v2.0 &&
+            git pull origin main &&
+            docker pull cuson108/smart-farming-web-portal:latest &&
+            docker compose up -d --build
+          "

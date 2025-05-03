@@ -5,10 +5,14 @@ WORKDIR /app
 COPY . .
 
 # Declare the build argument for the API endpoint
-ARG NEXT_PUBLIC_API_ENDPOINT
+ARG NEXT_PUBLIC_API_ENDPOINT=http://10.1.8.52:3002
+ARG NEXT_PUBLIC_SOCKET_ENDPOINT=crossover.proxy.rlwy.net:14760
+
+RUN echo $NEXT_PUBLIC_API_ENDPOINT
+RUN echo $NEXT_PUBLIC_SOCKET_ENDPOINT
 
 # Set the environment variable for Next.js to use at build time
-ENV NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
+# ENV NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
 
 # Install deps and build
 RUN npm install --legacy-peer-deps
@@ -27,7 +31,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
 
 # Expose the port Next.js runs on
-EXPOSE 3002
+EXPOSE 3000
 
 # Start the production server (entrypoint is usually index.js)
 CMD ["node", "server.js"]
