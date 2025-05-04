@@ -136,7 +136,7 @@ const SearchResults = ({
           </Button>
         </div>
         <div className="flex items-center justify-center py-4">
-          <p className="text-sm text-muted-foreground">{t("noUsersFound")}</p>
+          <p className="text-sm text-muted-foreground">{t("noUserFound")}</p>
         </div>
       </CardContent>
     </Card>
@@ -654,12 +654,12 @@ const EditScriptModal = ({
             {/* Shared users section - ONLY appears when privacy is set to private */}
             {formData.privacy === "private" && (
               <div className="space-y-4">
-                <Label>{t("sharedUsers")}</Label>
+                <Label>{t("sharedUsersLabel")}</Label>
                 <div className="flex gap-2">
                   <Input
                     value={searchTerm}
                     onChange={handleSearchTermChange}
-                    placeholder={t("searchUsers")}
+                    placeholder={t("searchUsersPlaceholder")}
                     className="flex-1"
                   />
                   <Button
@@ -669,7 +669,7 @@ const EditScriptModal = ({
                     variant="secondary"
                   >
                     <Search className="h-4 w-4 mr-2" />
-                    {t("search")}
+                    {t("searchButton")}
                   </Button>
                 </div>
 
@@ -686,7 +686,7 @@ const EditScriptModal = ({
                 {/* Shared users list */}
                 {sharedUsers.length > 0 && (
                   <div className="space-y-2">
-                    <Label className="text-sm">{t("sharedWith")}</Label>
+                    <Label className="text-sm">{t("sharedWithLabel")}</Label>
                     <div className="space-y-2">
                       {sharedUsers.map((user, index) => (
                         <div

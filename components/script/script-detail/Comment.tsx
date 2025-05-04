@@ -20,7 +20,7 @@ import { useFetchComments } from "@/hooks/useFetchComment";
 import { useParams } from "next/navigation";
 
 const CommentsTab = ({ script }: { script: Script }) => {
-  const t = useTranslations("dashboard.scripts.detail");
+  const t = useTranslations("dashboard.scripts.detail.comments");
   const { toast } = useToast();
   const [newComment, setNewComment] = useState("");
   const { userId } = useParams();
@@ -53,15 +53,15 @@ const CommentsTab = ({ script }: { script: Script }) => {
       refetchAllComments();
 
       toast({
-        title: t("comments.toast.addSuccess"),
-        description: t("comments.toast.addSuccessDescription"),
+        title: t("toast.addSuccess"),
+        description: t("toast.addSuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error adding comment:", error);
       toast({
-        title: t("comments.toast.addError"),
-        description: t("comments.toast.addErrorDescription"),
+        title: t("toast.addError"),
+        description: t("toast.addErrorDescription"),
         variant: "destructive",
       });
     }
@@ -72,20 +72,20 @@ const CommentsTab = ({ script }: { script: Script }) => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <MessageSquare className="h-5 w-5" />
-          {t("comments.title")}
+          {t("title")}
         </CardTitle>
-        <CardDescription>{t("comments.description")}</CardDescription>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-6">
           <form onSubmit={handleCommentSubmit} className="grid gap-4">
             <Textarea
-              placeholder={t("comments.addComment")}
+              placeholder={t("addComment")}
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             />
             <Button type="submit" className="ml-auto">
-              {t("comments.postComment")}
+              {t("postComment")}
             </Button>
           </form>
           <Separator />
@@ -100,9 +100,7 @@ const CommentsTab = ({ script }: { script: Script }) => {
                 />
               ))
             ) : (
-              <p className="text-muted-foreground text-sm">
-                {t("comments.noComments")}
-              </p>
+              <p className="text-muted-foreground text-sm">{t("noComments")}</p>
             )}
           </div>
         </div>

@@ -279,8 +279,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     } catch (error) {
       console.error("Error searching users:", error);
       toast({
-        title: "Search failed",
-        description: "Failed to search users. Please try again.",
+        title: t("searchFailed"),
+        description: t("searchFailedDescription"),
         variant: "destructive",
       });
     }
@@ -370,8 +370,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       } catch (error) {
         console.error("Invalid JSON file:", error);
         toast({
-          title: "Invalid file",
-          description: "Please upload a valid JSON file.",
+          title: t("invalidFile"),
+          description: t("invalidFileDescription"),
           variant: "destructive",
         });
       }
@@ -402,8 +402,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     } catch (error) {
       console.error("Error uploading file:", error);
       toast({
-        title: "Upload failed",
-        description: "Failed to upload script file.",
+        title: t("uploadFailed"),
+        description: t("uploadFailedDescription"),
         variant: "destructive",
       });
     }
@@ -416,8 +416,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     // Validate form
     if (!newScript.name.trim()) {
       toast({
-        title: "Missing information",
-        description: "Please provide a name for your script.",
+        title: t("missingInformation"),
+        description: t("missingInformationDescription"),
         variant: "destructive",
       });
       return;
@@ -428,8 +428,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
 
     if (!userId) {
       toast({
-        title: "Authentication error",
-        description: "You must be logged in to create a script.",
+        title: t("authError"),
+        description: t("authErrorDescription"),
         variant: "destructive",
       });
       return;
@@ -456,8 +456,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       handleSubmitFile(userId, scriptId._id);
 
       toast({
-        title: "Script created",
-        description: `Script "${newScript.name}" has been created successfully.`,
+        title: t("createSuccess"),
+        description: t("createSuccessDescription", { name: newScript.name }),
       });
 
       if (onScriptCreated) {
@@ -478,8 +478,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     } catch (error) {
       console.error("Error creating script:", error);
       toast({
-        title: "Creation failed",
-        description: "Failed to create script. Please try again.",
+        title: t("createFailed"),
+        description: t("createFailedDescription"),
         variant: "destructive",
       });
     }
@@ -570,9 +570,9 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                       >
                         <MapPin className="mr-2 h-4 w-4" />
                         {newScript.location && newScript.location.length > 0
-                          ? `${newScript.location.length} ${t(
-                              "locationsSelected"
-                            )}`
+                          ? t("locationsSelected", {
+                              count: newScript.location.length,
+                            })
                           : t("selectProvinces")}
                       </Button>
                     </PopoverTrigger>
@@ -649,9 +649,9 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                       >
                         <Leaf className="mr-2 h-4 w-4" />
                         {newScript.plant_type && newScript.plant_type.length > 0
-                          ? `${newScript.plant_type.length} ${t(
-                              "plantTypesSelected"
-                            )}`
+                          ? t("plantTypesSelected", {
+                              count: newScript.plant_type.length,
+                            })
                           : t("selectPlantTypes")}
                       </Button>
                     </PopoverTrigger>

@@ -194,11 +194,11 @@
         "locationLabel": "Địa điểm",
         "selectProvinces": "Chọn tỉnh",
         "searchProvinces": "Tìm kiếm tỉnh...",
-        "locationsSelected": "Địa điểm đã chọn",
+        "locationsSelected": "{count} Địa điểm đã chọn",
         "plantTypeLabel": "Loại cây trồng",
         "selectPlantTypes": "Chọn loại cây trồng",
         "searchPlantTypes": "Tìm kiếm loại cây trồng...",
-        "plantTypesSelected": "Loại cây trồng đã chọn",
+        "plantTypesSelected": "{count} Loại cây trồng đã chọn",
         "privacyLabel": "Quyền riêng tư",
         "publicLabel": "Công khai",
         "publicDescription": "Tất cả người dùng đều có thể xem kịch bản này.",
@@ -213,13 +213,33 @@
         "defaultTemplate": "Mẫu mặc định",
         "cancelButton": "Hủy",
         "createButton": "Tạo kịch bản",
-        "noPlantTypeFound": "Không tìm thấy loại cây nào",
-        "noProvinceFound": "Không tìm thấy tỉnh nào",
-        "noUserFound": "Không tìm thấy người dùng nào",
+        "noPlantTypeFound": "Không tìm thấy loại cây phù hợp",
+        "noProvinceFound": "Không tìm thấy tỉnh phù hợp",
+        "noUserFound": "Không tìm thấy người dùng",
         "searchResults": "Kết quả tìm kiếm",
         "confirm": "Xác nhận",
         "cancel": "Huỷ",
-        "scriptUrl": "Liên kết kịch bản"
+        "scriptUrl": "Liên kết kịch bản",
+        "add": "Thêm",
+        "sharedWithLabel": "Chia sẻ với",
+        "added": "Đã thêm",
+        "new": "Mới",
+        "toast": {
+          "searchFailed": "Tìm kiếm thất bại",
+          "searchFailedDescription": "Không thể tìm người dùng. Vui lòng thử lại.",
+          "invalidFile": "Tập tin không hợp lệ",
+          "invalidFileDescription": "Vui lòng tải lên một tập tin JSON hợp lệ.",
+          "uploadFailed": "Tải lên thất bại",
+          "uploadFailedDescription": "Không thể tải lên tập tin script.",
+          "missingInformation": "Thiếu thông tin",
+          "missingInformationDescription": "Vui lòng nhập tên cho script của bạn.",
+          "authError": "Lỗi xác thực",
+          "authErrorDescription": "Bạn phải đăng nhập để tạo script.",
+          "createSuccess": "Tạo script thành công",
+          "createSuccessDescription": "Script {name} đã được tạo thành công.",
+          "createFailed": "Tạo thất bại",
+          "createFailedDescription": "Không thể tạo script. Vui lòng thử lại."
+        }
       },
       "detail": {
         "cancel": "Hủy",
@@ -244,6 +264,22 @@
           "comments": "Bình luận",
           "versions": "Phiên bản"
         },
+        "toast": {
+          "updateSuccess": "Cập nhật thành công",
+          "updateSuccessDescription": "Thông tin script đã được cập nhật thành công",
+          "updateError": "Cập nhật thất bại",
+          "updateErrorDescription": "Không thể cập nhật thông tin script",
+          "deleteSuccess": "Xoá thành công",
+          "deleteSuccessDescription": "Script đã được xoá thành công",
+          "ratingSuccess": "Đánh giá thành công",
+          "ratingSuccessDescription": "Đánh giá của bạn đã được gửi thành công",
+          "ratingError": "Đánh giá thất bại",
+          "ratingErrorDescription": "Không thể gửi đánh giá của bạn",
+          "ratingDeleteSuccess": "Xoá đánh giá thành công",
+          "ratingDeleteSuccessDescription": "Đánh giá của bạn đã được xoá thành công",
+          "ratingDeleteError": "Xoá đánh giá thất bại",
+          "ratingDeleteErrorDescription": "Không thể xoá đánh giá của bạn"
+        },
         "loadingDetails": "Đang tải chi tiết kịch bản...",
         "scriptDetails": {
           "public": "Công khai",
@@ -258,7 +294,7 @@
           "noPlants": "Không có cây trồng được chỉ định",
           "privacy": "Quyền riêng tư",
           "averageRating": "Đánh giá trung bình",
-          "rating": "{value} ({count} {count, plural, one {đánh giá} other {đánh giá}})",
+          "rating": "Đánh giá",
           "yourRating": "Đánh giá của bạn",
           "rateScript": "Đánh giá kịch bản này",
           "youRated": "Bạn đã đánh giá {value} {value, plural, one {sao} other {sao}}",
@@ -309,8 +345,8 @@
           "cancel": "Hủy",
           "save": "Lưu",
           "deleteDialog": {
-            "title": "Xóa {type}",
-            "description": "Bạn có chắc chắn muốn xóa {type} này? Hành động này không thể hoàn tác.",
+            "title": "Xóa comment",
+            "description": "Bạn có chắc chắn muốn xóa không? Hành động này không thể hoàn tác.",
             "cancel": "Hủy",
             "confirm": "Xóa"
           },
@@ -322,12 +358,55 @@
             "close": "Đóng"
           },
           "toast": {
-            "addSuccess": "Đã thêm bình luận thành công",
-            "addError": "Không thể thêm bình luận",
-            "editSuccess": "Đã chỉnh sửa {type} thành công",
-            "editError": "Không thể chỉnh sửa {type}",
-            "deleteSuccess": "Đã xóa {type} thành công",
-            "deleteError": "Không thể xóa {type}"
+            "addSuccess": "Thêm bình luận thành công",
+            "addSuccessDescription": "Bình luận của bạn đã được thêm thành công",
+            "addError": "Thêm bình luận thất bại",
+            "addErrorDescription": "Không thể thêm bình luận. Vui lòng thử lại.",
+            "editSuccess": "Chỉnh sửa bình luận thành công",
+            "editSuccessDescription": "Bình luận đã được cập nhật thành công",
+            "editError": "Chỉnh sửa bình luận thất bại",
+            "editErrorDescription": "Không thể chỉnh sửa bình luận. Vui lòng thử lại.",
+            "deleteSuccess": "Xoá bình luận thành công",
+            "deleteSuccessDescription": "Bình luận đã được xoá thành công",
+            "deleteError": "Xoá bình luận thất bại",
+            "deleteErrorDescription": "Không thể xoá bình luận. Vui lòng thử lại.",
+            "replySuccess": "Thành công!",
+            "replySuccessDescription": "Trả lời bình luận thành công",
+            "replyError": "Thất bại!",
+            "replyErrorDescription": "Không thể trả lời bình luận",
+            "loadCommentsError": "Thất bại!",
+            "loadCommentsErrorDescription": "Không thể tải lịch sử bình luận"
+          }
+        },
+        "subcomments": {
+          "toast": {
+            "editReplySuccess": "Thành công!",
+            "editReplySuccessDescription": "Chỉnh sửa trả lời thành công",
+            "editReplyError": "Thất bại!",
+            "editReplyErrorDescription": "Chỉnh sửa trả lời thất bại",
+            "deleteReplySuccess": "Thành công!",
+            "deleteReplySuccessDescription": "Đã xoá trả lời thành công",
+            "deleteReplyError": "Thất bại!",
+            "deleteReplyErrorDescription": "Xoá trả lời thất bại",
+            "loadHistoryError": "Thất bại!",
+            "loadHistoryErrorDescription": "Không thể tải lịch sử bình luận"
+          },
+          "dialog": {
+            "deleteTitle": "Xoá trả lời",
+            "deleteDescription": "Bạn có chắc chắn muốn xoá trả lời này? Hành động này không thể hoàn tác.",
+            "deleteConfirm": "Xoá",
+            "deleteCancel": "Huỷ",
+            "historyTitle": "Lịch sử chỉnh sửa trả lời",
+            "historyDescription": "Xem lịch sử chỉnh sửa của trả lời này",
+            "historyEmpty": "Không có lịch sử chỉnh sửa cho trả lời này",
+            "close": "Đóng"
+          },
+          "button": {
+            "edit": "Chỉnh sửa",
+            "delete": "Xoá",
+            "cancel": "Huỷ",
+            "save": "Lưu",
+            "close": "Đóng"
           }
         },
         "versionCompare": {
@@ -775,6 +854,7 @@
     }
   },
   "common": {
+    "at": "Lúc",
     "datePicker": {
       "pickDateRange": "Chọn khoảng thời gian",
       "months": {

@@ -194,16 +194,16 @@
                 "locationLabel": "Location",
                 "locationPlaceholder": "Select location",
                 "selectProvinces": "Select provinces",
-                "searchProvinces": "Search provinces",
-                "locationsSelected": "Location selected",
+                "searchProvinces": "Search provinces...",
+                "locationsSelected": "{count} Location selected",
                 "plantTypeLabel": "Plant Type",
                 "selectPlantTypes": "Select plant types",
-                "searchPlantTypes": "Search plant types",
-                "plantTypesSelected": "Plant type selected",
+                "searchPlantTypes": "Search plant types...",
+                "plantTypesSelected": "{count} Plant type selected",
                 "privacyLabel": "Privacy",
-                "public": "Public",
+                "publicLabel": "Public",
                 "publicDescription": "Anyone can view and fork this script",
-                "private": "Private",
+                "privateLabel": "Private",
                 "privateDescription": "Only you and people you share with can access",
                 "sharedUsersLabel": "Shared with:",
                 "searchUsersPlaceholder": "Search users...",
@@ -220,7 +220,27 @@
                 "searchResults": "Search Results",
                 "confirm": "Confirm",
                 "cancel": "Cancel",
-                "scriptUrl": "Script URL"
+                "scriptUrl": "Script URL",
+                "add": "Add",
+                "sharedWithLabel": "Shared with",
+                "added": "Added",
+                "new": "New",
+                "toast": {
+                    "searchFailed": "Search failed",
+                    "searchFailedDescription": "Failed to search users. Please try again.",
+                    "invalidFile": "Invalid file",
+                    "invalidFileDescription": "Please upload a valid JSON file.",
+                    "uploadFailed": "Upload failed",
+                    "uploadFailedDescription": "Failed to upload script file.",
+                    "missingInformation": "Missing information",
+                    "missingInformationDescription": "Please provide a name for your script.",
+                    "authError": "Authentication error",
+                    "authErrorDescription": "You must be logged in to create a script.",
+                    "createSuccess": "Script created",
+                    "createSuccessDescription": "Script {name} has been created successfully.",
+                    "createFailed": "Creation failed",
+                    "createFailedDescription": "Failed to create script. Please try again."
+                }
             },
             "detail": {
                 "cancel": "Cancel",
@@ -245,6 +265,22 @@
                     "comments": "Comments",
                     "versions": "Versions"
                 },
+                "toast": {
+                    "updateSuccess": "Update successfully",
+                    "updateSuccessDescription": "Update script info successfully",
+                    "updateError": "Update failed",
+                    "updateErrorDescription": "Failed to update script info",
+                    "deleteSuccess": "Delete successfully",
+                    "deleteSuccessDescription": "Script deleted successfully",
+                    "ratingSuccess": "Rating submitted",
+                    "ratingSuccessDescription": "Your rating was submitted successfully",
+                    "ratingError": "Rating failed",
+                    "ratingErrorDescription": "Failed to submit your rating",
+                    "ratingDeleteSuccess": "Rating deleted",
+                    "ratingDeleteSuccessDescription": "Your rating was deleted successfully",
+                    "ratingDeleteError": "Rating delete failed",
+                    "ratingDeleteErrorDescription": "Failed to delete your rating"
+                },
                 "loadingDetails": "Loading script details...",
                 "scriptDetails": {
                     "public": "Public",
@@ -259,7 +295,7 @@
                     "noPlants": "No plants specified",
                     "privacy": "Privacy",
                     "averageRating": "Average Rating",
-                    "rating": "{value} ({count} {count, plural, one {rating} other {ratings}})",
+                    "rating": "Ratings",
                     "yourRating": "Your Rating",
                     "rateScript": "Rate this script",
                     "youRated": "You rated {value} {value, plural, one {star} other {stars}}",
@@ -310,8 +346,8 @@
                     "cancel": "Cancel",
                     "save": "Save",
                     "deleteDialog": {
-                        "title": "Delete {type}",
-                        "description": "Are you sure you want to delete this {type}? This action cannot be undone.",
+                        "title": "Delete comment",
+                        "description": "Are you sure you want to delete this? This action cannot be undone.",
                         "cancel": "Cancel",
                         "confirm": "Delete"
                     },
@@ -324,11 +360,54 @@
                     },
                     "toast": {
                         "addSuccess": "Comment added successfully",
+                        "addSuccessDescription": "Your comment has been added successfully",
                         "addError": "Failed to add comment",
-                        "editSuccess": "Edited {type} successfully",
-                        "editError": "Failed to edit {type}",
-                        "deleteSuccess": "{type} has been deleted successfully",
-                        "deleteError": "Failed to delete {type}"
+                        "addErrorDescription": "Could not add your comment. Please try again.",
+                        "editSuccess": "Edited comment successfully",
+                        "editSuccessDescription": "Your comment has been updated successfully",
+                        "editError": "Failed to edit comment",
+                        "editErrorDescription": "Could not edit your comment. Please try again.",
+                        "deleteSuccess": "Comment has been deleted successfully",
+                        "deleteSuccessDescription": "The comment was removed successfully",
+                        "deleteError": "Failed to delete comment",
+                        "deleteErrorDescription": "Could not delete the comment. Please try again.",
+                        "replySuccess": "Successful!",
+                        "replySuccessDescription": "Reply comment successfully",
+                        "replyError": "Failed!",
+                        "replyErrorDescription": "Failed to reply comment",
+                        "loadCommentsError": "Failed!",
+                        "loadCommentsErrorDescription": "Could not load comment history"
+                    }
+                },
+                "subcomments": {
+                    "toast": {
+                        "editReplySuccess": "Successful!",
+                        "editReplySuccessDescription": "Edited reply successfully",
+                        "editReplyError": "Failed!",
+                        "editReplyErrorDescription": "Failed to edit reply",
+                        "deleteReplySuccess": "Successful!",
+                        "deleteReplySuccessDescription": "Reply has been deleted successfully",
+                        "deleteReplyError": "Failed!",
+                        "deleteReplyErrorDescription": "Failed to delete reply",
+                        "loadHistoryError": "Failed!",
+                        "loadHistoryErrorDescription": "Could not load comment history"
+                    },
+                    "dialog": {
+                        "deleteTitle": "Delete Reply",
+                        "deleteDescription": "Are you sure you want to delete this reply? This action cannot be undone.",
+                        "deleteConfirm": "Delete",
+                        "deleteCancel": "Cancel",
+                        "historyTitle": "Reply Edit History",
+                        "historyDescription": "View the edit history of this reply",
+                        "historyEmpty": "No edit history available for this reply",
+                        "close": "Close"
+                    },
+                    "button": {
+                        "edit": "Edit",
+                        "delete": "Delete",
+                        "cancel": "Cancel",
+                        "save": "Save",
+                        "close": "Close"
                     }
                 },
                 "versionCompare": {
@@ -788,6 +867,7 @@
         }
     },
     "common": {
+        "at": "At",
         "datePicker": {
             "pickDateRange": "Pick a date range",
             "months": {

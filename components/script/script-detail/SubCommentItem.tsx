@@ -32,7 +32,7 @@ import {
 import commentApi from "@/api/commentAPI";
 import { Script } from "@/types/script";
 import { toast } from "@/hooks/use-toast";
-import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const SubCommentItem = ({
   script,
@@ -52,6 +52,7 @@ const SubCommentItem = ({
   const [commentHistory, setCommentHistory] = useState<UpdateHistory[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const [userId, setUserId] = useState<string>("");
+  const t = useTranslations("dashboard.scripts.detail.subcomments");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -82,15 +83,15 @@ const SubCommentItem = ({
       refetchAllSubComments();
 
       toast({
-        title: "Successful!",
-        description: "Edited reply successfully",
+        title: t("toast.editReplySuccess"),
+        description: t("toast.editReplySuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error editing reply:", error);
       toast({
-        title: "Failed!",
-        description: "Failed to edit reply",
+        title: t("toast.editReplyError"),
+        description: t("toast.editReplyErrorDescription"),
         variant: "destructive",
       });
     }
@@ -115,15 +116,15 @@ const SubCommentItem = ({
       setIsDeleteDialogOpen(false);
 
       toast({
-        title: "Successful!",
-        description: "Reply has been deleted successfully",
+        title: t("toast.deleteReplySuccess"),
+        description: t("toast.deleteReplySuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error deleting reply:", error);
       toast({
-        title: "Failed!",
-        description: "Failed to delete reply",
+        title: t("toast.deleteReplyError"),
+        description: t("toast.deleteReplyErrorDescription"),
         variant: "destructive",
       });
     }
@@ -148,8 +149,8 @@ const SubCommentItem = ({
     } catch (error) {
       console.error("Error fetching comment history:", error);
       toast({
-        title: "Failed!",
-        description: "Could not load comment history",
+        title: t("toast.loadHistoryError"),
+        description: t("toast.loadHistoryErrorDescription"),
         variant: "destructive",
       });
     } finally {
@@ -257,21 +258,20 @@ const SubCommentItem = ({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Reply</AlertDialogTitle>
+            <AlertDialogTitle>{t("dialog.deleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this reply? This action cannot be
-              undone.
+              {t("dialog.deleteDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleCloseDeleteDialog}>
-              Cancel
+              {t("dialog.deleteCancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
               className="bg-red-600 hover:bg-red-700"
             >
-              Delete
+              {t("dialog.deleteConfirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -281,9 +281,9 @@ const SubCommentItem = ({
       <Dialog open={isHistoryDialogOpen} onOpenChange={setIsHistoryDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Reply Edit History</DialogTitle>
+            <DialogTitle>{t("dialog.historyTitle")}</DialogTitle>
             <DialogDescription>
-              View the edit history of this reply
+              {t("dialog.historyDescription")}
             </DialogDescription>
           </DialogHeader>
 
@@ -308,14 +308,14 @@ const SubCommentItem = ({
               </div>
             ) : (
               <p className="text-center text-gray-500 py-4">
-                No edit history available for this reply
+                {t("dialog.historyEmpty")}
               </p>
             )}
           </div>
 
           <div className="flex justify-end">
             <DialogClose asChild>
-              <Button variant="outline">Close</Button>
+              <Button variant="outline">{t("dialog.close")}</Button>
             </DialogClose>
           </div>
         </DialogContent>
