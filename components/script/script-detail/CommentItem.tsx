@@ -11,7 +11,6 @@ import {
   XIcon,
   CheckIcon,
   HistoryIcon,
-  MoreVertical,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -36,15 +35,7 @@ import { Script } from "@/types/script";
 import { toast } from "@/hooks/use-toast";
 import { useFetchSubComments } from "@/hooks/useFetchComment";
 import SubCommentItem from "./SubCommentItem";
-import { useParams } from "next/navigation";
-import { formatDistanceToNow } from "date-fns";
 import { useTranslations } from "next-intl";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const CommentItem = ({
   script,
@@ -55,7 +46,7 @@ const CommentItem = ({
   comment: ScriptComment;
   refetchAllComments: () => void;
 }) => {
-  const t = useTranslations("dashboard.scripts.detail");
+  const t = useTranslations("dashboard.scripts.detail.comments");
   const [isEditing, setIsEditing] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
@@ -107,15 +98,15 @@ const CommentItem = ({
       refetchAllComments();
 
       toast({
-        title: t("comments.toast.editSuccess"),
-        description: t("comments.toast.editSuccessDescription"),
+        title: t("toast.editSuccess"),
+        description: t("toast.editSuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error editing comment:", error);
       toast({
-        title: t("comments.toast.editError"),
-        description: t("comments.toast.editErrorDescription"),
+        title: t("toast.editError"),
+        description: t("toast.editErrorDescription"),
         variant: "destructive",
       });
     }
@@ -141,15 +132,15 @@ const CommentItem = ({
       setIsDeleteDialogOpen(false);
 
       toast({
-        title: t("comments.toast.deleteSuccess"),
-        description: t("comments.toast.deleteSuccessDescription"),
+        title: t("toast.deleteSuccess"),
+        description: t("toast.deleteSuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error deleting comment:", error);
       toast({
-        title: t("comments.toast.deleteError"),
-        description: t("comments.toast.deleteErrorDescription"),
+        title: t("toast.deleteError"),
+        description: t("toast.deleteErrorDescription"),
         variant: "destructive",
       });
     }
@@ -181,15 +172,15 @@ const CommentItem = ({
 
       refetchAllComments();
       toast({
-        title: "Successful!",
-        description: "Reply comment successfully",
+        title: t("toast.replySuccess"),
+        description: t("toast.replySuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error sending reply:", error);
       toast({
-        title: "Failed!",
-        description: "Failed to reply comment",
+        title: t("toast.replyError"),
+        description: t("toast.replyErrorDescription"),
         variant: "destructive",
       });
     }
@@ -218,8 +209,8 @@ const CommentItem = ({
     } catch (error) {
       console.error("Error fetching comment history:", error);
       toast({
-        title: "Failed!",
-        description: "Could not load comment history",
+        title: t("toast.loadCommentsError"),
+        description: t("toast.loadCommentsErrorDescription"),
         variant: "destructive",
       });
     } finally {
@@ -266,7 +257,7 @@ const CommentItem = ({
               />
               <div className="flex justify-end gap-2">
                 <Button variant="outline" size="sm" onClick={handleCancelEdit}>
-                  <XIcon size={16} className="mr-1" /> {t("comments.cancel")}
+                  <XIcon size={16} className="mr-1" /> {t("cancel")}
                 </Button>
                 <Button
                   size="sm"
@@ -275,7 +266,7 @@ const CommentItem = ({
                     editContent === comment.content || editContent === ""
                   }
                 >
-                  <CheckIcon size={16} className="mr-1" /> {t("comments.save")}
+                  <CheckIcon size={16} className="mr-1" /> {t("save")}
                 </Button>
               </div>
             </div>
@@ -333,8 +324,9 @@ const CommentItem = ({
                   onClick={toggleSubComments}
                   className="text-xs ml-auto"
                 >
-                  {showSubComments ? "Hide" : "Show"} replies (
-                  {allSubComments.length})
+                  {!showSubComments
+                    ? t("showReplies", { count: allSubComments.length })
+                    : t("hideReplies")}
                 </Button>
               )}
             </div>
@@ -343,21 +335,21 @@ const CommentItem = ({
           {isReplying && (
             <div className="mt-4 pl-4 border-l-2 border-gray-200">
               <Textarea
-                placeholder="Write a reply..."
+                placeholder={t("writeReply")}
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 className="min-h-20 mb-2"
               />
               <div className="flex justify-end gap-2">
                 <Button variant="outline" size="sm" onClick={handleCancelReply}>
-                  <XIcon size={16} className="mr-1" /> {t("comments.cancel")}
+                  <XIcon size={16} className="mr-1" /> {t("cancel")}
                 </Button>
                 <Button
                   size="sm"
                   onClick={handleSubmitReply}
                   disabled={replyContent === ""}
                 >
-                  <ReplyIcon size={16} className="mr-1" /> {t("comments.reply")}
+                  <ReplyIcon size={16} className="mr-1" /> {t("reply")}
                 </Button>
               </div>
             </div>
@@ -387,22 +379,20 @@ const CommentItem = ({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              {t("comments.deleteDialog.title")}
-            </AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t("comments.deleteDialog.description")}
+              {t("deleteDialog.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleCloseDeleteDialog}>
-              {t("comments.cancel")}
+              {t("cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
               className="bg-red-600 hover:bg-red-700"
             >
-              {t("comments.delete")}
+              {t("delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, ShieldAlert } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,29 +18,40 @@ import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleM
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
+  const t = useTranslations("dashboard.models");
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
         <Button variant="outline" size="icon" asChild>
           <Link href={`/dashboard/${userId}/models`}>
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back</span>
+            <span className="sr-only">
+              {t("back", { defaultValue: "Back" })}
+            </span>
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold">Page Not Found</h1>
+        <h1 className="text-2xl font-bold">
+          {t("notFound.title", { defaultValue: "Page Not Found" })}
+        </h1>
       </div>
 
       <Alert variant="destructive" className="bg-destructive/10">
         <ShieldAlert className="h-5 w-5" />
-        <AlertTitle className="mb-2">Invalid Tab</AlertTitle>
+        <AlertTitle className="mb-2">
+          {t("notFound.invalidTab", { defaultValue: "Invalid Tab" })}
+        </AlertTitle>
         <AlertDescription>
-          The requested tab does not exist. Please select a valid tab or return
-          to your models.
+          {t("notFound.description", {
+            defaultValue:
+              "The requested tab does not exist. Please select a valid tab or return to your models.",
+          })}
         </AlertDescription>
         <div className="mt-4">
           <Button asChild>
             <Link href={`/dashboard/${userId}/models`}>
-              Return to My Models
+              {t("notFound.returnButton", {
+                defaultValue: "Return to My Models",
+              })}
             </Link>
           </Button>
         </div>
@@ -53,12 +65,12 @@ const ModelDetailPage = ({
 }: {
   params: { userId: string; modelName: string };
 }) => {
+  const t = useTranslations("dashboard.models");
   const router = useRouter();
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
 
   const validTabs = ["scripts", "versions", "schedule"];
-  // Changed this line to require a tab parameter that is valid
   const isValidTab = tabParam && validTabs.includes(tabParam);
   const tabName = isValidTab ? tabParam : "scripts";
 
@@ -124,23 +136,33 @@ const ModelDetailPage = ({
           <Button variant="outline" size="icon" asChild>
             <Link href={`/dashboard/${userId}/models`}>
               <ArrowLeft className="h-4 w-4" />
-              <span className="sr-only">Back</span>
+              <span className="sr-only">
+                {t("accessDenied.back", { defaultValue: "Back" })}
+              </span>
             </Link>
           </Button>
-          <h1 className="text-2xl font-bold">Model Access</h1>
+          <h1 className="text-2xl font-bold">
+            {t("accessDenied.title", { defaultValue: "Model Access" })}
+          </h1>
         </div>
 
         <Alert variant="destructive" className="bg-destructive/10">
           <ShieldAlert className="h-5 w-5" />
-          <AlertTitle className="mb-2">Access Denied</AlertTitle>
+          <AlertTitle className="mb-2">
+            {t("accessDenied.alertTitle", { defaultValue: "Access Denied" })}
+          </AlertTitle>
           <AlertDescription>
-            You don't have permission to view this model. Please contact the
-            model owner if you believe this is an error.
+            {t("accessDenied.description", {
+              defaultValue:
+                "You don't have permission to view this model. Please contact the model owner if you believe this is an error.",
+            })}
           </AlertDescription>
           <div className="mt-4">
             <Button asChild>
               <Link href={`/dashboard/${userId}/models`}>
-                Return to My Models
+                {t("accessDenied.returnButton", {
+                  defaultValue: "Return to My Models",
+                })}
               </Link>
             </Button>
           </div>
@@ -157,14 +179,20 @@ const ModelDetailPage = ({
           <Button variant="outline" size="icon" asChild>
             <Link href={`/dashboard/${userId}/models`}>
               <ArrowLeft className="h-4 w-4" />
-              <span className="sr-only">Back</span>
+              <span className="sr-only">
+                {t("back", { defaultValue: "Back" })}
+              </span>
             </Link>
           </Button>
-          <h1 className="text-2xl font-bold">Loading...</h1>
+          <h1 className="text-2xl font-bold">
+            {t("loading", { defaultValue: "Loading..." })}
+          </h1>
         </div>
         <div className="flex items-center justify-center p-12">
           <p className="text-sm text-muted-foreground">
-            Checking access permissions...
+            {t("checkingAccess", {
+              defaultValue: "Checking access permissions...",
+            })}
           </p>
         </div>
       </div>
@@ -178,7 +206,9 @@ const ModelDetailPage = ({
         <Button variant="outline" size="icon" asChild>
           <Link href={`/dashboard/${userId}/models`}>
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back</span>
+            <span className="sr-only">
+              {t("back", { defaultValue: "Back" })}
+            </span>
           </Link>
         </Button>
         <h1 className="text-2xl font-bold">{modelInfo?.alt_name}</h1>
@@ -187,16 +217,24 @@ const ModelDetailPage = ({
         <div className="lg:col-span-2">
           <Tabs value={tabName} onValueChange={handleTabChange}>
             <TabsList>
-              <TabsTrigger value="scripts">Scripts</TabsTrigger>
-              <TabsTrigger value="versions">Versions</TabsTrigger>
-              <TabsTrigger value="schedule">Schedule</TabsTrigger>
+              <TabsTrigger value="scripts">
+                {t("tabs.scripts", { defaultValue: "Scripts" })}
+              </TabsTrigger>
+              <TabsTrigger value="versions">
+                {t("tabs.versions", { defaultValue: "Versions" })}
+              </TabsTrigger>
+              <TabsTrigger value="schedule">
+                {t("tabs.schedule", { defaultValue: "Schedule" })}
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="versions" className="border-none p-0 pt-4">
               {modelInfo ? (
                 <ModelVersionTab model={modelInfo} />
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  Loading model details...
+                  {t("loadingDetails", {
+                    defaultValue: "Loading model details...",
+                  })}
                 </p>
               )}
             </TabsContent>
@@ -205,7 +243,9 @@ const ModelDetailPage = ({
                 <ScriptModelTab model={modelInfo} />
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  Loading model details...
+                  {t("loadingDetails", {
+                    defaultValue: "Loading model details...",
+                  })}
                 </p>
               )}
             </TabsContent>
@@ -214,7 +254,9 @@ const ModelDetailPage = ({
                 <ScheduleModelTab model={modelInfo} />
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  Loading model details...
+                  {t("loadingDetails", {
+                    defaultValue: "Loading model details...",
+                  })}
                 </p>
               )}
             </TabsContent>

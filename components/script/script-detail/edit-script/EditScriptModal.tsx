@@ -70,7 +70,7 @@ const SearchResults = ({
   sharedUserIds: string[];
   handleCloseResults: () => void;
 }) => {
-  const t = useTranslations("dashboard.scripts.detail");
+  const t = useTranslations("dashboard.scripts.scriptModal");
 
   return searchResults.length > 0 ? (
     <Card className="w-full max-h-64 overflow-y-auto relative mt-2">
@@ -136,7 +136,7 @@ const SearchResults = ({
           </Button>
         </div>
         <div className="flex items-center justify-center py-4">
-          <p className="text-sm text-muted-foreground">{t("noUsersFound")}</p>
+          <p className="text-sm text-muted-foreground">{t("noUserFound")}</p>
         </div>
       </CardContent>
     </Card>
@@ -150,7 +150,7 @@ const EditScriptModal = ({
   script,
   title = "Edit Script",
 }: EditScriptModalProps) => {
-  const t = useTranslations("dashboard.scripts.detail");
+  const t = useTranslations("dashboard.scripts.scriptModal");
   // Form Data
   const [formData, setFormData] = useState({
     _id: "",
@@ -400,13 +400,13 @@ const EditScriptModal = ({
           <div className="space-y-4">
             <div className="grid gap-2">
               <Label htmlFor="name" className="font-medium">
-                {t("scriptName")}
+                {t("nameLabel")}
               </Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => handleChange("name", e.target.value)}
-                placeholder={t("enterScriptName")}
+                placeholder={t("namePlaceholder")}
               />
             </div>
 
@@ -439,20 +439,20 @@ const EditScriptModal = ({
 
             <div className="grid gap-2">
               <Label htmlFor="description" className="font-medium">
-                {t("description")}
+                {t("descriptionLabel")}
               </Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => handleChange("description", e.target.value)}
-                placeholder={t("enterDescription")}
+                placeholder={t("descriptionPlaceholder")}
                 rows={4}
               />
             </div>
 
             {/* Location selection */}
             <div className="grid gap-2">
-              <Label>{t("location")}</Label>
+              <Label>{t("locationLabel")}</Label>
               <div className="flex flex-col space-y-2">
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.location?.map((location) => (
@@ -531,7 +531,7 @@ const EditScriptModal = ({
 
             {/* Plant Type selection */}
             <div className="grid gap-2">
-              <Label>{t("plantType")}</Label>
+              <Label>{t("plantTypeLabel")}</Label>
               <div className="flex flex-col space-y-2">
                 <div className="flex flex-wrap gap-2 mb-2">
                   {formData.plant_type?.map((plantType) => (
@@ -610,7 +610,7 @@ const EditScriptModal = ({
 
             {/* Privacy section */}
             <div className="space-y-4">
-              <Label>{t("privacy")}</Label>
+              <Label>{t("privacyLabel")}</Label>
               <RadioGroup
                 value={formData.privacy}
                 onValueChange={(value) => handleChange("privacy", value)}
@@ -622,7 +622,7 @@ const EditScriptModal = ({
                     <div className="flex items-center">
                       <Globe className="mr-2 h-4 w-4 text-blue-500" />
                       <Label htmlFor="public" className="font-medium">
-                        {t("public")}
+                        {t("publicLabel")}
                       </Label>
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">
@@ -640,7 +640,7 @@ const EditScriptModal = ({
                     <div className="flex items-center">
                       <Lock className="mr-2 h-4 w-4 text-amber-500" />
                       <Label htmlFor="private" className="font-medium">
-                        {t("private")}
+                        {t("privateLabel")}
                       </Label>
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">
@@ -654,12 +654,12 @@ const EditScriptModal = ({
             {/* Shared users section - ONLY appears when privacy is set to private */}
             {formData.privacy === "private" && (
               <div className="space-y-4">
-                <Label>{t("sharedUsers")}</Label>
+                <Label>{t("sharedUsersLabel")}</Label>
                 <div className="flex gap-2">
                   <Input
                     value={searchTerm}
                     onChange={handleSearchTermChange}
-                    placeholder={t("searchUsers")}
+                    placeholder={t("searchUsersPlaceholder")}
                     className="flex-1"
                   />
                   <Button
@@ -669,7 +669,7 @@ const EditScriptModal = ({
                     variant="secondary"
                   >
                     <Search className="h-4 w-4 mr-2" />
-                    {t("search")}
+                    {t("searchButton")}
                   </Button>
                 </div>
 
@@ -686,7 +686,7 @@ const EditScriptModal = ({
                 {/* Shared users list */}
                 {sharedUsers.length > 0 && (
                   <div className="space-y-2">
-                    <Label className="text-sm">{t("sharedWith")}</Label>
+                    <Label className="text-sm">{t("sharedWithLabel")}</Label>
                     <div className="space-y-2">
                       {sharedUsers.map((user, index) => (
                         <div

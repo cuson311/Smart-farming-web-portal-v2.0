@@ -23,15 +23,15 @@ const DeleteScriptModal = ({
   onConfirm,
   scriptName = "this script",
 }: DeleteScriptModalProps) => {
-  const t = useTranslations("dashboard.scripts.detail");
+  const t = useTranslations("dashboard.scripts.deleteScript");
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{t("deleteDialog.title")}</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            {t("deleteDialog.description", { name: scriptName })}
+            {t("description", { name: scriptName })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex gap-2 pt-4">

@@ -406,12 +406,7 @@ const ScriptDetailsCard = ({
               </div>
               <span className="text-sm text-muted-foreground">
                 {script?.rating.avg ? script.rating.avg.toFixed(1) : "0"} (
-                {script?.rating.count || 0}{" "}
-                {t("scriptDetails.rating", {
-                  value: script?.rating.avg || 0,
-                  count: script?.rating.count || 0,
-                })}
-                )
+                {script?.rating.count || 0} {t("scriptDetails.rating")})
               </span>
             </div>
           </div>

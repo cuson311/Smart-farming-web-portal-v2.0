@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -98,7 +98,9 @@ const EditModelModal = ({
     setIsEditingTag(false);
     setEditingTagIndex(null);
   };
-
+  const handleTagKeyChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTagKey(e.target.value);
+  };
   const handleTagValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTagValue(e.target.value);
   };
@@ -295,7 +297,8 @@ const EditModelModal = ({
     };
     onConfirm(modelUpdateData);
   };
-
+  console.log("isTagProcessing", isTagProcessing);
+  console.log("isEditingTag", isEditingTag);
   return (
     <>
       <Dialog open={open} onOpenChange={onClose}>
@@ -348,7 +351,8 @@ const EditModelModal = ({
                       id="tagKey"
                       value={tagKey}
                       placeholder={t("editModel.tagKeyPlaceholder")}
-                      disabled={isTagProcessing || isEditingTag}
+                      onChange={handleTagKeyChange}
+                      disabled={isEditingTag}
                     />
                   </div>
                   <div className="flex items-center gap-2 flex-1">
