@@ -456,14 +456,16 @@
         },
         "models": {
             "title": "Models",
+            "back": "Back",
             "searchPlaceholder": "Search models...",
             "favoriteUpdated": "Favorite updated",
             "favoriteUpdatedDescription": "Model favorite status has been updated.",
             "error": "Error",
             "favoriteUpdateFailed": "Failed to update favorite status.",
             "tabs": {
-                "all": "All Models",
-                "favorites": "Favorites"
+                "scripts": "Scripts",
+                "versions": "Versions",
+                "schedule": "Schedule"
             },
             "newModel": {
                 "createButton": "Create Model",
@@ -542,7 +544,7 @@
             },
             "deleteModel": {
                 "title": "Delete Model",
-                "description": "Are you sure you want to delete {modelName}? This action cannot be undone.",
+                "description": "Are you sure you want to delete model {modelName}? This action cannot be undone.",
                 "cancel": "Cancel",
                 "confirm": "Delete",
                 "success": "Model deleted successfully",

@@ -455,14 +455,16 @@
     },
     "models": {
       "title": "Mô hình",
+      "back": "Quay lại",
       "searchPlaceholder": "Tìm kiếm mô hình...",
       "favoriteUpdated": "Đã cập nhật yêu thích",
       "favoriteUpdatedDescription": "Trạng thái yêu thích của mô hình đã được cập nhật.",
       "error": "Lỗi",
       "favoriteUpdateFailed": "Không thể cập nhật trạng thái yêu thích.",
       "tabs": {
-        "all": "Tất cả mô hình",
-        "favorites": "Yêu thích"
+        "scripts": "Kịch bản",
+        "versions": "Phiên bản",
+        "schedule": "Lịch trình"
       },
       "newModel": {
         "createButton": "Tạo mô hình",
@@ -471,27 +473,27 @@
         "nameLabel": "Tên",
         "namePlaceholder": "Nhập tên mô hình",
         "descriptionLabel": "Mô tả",
-        "descriptionPlaceholder": "Nhập mô tả mô hình (tùy chọn)",
+        "descriptionPlaceholder": "Nhập mô tả mô hình (không bắt buộc)",
         "tagsLabel": "Thẻ",
         "tagKeyLabel": "Khóa",
         "tagValueLabel": "Giá trị",
         "tagKeyPlaceholder": "Nhập khóa thẻ",
         "tagValuePlaceholder": "Nhập giá trị thẻ",
         "missingInfo": "Thiếu thông tin",
-        "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
-        "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+        "provideName": "Vui lòng nhập tên cho mô hình.",
+        "tagMissingInfo": "Vui lòng nhập cả khóa và giá trị cho thẻ.",
         "duplicateTag": "Thẻ trùng lặp",
-        "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+        "duplicateTagDesc": "Thẻ với khóa này đã tồn tại.",
         "cancelButton": "Hủy",
         "submitButton": "Tạo",
         "toast": {
           "missingInfo": "Thiếu thông tin",
-          "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
-          "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+          "provideName": "Vui lòng nhập tên cho mô hình.",
+          "tagMissingInfo": "Vui lòng nhập cả khóa và giá trị cho thẻ.",
           "duplicateTag": "Thẻ trùng lặp",
-          "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+          "duplicateTagDesc": "Thẻ với khóa này đã tồn tại.",
           "authError": "Lỗi xác thực",
-          "loginRequired": "Bạn phải đăng nhập để tạo mô hình.",
+          "loginRequired": "Bạn cần đăng nhập để tạo mô hình.",
           "createSuccess": "Đã tạo mô hình",
           "createSuccessDesc": "Mô hình \"{name}\" đã được tạo thành công.",
           "createError": "Tạo thất bại",
@@ -503,11 +505,11 @@
         "name": "Tên",
         "description": "Mô tả",
         "created": "Ngày tạo",
-        "lastUpdated": "Cập nhật lúc",
+        "lastUpdated": "Cập nhật lần cuối",
         "tags": "Thẻ",
         "noDescription": "Không có mô tả.",
-        "noTags": "Không có thẻ nào.",
-        "actions": "Thao tác",
+        "noTags": "Không tìm thấy thẻ nào.",
+        "actions": "Hành động",
         "editModel": "Chỉnh sửa mô hình",
         "deleteModel": "Xóa"
       },
@@ -515,7 +517,7 @@
         "title": "Chỉnh sửa mô hình",
         "modelName": "Tên mô hình",
         "description": "Mô tả",
-        "descriptionPlaceholder": "Nhập mô tả mô hình (tùy chọn)",
+        "descriptionPlaceholder": "Nhập mô tả mô hình (không bắt buộc)",
         "tags": "Thẻ",
         "tagKey": "Khóa",
         "tagValue": "Giá trị",
@@ -524,47 +526,47 @@
         "cancel": "Hủy",
         "confirm": "Xác nhận",
         "missingInfo": "Thiếu thông tin",
-        "provideName": "Vui lòng cung cấp tên cho mô hình của bạn.",
-        "tagMissingInfo": "Vui lòng cung cấp cả khóa và giá trị cho thẻ.",
+        "provideName": "Vui lòng nhập tên cho mô hình.",
+        "tagMissingInfo": "Vui lòng nhập cả khóa và giá trị cho thẻ.",
         "duplicateTag": "Thẻ trùng lặp",
-        "duplicateTagDesc": "Đã tồn tại thẻ với khóa này.",
+        "duplicateTagDesc": "Thẻ với khóa này đã tồn tại.",
         "tagUpdated": "Đã cập nhật thẻ",
         "tagAdded": "Đã thêm thẻ",
-        "tagUpdateSuccess": "Thẻ {key} đã được cập nhật thành công.",
-        "tagAddSuccess": "Thẻ {key} đã được thêm thành công.",
+        "tagUpdateSuccess": "Đã cập nhật thẻ {key} thành công.",
+        "tagAddSuccess": "Đã thêm thẻ {key} thành công.",
         "tagOperationFailed": "Thao tác thẻ thất bại",
         "tagUpdateFailed": "Không thể cập nhật thẻ. Vui lòng thử lại.",
         "tagAddFailed": "Không thể thêm thẻ. Vui lòng thử lại.",
         "tagRemoved": "Đã xóa thẻ",
-        "tagRemoveSuccess": "Thẻ {key} đã được xóa thành công.",
+        "tagRemoveSuccess": "Đã xóa thẻ {key} thành công.",
         "tagRemoveFailed": "Không thể xóa thẻ. Vui lòng thử lại."
       },
       "deleteModel": {
         "title": "Xóa mô hình",
-        "description": "Bạn có chắc chắn muốn xóa {modelName}? Hành động này không thể hoàn tác.",
+        "description": "Bạn có chắc muốn xóa mô hình {modelName}? Hành động này không thể hoàn tác.",
         "cancel": "Hủy",
         "confirm": "Xóa",
         "success": "Đã xóa mô hình thành công",
-        "error": "Không thể xóa mô hình"
+        "error": "Xóa mô hình thất bại"
       },
       "toast": {
-        "updateSuccess": "Cập nhật thông tin mô hình thành công",
-        "updateError": "Không thể cập nhật mô hình",
-        "deleteSuccess": "Đã xóa mô hình thành công",
-        "deleteError": "Không thể xóa mô hình"
+        "updateSuccess": "Cập nhật mô hình thành công",
+        "updateError": "Cập nhật mô hình thất bại",
+        "deleteSuccess": "Xóa mô hình thành công",
+        "deleteError": "Xóa mô hình thất bại"
       },
       "emptyState": {
         "title": "Không tìm thấy mô hình",
-        "description": "Tạo mô hình mới hoặc thử tìm kiếm khác."
+        "description": "Tạo một mô hình mới hoặc thử từ khóa tìm kiếm khác."
       },
       "sortBy": "Sắp xếp theo",
       "selectField": "Chọn trường",
       "selectOrder": "Chọn thứ tự",
       "creationDate": "Ngày tạo",
-      "lastUpdate": "Cập nhật lúc",
+      "lastUpdate": "Cập nhật lần cuối",
       "latestFirst": "Mới nhất trước",
       "oldestFirst": "Cũ nhất trước",
-      "cloneModel": "Sao chép",
+      "cloneModel": "Nhân bản",
       "version": "Phiên bản",
       "scheduled": "Đã lên lịch",
       "notScheduled": "Chưa lên lịch",
@@ -572,23 +574,23 @@
       "view": "Xem",
       "schedule": {
         "title": "Lịch trình mô hình",
-        "description": "Cấu hình thời gian cập nhật tự động cho mô hình này",
+        "description": "Cấu hình thời gian mô hình này sẽ được cập nhật tự động",
         "enableSchedule": "Bật lịch trình",
         "scheduleType": "Loại lịch trình",
         "customCron": {
           "label": "Biểu thức Cron tùy chỉnh",
           "placeholder": "0 0 * * *",
-          "description": "Sử dụng định dạng biểu thức cron (ví dụ: \"0 0 * * *\" cho hàng ngày lúc nửa đêm)"
+          "description": "Dùng định dạng biểu thức cron (ví dụ: \"0 0 * * *\" để chạy hàng ngày lúc nửa đêm)"
         },
-        "setSchedule": "Đặt lịch trình",
+        "setSchedule": "Thiết lập lịch trình",
         "scheduleOptions": {
           "daily": {
             "label": "Hàng ngày",
-            "description": "Chạy một lần mỗi ngày vào lúc nửa đêm"
+            "description": "Chạy một lần mỗi ngày lúc nửa đêm"
           },
           "weekly": {
             "label": "Hàng tuần",
-            "description": "Chạy một lần mỗi tuần vào Chủ nhật"
+            "description": "Chạy một lần mỗi tuần vào Chủ Nhật"
           },
           "monthly": {
             "label": "Hàng tháng",
@@ -600,55 +602,67 @@
           },
           "custom": {
             "label": "Tùy chỉnh",
-            "description": "Đặt lịch trình tùy chỉnh"
+            "description": "Thiết lập lịch trình tùy chỉnh"
           }
         },
         "plan": {
           "title": "Kế hoạch lịch trình",
-          "descriptionSection": "Xem các lần chạy sắp tới cho mô hình này",
+          "descriptionSection": "Xem các lần chạy đã được lên lịch cho mô hình này",
           "sortBy": "Sắp xếp theo:",
           "oldestFirst": "Cũ nhất trước",
           "latestFirst": "Mới nhất trước",
           "name": "Tên:",
           "description": "Mô tả:",
-          "noRuns": "Không tìm thấy lịch trình trong khoảng thời gian đã chọn"
+          "noRuns": "Không tìm thấy lần chạy nào trong khoảng thời gian đã chọn"
         },
         "toast": {
           "enterCron": "Vui lòng nhập biểu thức cron",
-          "setSuccess": "Đặt lịch trình thành công",
-          "setError": "Không thể đặt lịch trình",
-          "enableSuccess": "Bật lịch trình thành công",
-          "enableError": "Không thể bật lịch trình",
-          "fetchError": "Không thể tải lịch trình",
-          "planFetchError": "Không thể tải kế hoạch lịch trình"
+          "setSuccess": "Đã thiết lập lịch trình thành công",
+          "setError": "Thiết lập lịch trình thất bại",
+          "setErrorDesc": "Không thể thiết lập lịch trình. Vui lòng thử lại.",
+          "enableSuccess": "Đã cập nhật trạng thái lịch trình thành công",
+          "enableError": "Cập nhật trạng thái lịch trình thất bại",
+          "enableErrorDesc": "Không thể cập nhật trạng thái lịch trình. Vui lòng thử lại.",
+          "fetchError": "Lỗi tải lịch trình",
+          "fetchErrorDesc": "Không thể tải lịch trình. Vui lòng thử lại.",
+          "planFetchError": "Lỗi tải kế hoạch lịch trình",
+          "planFetchErrorDesc": "Không thể tải kế hoạch lịch trình. Vui lòng thử lại."
         }
       },
       "scripts": {
-        "title": "Kịch bản liên quan",
-        "description": "Các kịch bản thuộc về mô hình này",
+        "title": "Kịch bản liên kết",
+        "description": "Kịch bản thuộc về mô hình này",
         "sortBy": "Sắp xếp theo:",
         "sortFields": {
           "creationDate": "Ngày tạo",
-          "lastUpdate": "Cập nhật lúc",
+          "lastUpdate": "Cập nhật lần cuối",
           "latestFirst": "Mới nhất trước",
           "oldestFirst": "Cũ nhất trước"
         },
         "version": "Phiên bản",
         "modelVersion": "Phiên bản mô hình",
-        "createdAt": "Ngày tạo",
-        "lastUpdate": "Cập nhật lúc",
-        "noScripts": "Không tìm thấy kịch bản trong khoảng thời gian đã chọn"
+        "createdAt": "Tạo lúc",
+        "lastUpdate": "Cập nhật lần cuối",
+        "noScripts": "Không tìm thấy kịch bản nào trong khoảng thời gian đã chọn",
+        "toast": {
+          "fetchError": "Lỗi tải kịch bản mô hình",
+          "fetchErrorDesc": "Không thể tải kịch bản mô hình. Vui lòng thử lại."
+        }
       },
       "versions": {
         "title": "Lịch sử phiên bản",
-        "descriptionSection": "Theo dõi các thay đổi và cập nhật cho mô hình tưới này",
+        "descriptionSection": "Theo dõi thay đổi và cập nhật của mô hình tưới tiêu này",
         "version": "Phiên bản",
-        "lastUpdated": "Cập nhật lúc",
+        "lastUpdated": "Cập nhật lần cuối",
         "name": "Tên:",
         "description": "Mô tả:",
         "noDescription": "Không có mô tả",
         "tags": "Thẻ:",
-        "noVersions": "Không tìm thấy phiên bản trong khoảng thời gian đã chọn"
+        "noVersions": "Không tìm thấy phiên bản nào trong khoảng thời gian đã chọn",
+        "toast": {
+          "fetchError": "Lỗi tải phiên bản mô hình",
+          "fetchErrorDesc": "Không thể tải phiên bản mô hình. Vui lòng thử lại."
+        }
       }
     }
   },
