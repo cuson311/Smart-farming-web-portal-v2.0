@@ -177,7 +177,13 @@
         "description": "Bắt đầu bằng cách tạo kịch bản tưới đầu tiên của bạn.",
         "createButton": "Tạo kịch bản mới"
       },
-      "newScript": {
+      "deleteScript": {
+        "title": "Xóa kịch bản",
+        "description": "Bạn có chắc chắn muốn xóa kịch bản {name} không? Không thể hoàn tác hành động này.",
+        "cancel": "Hủy",
+        "delete": "Xóa"
+      },
+      "scriptModal": {
         "newScriptButton": "Kịch bản mới",
         "dialogTitle": "Tạo kịch bản mới",
         "dialogDescription": "Thêm một kịch bản tưới tiêu mới vào bộ sưu tập của bạn.",
@@ -204,14 +210,19 @@
         "scriptJsonLabel": "File JSON kịch bản",
         "uploadJsonButton": "Tải file JSON",
         "templateButton": "Mẫu JSON",
+        "defaultTemplate": "Mẫu mặc định",
         "cancelButton": "Hủy",
         "createButton": "Tạo kịch bản",
         "noPlantTypeFound": "Không tìm thấy loại cây nào",
         "noProvinceFound": "Không tìm thấy tỉnh nào",
         "noUserFound": "Không tìm thấy người dùng nào",
-        "searchResults": "Kết quả tìm kiếm"
+        "searchResults": "Kết quả tìm kiếm",
+        "confirm": "Xác nhận",
+        "cancel": "Huỷ",
+        "scriptUrl": "Liên kết kịch bản"
       },
       "detail": {
+        "cancel": "Hủy",
         "delete": "Xóa",
         "back": "Quay lại",
         "loading": "Đang tải...",
@@ -655,6 +666,13 @@
     "backToHome": "Trở về nhà"
   },
   "profile": {
+    "Common": {
+      "loading": "Đang tải...",
+      "error": "Một lỗi đã xảy ra",
+      "success": "Hoạt động thành công",
+      "pageNotFound": "Không tìm thấy trang",
+      "backToHome": "Trở về nhà"
+    },
     "title": "Hồ sơ",
     "tabs": {
       "profile": "Hồ sơ",
@@ -664,7 +682,7 @@
     },
     "notFound": {
       "title": "Không tìm thấy trang",
-      "back": "Mặt sau",
+      "back": "Trở lại",
       "invalidTab": "Tab không hợp lệ",
       "description": "Tab được yêu cầu không tồn tại. Vui lòng chọn một tab hợp lệ hoặc quay lại bảng điều khiển.",
       "returnToDashboard": "Quay trở lại bảng điều khiển"
@@ -678,7 +696,7 @@
       "scripts": "Kịch bản",
       "models": "Mô hình",
       "comments": "Bình luận",
-      "showMore": "thêm",
+      "showMore": "Xem thêm",
       "showLess": "Ẩn bớt"
     },
     "edit": {

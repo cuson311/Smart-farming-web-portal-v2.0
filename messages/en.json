@@ -177,7 +177,13 @@
                 "description": "Get started by creating your first irrigation script.",
                 "createButton": "Create New Script"
             },
-            "newScript": {
+            "deleteScript": {
+                "title": "Delete Script",
+                "description": "Are you sure you want to delete script {name}? This action cannot be undone.",
+                "cancel": "Cancel",
+                "delete": "Delete"
+            },
+            "scriptModal": {
                 "newScriptButton": "New Script",
                 "dialogTitle": "Create New Script",
                 "dialogDescription": "Add a new irrigation script to your collection.",
@@ -205,14 +211,19 @@
                 "scriptJsonLabel": "Script JSON",
                 "uploadJsonButton":"Upload JSON",
                 "templateButton": "Template",
+                "defaultTemplate": "Default template",
                 "cancelButton": "Cancel",
                 "createButton": "Create Script",
                 "noPlantTypeFound": "No plant types found",
                 "noProvinceFound": "No provinces found",
                 "noUserFound": "No users found",
-                "searchResults": "Search Results"
+                "searchResults": "Search Results",
+                "confirm": "Confirm",
+                "cancel": "Cancel",
+                "scriptUrl": "Script URL"
             },
             "detail": {
+                "cancel": "Cancel",
                 "delete": "Delete",
                 "back": "Back",
                 "loading": "Loading...",
@@ -669,7 +680,14 @@
     },
     "profile": {
         "title": "Profile",
-        "tabs": {
+        "Common": {
+            "loading": "Loading...",
+            "error": "An error occurred",
+            "success": "Operation successful",
+            "pageNotFound": "Page not found",
+            "backToHome": "Back to Home"
+        },
+        "tabs": { 
             "profile": "Profile",
             "activity": "Activity",
             "notifications": "Notifications",
@@ -691,7 +709,7 @@
             "scripts": "Scripts",
             "models": "Models",
             "comments": "Comments",
-            "showMore": "more",
+            "showMore": "More",
             "showLess": "Show less"
         },
         "edit": {

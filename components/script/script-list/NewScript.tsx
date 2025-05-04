@@ -80,7 +80,7 @@ const SearchResults = ({
   sharedUserIds: string[];
   handleCloseResults: () => void;
 }) => {
-  const t = useTranslations("dashboard.scripts.newScript");
+  const t = useTranslations("dashboard.scripts.scriptModal");
   return searchResults.length > 0 ? (
     <Card className="w-full max-h-64 overflow-y-auto relative mt-2">
       <CardContent className="p-4">
@@ -154,7 +154,7 @@ const SearchResults = ({
 
 const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
   const { theme } = useTheme();
-  const t = useTranslations("dashboard.scripts.newScript"); // Use translations for this component
+  const t = useTranslations("dashboard.scripts.scriptModal"); // Use translations for this component
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [newScript, setNewScript] = useState<NewScriptData>({
