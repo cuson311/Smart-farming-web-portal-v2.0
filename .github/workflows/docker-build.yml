@@ -26,8 +26,8 @@ jobs:
           push: true
           tags: cuson108/smart-farming-web-portal:latest
           build-args: |
-            NEXT_PUBLIC_API_ENDPOINT=http://10.1.8.52:3002
-            NEXT_PUBLIC_SOCKET_ENDPOINT=ws://10.1.8.52:3002
+            NEXT_PUBLIC_API_ENDPOINT=https://antamtuoi.hpcc.vn/api
+            NEXT_PUBLIC_SOCKET_ENDPOINT=wss://antamtuoi.hpcc.vn/api
 
       - name: 📥 Install OpenVPN and sshpass
         run: sudo apt-get update && sudo apt-get install -y openvpn sshpass
