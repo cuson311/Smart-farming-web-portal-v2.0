@@ -5,7 +5,7 @@ services:
     image: cuson108/smart-farming-web-portal:latest
     container_name: smart-farming-portal
     ports:
-      - "3001:3000"
+      - "3000:3000"
     restart: unless-stopped
     working_dir: /app
     environment:
