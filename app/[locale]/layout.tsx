@@ -14,7 +14,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Irrigation Management Portal",
   description: "Manage your irrigation scripts and models",
-  generator: "v0.dev",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default async function RootLayout({
