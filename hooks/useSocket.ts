@@ -10,6 +10,7 @@ interface NotificationQueryParams {
 }
 
 export const useSocket = () => {
+  // console.log("socket", process.env.NEXT_PUBLIC_SOCKET_ENDPOINT)
   const [notifications, setNotifications] = useState<UserNotify>({
     data: [],
     total: 0,
@@ -37,8 +38,9 @@ export const useSocket = () => {
       socket.disconnect();
     }
 
-      const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_ENDPOINT}`, {
+    const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_ENDPOINT}`, {
       transports: ["websocket"],
+      path: "/api/socket.io",
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 2000,
