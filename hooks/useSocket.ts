@@ -147,9 +147,9 @@ export const useSocket = () => {
         setRing(true);
 
         // If we got valid notification data
-        if (result && result.data && result.data.length > 0) {
+        if (result && result._id) {
           // Get the new notification (should be first item)
-          const newNotification = result.data[0];
+          const newNotification = result;
 
           // Update notifications state in a way that maintains the UserNotify interface
           setNotifications((prev) => {
