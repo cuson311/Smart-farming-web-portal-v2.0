@@ -667,7 +667,6 @@
     }
   },
   "footer": {
-    "brand": "Irrigation Portal",
     "description": "Quản lý tưới thông minh cho nông nghiệp hiện đại.",
     "product": {
       "title": "Sản phẩm",
@@ -717,7 +716,6 @@
     }
   },
   "header": {
-    "brand": "Cổng thông tin tưới tiêu",
     "mobileMenu": "Chuyển đổi menu điều hướng",
     "notifications": "Thông báo",
     "noNotifications": "Không có thông báo",

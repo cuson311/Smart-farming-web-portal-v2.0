@@ -668,7 +668,6 @@
         }
     },
     "footer": {
-        "brand": "Irrigation Portal",
         "description": "Smart irrigation management for modern agriculture.",
         "product": {
             "title": "Product",
@@ -718,7 +717,6 @@
         }
     },
     "header": {
-        "brand": "Irrigation Portal",
         "mobileMenu": "Toggle navigation menu",
         "notifications": "Notifications",
         "noNotifications": "No notifications",

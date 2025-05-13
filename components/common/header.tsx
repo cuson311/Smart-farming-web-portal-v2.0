@@ -130,7 +130,7 @@ const Header = () => {
           <Link href="/">
             <div className="flex items-center gap-2">
               <Droplets className="h-6 w-6 text-primary" />
-              <span>{t("brand")}</span>
+              <span>Antamtuoi</span>
             </div>
           </Link>
         </div>
@@ -157,7 +157,7 @@ const Header = () => {
                 <Link href="/">
                   <div className="flex items-center gap-2">
                     <Droplets className="h-6 w-6 text-primary" />
-                    <span className="font-semibold">{t("brand")}</span>
+                    <span className="font-semibold">Antamtuoi</span>
                   </div>
                 </Link>
               </div>
@@ -184,7 +184,7 @@ const Header = () => {
         )}
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <Droplets className="h-6 w-6 text-primary" />
-          <span>{t("brand")}</span>
+          <span>Antamtuoi</span>
         </Link>
       </div>
       {isLoggedIn ? (
