@@ -10,6 +10,7 @@ interface NotificationQueryParams {
 }
 
 export const useSocket = () => {
+  // console.log("socket", process.env.NEXT_PUBLIC_SOCKET_ENDPOINT)
   const [notifications, setNotifications] = useState<UserNotify>({
     data: [],
     total: 0,
@@ -37,8 +38,9 @@ export const useSocket = () => {
       socket.disconnect();
     }
 
-      const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_ENDPOINT}`, {
+    const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_ENDPOINT}`, {
       transports: ["websocket"],
+      path: "/api/socket.io",
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 2000,
@@ -145,9 +147,9 @@ export const useSocket = () => {
         setRing(true);
 
         // If we got valid notification data
-        if (result && result.data && result.data.length > 0) {
+        if (result && result._id) {
           // Get the new notification (should be first item)
-          const newNotification = result.data[0];
+          const newNotification = result;
 
           // Update notifications state in a way that maintains the UserNotify interface
           setNotifications((prev) => {
