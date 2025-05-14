@@ -13,7 +13,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 font-semibold">
               <Droplets className="h-6 w-6 text-primary" />
-              <span>{t("brand")}</span>
+              <span>An tâm tưới</span>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
               {t("description")}

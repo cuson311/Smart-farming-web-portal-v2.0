@@ -1,8 +1,6 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin({
-  basePath: '/portal',
-});
+const withNextIntl = createNextIntlPlugin();
 
 let userConfig = undefined
 try {

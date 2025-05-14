@@ -12,7 +12,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-
 import { Script } from "@/types/script";
 import commentApi from "@/api/commentAPI";
 import CommentItem from "./CommentItem";

@@ -45,7 +45,6 @@ const NewModelDialog = ({ onModelCreated }: NewModelDialogProps) => {
   const [isEditingTag, setIsEditingTag] = useState(false);
   const [editingTagIndex, setEditingTagIndex] = useState<number | null>(null);
 
-  console.log("newModel", newModel);
   const handleOpenChange = (open: boolean) => {
     if (open) {
       setOpen(true);

@@ -8,7 +8,6 @@ import { useTheme } from "next-themes";
 import { Book } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-
 // Shadcn UI Components
 import { Button } from "@/components/ui/button";
 import {

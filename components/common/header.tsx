@@ -6,7 +6,6 @@ import Link from "next/link";
 import {
   Bell,
   ChevronDown,
-  Droplets,
   LogOut,
   User,
   Settings,
@@ -32,7 +31,8 @@ import { NotiInfo } from "@/types/user";
 import { useSocket } from "@/hooks/useSocket";
 import { LanguageSwitcher } from "../language-switcher";
 import { useTranslations } from "next-intl";
-
+import Logo from "@/public/favicon.svg";
+import Image from "next/image";
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -129,8 +129,8 @@ const Header = () => {
         <div className="flex items-center gap-2 font-semibold">
           <Link href="/">
             <div className="flex items-center gap-2">
-              <Droplets className="h-6 w-6 text-primary" />
-              <span>{t("brand")}</span>
+              <Image src={Logo} alt="logo" width={32} height={32} />
+              <span className="text-xl font-semibold">An tâm tưới</span>
             </div>
           </Link>
         </div>
@@ -142,7 +142,7 @@ const Header = () => {
   }
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background opacity-[0.95] px-4 md:px-6">
       <div className="flex items-center">
         {isLoggedIn && (
           <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
@@ -156,8 +156,8 @@ const Header = () => {
               <div className="flex items-center gap-2 pb-4 pt-2">
                 <Link href="/">
                   <div className="flex items-center gap-2">
-                    <Droplets className="h-6 w-6 text-primary" />
-                    <span className="font-semibold">{t("brand")}</span>
+                    <Image src={Logo} alt="logo" width={32} height={32} />
+                    <span className="text-xl font-semibold">An tâm tưới</span>
                   </div>
                 </Link>
               </div>
@@ -183,8 +183,8 @@ const Header = () => {
           </Sheet>
         )}
         <Link href="/" className="flex items-center gap-2 font-semibold">
-          <Droplets className="h-6 w-6 text-primary" />
-          <span>{t("brand")}</span>
+          <Image src={Logo} alt="logo" width={32} height={32} />
+          <span className="text-xl font-semibold">An tâm tưới</span>
         </Link>
       </div>
       {isLoggedIn ? (
@@ -259,7 +259,7 @@ const Header = () => {
               <Button
                 variant="outline"
                 size="sm"
-                className="relative h-8 rounded-full"
+                className="relative h-8 p-0 rounded-full"
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage
@@ -321,12 +321,6 @@ const Header = () => {
               className="text-sm font-medium hover:text-primary transition-colors"
             >
               {t("testimonials")}
-            </Link>
-            <Link
-              href="#pricing"
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              {t("pricing")}
             </Link>
             <Link
               href="#contact"

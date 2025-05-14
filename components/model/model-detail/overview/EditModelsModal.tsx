@@ -297,8 +297,6 @@ const EditModelModal = ({
     };
     onConfirm(modelUpdateData);
   };
-  console.log("isTagProcessing", isTagProcessing);
-  console.log("isEditingTag", isEditingTag);
   return (
     <>
       <Dialog open={open} onOpenChange={onClose}>
@@ -342,9 +340,9 @@ const EditModelModal = ({
               {/* Tags Section */}
               <div className="grid gap-2">
                 <Label className="font-medium">{t("editModel.tags")}</Label>
-                <div className="flex gap-4">
+                <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
                   <div className="flex items-center gap-2 flex-1">
-                    <Label htmlFor="tagKey" className="text-s">
+                    <Label htmlFor="tagKey" className="text-s text-nowrap">
                       {t("editModel.tagKey")}
                     </Label>
                     <Input
@@ -356,7 +354,7 @@ const EditModelModal = ({
                     />
                   </div>
                   <div className="flex items-center gap-2 flex-1">
-                    <Label htmlFor="tagValue" className="text-s">
+                    <Label htmlFor="tagValue" className="text-s text-nowrap">
                       {t("editModel.tagValue")}
                     </Label>
                     <Input
@@ -366,34 +364,34 @@ const EditModelModal = ({
                       placeholder={t("editModel.tagValuePlaceholder")}
                       disabled={isTagProcessing}
                     />
-                  </div>
-                  <div className="flex items-end gap-2">
-                    {isEditingTag && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        className="mb-0.5"
-                        onClick={resetTagInputs}
-                        disabled={isTagProcessing}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                    <div>
-                      <Button
-                        type="button"
-                        onClick={handleAddTag}
-                        size="sm"
-                        className="mb-0.5"
-                        disabled={isTagProcessing}
-                      >
-                        {isEditingTag ? (
-                          <Check className="h-4 w-4" />
-                        ) : (
-                          <Plus className="h-4 w-4" />
-                        )}
-                      </Button>
+                    <div className="flex items-end gap-2 ms-2">
+                      {isEditingTag && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="mb-0.5"
+                          onClick={resetTagInputs}
+                          disabled={isTagProcessing}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                      <div>
+                        <Button
+                          type="button"
+                          onClick={handleAddTag}
+                          size="sm"
+                          className="mb-0.5"
+                          disabled={isTagProcessing}
+                        >
+                          {isEditingTag ? (
+                            <Check className="h-4 w-4" />
+                          ) : (
+                            <Plus className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>

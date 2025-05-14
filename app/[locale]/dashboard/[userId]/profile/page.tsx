@@ -74,7 +74,8 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
 
   // Handle tab change by updating query parameter
   const handleTabChange = (value: string) => {
-    const newUrl = `/dashboard/${params.userId}/profile?tab=${value}`;
+    const currentLocale = window.location.pathname.split("/")[1]; // Get current locale from URL
+    const newUrl = `/${currentLocale}/dashboard/${params.userId}/profile?tab=${value}`;
     router.replace(newUrl);
   };
 
