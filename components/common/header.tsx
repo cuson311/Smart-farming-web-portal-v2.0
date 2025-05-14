@@ -6,7 +6,6 @@ import Link from "next/link";
 import {
   Bell,
   ChevronDown,
-  Droplets,
   LogOut,
   User,
   Settings,
@@ -32,7 +31,8 @@ import { NotiInfo } from "@/types/user";
 import { useSocket } from "@/hooks/useSocket";
 import { LanguageSwitcher } from "../language-switcher";
 import { useTranslations } from "next-intl";
-
+import Logo from "@/public/favicon.svg";
+import Image from "next/image";
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -129,8 +129,8 @@ const Header = () => {
         <div className="flex items-center gap-2 font-semibold">
           <Link href="/">
             <div className="flex items-center gap-2">
-              <Droplets className="h-6 w-6 text-primary" />
-              <span>Antamtuoi</span>
+              <Image src={Logo} alt="logo" width={32} height={32} />
+              <span className="text-xl font-semibold">An tâm tưới</span>
             </div>
           </Link>
         </div>
@@ -156,8 +156,8 @@ const Header = () => {
               <div className="flex items-center gap-2 pb-4 pt-2">
                 <Link href="/">
                   <div className="flex items-center gap-2">
-                    <Droplets className="h-6 w-6 text-primary" />
-                    <span className="font-semibold">Antamtuoi</span>
+                    <Image src={Logo} alt="logo" width={32} height={32} />
+                    <span className="text-xl font-semibold">An tâm tưới</span>
                   </div>
                 </Link>
               </div>
@@ -183,8 +183,8 @@ const Header = () => {
           </Sheet>
         )}
         <Link href="/" className="flex items-center gap-2 font-semibold">
-          <Droplets className="h-6 w-6 text-primary" />
-          <span>Antamtuoi</span>
+          <Image src={Logo} alt="logo" width={32} height={32} />
+          <span className="text-xl font-semibold">An tâm tưới</span>
         </Link>
       </div>
       {isLoggedIn ? (
