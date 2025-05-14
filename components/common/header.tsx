@@ -142,7 +142,7 @@ const Header = () => {
   }
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background opacity-[0.95] px-4 md:px-6">
       <div className="flex items-center">
         {isLoggedIn && (
           <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
@@ -321,12 +321,6 @@ const Header = () => {
               className="text-sm font-medium hover:text-primary transition-colors"
             >
               {t("testimonials")}
-            </Link>
-            <Link
-              href="#pricing"
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              {t("pricing")}
             </Link>
             <Link
               href="#contact"

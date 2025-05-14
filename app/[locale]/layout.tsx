@@ -12,7 +12,7 @@ import { routing } from "@/i18n/routing";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Irrigation Management Portal",
+  title: "An tâm tưới",
   description: "Manage your irrigation scripts and models",
   icons: {
     icon: "/favicon.svg",

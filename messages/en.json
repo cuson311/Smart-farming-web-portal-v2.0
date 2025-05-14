@@ -10,99 +10,47 @@
         "features": {
             "title": "Features",
             "heading": "Everything You Need to Optimize Irrigation",
-            "description": "Our platform provides powerful tools to manage, monitor, and optimize your irrigation systems.",
+            "description": "Our platform provides powerful tools to manage and optimize your irrigation systems.",
             "smartScripts": {
-                "title": "Smart Scripts",
-                "description": "Create and manage intelligent irrigation scripts that adapt to changing conditions."
+              "title": "Smart Scripts",
+              "description": "Create and manage adaptive irrigation scenarios that respond to real-time changes in weather, soil moisture, and crop needs for maximum efficiency."
             },
             "advancedModels": {
-                "title": "Advanced Models",
-                "description": "Develop sophisticated irrigation models based on soil, weather, and crop data."
-            },
-            "dataAnalytics": {
-                "title": "Data Analytics",
-                "description": "Gain insights from comprehensive analytics and reporting on water usage and efficiency."
-            },
-            "teamCollaboration": {
-                "title": "Team Collaboration",
-                "description": "Work together with your team to manage and optimize irrigation systems."
+              "title": "Advanced Models",
+              "description": "Develop intelligent irrigation models based on real-world data such as soil composition, weather conditions, and crop types to make informed decisions."
             },
             "securePlatform": {
-                "title": "Secure Platform",
-                "description": "Your data is protected with enterprise-grade security and encryption."
+              "title": "Secure Platform",
+              "description": "All irrigation data is protected using enterprise-grade encryption and security protocols, ensuring privacy and safety for all users."
             },
             "waterConservation": {
-                "title": "Water Conservation",
-                "description": "Save water and reduce costs with intelligent irrigation management."
+              "title": "Water Conservation",
+              "description": "Reduce water waste and operational costs with intelligent scheduling and precise water delivery based on real-time data and optimized scripts."
             }
         },
         "testimonials": {
             "title": "Testimonials",
-            "heading": "Trusted by Professionals Worldwide",
+            "heading": "Trusted by Users Worldwide",
             "description": "See what our customers are saying about our irrigation management platform.",
             "testimonial1": {
-                "name": "John Doe",
+                "name": "Cu Hoang Nguyen S",
                 "role": "Farm Manager",
                 "quote": "This platform has revolutionized how we manage irrigation on our farm. We've reduced water usage by 30% while improving crop yields."
             },
             "testimonial2": {
-                "name": "Jane Smith",
+                "name": "Le Hoang Anh V",
                 "role": "Agricultural Engineer",
                 "quote": "The ability to create custom irrigation models and scripts has been a game-changer for our operations. Highly recommended!"
             },
             "testimonial3": {
-                "name": "Robert Johnson",
+                "name": "Vu Ngoc T",
                 "role": "Vineyard Owner",
                 "quote": "We've been using this platform for our vineyard irrigation for over a year now. The water savings and improved grape quality speak for themselves."
             }
         },
-        "pricing": {
-            "title": "Pricing",
-            "heading": "Simple, Transparent Pricing",
-            "description": "Choose the plan that's right for your irrigation management needs.",
-            "basic": {
-                "title": "Basic",
-                "subtitle": "For small farms and gardens",
-                "price": "$29",
-                "period": "/month",
-                "features": {
-                    "scripts": "Up to 5 irrigation scripts",
-                    "analytics": "Basic analytics",
-                    "support": "Email support"
-                },
-                "button": "Get Started"
-            },
-            "pro": {
-                "title": "Pro",
-                "subtitle": "For medium-sized farms",
-                "price": "$79",
-                "period": "/month",
-                "popular": "Popular",
-                "features": {
-                    "scripts": "Unlimited irrigation scripts",
-                    "analytics": "Advanced analytics",
-                    "models": "Custom models",
-                    "support": "Priority support"
-                },
-                "button": "Get Started"
-            },
-            "enterprise": {
-                "title": "Enterprise",
-                "subtitle": "For large agricultural operations",
-                "price": "$199",
-                "period": "/month",
-                "features": {
-                    "pro": "Everything in Pro",
-                    "manager": "Dedicated account manager",
-                    "integrations": "Custom integrations",
-                    "support": "24/7 phone support"
-                },
-                "button": "Contact Sales"
-            }
-        },
         "cta": {
             "heading": "Ready to Optimize Your Irrigation?",
-            "description": "Join thousands of professionals who are saving water and improving crop yields with our platform.",
+            "description": "Join with professionals who are saving water and improving crop yields with our platform.",
             "getStarted": "Get Started",
             "contactSales": "Contact Sales"
         }

@@ -2,107 +2,55 @@
   "home": {
     "hero": {
       "title": "Tưới tiêu thông minh",
-      "subtitle": "Quản lý thực hiện đơn giản",
+      "subtitle": "Quản lý tưới tiêu thực hiện đơn giản",
       "description": "Tối ưu hóa các hệ thống tưới của bạn với các kịch bản và mô hình thông minh. ",
       "getStarted": "Bắt đầu",
       "learnMore": "Tìm hiểu thêm"
     },
     "features": {
-      "title": "Đặc trưng",
-      "heading": "Mọi thứ bạn cần để tối ưu hóa tưới",
-      "description": "Nền tảng của chúng tôi cung cấp các công cụ mạnh mẽ để quản lý, giám sát và tối ưu hóa các hệ thống tưới của bạn.",
-      "smartScripts": {
-        "title": "Kịch bản thông minh",
-        "description": "Tạo và quản lý các kịch bản tưới thông minh thích ứng với các điều kiện thay đổi."
-      },
-      "advancedModels": {
-        "title": "Mô hình nâng cao",
-        "description": "Phát triển các mô hình thủy lợi tinh vi dựa trên đất, thời tiết và dữ liệu cây trồng."
-      },
-      "dataAnalytics": {
-        "title": "Phân tích dữ liệu",
-        "description": "Có được hiểu biết sâu sắc từ các phân tích toàn diện và báo cáo về việc sử dụng nước và hiệu quả."
-      },
-      "teamCollaboration": {
-        "title": "Hợp tác nhóm",
-        "description": "Làm việc cùng với nhóm của bạn để quản lý và tối ưu hóa các hệ thống tưới."
-      },
-      "securePlatform": {
-        "title": "Nền tảng an toàn",
-        "description": "Dữ liệu của bạn được bảo vệ với bảo mật và mã hóa cấp độ doanh nghiệp."
-      },
-      "waterConservation": {
-        "title": "Bảo tồn nước",
-        "description": "Tiết kiệm nước và giảm chi phí với quản lý tưới thông minh."
-      }
+    "title": "Đặc trưng",
+    "heading": "Những thứ bạn cần để tối ưu hóa tưới tiêu",
+    "description": "Nền tảng của chúng tôi cung cấp các công cụ mạnh mẽ để quản lý và tối ưu hóa các hệ thống tưới của bạn.",
+    "smartScripts": {
+      "title": "Kịch bản thông minh",
+      "description": "Tạo và quản lý các kịch bản tưới linh hoạt, thích ứng với điều kiện thời tiết, độ ẩm đất và nhu cầu cây trồng để đảm bảo hiệu quả tối ưu trong mỗi chu kỳ tưới."
     },
+    "advancedModels": {
+      "title": "Mô hình nâng cao",
+      "description": "Phát triển các mô hình thủy lợi thông minh dựa trên dữ liệu thực tế như đất, thời tiết và cây trồng, nhằm hỗ trợ ra quyết định chính xác trong vận hành hệ thống tưới."
+    },
+    "securePlatform": {
+      "title": "Nền tảng an toàn",
+      "description": "Thông tin và dữ liệu tưới tiêu được bảo mật với mã hóa cấp doanh nghiệp, đảm bảo quyền riêng tư và an toàn cho mọi người dùng trong hệ thống."
+    },
+    "waterConservation": {
+      "title": "Bảo tồn nước",
+      "description": "Giảm thiểu lãng phí và tiết kiệm chi phí thông qua các giải pháp tưới chính xác, phù hợp với nhu cầu thực tế của cây trồng và điều kiện môi trường."
+    }
+  },
     "testimonials": {
       "title": "Lời chứng thực",
-      "heading": "Được tin tưởng bởi các chuyên gia trên toàn thế giới",
-      "description": "Xem những gì khách hàng của chúng tôi đang nói về nền tảng quản lý thủy lợi của chúng tôi.",
+      "heading": "Được tin tưởng bởi người dùng",
+      "description": "Xem những gì khách hàng của chúng tôi đang nói về nền tảng quản lý kịch bản & mô hình tưới tiêu của chúng tôi.",
       "testimonial1": {
-        "name": "John Doe",
+        "name": "Cù Hoàng Nguyễn S",
         "role": "Quản lý trang trại",
         "quote": "Nền tảng này đã cách mạng hóa cách chúng ta quản lý tưới trong trang trại của chúng ta. "
       },
       "testimonial2": {
-        "name": "Jane Smith",
+        "name": "Lê Hoàng Anh V",
         "role": "Kỹ sư nông nghiệp",
         "quote": "Khả năng tạo các mô hình và kịch bản tưới tùy chỉnh là một người thay đổi trò chơi cho các hoạt động của chúng tôi. "
       },
       "testimonial3": {
-        "name": "Robert Johnson",
+        "name": "Vũ Ngọc T",
         "role": "Chủ vườn nho",
         "quote": "Chúng tôi đã sử dụng nền tảng này cho việc tưới vườn nho của chúng tôi trong hơn một năm nay. "
       }
     },
-    "pricing": {
-      "title": "Giá cả",
-      "heading": "Đơn giản, giá cả minh bạch",
-      "description": "Chọn kế hoạch phù hợp với nhu cầu quản lý thủy lợi của bạn.",
-      "basic": {
-        "title": "Nền tảng",
-        "subtitle": "Cho các trang trại và vườn nhỏ",
-        "price": "$ 29",
-        "period": "/tháng",
-        "features": {
-          "scripts": "Lên đến 5 kịch bản tưới",
-          "analytics": "Phân tích cơ bản",
-          "support": "Hỗ trợ email"
-        },
-        "button": "Bắt đầu"
-      },
-      "pro": {
-        "title": "Pro",
-        "subtitle": "Cho các trang trại cỡ trung bình",
-        "price": "$ 79",
-        "period": "/tháng",
-        "popular": "Phổ biến",
-        "features": {
-          "scripts": "Các kịch bản thủy lợi không giới hạn",
-          "analytics": "Phân tích nâng cao",
-          "models": "Mô hình tùy chỉnh",
-          "support": "Hỗ trợ ưu tiên"
-        },
-        "button": "Bắt đầu"
-      },
-      "enterprise": {
-        "title": "Doanh nghiệp",
-        "subtitle": "Đối với các hoạt động nông nghiệp lớn",
-        "price": "$ 199",
-        "period": "/tháng",
-        "features": {
-          "pro": "Mọi thứ trong pro",
-          "manager": "Quản lý tài khoản chuyên dụng",
-          "integrations": "Tích hợp tùy chỉnh",
-          "support": "Hỗ trợ điện thoại 24/7"
-        },
-        "button": "Liên hệ bán hàng"
-      }
-    },
     "cta": {
       "heading": "Sẵn sàng để tối ưu hóa việc tưới tiêu của bạn?",
-      "description": "Tham gia hàng ngàn chuyên gia đang tiết kiệm nước và cải thiện năng suất cây trồng với nền tảng của chúng tôi.",
+      "description": "Tham gia cùng nhiều chuyên gia đang tiết kiệm nước và cải thiện năng suất cây trồng với nền tảng của chúng tôi.",
       "getStarted": "Bắt đầu",
       "contactSales": "Liên hệ bán hàng"
     }
