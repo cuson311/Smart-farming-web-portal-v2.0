@@ -128,47 +128,47 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
         </div>
         <div className="flex flex-col gap-4 items-end">
           <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
-          <div className="flex items-center gap-2">
-            <Label>{t("sortBy")}</Label>
-            <Select
-              value={sortField}
-              onValueChange={(value: "createdAt" | "updatedAt") =>
-                handleSortChange(value, sortOrder)
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select field" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="createdAt">
-                  {t("sortFields.creationDate")}
-                </SelectItem>
-                <SelectItem value="updatedAt">
-                  {t("sortFields.lastUpdate")}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-            <Select
-              value={sortOrder}
-              onValueChange={(value: "asc" | "desc") =>
-                handleSortChange(sortField, value)
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select order" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="desc">
-                  {t("sortFields.latestFirst")}
-                </SelectItem>
-                <SelectItem value="asc">
-                  {t("sortFields.oldestFirst")}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </div>
       </CardHeader>
+      <div className="flex items-center justify-between gap-2 space-y-0  px-6 py-2">
+        <Label>{t("sortBy")}</Label>
+        <div className="flex items-center gap-2">
+          <Select
+            value={sortField}
+            onValueChange={(value: "createdAt" | "updatedAt") =>
+              handleSortChange(value, sortOrder)
+            }
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select field" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="createdAt">
+                {t("sortFields.creationDate")}
+              </SelectItem>
+              <SelectItem value="updatedAt">
+                {t("sortFields.lastUpdate")}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <Select
+            value={sortOrder}
+            onValueChange={(value: "asc" | "desc") =>
+              handleSortChange(sortField, value)
+            }
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select order" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="desc">
+                {t("sortFields.latestFirst")}
+              </SelectItem>
+              <SelectItem value="asc">{t("sortFields.oldestFirst")}</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
       <CardContent className="pt-6">
         <div className="flex flex-col space-y-8">
           {paginatedVersions?.map((item: ScriptModel, index: number) => (

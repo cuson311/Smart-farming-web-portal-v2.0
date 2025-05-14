@@ -19,16 +19,20 @@ import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleM
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
   const t = useTranslations("dashboard.models");
+  const router = useRouter();
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="icon" asChild>
-          <Link href={`/dashboard/${userId}/models`}>
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">
-              {t("back", { defaultValue: "Back" })}
-            </span>
-          </Link>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => {
+            const currentLocale = window.location.pathname.split("/")[1];
+            router.push(`/${currentLocale}/dashboard/${userId}/models`);
+          }}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span className="sr-only">{t("back", { defaultValue: "Back" })}</span>
         </Button>
         <h1 className="text-2xl font-bold">
           {t("notFound.title", { defaultValue: "Page Not Found" })}
@@ -47,12 +51,15 @@ const NotFoundComponent = ({ userId }: { userId: string }) => {
           })}
         </AlertDescription>
         <div className="mt-4">
-          <Button asChild>
-            <Link href={`/dashboard/${userId}/models`}>
-              {t("notFound.returnButton", {
-                defaultValue: "Return to My Models",
-              })}
-            </Link>
+          <Button
+            onClick={() => {
+              const currentLocale = window.location.pathname.split("/")[1];
+              router.push(`/${currentLocale}/dashboard/${userId}/models`);
+            }}
+          >
+            {t("notFound.returnButton", {
+              defaultValue: "Return to My Models",
+            })}
           </Button>
         </div>
       </Alert>
@@ -124,7 +131,8 @@ const ModelDetailPage = ({
 
   // Handle tab change by updating query parameter
   const handleTabChange = (value: string) => {
-    const newUrl = `/dashboard/${params.userId}/models/${params.modelName}?tab=${value}`;
+    const currentLocale = window.location.pathname.split("/")[1]; // Get current locale from URL
+    const newUrl = `/${currentLocale}/dashboard/${params.userId}/models/${params.modelName}?tab=${value}`;
     router.replace(newUrl);
   };
 
@@ -133,13 +141,20 @@ const ModelDetailPage = ({
     return (
       <div className="grid gap-6">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" asChild>
-            <Link href={`/dashboard/${userId}/models`}>
-              <ArrowLeft className="h-4 w-4" />
-              <span className="sr-only">
-                {t("accessDenied.back", { defaultValue: "Back" })}
-              </span>
-            </Link>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => {
+              const currentLocale = window.location.pathname.split("/")[1];
+              router.push(
+                `/${currentLocale}/dashboard/${params.userId}/models`
+              );
+            }}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">
+              {t("accessDenied.back", { defaultValue: "Back" })}
+            </span>
           </Button>
           <h1 className="text-2xl font-bold">
             {t("accessDenied.title", { defaultValue: "Model Access" })}
@@ -158,12 +173,17 @@ const ModelDetailPage = ({
             })}
           </AlertDescription>
           <div className="mt-4">
-            <Button asChild>
-              <Link href={`/dashboard/${userId}/models`}>
-                {t("accessDenied.returnButton", {
-                  defaultValue: "Return to My Models",
-                })}
-              </Link>
+            <Button
+              onClick={() => {
+                const currentLocale = window.location.pathname.split("/")[1];
+                router.push(
+                  `/${currentLocale}/dashboard/${params.userId}/scripts?tab=all`
+                );
+              }}
+            >
+              {t("accessDenied.returnButton", {
+                defaultValue: "Return to My Models",
+              })}
             </Button>
           </div>
         </Alert>
@@ -176,13 +196,20 @@ const ModelDetailPage = ({
     return (
       <div className="grid gap-6">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" asChild>
-            <Link href={`/dashboard/${userId}/models`}>
-              <ArrowLeft className="h-4 w-4" />
-              <span className="sr-only">
-                {t("back", { defaultValue: "Back" })}
-              </span>
-            </Link>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => {
+              const currentLocale = window.location.pathname.split("/")[1];
+              router.push(
+                `/${currentLocale}/dashboard/${params.userId}/models`
+              );
+            }}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">
+              {t("back", { defaultValue: "Back" })}
+            </span>
           </Button>
           <h1 className="text-2xl font-bold">
             {t("loading", { defaultValue: "Loading..." })}
@@ -203,13 +230,16 @@ const ModelDetailPage = ({
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="icon" asChild>
-          <Link href={`/dashboard/${userId}/models`}>
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">
-              {t("back", { defaultValue: "Back" })}
-            </span>
-          </Link>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => {
+            const currentLocale = window.location.pathname.split("/")[1];
+            router.push(`/${currentLocale}/dashboard/${params.userId}/models`);
+          }}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span className="sr-only">{t("back", { defaultValue: "Back" })}</span>
         </Button>
         <h1 className="text-2xl font-bold">{modelInfo?.alt_name}</h1>
       </div>

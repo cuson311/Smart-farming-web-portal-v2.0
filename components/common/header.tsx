@@ -259,7 +259,7 @@ const Header = () => {
               <Button
                 variant="outline"
                 size="sm"
-                className="relative h-8 rounded-full"
+                className="relative h-8 p-0 rounded-full"
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage

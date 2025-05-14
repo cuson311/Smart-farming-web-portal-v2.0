@@ -22,5 +22,5 @@ export const formatDate = (isoString: string): string => {
   const minute = parts.find((p) => p.type === "minute")?.value;
   const second = parts.find((p) => p.type === "second")?.value;
 
-  return `${day}-${month}-${year} ${"Lúc"} ${hour}:${minute}:${second}`;
+  return `${hour}:${minute}:${second} ${day}-${month}-${year}`;
 };

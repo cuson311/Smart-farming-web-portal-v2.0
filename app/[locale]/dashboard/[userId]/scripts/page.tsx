@@ -217,7 +217,8 @@ const ScriptsPage = ({ params }: { params: { userId: string } }) => {
     tabName === "public-scripts" || tabName === "shared-scripts";
 
   const handleTabChange = (value: string) => {
-    const newUrl = `/dashboard/${params.userId}/scripts?tab=${value}`;
+    const currentLocale = window.location.pathname.split("/")[1]; // Get current locale from URL
+    const newUrl = `/${currentLocale}/dashboard/${params.userId}/scripts?tab=${value}`;
     router.replace(newUrl);
   };
 

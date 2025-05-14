@@ -214,6 +214,10 @@
                     "versions": "Versions"
                 },
                 "toast": {
+                    "saveSuccess": "Save successfully",
+                    "saveSuccessDescription": "Script saved successfully",
+                    "saveError": "Save failed",
+                    "saveErrorDescription": "Failed to save script",
                     "updateSuccess": "Update successfully",
                     "updateSuccessDescription": "Update script info successfully",
                     "updateError": "Update failed",
@@ -405,6 +409,8 @@
         "models": {
             "title": "Models",
             "back": "Back",
+            "loading": "Loading models...",
+            "checkingAccess": "Checking access permissions...",
             "searchPlaceholder": "Search models...",
             "favoriteUpdated": "Favorite updated",
             "favoriteUpdatedDescription": "Model favorite status has been updated.",

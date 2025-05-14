@@ -110,7 +110,8 @@ const ScriptDetailPage = ({
   }
 
   const handleTabChange = (value: string) => {
-    const newUrl = `/dashboard/${params.userId}/scripts/${params.scriptId}?tab=${value}`;
+    const currentLocale = window.location.pathname.split("/")[1]; // Get current locale from URL
+    const newUrl = `/${currentLocale}/dashboard/${params.userId}/scripts/${params.scriptId}?tab=${value}`;
     router.replace(newUrl);
   };
 
@@ -120,8 +121,8 @@ const ScriptDetailPage = ({
         <div className="flex items-center gap-4">
           <Button variant="ghost" onClick={() => router.back()}>
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">{t("back")}</span>
-          </Button>
+          </Button>{" "}
+          <span className="sr-only">{t("back")}</span>
           <h1 className="text-2xl font-bold">{t("accessDenied.title")}</h1>
         </div>
 
@@ -163,7 +164,15 @@ const ScriptDetailPage = ({
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" onClick={() => router.back()}>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            const currentLocale = window.location.pathname.split("/")[1];
+            router.push(
+              `/${currentLocale}/dashboard/${params.userId}/scripts?tab=all`
+            );
+          }}
+        >
           <ArrowLeft className="h-4 w-4" />
           <span className="sr-only">{t("back")}</span>
         </Button>

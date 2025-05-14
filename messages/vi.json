@@ -213,6 +213,10 @@
           "versions": "Phiên bản"
         },
         "toast": {
+          "saveSuccess": "Lưu thành công",
+          "saveSuccessDescription": "Kịch bản đã được lưu thành công",
+          "saveError": "Lưu thất bại",
+          "saveErrorDescription": "Không thể lưu kịch bản",
           "updateSuccess": "Cập nhật thành công",
           "updateSuccessDescription": "Thông tin script đã được cập nhật thành công",
           "updateError": "Cập nhật thất bại",
@@ -404,6 +408,8 @@
     "models": {
       "title": "Mô hình",
       "back": "Quay lại",
+      "loading": "Đang tải mô hình...",
+      "checkingAccess": "Kiểm tra quyền truy cập...",
       "searchPlaceholder": "Tìm kiếm mô hình...",
       "favoriteUpdated": "Đã cập nhật yêu thích",
       "favoriteUpdatedDescription": "Trạng thái yêu thích của mô hình đã được cập nhật.",
