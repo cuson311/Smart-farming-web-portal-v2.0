@@ -32,21 +32,38 @@ jobs:
       - name: 📥 Install OpenVPN and sshpass
         run: sudo apt-get update && sudo apt-get install -y openvpn sshpass
 
-      - name: 🔐 Setup VPN config and connect
+      - name: 🔐 Connect VPN and deploy
         run: |
           echo "${{ secrets.VPN_CONFIG }}" | base64 -d > vpn.ovpn
           echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}" > auth.txt
+
+          echo "🛜 Starting VPN..."
           sudo openvpn --config vpn.ovpn --auth-user-pass auth.txt --daemon
+          sleep 15
 
-      - name: ⏱️ Wait for VPN to connect
-        run: sleep 15
+          echo "📡 Adding route if needed..."
+          sudo ip route add 10.1.8.0/24 dev tun0 || true
 
-      - name: 🚀 Deploy via SSH using password
-        run: |
+          echo "📶 Waiting for VPN to connect..."
+          for i in {1..30}; do
+            if ping -c 1 10.1.8.52 &> /dev/null; then
+              echo "✅ VPN is connected!"
+              break
+            fi
+            echo "⏳ Waiting ($i)..."
+            sleep 5
+          done
+
+          if ! ping -c 1 10.1.8.52 &> /dev/null; then
+            echo "❌ VPN failed to connect to 10.1.8.52"
+            exit 1
+          fi
+
+          echo "🚀 Deploying via SSH"
           sshpass -p "${{ secrets.VM_PASSWORD }}" ssh -o StrictHostKeyChecking=no root@10.1.8.52 "
             cd /home/ubuntu/Smart-farming-web-portal-v2.0 &&
             git pull origin main &&
             docker pull cuson108/smart-farming-web-portal:latest &&
-            docker compose up -d --build
+            docker compose up -d --build &&
             docker image prune -f
           "
