@@ -599,6 +599,7 @@
             "scripts": {
                 "title": "Associated Scripts",
                 "description": "Scripts belong to this model",
+                "loading": "Loading scripts...",
                 "sortBy": "Sort by:",
                 "sortFields": {
                     "creationDate": "Creation Date",
