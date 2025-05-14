@@ -37,7 +37,8 @@ jobs:
           echo "${{ secrets.VPN_CONFIG }}" | base64 -d > vpn.ovpn
           echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}" > auth.txt
           sudo openvpn --config vpn.ovpn --auth-user-pass auth.txt --daemon --log /tmp/openvpn.log
-          cat /tmp/openvpn.log
+          sleep 10
+          sudo cat /tmp/openvpn.log
 
       - name: ⏱️ Wait for VPN to connect
         run: |
