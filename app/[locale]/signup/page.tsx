@@ -10,18 +10,19 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 // Import the authApi (you'll need to create this file in your project)
 import authApi from "@/api/authAPI";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const t = useTranslations("login");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const t = useTranslations("signup");
   const router = useRouter();
 
   // Check if user is already authenticated
@@ -38,34 +39,33 @@ export default function LoginPage() {
     router.push(`/dashboard`);
   }
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null); // Reset previous error
 
     try {
-      if (username === "" || password === "") {
+      if (username === "" || password === "" || confirmPassword === "") {
         setError(t("errors.emptyFields"));
         return;
       }
 
-      const data = await authApi.login(username, password);
+      if (password !== confirmPassword) {
+        setError(t("errors.passwordMismatch"));
+        return;
+      }
 
-      // Store authentication data
-      localStorage.setItem("token", data.access_token);
-      localStorage.setItem("userId", data.user_id);
-      localStorage.setItem("profileImage", data.profile_image);
-      window.dispatchEvent(new Event("loginSuccess"));
-      router.push(`/dashboard`);
+      await authApi.register(username, password);
+      router.push(`/login`);
     } catch (err) {
-      setError(t("errors.invalidCredentials"));
+      setError(t("errors.signupFailed"));
     }
   };
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Login Section */}
+      {/* Signup Section */}
       <div className="flex-1 grid lg:grid-cols-2">
-        {/* Login Form */}
+        {/* Signup Form */}
         <div className="flex items-center justify-center py-12 animate-fade-up">
           <div className="mx-auto w-full max-w-[400px] space-y-6 px-4 md:px-6">
             <div className="space-y-2 text-center">
@@ -77,33 +77,25 @@ export default function LoginPage() {
               </h1>
               <p className="text-muted-foreground">{t("description")}</p>
             </div>
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleSignup} className="space-y-4">
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
               <div className="space-y-2">
-                <Label htmlFor="email">{t("form.email")}</Label>
+                <Label htmlFor="username">{t("form.username")}</Label>
                 <Input
                   id="username"
                   type="text"
-                  placeholder={t("form.emailPlaceholder")}
+                  placeholder={t("form.usernamePlaceholder")}
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">{t("form.password")}</Label>
-                  {/* <Link
-                    href="/forgot-password"
-                    className="text-sm text-irrigation-600 hover:text-irrigation-700"
-                  >
-                    {t("form.forgotPassword")}
-                  </Link> */}
-                </div>
+                <Label htmlFor="password">{t("form.password")}</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -121,6 +113,34 @@ export default function LoginPage() {
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-500" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">
+                  {t("form.confirmPassword")}
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    required
+                    placeholder={t("form.confirmPasswordPlaceholder")}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
                       <EyeOff className="h-4 w-4 text-gray-500" />
                     ) : (
                       <Eye className="h-4 w-4 text-gray-500" />
@@ -155,12 +175,12 @@ export default function LoginPage() {
               </div> */}
             </form>
             <div className="mt-4 text-center text-sm">
-              {t("form.noAccount")}{" "}
+              {t("form.haveAccount")}{" "}
               <Link
-                href="/signup"
+                href="/login"
                 className="text-irrigation-600 hover:text-irrigation-700"
               >
-                {t("form.signUp")}
+                {t("form.signIn")}
               </Link>
             </div>
           </div>

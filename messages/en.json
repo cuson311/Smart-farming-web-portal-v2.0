@@ -664,6 +664,34 @@
             "description": "Optimize your irrigation systems with intelligent scripts and models. Save water, time, and resources."
         }
     },
+    "signup": {
+        "welcome": "Create Account",
+        "title": "Sign up for an account",
+        "description": "Enter your details below to create your irrigation management account",
+        "errors": {
+            "emptyFields": "Please fill in all fields",
+            "passwordMismatch": "Passwords do not match",
+            "signupFailed": "Sign up failed. Please try again."
+        },
+        "form": {
+            "username": "Username",
+            "usernamePlaceholder": "Choose a username",
+            "password": "Password",
+            "passwordPlaceholder": "Create a password",
+            "confirmPassword": "Confirm Password",
+            "confirmPasswordPlaceholder": "Confirm your password",
+            "submit": "Sign up",
+            "orContinue": "Or continue with",
+            "google": "Google",
+            "microsoft": "Microsoft",
+            "haveAccount": "Already have an account?",
+            "signIn": "Sign in"
+        },
+        "hero": {
+            "title": "Smart Irrigation Management",
+            "description": "Join our community of farmers and optimize your irrigation systems with intelligent scripts and models."
+        }
+    },
     "header": {
         "mobileMenu": "Toggle navigation menu",
         "notifications": "Notifications",

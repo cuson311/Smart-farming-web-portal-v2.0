@@ -663,6 +663,34 @@
       "description": "Tối ưu hóa các hệ thống tưới của bạn với các kịch bản và mô hình thông minh. "
     }
   },
+  "signup": {
+    "welcome": "Tạo tài khoản",
+    "title": "Đăng ký tài khoản",
+    "description": "Nhập thông tin chi tiết của bạn bên dưới để tạo tài khoản quản lý tưới tiêu",
+    "errors": {
+      "emptyFields": "Vui lòng điền vào tất cả các trường",
+      "passwordMismatch": "Mật khẩu không khớp",
+      "signupFailed": "Đăng ký không thành công. Vui lòng thử lại."
+    },
+    "form": {
+      "username": "Tên người dùng",
+      "usernamePlaceholder": "Chọn tên người dùng",
+      "password": "Mật khẩu",
+      "passwordPlaceholder": "Tạo mật khẩu",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "confirmPasswordPlaceholder": "Xác nhận mật khẩu",
+      "submit": "Đăng ký",
+      "orContinue": "Hoặc tiếp tục với",
+      "google": "Google",
+      "microsoft": "Microsoft",
+      "haveAccount": "Bạn đã có tài khoản?",
+      "signIn": "Đăng nhập"
+    },
+    "hero": {
+      "title": "Quản lý tưới tiêu thông minh",
+      "description": "Tham gia cộng đồng nông dân của chúng tôi và tối ưu hóa hệ thống tưới tiêu của bạn bằng các tập lệnh và mô hình thông minh."
+    }
+  },
   "header": {
     "mobileMenu": "Chuyển đổi menu điều hướng",
     "notifications": "Thông báo",

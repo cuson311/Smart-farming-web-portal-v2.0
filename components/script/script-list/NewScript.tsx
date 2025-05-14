@@ -456,8 +456,10 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       handleSubmitFile(userId, scriptId._id);
 
       toast({
-        title: t("createSuccess"),
-        description: t("createSuccessDescription", { name: newScript.name }),
+        title: t("toast.createSuccess"),
+        description: t("toast.createSuccessDescription", {
+          name: newScript.name,
+        }),
       });
 
       if (onScriptCreated) {
@@ -478,8 +480,8 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     } catch (error) {
       console.error("Error creating script:", error);
       toast({
-        title: t("createFailed"),
-        description: t("createFailedDescription"),
+        title: t("toast.createFailed"),
+        description: t("toast.createFailedDescription"),
         variant: "destructive",
       });
     }
