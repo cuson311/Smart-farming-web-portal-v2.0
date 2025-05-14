@@ -39,7 +39,7 @@ jobs:
           sudo openvpn --config vpn.ovpn --auth-user-pass auth.txt --daemon
 
       - name: ⏱️ Wait for VPN to connect
-        run: sleep 15
+        run: sleep 30
 
       - name: 🚀 Deploy via SSH using password
         run: |
