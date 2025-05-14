@@ -39,7 +39,13 @@ jobs:
           sudo openvpn --config vpn.ovpn --auth-user-pass auth.txt --daemon
 
       - name: ⏱️ Wait for VPN to connect
-        run: sleep 30
+        run: |
+          echo "Waiting for VPN to connect..."
+          while ! ping -c 1 10.1.8.52 &> /dev/null; do
+            echo "Waiting for VPN to be up..."
+            sleep 5
+          done
+          echo "VPN is connected!"
 
       - name: 🚀 Deploy via SSH using password
         run: |
