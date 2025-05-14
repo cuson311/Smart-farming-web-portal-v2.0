@@ -598,6 +598,7 @@
       "scripts": {
         "title": "Kịch bản liên kết",
         "description": "Kịch bản thuộc về mô hình này",
+        "loading": "Đang tải kịch bản...",
         "sortBy": "Sắp xếp theo:",
         "sortFields": {
           "creationDate": "Ngày tạo",
