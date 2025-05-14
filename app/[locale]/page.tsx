@@ -8,6 +8,7 @@ import { useRef } from "react";
 import HeroImage from "@/public/herosection.svg";
 import FeaturesImage from "@/public/featuressection.svg";
 import AvatarImage1 from "@/public/avatar1.png";
+import CTAImage from "@/public/cta.png";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -119,18 +120,16 @@ export default function Home() {
               {t("features.description")}
             </p>
           </motion.div>
-          <motion.div
-            className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-1 lg:grid-cols-3"
-            initial="hidden"
-            animate={isFeaturesInView ? "visible" : "hidden"}
-            variants={staggerContainer}
-          >
+          <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-1 lg:grid-cols-3">
             {/* Left Column */}
             <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 lg:grid-rows-2 lg:grid-cols-1 gap-6 z-10">
               {/* Feature 1 */}
               <motion.div
                 variants={fadeInUp}
-                className="feature-card relative overflow-hidden rounded-lg border bg-background p-6 text-center flex flex-col items-center justify-center"
+                whileInView="visible"
+                viewport={{ once: true }}
+                initial="hidden"
+                className="feature-card relative overflow-hidden rounded-lg border bg-background p-6 text-center flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:border-irrigation-200 dark:hover:border-irrigation-800 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full mx-auto">
                   <Sprout className="h-6 w-6 text-irrigation-600" />
@@ -145,7 +144,10 @@ export default function Home() {
               {/* Feature 2 */}
               <motion.div
                 variants={fadeInUp}
-                className="feature-card relative overflow-hidden rounded-lg border bg-background p-6 text-center flex flex-col items-center justify-center"
+                whileInView="visible"
+                viewport={{ once: true }}
+                initial="hidden"
+                className="feature-card relative overflow-hidden rounded-lg border bg-background p-6 text-center flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:border-irrigation-200 dark:hover:border-irrigation-800 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full mx-auto">
                   <Database className="h-6 w-6 text-irrigation-600" />
@@ -164,7 +166,7 @@ export default function Home() {
               variants={fadeInUp}
               className="relative p-6 flex justify-center items-center"
             >
-              <div className="lg:absolute w-[600px] z-0">
+              <div className="lg:absolute w-[500px] z-0">
                 <Image
                   className="w-full"
                   src={FeaturesImage}
@@ -178,7 +180,10 @@ export default function Home() {
               {/* Feature 4 */}
               <motion.div
                 variants={fadeInUp}
-                className="feature-card relative overflow-hidden rounded-lg border bg-background p-6 text-center flex flex-col items-center justify-center"
+                whileInView="visible"
+                viewport={{ once: true }}
+                initial="hidden"
+                className="feature-card relative overflow-hidden rounded-lg border bg-background p-6 text-center flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:border-irrigation-200 dark:hover:border-irrigation-800 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full mx-auto">
                   <Users className="h-6 w-6 text-irrigation-600" />
@@ -193,7 +198,10 @@ export default function Home() {
               {/* Feature 5 */}
               <motion.div
                 variants={fadeInUp}
-                className="feature-card relative overflow-hidden rounded-lg border bg-background p-6 text-center flex flex-col items-center justify-center"
+                whileInView="visible"
+                viewport={{ once: true }}
+                initial="hidden"
+                className="feature-card relative overflow-hidden rounded-lg border bg-background p-6 text-center flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:border-irrigation-200 dark:hover:border-irrigation-800 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full mx-auto">
                   <Shield className="h-6 w-6 text-irrigation-600" />
@@ -206,7 +214,7 @@ export default function Home() {
                 </p>
               </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -238,7 +246,10 @@ export default function Home() {
             {/* Testimonial 1 */}
             <motion.div
               variants={fadeInUp}
-              className="testimonial-card relative overflow-hidden rounded-lg border bg-background p-6"
+              whileInView="visible"
+              viewport={{ once: true }}
+              initial="hidden"
+              className="testimonial-card relative overflow-hidden rounded-lg border bg-background p-6 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:border-irrigation-200 dark:hover:border-irrigation-800 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
             >
               <div className="flex items-start gap-4">
                 <Avatar className="h-10 w-10">
@@ -261,7 +272,10 @@ export default function Home() {
             {/* Testimonial 2 */}
             <motion.div
               variants={fadeInUp}
-              className="testimonial-card relative overflow-hidden rounded-lg border bg-background p-6"
+              whileInView="visible"
+              viewport={{ once: true }}
+              initial="hidden"
+              className="testimonial-card relative overflow-hidden rounded-lg border bg-background p-6 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:border-irrigation-200 dark:hover:border-irrigation-800 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
             >
               <div className="flex items-start gap-4">
                 <Avatar className="h-10 w-10">
@@ -285,7 +299,10 @@ export default function Home() {
             {/* Testimonial 3 */}
             <motion.div
               variants={fadeInUp}
-              className="testimonial-card relative overflow-hidden rounded-lg border bg-background p-6"
+              whileInView="visible"
+              viewport={{ once: true }}
+              initial="hidden"
+              className="testimonial-card relative overflow-hidden rounded-lg border bg-background p-6 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:border-irrigation-200 dark:hover:border-irrigation-800 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
             >
               <div className="flex items-start gap-4">
                 <Avatar className="h-10 w-10">
@@ -324,6 +341,7 @@ export default function Home() {
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
               {t("cta.description")}
             </p>
+
             <motion.div
               className="flex flex-col gap-2 min-[400px]:flex-row"
               variants={fadeInUp}
@@ -333,12 +351,15 @@ export default function Home() {
                 size="lg"
                 className="bg-primary hover:bg-irrigation-700"
               >
-                <Link href="/dashboard">
+                <Link href="/login">
                   {t("cta.getStarted")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </motion.div>
+            <div className="h-[300px] overflow-hidden flex justify-center items-center">
+              <Image height={300} src={CTAImage} alt="CTA Image" />
+            </div>
           </motion.div>
         </div>
       </section>

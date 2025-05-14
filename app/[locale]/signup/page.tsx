@@ -6,7 +6,7 @@ import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-
+import LoginImage from "@/public/login.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -185,25 +185,17 @@ export default function SignupPage() {
             </div>
           </div>
         </div>
-
         {/* Image Section */}
         <div className="hidden lg:block bg-muted relative overflow-hidden">
           <div className="absolute inset-0 bg-irrigation-100/20 z-10"></div>
           <Image
-            src="/placeholder.svg?height=1080&width=1920"
+            src={LoginImage}
             alt="Irrigation field"
             width={1920}
             height={1080}
             className="h-full w-full object-cover"
           />
-          <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-background/80 to-transparent z-20">
-            <div className="max-w-md animate-fade-up">
-              <h2 className="text-2xl font-bold mb-2 gradient-text">
-                {t("hero.title")}
-              </h2>
-              <p className="text-muted-foreground">{t("hero.description")}</p>
-            </div>
-          </div>
+          <div className="absolute bottom-0 left-0 right-0 p-8 pt-20 bg-gradient-to-t from-background to-transparent z-20"></div>
         </div>
       </div>
     </div>
