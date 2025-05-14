@@ -129,11 +129,17 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
                   <div className="flex flex-nowrap gap-2 items-center">
                     <span className="text-sm font-medium">{t("tags")} </span>
                     <span className="flex flex-wrap gap-2 mt-1">
-                      {item?.tags?.map((tag, i) => (
-                        <Badge key={i} variant="secondary">
-                          {tag.key}: {tag.value}
-                        </Badge>
-                      ))}
+                      {item?.tags && item.tags.length > 0 ? (
+                        item.tags.map((tag, i) => (
+                          <Badge key={i} variant="secondary">
+                            {tag.key}: {tag.value}
+                          </Badge>
+                        ))
+                      ) : (
+                        <span className="text-sm text-muted-foreground italic">
+                          {t("noTags")}
+                        </span>
+                      )}
                     </span>
                   </div>
                 </CardContent>

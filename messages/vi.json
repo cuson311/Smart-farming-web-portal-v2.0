@@ -408,8 +408,20 @@
     "models": {
       "title": "Mô hình",
       "back": "Quay lại",
+      "loadingDetails": "Đang tải chi tiết mô hình...",
       "loading": "Đang tải mô hình...",
       "checkingAccess": "Kiểm tra quyền truy cập...",
+      "accessDenied": {
+        "title": "Quyền truy cập bị từ chối",
+        "description": "Bạn không có quyền truy cập vào mô hình này. Vui lòng liên hệ với chủ sở hữu mô hình để biết thêm thông tin.",
+        "returnButton": "Quay lại"
+      },
+      "notFound": {
+        "title": "Không tìm thấy mô hình",
+        "invalidTab": "Tab không hợp lệ",
+        "description": "Vui lòng kiểm tra lại đường dẫn hoặc liên hệ với chủ sở hữu mô hình để biết thêm thông tin.",
+        "returnButton": "Quay lại"
+      },
       "searchPlaceholder": "Tìm kiếm mô hình...",
       "favoriteUpdated": "Đã cập nhật yêu thích",
       "favoriteUpdatedDescription": "Trạng thái yêu thích của mô hình đã được cập nhật.",
@@ -598,6 +610,7 @@
         "createdAt": "Tạo lúc",
         "lastUpdate": "Cập nhật lần cuối",
         "noScripts": "Không tìm thấy kịch bản nào trong khoảng thời gian đã chọn",
+        "viewDetails": "Xem chi tiết",
         "toast": {
           "fetchError": "Lỗi tải kịch bản mô hình",
           "fetchErrorDesc": "Không thể tải kịch bản mô hình. Vui lòng thử lại."
@@ -612,6 +625,7 @@
         "description": "Mô tả:",
         "noDescription": "Không có mô tả",
         "tags": "Thẻ:",
+        "noTags": "Không tìm thấy thẻ nào.",
         "noVersions": "Không tìm thấy phiên bản nào trong khoảng thời gian đã chọn",
         "toast": {
           "fetchError": "Lỗi tải phiên bản mô hình",
