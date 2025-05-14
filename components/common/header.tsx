@@ -187,6 +187,26 @@ const Header = () => {
           <span className="text-xl font-semibold">An tâm tưới</span>
         </Link>
       </div>
+      <nav className="hidden md:flex items-center gap-6">
+        <Link
+          href="#features"
+          className="text-sm font-medium hover:text-primary transition-colors"
+        >
+          {t("features")}
+        </Link>
+        <Link
+          href="#testimonials"
+          className="text-sm font-medium hover:text-primary transition-colors"
+        >
+          {t("testimonials")}
+        </Link>
+        <Link
+          href="#contact"
+          className="text-sm font-medium hover:text-primary transition-colors"
+        >
+          {t("contact")}
+        </Link>
+      </nav>
       {isLoggedIn ? (
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
@@ -309,31 +329,11 @@ const Header = () => {
         </div>
       ) : (
         <>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href="#features"
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              {t("features")}
-            </Link>
-            <Link
-              href="#testimonials"
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              {t("testimonials")}
-            </Link>
-            <Link
-              href="#contact"
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              {t("contact")}
-            </Link>
-          </nav>
           <div className="flex items-center gap-4">
             <LanguageSwitcher />
             <ThemeToggle />
             <Button asChild>
-              <Link href="/dashboard">{t("getStarted")}</Link>
+              <Link href="/login">{t("getStarted")}</Link>
             </Button>
           </div>
         </>

@@ -79,7 +79,7 @@ export default function Home() {
                   size="lg"
                   className="bg-primary hover:bg-irrigation-700"
                 >
-                  <Link href="/dashboard">
+                  <Link href="/login">
                     {t("hero.getStarted")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>

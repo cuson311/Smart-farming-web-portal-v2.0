@@ -164,7 +164,7 @@ const ModelDetailPage = ({
         <Alert variant="destructive" className="bg-destructive/10">
           <ShieldAlert className="h-5 w-5" />
           <AlertTitle className="mb-2">
-            {t("accessDenied.alertTitle", { defaultValue: "Access Denied" })}
+            {t("accessDenied.title", { defaultValue: "Access Denied" })}
           </AlertTitle>
           <AlertDescription>
             {t("accessDenied.description", {
@@ -177,7 +177,7 @@ const ModelDetailPage = ({
               onClick={() => {
                 const currentLocale = window.location.pathname.split("/")[1];
                 router.push(
-                  `/${currentLocale}/dashboard/${params.userId}/scripts?tab=all`
+                  `/${currentLocale}/dashboard/${params.userId}/models`
                 );
               }}
             >

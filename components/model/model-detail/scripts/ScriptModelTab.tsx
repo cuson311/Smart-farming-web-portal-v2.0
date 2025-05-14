@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -11,6 +11,15 @@ import {
 } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Editor } from "@monaco-editor/react";
+import { useTheme } from "next-themes";
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
@@ -28,6 +37,7 @@ import { Label } from "@/components/ui/label";
 import { formatDate } from "@/lib/formatDate";
 
 const ScriptModelTab = ({ model }: { model: Model }) => {
+  const { theme } = useTheme();
   const t = useTranslations("dashboard.models.scripts");
   const params = useParams();
   const userId: string = Array.isArray(params.userId)
@@ -46,8 +56,13 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
     "createdAt"
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-
-  console.log("scripts", scripts);
+  const [selectedScript, setSelectedScript] = useState<ScriptModel | null>(
+    null
+  );
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [scriptDetails, setScriptDetails] = useState<any>(null);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (!userId || !modelId) {
@@ -61,6 +76,7 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
       try {
         const response = await modelApi.getScriptsModel(userId, modelId);
         setScripts(response);
+        console.log("scripts", response);
         setFilteredScripts(response.model_versions);
       } catch (err) {
         setScriptError("Error fetching model scripts");
@@ -119,119 +135,185 @@ const ScriptModelTab = ({ model }: { model: Model }) => {
     setCurrentPage(1); // Reset to first page when sorting changes
   };
 
+  const handleViewDetails = async (script: ScriptModel) => {
+    setSelectedScript(script);
+    setIsDialogOpen(true);
+    setLoadingDetails(true);
+    try {
+      const response = await modelApi.getScriptsModelVersion(
+        userId,
+        modelId,
+        script.version
+      );
+      setScriptDetails(response);
+    } catch (err) {
+      console.error("Error fetching script details:", err);
+      toast.error(t("toast.fetchError"), {
+        description: t("toast.fetchErrorDesc"),
+      });
+    } finally {
+      setLoadingDetails(false);
+    }
+  };
+
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <div>
-          <CardTitle className="mb-2">{t("title")}</CardTitle>
-          <CardDescription>{t("description")}</CardDescription>
+    <>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <div>
+            <CardTitle className="mb-2">{t("title")}</CardTitle>
+            <CardDescription>{t("description")}</CardDescription>
+          </div>
+          <div className="flex flex-col gap-4 items-end">
+            <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
+          </div>
+        </CardHeader>
+        <div className="flex items-center justify-between gap-2 space-y-0  px-6 py-2">
+          <Label>{t("sortBy")}</Label>
+          <div className="flex items-center gap-2">
+            <Select
+              value={sortField}
+              onValueChange={(value: "createdAt" | "updatedAt") =>
+                handleSortChange(value, sortOrder)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select field" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="createdAt">
+                  {t("sortFields.creationDate")}
+                </SelectItem>
+                <SelectItem value="updatedAt">
+                  {t("sortFields.lastUpdate")}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <Select
+              value={sortOrder}
+              onValueChange={(value: "asc" | "desc") =>
+                handleSortChange(sortField, value)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select order" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="desc">
+                  {t("sortFields.latestFirst")}
+                </SelectItem>
+                <SelectItem value="asc">
+                  {t("sortFields.oldestFirst")}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 items-end">
-          <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
-        </div>
-      </CardHeader>
-      <div className="flex items-center justify-between gap-2 space-y-0  px-6 py-2">
-        <Label>{t("sortBy")}</Label>
-        <div className="flex items-center gap-2">
-          <Select
-            value={sortField}
-            onValueChange={(value: "createdAt" | "updatedAt") =>
-              handleSortChange(value, sortOrder)
-            }
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select field" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="createdAt">
-                {t("sortFields.creationDate")}
-              </SelectItem>
-              <SelectItem value="updatedAt">
-                {t("sortFields.lastUpdate")}
-              </SelectItem>
-            </SelectContent>
-          </Select>
-          <Select
-            value={sortOrder}
-            onValueChange={(value: "asc" | "desc") =>
-              handleSortChange(sortField, value)
-            }
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select order" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="desc">
-                {t("sortFields.latestFirst")}
-              </SelectItem>
-              <SelectItem value="asc">{t("sortFields.oldestFirst")}</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      <CardContent className="pt-6">
-        <div className="flex flex-col space-y-8">
-          {paginatedVersions?.map((item: ScriptModel, index: number) => (
-            <div key={index}>
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="font-semibold">
-                  {t("version")} {item.version}
-                </span>
+        <CardContent className="pt-6">
+          <div className="flex flex-col space-y-8">
+            {paginatedVersions?.map((item: ScriptModel, index: number) => (
+              <div key={index}>
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="font-semibold">
+                    {t("version")} {item.version}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleViewDetails(item)}
+                  >
+                    {t("viewDetails")}
+                  </Button>
+                </div>
+                <Card>
+                  <CardContent className="p-4 grid grid-cols-2 gap-2">
+                    <div className="flex gap-1">
+                      <span className="mb-1 text-sm font-medium">
+                        {t("version")}:
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {item.version}
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="mb-1 text-sm font-medium">
+                        {t("modelVersion")}:
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {item.model_version}
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="mb-1 text-sm font-medium">
+                        {t("createdAt")}:
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {formatDate(item.createdAt)}
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="mb-1 text-sm font-medium">
+                        {t("lastUpdate")}:
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {formatDate(item.updatedAt)}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-              <Card>
-                <CardContent className="p-4 grid grid-cols-2 gap-2">
-                  <div className="flex gap-1">
-                    <span className="mb-1 text-sm font-medium">
-                      {t("version")}:
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {item.version}
-                    </span>
-                  </div>
-                  <div className="flex gap-1">
-                    <span className="mb-1 text-sm font-medium">
-                      {t("modelVersion")}:
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {item.model_version}
-                    </span>
-                  </div>
-                  <div className="flex gap-1">
-                    <span className="mb-1 text-sm font-medium">
-                      {t("createdAt")}:
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {formatDate(item.createdAt)}
-                    </span>
-                  </div>
-                  <div className="flex gap-1">
-                    <span className="mb-1 text-sm font-medium">
-                      {t("lastUpdate")}:
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {formatDate(item.updatedAt)}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
-          {filteredScripts?.length === 0 && (
-            <div className="text-center text-muted-foreground py-4">
-              {t("noScripts")}
-            </div>
-          )}
-          {totalPages > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-              className="mt-4"
-            />
-          )}
-        </div>
-      </CardContent>
-    </Card>
+            ))}
+            {filteredScripts?.length === 0 && (
+              <div className="text-center text-muted-foreground py-4">
+                {t("noScripts")}
+              </div>
+            )}
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                className="mt-4"
+              />
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-4xl h-[80vh]">
+          <DialogHeader>
+            <DialogTitle>
+              {t("version")} {selectedScript?.version}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 overflow-hidden">
+            {loadingDetails ? (
+              <div className="flex items-center justify-center h-full">
+                <p className="text-sm text-muted-foreground">{t("loading")}</p>
+              </div>
+            ) : (
+              <Editor
+                height="100%"
+                language="json"
+                theme={theme === "dark" ? "vs-dark" : "light"}
+                value={
+                  scriptDetails ? JSON.stringify(scriptDetails, null, 2) : "{}"
+                }
+                options={{
+                  inlineSuggest: { enabled: true },
+                  fontSize: 14,
+                  formatOnType: true,
+                  autoClosingBrackets: "always",
+                  minimap: { enabled: false },
+                  readOnly: true,
+                }}
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

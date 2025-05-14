@@ -409,8 +409,20 @@
         "models": {
             "title": "Models",
             "back": "Back",
+            "loadingDetails": "Loading model details...",
             "loading": "Loading models...",
             "checkingAccess": "Checking access permissions...",
+            "accessDenied": {
+                "title": "Access Denied",
+                "description": "You don't have permission to view this model. Please contact the model owner if you believe this is an error.",
+                "returnButton": "Return to My Models"
+            },
+            "notFound": {
+                "title": "Model Not Found",
+                "invalidTab": "Invalid Tab",
+                "description": "The requested tab does not exist. Please select a valid tab or return to your models.",
+                "returnButton": "Return to My Models"
+            },
             "searchPlaceholder": "Search models...",
             "favoriteUpdated": "Favorite updated",
             "favoriteUpdatedDescription": "Model favorite status has been updated.",
@@ -599,6 +611,7 @@
                 "createdAt": "Created At",
                 "lastUpdate": "Last Update",
                 "noScripts": "No scripts found in the selected date range",
+                "viewDetails": "View Details",
                 "toast": {
                     "fetchError": "Error fetching model scripts",
                     "fetchErrorDesc": "Failed to fetch model scripts. Please try again."
@@ -613,6 +626,7 @@
                 "description": "Description:",
                 "noDescription": "No description",
                 "tags": "Tags:",
+                "noTags": "No tags found.",
                 "noVersions": "No versions found in the selected date range",
                 "toast": {
                     "fetchError": "Error fetching model versions",
