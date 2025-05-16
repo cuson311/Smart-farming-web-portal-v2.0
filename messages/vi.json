@@ -424,6 +424,12 @@
           },
           "errors": {
             "duplicateTime": "Thời gian này đã được sử dụng"
+          },
+          "toast": {
+            "saveSuccess": "Lưu thành công",
+            "saveSuccessDescription": "Lịch trình tưới đã được lưu thành công",
+            "saveError": "Lưu thất bại",
+            "saveErrorDescription": "Không thể lưu lịch trình tưới"
           }
         }
       },
