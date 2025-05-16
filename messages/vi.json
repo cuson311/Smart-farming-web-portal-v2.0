@@ -191,6 +191,8 @@
       },
       "detail": {
         "cancel": "Hủy",
+        "save": "Lưu",
+        "edit": "Chỉnh sửa",
         "delete": "Xóa",
         "back": "Quay lại",
         "loading": "Đang tải...",
@@ -230,7 +232,19 @@
           "ratingDeleteSuccess": "Xoá đánh giá thành công",
           "ratingDeleteSuccessDescription": "Đánh giá của bạn đã được xoá thành công",
           "ratingDeleteError": "Xoá đánh giá thất bại",
-          "ratingDeleteErrorDescription": "Không thể xoá đánh giá của bạn"
+          "ratingDeleteErrorDescription": "Không thể xoá đánh giá của bạn",
+          "downloadSuccess": "Tải xuống thành công",
+          "downloadSuccessDescription": "File đã được tải xuống thành công.",
+          "downloadError": "Tải xuống thất bại",
+          "downloadErrorDescription": "Không thể tải xuống file.",
+          "newVersionSuccess": "Tạo phiên bản mới thành công",
+          "newVersionSuccessDescription": "Phiên bản mới đã được tạo thành công.",
+          "newVersionError": "Tạo phiên bản mới thất bại",
+          "newVersionErrorDescription": "Không thể tạo phiên bản mới.",
+          "deleteVersionSuccess": "Xóa phiên bản thành công",
+          "deleteVersionSuccessDescription": "Phiên bản đã được xóa thành công.",
+          "deleteVersionError": "Xóa phiên bản thất bại",
+          "deleteVersionErrorDescription": "Không thể xóa phiên bản."
         },
         "loadingDetails": "Đang tải chi tiết kịch bản...",
         "scriptDetails": {
@@ -260,7 +274,7 @@
           "allPlantTypes": "Tất cả loại cây trồng"
         },
         "code": {
-          "title": "Mã kịch bản",
+          "title": "Thông tin kịch bản",
           "version": "Phiên bản {version}",
           "currentVersion": "Phiên bản hiện tại: {version}",
           "reload": "Tải lại",
@@ -364,6 +378,53 @@
         "versionCompare": {
           "title": "So sánh phiên bản",
           "selectVersion": "Chọn phiên bản"
+        },
+        "irrigationSchedule": {
+          "title": "Lịch trình tưới",
+          "timeSetup": {
+            "title": "Thiết lập thời gian",
+            "repeatEvery": "Lặp lại mỗi",
+            "days": "ngày",
+            "weeks": "tuần"
+          },
+          "wateringEvents": {
+            "title": "Các lần tưới",
+            "eventsPerDay": "Số lần tưới mỗi ngày",
+            "event": "Lần tưới #{number}",
+            "time": "Thời gian",
+            "duration": "Thời lượng",
+            "waterVolume": "Lượng nước",
+            "method": "Phương pháp",
+            "minutes": "phút",
+            "hours": "giờ",
+            "liters": "lít",
+            "cubicMeters": "m³",
+            "methods": {
+              "drip": "Nhỏ giọt",
+              "spray": "Phun",
+              "soak": "Tưới thấm",
+              "manual": "Tưới tay"
+            }
+          },
+          "conditions": {
+            "title": "Điều kiện tưới",
+            "skipIfRaining": "Bỏ qua nếu trời mưa",
+            "minSoilMoisture": "Độ ẩm đất tối thiểu (%)",
+            "maxTemperature": "Nhiệt độ tối đa (°C)",
+            "minAirHumidity": "Độ ẩm không khí tối thiểu (%)",
+            "maxWindSpeed": "Tốc độ gió tối đa (m/s)"
+          },
+          "notes": {
+            "title": "Ghi chú",
+            "placeholder": "Nhập ghi chú hoặc thông tin bổ sung về lịch trình tưới..."
+          },
+          "actions": {
+            "cancel": "Hủy",
+            "save": "Lưu"
+          },
+          "errors": {
+            "duplicateTime": "Thời gian này đã được sử dụng"
+          }
         }
       },
       "list": {

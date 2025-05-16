@@ -57,6 +57,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { vietnamProvinces, plantTypes } from "@/lib/constant";
+
 interface NewScriptDialogProps {
   onScriptCreated: () => void;
 }
@@ -154,7 +155,7 @@ const SearchResults = ({
 
 const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
   const { theme } = useTheme();
-  const t = useTranslations("dashboard.scripts.scriptModal"); // Use translations for this component
+  const t = useTranslations("dashboard.scripts.scriptModal");
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [newScript, setNewScript] = useState<NewScriptData>({
@@ -166,10 +167,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     plant_type: [],
   });
 
-  // Added file data state from first file
-  const [fileData, setFileData] = useState("");
-
-  // User search states from first file
+  // User search states
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<SearchUser[]>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
@@ -180,13 +178,6 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
   const [plantTypePopoverOpen, setPlantTypePopoverOpen] = useState(false);
   const [locationSearchTerm, setLocationSearchTerm] = useState("");
   const [plantTypeSearchTerm, setPlantTypeSearchTerm] = useState("");
-
-  // Load default template when dialog opens
-  useEffect(() => {
-    if (open) {
-      fetchDefaultTemplate();
-    }
-  }, [open]);
 
   // Update share_id when sharedUsers changes
   useEffect(() => {
@@ -216,31 +207,10 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
       location: [],
       plant_type: [],
     });
-    setFileData("");
     setSharedUsers([]);
     setSearchTerm("");
     setSearchResults([]);
     setShowSearchResults(false);
-  };
-
-  // Fetch default template function from first file
-  const fetchDefaultTemplate = () => {
-    fetch("/scriptTemplates/defaultTemplate.json")
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch JSON");
-        return response.json();
-      })
-      .then((jsonData) => {
-        setFileData(JSON.stringify(jsonData, null, 2));
-      })
-      .catch((error) => console.error("Error when reading JSON:", error));
-  };
-
-  // Handle editor change from first file
-  const handleEditorChange = (value: string | undefined) => {
-    if (value !== undefined) {
-      setFileData(value);
-    }
   };
 
   const handleNewScriptChange = (
@@ -304,15 +274,12 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
   // Handle location selection
   const handleLocationSelect = (location: string) => {
     setNewScript((prev) => {
-      // Check if location is already selected
       if (prev.location?.includes(location)) {
-        // Remove location if already selected
         return {
           ...prev,
           location: prev.location.filter((loc) => loc !== location),
         };
       } else {
-        // Add location if not already selected
         return {
           ...prev,
           location: [...(prev.location || []), location],
@@ -324,15 +291,12 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
   // Handle plant type selection
   const handlePlantTypeSelect = (plantType: string) => {
     setNewScript((prev) => {
-      // Check if plant type is already selected
       if (prev.plant_type?.includes(plantType)) {
-        // Remove plant type if already selected
         return {
           ...prev,
           plant_type: prev.plant_type.filter((type) => type !== plantType),
         };
       } else {
-        // Add plant type if not already selected
         return {
           ...prev,
           plant_type: [...(prev.plant_type || []), plantType],
@@ -357,59 +321,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
     }));
   };
 
-  // Handle upload file function from first file
-  const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const jsonData = JSON.parse(e.target?.result as string);
-        setFileData(JSON.stringify(jsonData, null, 2));
-      } catch (error) {
-        console.error("Invalid JSON file:", error);
-        toast({
-          title: t("invalidFile"),
-          description: t("invalidFileDescription"),
-          variant: "destructive",
-        });
-      }
-    };
-    reader.readAsText(file);
-  };
-
-  // Submit file function from first file
-  const handleSubmitFile = async (userId: string, scriptId: string) => {
-    if (!fileData) return;
-
-    try {
-      const jsonBlob = new Blob([fileData], { type: "application/json" });
-      const jsonFile = new File([jsonBlob], "v1.0.json", {
-        type: "application/json",
-      });
-      const formFileData = new FormData();
-      formFileData.append("files", jsonFile);
-      formFileData.append("remote_path", `/${userId}/script/${scriptId}/`);
-
-      // Uncomment and adjust this based on your actual API implementation
-      const response = await scriptApi.uploadScriptFile(formFileData);
-      console.log(
-        "File would be uploaded with path:",
-        `/${userId}/script/${scriptId}/`,
-        response
-      );
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      toast({
-        title: t("uploadFailed"),
-        description: t("uploadFailedDescription"),
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Modified submit function to include API calls from first file
+  // Modified submit function
   const handleCreateScript = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
@@ -441,7 +353,6 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
         newScript.share_id = [];
       }
 
-      // Uncomment and adjust these based on your actual API implementation
       const scriptId = await scriptApi.createScript(userId, newScript);
 
       // Only create notifications for private scripts with shared users
@@ -452,8 +363,6 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
           scriptId._id
         );
       }
-
-      handleSubmitFile(userId, scriptId._id);
 
       toast({
         title: t("toast.createSuccess"),
@@ -466,17 +375,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
         onScriptCreated();
       }
 
-      setNewScript({
-        name: "",
-        description: "",
-        privacy: "public",
-        share_id: [],
-        location: [],
-        plant_type: [],
-      });
-      setFileData("");
-      setSharedUsers([]);
-      setOpen(false);
+      handleCloseDialog();
     } catch (error) {
       console.error("Error creating script:", error);
       toast({
@@ -539,7 +438,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                 />
               </div>
 
-              {/* Location selection - NEW SECTION */}
+              {/* Location selection */}
               <div className="grid gap-2">
                 <Label>{t("locationLabel")}</Label>
                 <div className="flex flex-col space-y-2">
@@ -618,7 +517,7 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                 </div>
               </div>
 
-              {/* Plant Type selection - NEW SECTION */}
+              {/* Plant Type selection */}
               <div className="grid gap-2">
                 <Label>{t("plantTypeLabel")}</Label>
                 <div className="flex flex-col space-y-2">
@@ -815,64 +714,6 @@ const NewScriptDialog = ({ onScriptCreated }: NewScriptDialogProps) => {
                   )}
                 </div>
               )}
-            </div>
-
-            {/* Script JSON section - now as a separate row spanning full width */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <Label className="text-lg font-medium">
-                  {t("scriptJsonLabel")}
-                </Label>
-                <div className="flex space-x-2">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    onClick={() => {
-                      const input = document.createElement("input");
-                      input.type = "file";
-                      input.accept = "application/json";
-                      input.onchange = (e) =>
-                        handleUpload(
-                          e as unknown as ChangeEvent<HTMLInputElement>
-                        );
-                      input.click();
-                    }}
-                  >
-                    <Upload className="mr-2 h-4 w-4" />
-                    {t("uploadJsonButton")}
-                  </Button>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button type="button" size="sm" variant="outline">
-                        <FileText className="h-4 w-4 mr-2" />
-                        {t("templateButton")}
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem onClick={fetchDefaultTemplate}>
-                        {t("defaultTemplate")}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </div>
-
-              {/* Code editor - same from first file */}
-              <Editor
-                height="400px"
-                language="json"
-                theme={theme === "dark" ? "vs-dark" : "light"}
-                value={fileData || "{}"}
-                onChange={handleEditorChange}
-                options={{
-                  inlineSuggest: { enabled: true },
-                  fontSize: 14,
-                  formatOnType: true,
-                  autoClosingBrackets: "always",
-                  minimap: { enabled: false },
-                }}
-              />
             </div>
           </div>
           <DialogFooter>
