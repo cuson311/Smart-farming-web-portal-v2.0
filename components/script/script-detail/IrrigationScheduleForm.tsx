@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { useToast } from "@/components/ui/use-toast";
 
 interface WateringEvent {
   time: string;
@@ -70,7 +71,8 @@ export default function IrrigationScheduleForm({
   onCancel,
   disabled = false,
 }: IrrigationScheduleFormProps) {
-  const t = useTranslations("scripts.detail.irrigationSchedule");
+  const t = useTranslations("dashboard.scripts.detail.irrigationSchedule");
+  const { toast } = useToast();
   const [repeat, setRepeat] = useState({ interval: 3, unit: "ngày" });
   const [wateringEventsCount, setWateringEventsCount] = useState(2);
   const [wateringEvents, setWateringEvents] = useState<WateringEvent[]>([
@@ -195,6 +197,10 @@ export default function IrrigationScheduleForm({
 
   const handleSave = () => {
     if (!checkDuplicateTimes(wateringEvents)) {
+      toast({
+        title: t("toast.saveError"),
+        description: t("toast.saveErrorDescription"),
+      });
       return; // Don't save if there are duplicate times
     }
     const formData = {
@@ -261,10 +267,10 @@ export default function IrrigationScheduleForm({
         </div>
         <CardContent className="p-6">
           <div className="flex flex-wrap items-end gap-4">
+            <Label htmlFor="interval" className="mb-4">
+              {t("timeSetup.repeatEvery")}
+            </Label>
             <div>
-              <Label htmlFor="interval" className="mb-2">
-                {t("timeSetup.repeatEvery")}
-              </Label>
               <Input
                 id="interval"
                 type="number"
@@ -295,9 +301,6 @@ export default function IrrigationScheduleForm({
                   <SelectItem value="tuần">{t("timeSetup.weeks")}</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="text-sm bg-muted px-3 py-2 rounded-md font-medium">
-              {t("timeSetup.repeatEvery")} {repeat.interval} {repeat.unit}
             </div>
           </div>
         </CardContent>
@@ -366,7 +369,10 @@ export default function IrrigationScheduleForm({
                     </span>
                     <span className="text-muted-foreground">
                       ({event.time} - {event.duration.value}{" "}
-                      {event.duration.unit})
+                      {event.duration.unit === "phút"
+                        ? t("wateringEvents.minutes")
+                        : t("wateringEvents.hours")}
+                      )
                     </span>
                   </div>
                 </AccordionTrigger>

@@ -425,6 +425,12 @@
                     },
                     "errors": {
                         "duplicateTime": "This time is already used"
+                    },
+                    "toast": {
+                        "saveSuccess": "Save successfully",
+                        "saveSuccessDescription": "Irrigation schedule saved successfully",
+                        "saveError": "Save failed",
+                        "saveErrorDescription": "Failed to save irrigation schedule"
                     }
                 }
             },
