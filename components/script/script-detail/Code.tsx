@@ -4,12 +4,12 @@ import {
   Save,
   RefreshCw,
   Download,
-  Upload,
   Plus,
   Edit,
   Trash,
+  X,
+  ChevronDown,
 } from "lucide-react";
-import Editor from "@monaco-editor/react";
 import { saveAs } from "file-saver";
 import { useTheme } from "next-themes";
 import {
@@ -42,16 +42,20 @@ import { useFetchScriptFile } from "@/hooks/useFetchScript";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "@/components/ui/use-toast";
+import IrrigationScheduleForm from "./IrrigationScheduleForm";
 
 const CodeTab = ({ script }: { script: Script }) => {
   const t = useTranslations("dashboard.scripts.detail");
   const { theme } = useTheme();
   const { userId } = useParams();
   const user_Id: string = Array.isArray(userId) ? userId[0] : userId;
+
   // State for version management
   const [curVersion, setCurVersion] = useState<number>(script.version[0]);
   const [stateVersion, setStateVersion] = useState<number>(script.version[0]);
   const [disableEditFile, setDisableEditFile] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [tempFormData, setTempFormData] = useState<any>(null);
 
   // Get the file data
   const {
@@ -63,33 +67,68 @@ const CodeTab = ({ script }: { script: Script }) => {
   // Update stateVersion when curVersion changes
   useEffect(() => {
     setStateVersion(curVersion);
+    setIsEditing(false);
+    setDisableEditFile(true);
   }, [curVersion]);
 
-  // Handle editor content changes
-  const handleEditorChange = (value: string | undefined) => {
-    if (value !== undefined) {
-      setFileData(value);
+  // Handle new version creation
+  const handleNewVersion = async () => {
+    try {
+      const newVersion = Math.max(...script.version) + 1;
+      const newVersionArr = [...script.version, newVersion].sort(
+        (a, b) => b - a
+      );
+
+      // Create new version file with current version's data
+      const jsonBlob = new Blob([fileData || ""], { type: "application/json" });
+      const jsonFile = new File([jsonBlob], `v${newVersion.toFixed(1)}.json`, {
+        type: "application/json",
+      });
+
+      const formFileData = new FormData();
+      formFileData.append("files", jsonFile);
+      formFileData.append("remote_path", `/${userId}/script/${script._id}/`);
+
+      await scriptApi.uploadScriptFile(formFileData);
+
+      // Update script version info
+      await scriptApi.updateScriptInfo(user_Id, script._id, {
+        version: newVersionArr,
+      });
+
+      // Update local state
+      script.version = newVersionArr;
+      setCurVersion(newVersion);
+      setStateVersion(newVersion);
+
+      // Enable editing mode
+      setDisableEditFile(false);
+      setIsEditing(true);
+
+      // Reload file data to ensure form is initialized with new version data
+      await reloadFileData();
+
+      toast({
+        title: t("toast.newVersionSuccess"),
+        description: t("toast.newVersionSuccessDescription"),
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("Error creating new version:", error);
+      toast({
+        title: t("toast.newVersionError"),
+        description: t("toast.newVersionErrorDescription"),
+        variant: "destructive",
+      });
     }
   };
 
   // Handle file submission/saving
-  const handleSubmitFile = async (newFile = false, newVersion = -1) => {
-    if (!fileData) return;
-
+  const handleSubmitFile = async (formData: any) => {
     try {
       let newVersionArr = [...script.version];
 
-      if (newFile) {
-        newVersionArr.push(newVersion);
-        newVersionArr = newVersionArr.sort((a, b) => b - a);
-
-        await scriptApi.updateScriptInfo(user_Id, script._id, {
-          version: newVersionArr,
-        });
-
-        setCurVersion(newVersion);
-        script.version = newVersionArr;
-      } else if (stateVersion !== curVersion) {
+      if (stateVersion !== curVersion) {
         await scriptApi.renameFile(
           user_Id,
           script._id,
@@ -110,12 +149,12 @@ const CodeTab = ({ script }: { script: Script }) => {
         script.version = newVersionArr;
       }
 
-      const jsonBlob = new Blob([fileData], { type: "application/json" });
+      const jsonBlob = new Blob([JSON.stringify(formData, null, 2)], {
+        type: "application/json",
+      });
       const jsonFile = new File(
         [jsonBlob],
-        newFile
-          ? `v${newVersion.toFixed(1)}.json`
-          : `v${stateVersion.toFixed(1)}.json`,
+        `v${stateVersion.toFixed(1)}.json`,
         { type: "application/json" }
       );
 
@@ -125,49 +164,34 @@ const CodeTab = ({ script }: { script: Script }) => {
 
       await scriptApi.uploadScriptFile(formFileData);
 
+      setIsEditing(false);
+      setDisableEditFile(true);
+      setTempFormData(null);
+
+      // Reload file data after successful save
+      await reloadFileData();
+
       toast({
-        title: t("toast.saveSuccess"),
-        description: t("toast.saveSuccessDescription"),
+        title: t("toast.updateSuccess"),
+        description: t("toast.updateSuccessDescription"),
         variant: "default",
       });
     } catch (error) {
       console.error("Error uploading file:", error);
       toast({
-        title: t("toast.saveError"),
-        description: t("toast.saveErrorDescription"),
+        title: t("toast.updateError"),
+        description: t("toast.updateErrorDescription"),
         variant: "destructive",
       });
     }
   };
 
-  // Handle creating a new version
-  const handleNewVersion = async () => {
-    const versions = script.version || [];
-    const newVersion = Math.floor((versions[0] || 0) + 1.0);
-
-    setFileData("{}");
-    setStateVersion(newVersion);
-
-    // Call handleSubmitFile with newFile=true and the new version number
-    handleSubmitFile(true, newVersion);
-  };
-
-  // Handle file upload
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const jsonData = JSON.parse(e.target?.result as string);
-        setFileData(JSON.stringify(jsonData, null, 2));
-      } catch (error) {
-        console.error("Invalid JSON file:", error);
-        alert("Invalid JSON file. Please upload a valid JSON.");
-      }
-    };
-    reader.readAsText(file);
+  // Handle cancel editing
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setDisableEditFile(true);
+    setTempFormData(null);
+    reloadFileData();
   };
 
   // Handle version deletion
@@ -191,9 +215,6 @@ const CodeTab = ({ script }: { script: Script }) => {
 
       if (newVersions.length > 0) {
         setCurVersion(newVersions[0]);
-      } else {
-        // Handle case with no versions left
-        handleNewVersion();
       }
 
       toast({
@@ -213,7 +234,14 @@ const CodeTab = ({ script }: { script: Script }) => {
 
   // Handle file download
   const handleDownload = () => {
-    if (!fileData) return;
+    if (!fileData) {
+      toast({
+        title: t("toast.downloadError"),
+        description: t("toast.downloadErrorDescription"),
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
       const jsonObject = JSON.parse(fileData);
@@ -221,8 +249,19 @@ const CodeTab = ({ script }: { script: Script }) => {
         type: "application/json",
       });
       saveAs(blob, `v${curVersion.toFixed(1)}.json`);
+
+      toast({
+        title: t("toast.downloadSuccess"),
+        description: t("toast.downloadSuccessDescription"),
+        variant: "default",
+      });
     } catch (error) {
       console.error("Error downloading file:", error);
+      toast({
+        title: t("toast.downloadError"),
+        description: t("toast.downloadErrorDescription"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -235,35 +274,47 @@ const CodeTab = ({ script }: { script: Script }) => {
             <CardTitle>{t("code.title")}</CardTitle>
           </div>
           <div className="flex items-center gap-2">
-            {/* Version selector */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  {t("code.version", { version: curVersion.toFixed(1) })}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {script.version
-                  ?.sort((a, b) => b - a)
-                  .map((version) => (
-                    <DropdownMenuItem
-                      key={version}
-                      onClick={() => {
-                        setCurVersion(version);
-                        reloadFileData();
-                      }}
-                    >
-                      {t("code.version", { version: version.toFixed(1) })}
-                    </DropdownMenuItem>
-                  ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* New version button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleNewVersion}
+              className="ml-2"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              {t("code.newVersion")}
+            </Button>
           </div>
         </div>
         <CardDescription className="flex items-center justify-between">
-          <span>
-            {t("code.currentVersion", { version: curVersion.toFixed(1) })}
-          </span>
+          {/* Version selector */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                {t("code.version", { version: curVersion.toFixed(1) })}
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {script.version
+                ?.sort((a, b) => b - a)
+                .map((version) => (
+                  <DropdownMenuItem
+                    key={version}
+                    onClick={() => {
+                      setCurVersion(version);
+                      reloadFileData();
+                    }}
+                  >
+                    {t("code.version", { version: version.toFixed(1) })}
+                  </DropdownMenuItem>
+                ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <div className="flex items-center gap-1">
             {/* Reload button */}
@@ -293,63 +344,35 @@ const CodeTab = ({ script }: { script: Script }) => {
             {typeof window !== "undefined" &&
               localStorage.getItem("userId") === userId && (
                 <>
-                  {!disableEditFile && (
-                    <>
-                      {/* New version button */}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={handleNewVersion}
-                        title={t("code.newVersion")}
-                      >
-                        <Plus className="h-4 w-4" />
-                      </Button>
-
-                      {/* Upload button */}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        asChild
-                        title={t("code.upload")}
-                      >
-                        <label>
-                          <Upload className="h-4 w-4" />
-                          <input
-                            type="file"
-                            className="sr-only"
-                            accept="application/json"
-                            onChange={handleUpload}
-                          />
-                        </label>
-                      </Button>
-
-                      {/* Save button */}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleSubmitFile()}
-                        title={t("code.save")}
-                      >
-                        <Save className="h-4 w-4" />
-                      </Button>
-
-                      {/* Delete version button */}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setOpenDeleteDialog(true)}
-                        title={t("code.deleteVersion")}
-                      >
-                        <Trash className="h-4 w-4" />
-                      </Button>
-                    </>
-                  )}
-
+                  {/* Delete version button */}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setOpenDeleteDialog(true)}
+                    title={t("code.deleteVersion")}
+                  >
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </>
+              )}
+            {typeof window !== "undefined" &&
+              localStorage.getItem("userId") === userId &&
+              disableEditFile && (
+                <>
                   {/* Toggle edit mode button */}
                   <Button
-                    variant={disableEditFile ? "ghost" : "secondary"}
-                    size="icon"
-                    onClick={() => setDisableEditFile((prev) => !prev)}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      if (disableEditFile) {
+                        // Enter edit mode
+                        setDisableEditFile(false);
+                        setIsEditing(true);
+                      } else {
+                        // Exit edit mode
+                        handleCancelEdit();
+                      }
+                    }}
                     title={
                       disableEditFile
                         ? t("code.enableEditing")
@@ -357,6 +380,7 @@ const CodeTab = ({ script }: { script: Script }) => {
                     }
                   >
                     <Edit className="h-4 w-4" />
+                    {disableEditFile ? t("edit") : t("cancel")}
                   </Button>
                 </>
               )}
@@ -364,20 +388,11 @@ const CodeTab = ({ script }: { script: Script }) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Editor
-          height="500px"
-          language="json"
-          theme={theme === "dark" ? "vs-dark" : "light"}
-          value={fileData || "{}"}
-          onChange={handleEditorChange}
-          options={{
-            inlineSuggest: { enabled: true },
-            fontSize: 14,
-            formatOnType: true,
-            autoClosingBrackets: "always",
-            minimap: { enabled: false },
-            readOnly: disableEditFile,
-          }}
+        <IrrigationScheduleForm
+          initialData={fileData ? JSON.parse(fileData) : null}
+          onSave={handleSubmitFile}
+          onCancel={handleCancelEdit}
+          disabled={disableEditFile}
         />
       </CardContent>
 

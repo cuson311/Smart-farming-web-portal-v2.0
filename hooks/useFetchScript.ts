@@ -56,7 +56,7 @@ const useFetchScriptFile = (
         1
       )}.json`;
       const data = await scriptApi.getScriptFile(filePath);
-      //console.log("Fetching File data: ", data);
+      console.log("Fetching File data: ", data);
       setData(JSON.stringify(data, null, 2));
     } catch (err) {
       console.error("Error fetching script file:", err);

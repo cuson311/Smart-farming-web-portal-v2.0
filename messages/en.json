@@ -192,6 +192,8 @@
             },
             "detail": {
                 "cancel": "Cancel",
+                "save": "Save",
+                "edit": "Edit",
                 "delete": "Delete",
                 "back": "Back",
                 "loading": "Loading...",
@@ -231,7 +233,19 @@
                     "ratingDeleteSuccess": "Rating deleted",
                     "ratingDeleteSuccessDescription": "Your rating was deleted successfully",
                     "ratingDeleteError": "Rating delete failed",
-                    "ratingDeleteErrorDescription": "Failed to delete your rating"
+                    "ratingDeleteErrorDescription": "Failed to delete your rating",
+                    "downloadSuccess": "Download successful",
+                    "downloadSuccessDescription": "The file has been downloaded successfully.",
+                    "downloadError": "Download failed",
+                    "downloadErrorDescription": "Failed to download the file.",
+                    "newVersionSuccess": "New version created",
+                    "newVersionSuccessDescription": "A new version has been created successfully.",
+                    "newVersionError": "Create new version failed",
+                    "newVersionErrorDescription": "Failed to create a new version.",
+                    "deleteVersionSuccess": "Version deleted",
+                    "deleteVersionSuccessDescription": "The version has been deleted successfully.",
+                    "deleteVersionError": "Delete version failed",
+                    "deleteVersionErrorDescription": "Failed to delete the version."
                 },
                 "loadingDetails": "Loading script details...",
                 "scriptDetails": {
@@ -365,6 +379,53 @@
                 "versionCompare": {
                     "title": "Compare version",
                     "selectVersion": "Select version"
+                },
+                "irrigationSchedule": {
+                    "title": "Irrigation Schedule",
+                    "timeSetup": {
+                        "title": "Time Setup",
+                        "repeatEvery": "Repeat every",
+                        "days": "days",
+                        "weeks": "weeks"
+                    },
+                    "wateringEvents": {
+                        "title": "Watering Events",
+                        "eventsPerDay": "Events per day",
+                        "event": "Event #{number}",
+                        "time": "Time",
+                        "duration": "Duration",
+                        "waterVolume": "Water Volume",
+                        "method": "Method",
+                        "minutes": "minutes",
+                        "hours": "hours",
+                        "liters": "liters",
+                        "cubicMeters": "m³",
+                        "methods": {
+                            "drip": "Drip",
+                            "spray": "Spray",
+                            "soak": "Soak",
+                            "manual": "Manual"
+                        }
+                    },
+                    "conditions": {
+                        "title": "Watering Conditions",
+                        "skipIfRaining": "Skip if raining",
+                        "minSoilMoisture": "Min Soil Moisture (%)",
+                        "maxTemperature": "Max Temperature (°C)",
+                        "minAirHumidity": "Min Air Humidity (%)",
+                        "maxWindSpeed": "Max Wind Speed (m/s)"
+                    },
+                    "notes": {
+                        "title": "Notes",
+                        "placeholder": "Enter additional notes or information about the irrigation schedule..."
+                    },
+                    "actions": {
+                        "cancel": "Cancel",
+                        "save": "Save"
+                    },
+                    "errors": {
+                        "duplicateTime": "This time is already used"
+                    }
                 }
             },
             "list": {
