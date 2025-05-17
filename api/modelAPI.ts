@@ -5,6 +5,7 @@ import {
   UpdateModelData,
 } from "@/types/model";
 import axiosInstance from "./axiosInstance";
+import qs from "qs";
 
 const modelApi = {
   getModels: async (userId: string) => {
@@ -12,14 +13,24 @@ const modelApi = {
     return response.data;
   },
   getModelInfo: async (userId: string, modelName: string) => {
-    const response = await axiosInstance.get(
-      `/${userId}/models/get?name=${modelName}`
-    );
+    const response = await axiosInstance.get(`/models/get?name=${modelName}`);
     return response.data;
   },
-  getModelVersion: async (userId: string, modelName: string) => {
+  getModelVersion: async (
+    modelName: string,
+    maxResults: number = 10,
+    pageToken?: string
+  ) => {
+    const query = qs.stringify(
+      {
+        max_results: maxResults,
+        page_token: pageToken,
+        filter: `name='${modelName}'`,
+      },
+      { arrayFormat: "repeat" }
+    );
     const response = await axiosInstance.get(
-      `/${userId}/models/versions/get-all?name=${modelName}`
+      `/model-versions/get-all?${query}`
     );
     return response.data;
   },

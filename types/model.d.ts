@@ -30,6 +30,23 @@ export interface Model {
   creation_timestamp?: string;
   last_updated_timestamp?: string;
 }
+export interface RegisteredModelsResponse {
+  registered_models: RegisteredModel[];
+}
+export interface RegisteredModel {
+  name: string;
+  creation_timestamp: string;
+  last_updated_timestamp: string;
+  description: string;
+  latest_versions?: ModelVersion[];
+  tags?: Tag[];
+}
+export type ModelsListOptions = {
+  max_results?: number;
+  order_by?: "name ASC" | "name DESC";
+  page_token?: string;
+  filter?: string;
+};
 export interface NewModelData {
   name: string;
   description: string;

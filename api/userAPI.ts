@@ -1,6 +1,7 @@
 import { ScriptsListOptions } from "@/types/script";
 import axiosInstance from "./axiosInstance";
 import qs from "qs";
+import { ModelsListOptions } from "@/types/model";
 
 const userApi = {
   profile: async (userId: string) => {
@@ -35,8 +36,9 @@ const userApi = {
     return response.data;
   },
 
-  modelsList: async (userId: string) => {
-    const response = await axiosInstance.get(`/${userId}/models/get-all`);
+  modelsList: async (options?: ModelsListOptions) => {
+    const query = qs.stringify(options, { arrayFormat: "repeat" });
+    const response = await axiosInstance.get(`/models/search?${query}`);
     return response.data;
   },
 

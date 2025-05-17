@@ -1,38 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useFetchModelsList } from "@/hooks/useFetchUser";
-import { Model } from "@/types/model";
+import { ModelsListOptions } from "@/types/model";
 import ModelList from "@/components/model/model-list/ModelList";
 import NewModelDialog from "@/components/model/model-list/NewModel";
-import { useTranslations } from "next-intl"; // Import next-intl
+import { useTranslations } from "next-intl";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const ModelPage = ({ params }: { params: { userId: string } }) => {
+const ModelPage = () => {
   const { toast } = useToast();
-  const t = useTranslations("dashboard.models"); // Use translations for this page
+  const t = useTranslations("dashboard.models");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filters, setFilters] = useState<ModelsListOptions>({
+    max_results: 10,
+    order_by: "name ASC",
+    filter: "",
+  });
 
   const {
     data: models,
     loading: modelsListLoading,
     refetch: refetchAllModels,
-  } = useFetchModelsList(params.userId);
+  } = useFetchModelsList(filters);
 
-  const filteredModels = models.filter(
-    (model: Model) =>
-      model.alt_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      model.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Effect to update search filter when search query changes
+  useEffect(() => {
+    const searchFilter = searchQuery ? `name LIKE '%${searchQuery}%'` : "";
+    setFilters((prev) => ({
+      ...prev,
+      filter: searchFilter,
+    }));
+  }, [searchQuery]);
 
+  // Effect to refetch data when filters change
+  useEffect(() => {
+    console.log("Current filters:", filters);
+    refetchAllModels(filters);
+  }, [filters, refetchAllModels]);
+
+  const handleFilterChange = (
+    key: keyof ModelsListOptions,
+    value: string | number
+  ) => {
+    console.log("Filter changed:", key, value);
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleSearch = () => {
+    refetchAllModels(filters);
+  };
+  console.log("models", models);
   return (
     <div className="grid gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
-        <div className="flex items-center gap-2">
+      </div>
+      <div className="flex flex-col gap-8 md:flex-row items-center justify-between bg-muted/30 rounded-lg p-4">
+        <div className="flex flex-wrap gap-4 items-center flex-grow">
           <div className="relative flex-1">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
@@ -41,13 +78,57 @@ const ModelPage = ({ params }: { params: { userId: string } }) => {
               className="pl-8"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />
           </div>
-          <NewModelDialog onModelCreated={refetchAllModels} />
+          {/* <NewModelDialog onModelCreated={refetchAllModels} /> */}
+        </div>
+        <div className="flex gap-8">
+          <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
+            <span className="text-sm font-medium">Results per page:</span>
+            <Select
+              value={filters.max_results?.toString() ?? "10"}
+              onValueChange={(value) =>
+                handleFilterChange("max_results", parseInt(value))
+              }
+            >
+              <SelectTrigger className="w-[100px]">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
+            <span className="text-sm font-medium">Sort by:</span>
+            <Select
+              value={filters.order_by ?? "name ASC"}
+              onValueChange={(value) => {
+                console.log("Sort value changed:", value);
+                handleFilterChange("order_by", value);
+              }}
+            >
+              <SelectTrigger className="w-[150px]">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="name ASC">Name (A-Z)</SelectItem>
+                <SelectItem value="name DESC">Name (Z-A)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
-      <ModelList models={filteredModels} loading={modelsListLoading} />
+
+      <ModelList
+        models={models?.registered_models || []}
+        loading={modelsListLoading}
+      />
     </div>
   );
 };
+
 export default ModelPage;

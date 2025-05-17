@@ -10,77 +10,70 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock } from "lucide-react";
+import { Clock, Leaf, Code2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
 import { Model, ModelVersion } from "@/types/model";
-import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
 import { formatDate } from "@/lib/formatDate";
 
 const ModelVersionTab = ({ model }: { model: Model }) => {
   const t = useTranslations("dashboard.models.versions");
   const params = useParams();
-  const userId: string = Array.isArray(params.userId)
-    ? params.userId[0]
-    : params.userId;
-  const modelName: string = model.alt_name;
+  const modelName: string = model.name;
 
   const [versions, setVersions] = useState<ModelVersion[]>([]);
-  const [filteredVersions, setFilteredVersions] = useState<ModelVersion[]>([]);
   const [versionLoading, setVersionLoading] = useState(false);
   const [versionError, setVersionError] = useState<any>(false);
-  const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({});
+  const [nextPageToken, setNextPageToken] = useState<string | undefined>();
+  const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    if (!userId || !modelName) {
-      setVersionError("User ID or Model Name is missing");
+  const getTagValue = (tags: any[], key: string) => {
+    return tags?.find((tag) => tag.key === key)?.value;
+  };
+
+  const fetchVersions = async (pageToken?: string) => {
+    if (!modelName) {
+      setVersionError(" Model Name is missing");
       setVersionLoading(false);
       return;
     }
 
-    const fetchVersions = async () => {
-      setVersionLoading(true);
-      try {
-        const response = await modelApi.getModelVersion(userId, modelName);
+    setVersionLoading(true);
+    try {
+      const response = await modelApi.getModelVersion(modelName, 10, pageToken);
+      if (pageToken) {
+        setVersions((prev) => [...prev, ...response.model_versions]);
+      } else {
         setVersions(response.model_versions);
-        setFilteredVersions(response.model_versions);
-      } catch (err) {
-        setVersionError("Error fetching model");
-        console.error("Error fetching model:", err);
-        toast.error(t("toast.fetchError"), {
-          description: t("toast.fetchErrorDesc"),
-        });
-      } finally {
-        setVersionLoading(false);
       }
-    };
+      setNextPageToken(response.next_page_token);
+      setHasMore(!!response.next_page_token);
+    } catch (err) {
+      setVersionError("Error fetching model");
+      console.error("Error fetching model:", err);
+      toast.error(t("toast.fetchError"), {
+        description: t("toast.fetchErrorDesc"),
+      });
+    } finally {
+      setVersionLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchVersions();
   }, [modelName]);
 
-  // Filter versions based on date range
-  useEffect(() => {
-    if (!dateRange.from || !dateRange.to) {
-      setFilteredVersions(versions);
-      return;
+  const loadMore = () => {
+    if (nextPageToken) {
+      fetchVersions(nextPageToken);
     }
-
-    const filtered = versions.filter((version) => {
-      const versionDate = new Date(version.last_updated_timestamp);
-      return versionDate >= dateRange.from! && versionDate <= dateRange.to!;
-    });
-
-    setFilteredVersions(filtered);
-  }, [dateRange, versions]);
-
-  const handleDateRangeChange = (range: { from?: Date; to?: Date }) => {
-    setDateRange(range);
   };
 
-  console.log("version", versions);
+  console.log("versions", versions);
 
   return (
     <Card>
@@ -89,66 +82,82 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
           <CardTitle className="mb-2">{t("title")}</CardTitle>
           <CardDescription>{t("descriptionSection")}</CardDescription>
         </div>
-        {/* <Button asChild variant="default">
-          <Link href="new-script">
-            <Plus className="mr-2 h-4 w-4" />
-            Create New Version
-          </Link>
-        </Button> */}
-        <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
       </CardHeader>
       <CardContent className="pt-6">
         <div className="flex flex-col space-y-8">
-          {filteredVersions?.map((item, index) => (
-            <div key={index} className="pl-8 relative">
-              <Clock size="16" className="absolute left-2 top-1" />
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="font-semibold">
-                  {t("version")} {item.version}
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {t("lastUpdated")} {formatDate(item.last_updated_timestamp)}
-                </span>
-              </div>
-              <Card>
-                <CardContent className="p-4 space-y-2">
-                  <div>
-                    <span className="text-sm font-medium">{t("name")} </span>
-                    <span className="text-sm text-muted-foreground">
-                      {item.name}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium">
-                      {t("description")}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {item.description ? item.description : t("noDescription")}
-                    </span>
-                  </div>
-                  <div className="flex flex-nowrap gap-2 items-center">
-                    <span className="text-sm font-medium">{t("tags")} </span>
-                    <span className="flex flex-wrap gap-2 mt-1">
-                      {item?.tags && item.tags.length > 0 ? (
-                        item.tags.map((tag, i) => (
-                          <Badge key={i} variant="secondary">
-                            {tag.key}: {tag.value}
-                          </Badge>
-                        ))
-                      ) : (
-                        <span className="text-sm text-muted-foreground italic">
-                          {t("noTags")}
+          {versions?.map((item, index) => {
+            const plantType = getTagValue(item.tags, "plant");
+            const algorithm = getTagValue(item.tags, "algorithm");
+
+            return (
+              <div key={index} className="pl-8 relative">
+                <Clock size="16" className="absolute left-2 top-1" />
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="font-semibold">
+                    {t("version")} {item.version}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    {t("lastUpdated")} {formatDate(item.last_updated_timestamp)}
+                  </span>
+                </div>
+                <Card>
+                  <CardContent className="p-4 space-y-2">
+                    <div>
+                      <span className="text-sm font-medium">{t("name")} </span>
+                      <span className="text-sm text-muted-foreground">
+                        {item.name}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium">
+                        {t("description")}
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {" "}
+                        {item.description
+                          ? item.description
+                          : t("noDescription")}
+                      </span>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Leaf className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">
+                          {t("plant")}:
                         </span>
-                      )}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
-          {filteredVersions?.length === 0 && (
+                        <Badge variant="secondary">
+                          {plantType || t("noPlant")}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Code2 className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">
+                          {t("algorithm")}:
+                        </span>
+                        <Badge variant="secondary">
+                          {algorithm || t("noAlgorithm")}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            );
+          })}
+          {versions?.length === 0 && !versionLoading && (
             <div className="text-center text-muted-foreground py-4">
               {t("noVersions")}
+            </div>
+          )}
+          {hasMore && (
+            <div className="flex justify-center">
+              <Button
+                variant="outline"
+                onClick={loadMore}
+                disabled={versionLoading}
+              >
+                {versionLoading ? t("loading") : t("loadMore")}
+              </Button>
             </div>
           )}
         </div>

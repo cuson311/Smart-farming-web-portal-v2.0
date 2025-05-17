@@ -7,7 +7,11 @@ import {
   UserActivity,
   UserProfile,
 } from "@/types/user";
-import { Model } from "@/types/model";
+import {
+  Model,
+  ModelsListOptions,
+  RegisteredModelsResponse,
+} from "@/types/model";
 import notificationApi from "@/api/notificationAPI";
 
 const useFetchProfile = (userId: string) => {
@@ -137,31 +141,34 @@ const useFetchScriptsList = (userId: string, options?: ScriptsListOptions) => {
   return { data, loading, error, refetch: fetchScriptsList };
 };
 
-const useFetchModelsList = (userId: string) => {
-  const [data, setData] = useState<Model[]>([]);
+const useFetchModelsList = (options?: ModelsListOptions) => {
+  const [data, setData] = useState<RegisteredModelsResponse>({
+    registered_models: [],
+  });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<unknown>(null);
 
-  const fetchModelsList = useCallback(async () => {
-    if (!userId) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const models = await userApi.modelsList(userId);
-      setData(models);
-    } catch (err) {
-      console.error("Error fetching models:", err);
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [userId]);
+  const fetchModelsList = useCallback(
+    async (fetchOptions?: ModelsListOptions) => {
+      setLoading(true);
+      setError(null);
+      console.log("fetchModelsList", fetchOptions);
+      try {
+        const models = await userApi.modelsList(fetchOptions);
+        setData(models);
+      } catch (err) {
+        console.error("Error fetching models:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    fetchModelsList();
-  }, [fetchModelsList]);
+    fetchModelsList(options);
+  }, [fetchModelsList, options]);
 
   return { data, loading, error, refetch: fetchModelsList };
 };

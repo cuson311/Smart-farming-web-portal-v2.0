@@ -1,6 +1,4 @@
 "use client";
-
-import Link from "next/link";
 import { ArrowLeft, ShieldAlert } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -8,12 +6,9 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { useEffect, useState } from "react";
-import modelApi from "@/api/modelAPI";
 import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOverviewCard";
 import { useFetchModelInfo } from "@/hooks/useFetchModel";
 import ModelVersionTab from "@/components/model/model-detail/versions/ModelVersionTab";
-import ScriptModelTab from "@/components/model/model-detail/scripts/ScriptModelTab";
 import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
 
 // This component will be rendered on invalid tab routes
@@ -77,20 +72,9 @@ const ModelDetailPage = ({
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
 
-  const validTabs = ["scripts", "versions", "schedule"];
+  const validTabs = ["versions", "schedule"];
   const isValidTab = tabParam && validTabs.includes(tabParam);
-  const tabName = isValidTab ? tabParam : "scripts";
-
-  const [hasAccess, setHasAccess] = useState<boolean>(false);
-  const [isChecking, setIsChecking] = useState<boolean>(true);
-  const [userId, setUserId] = useState<string>("");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const userId = localStorage.getItem("userId") || "";
-      setUserId(userId);
-    }
-  }, []);
+  const tabName = isValidTab ? tabParam : "versions";
 
   const {
     data: modelInfo,
@@ -100,33 +84,9 @@ const ModelDetailPage = ({
     refetch,
   } = useFetchModelInfo(params.userId, params.modelName);
 
-  useEffect(() => {
-    const fetchModelInfo = async () => {
-      setIsChecking(true);
-      try {
-        const response = await modelApi.getModelInfo(
-          params.userId,
-          params.modelName
-        );
-        if (response.message === "Not allowed to access this model") {
-          setHasAccess(false);
-        } else {
-          setHasAccess(true);
-        }
-      } catch (err) {
-        console.error("Error fetching model info:", err);
-        setHasAccess(false);
-      } finally {
-        setIsChecking(false);
-      }
-    };
-
-    fetchModelInfo();
-  }, [params.userId, params.modelName]);
-
   // If no tab param or invalid tab, render NotFound component
   if (!isValidTab) {
-    return <NotFoundComponent userId={userId} />;
+    return <NotFoundComponent userId={params.userId} />;
   }
 
   // Handle tab change by updating query parameter
@@ -136,97 +96,6 @@ const ModelDetailPage = ({
     router.replace(newUrl);
   };
 
-  // Access denied UI
-  if (!hasAccess && !isChecking) {
-    return (
-      <div className="grid gap-6">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => {
-              const currentLocale = window.location.pathname.split("/")[1];
-              router.push(
-                `/${currentLocale}/dashboard/${params.userId}/models`
-              );
-            }}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">
-              {t("accessDenied.back", { defaultValue: "Back" })}
-            </span>
-          </Button>
-          <h1 className="text-2xl font-bold">
-            {t("accessDenied.title", { defaultValue: "Model Access" })}
-          </h1>
-        </div>
-
-        <Alert variant="destructive" className="bg-destructive/10">
-          <ShieldAlert className="h-5 w-5" />
-          <AlertTitle className="mb-2">
-            {t("accessDenied.title", { defaultValue: "Access Denied" })}
-          </AlertTitle>
-          <AlertDescription>
-            {t("accessDenied.description", {
-              defaultValue:
-                "You don't have permission to view this model. Please contact the model owner if you believe this is an error.",
-            })}
-          </AlertDescription>
-          <div className="mt-4">
-            <Button
-              onClick={() => {
-                const currentLocale = window.location.pathname.split("/")[1];
-                router.push(
-                  `/${currentLocale}/dashboard/${params.userId}/models`
-                );
-              }}
-            >
-              {t("accessDenied.returnButton", {
-                defaultValue: "Return to My Models",
-              })}
-            </Button>
-          </div>
-        </Alert>
-      </div>
-    );
-  }
-
-  // Loading state
-  if (isChecking) {
-    return (
-      <div className="grid gap-6">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => {
-              const currentLocale = window.location.pathname.split("/")[1];
-              router.push(
-                `/${currentLocale}/dashboard/${params.userId}/models`
-              );
-            }}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">
-              {t("back", { defaultValue: "Back" })}
-            </span>
-          </Button>
-          <h1 className="text-2xl font-bold">
-            {t("loading", { defaultValue: "Loading..." })}
-          </h1>
-        </div>
-        <div className="flex items-center justify-center p-12">
-          <p className="text-sm text-muted-foreground">
-            {t("checkingAccess", {
-              defaultValue: "Checking access permissions...",
-            })}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // Normal view with access
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
@@ -247,9 +116,9 @@ const ModelDetailPage = ({
         <div className="lg:col-span-2">
           <Tabs value={tabName} onValueChange={handleTabChange}>
             <TabsList>
-              <TabsTrigger value="scripts">
+              {/* <TabsTrigger value="scripts">
                 {t("tabs.scripts", { defaultValue: "Scripts" })}
-              </TabsTrigger>
+              </TabsTrigger> */}
               <TabsTrigger value="versions">
                 {t("tabs.versions", { defaultValue: "Versions" })}
               </TabsTrigger>
@@ -260,17 +129,6 @@ const ModelDetailPage = ({
             <TabsContent value="versions" className="border-none p-0 pt-4">
               {modelInfo ? (
                 <ModelVersionTab model={modelInfo} />
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  {t("loadingDetails", {
-                    defaultValue: "Loading model details...",
-                  })}
-                </p>
-              )}
-            </TabsContent>
-            <TabsContent value="scripts" className="border-none p-0 pt-4">
-              {modelInfo ? (
-                <ScriptModelTab model={modelInfo} />
               ) : (
                 <p className="text-sm text-muted-foreground">
                   {t("loadingDetails", {
