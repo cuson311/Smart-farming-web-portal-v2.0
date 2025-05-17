@@ -144,6 +144,7 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
               </div>
             );
           })}
+
           {versions?.length === 0 && !versionLoading && (
             <div className="text-center text-muted-foreground py-4">
               {t("noVersions")}

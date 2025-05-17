@@ -1,8 +1,6 @@
 // utils/getCronDescription.ts
 "use client";
 import cronstrue from "cronstrue";
-import "cronstrue/locales/vi";
-import "cronstrue/locales/en"; // hoặc các ngôn ngữ bạn cần
 
 /**
  * Converts a cron expression to a human-readable description
