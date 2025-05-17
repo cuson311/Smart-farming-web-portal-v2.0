@@ -482,7 +482,8 @@
             "accessDenied": {
                 "title": "Access Denied",
                 "description": "You don't have permission to view this model. Please contact the model owner if you believe this is an error.",
-                "returnButton": "Return to My Models"
+                "returnButton": "Return to My Models",
+                "back": "Back to Models"
             },
             "notFound": {
                 "title": "Model Not Found",
@@ -689,17 +690,34 @@
                 "title": "Version History",
                 "descriptionSection": "Track changes and updates to this irrigation model",
                 "version": "Version",
+                "loadMore": "Load More",
+                "loading": "Loading...",
                 "lastUpdated": "Last Updated",
                 "name": "Name:",
                 "description": "Description:",
                 "noDescription": "No description",
                 "tags": "Tags:",
+                "plant": "Plant",
+                "noPlant": "No plant specified",
+                "algorithm": "Algorithm",
+                "noAlgorithm": "No algorithm specified",
                 "noTags": "No tags found.",
                 "noVersions": "No versions found in the selected date range",
                 "toast": {
                     "fetchError": "Error fetching model versions",
                     "fetchErrorDesc": "Failed to fetch model versions. Please try again."
                 }
+            },
+            "card": {
+                "plant": "Plant",
+                "noPlant": "No plant specified",
+                "schedule": "Schedule",
+                "noSchedule": "No schedule specified",
+                "status": "Status",
+                "scheduled": "Scheduled",
+                "notScheduled": "Not Scheduled",
+                "updatedAt": "Updated at",
+                "view": "View"
             }
         }
     },

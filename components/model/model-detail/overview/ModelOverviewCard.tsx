@@ -1,5 +1,6 @@
 import React, { useState, ReactNode } from "react";
 import { useTranslations } from "next-intl";
+import { Leaf, Clock, CheckCircle2, XCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,8 +11,9 @@ import { toast } from "@/hooks/use-toast";
 import modelApi from "@/api/modelAPI";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/formatDate";
-import EditModelModal from "./EditModelsModal";
-import DeleteModelModal from "./DeleteModelsModal";
+import { getCronDescription } from "@/lib/cronTransform";
+// import EditModelModal from "./EditModelsModal";
+// import DeleteModelModal from "./DeleteModelsModal";
 
 const ModelOverviewCard = ({
   model,
@@ -25,50 +27,57 @@ const ModelOverviewCard = ({
     userId: string;
     modelName: string;
   }>();
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const t = useTranslations("dashboard.models");
 
-  const handleEditConfirm = async (updatedModel: UpdateModelData) => {
-    try {
-      await modelApi.updateModelInfo(userId, updatedModel);
-      toast({
-        title: t("toast.updateSuccess"),
-        description: t("toast.updateSuccess"),
-        variant: "default",
-      });
-      setIsEditModalOpen(false);
-      refetch();
-    } catch (error) {
-      console.error("Error updating model:", error);
-      toast({
-        title: t("toast.updateError"),
-        description: t("toast.updateError"),
-        variant: "destructive",
-      });
-    }
+  const getTagValue = (key: string) => {
+    return model.tags?.find((tag) => tag.key === key)?.value;
   };
 
-  const handleDeleteConfirm = async () => {
-    try {
-      await modelApi.deleteModelInfo(userId, model.alt_name);
-      toast({
-        title: t("deleteModel.success"),
-        description: t("deleteModel.success"),
-        variant: "default",
-      });
-      setIsDeleteModalOpen(false);
-      // Navigate back to scripts list or wherever appropriate
-      router.push(`/dashboard/${userId}/models`);
-    } catch (error) {
-      console.error("Error deleting model:", error);
-      toast({
-        title: t("deleteModel.error"),
-        description: t("deleteModel.error"),
-        variant: "destructive",
-      });
-    }
-  };
+  const isEnabled = getTagValue("is_enabled") === "true";
+  const plantType = getTagValue("plant");
+  const schedule = getTagValue("schedule");
+  // const handleEditConfirm = async (updatedModel: UpdateModelData) => {
+  //   try {
+  //     await modelApi.updateModelInfo(userId, updatedModel);
+  //     toast({
+  //       title: t("toast.updateSuccess"),
+  //       description: t("toast.updateSuccess"),
+  //       variant: "default",
+  //     });
+  //     setIsEditModalOpen(false);
+  //     refetch();
+  //   } catch (error) {
+  //     console.error("Error updating model:", error);
+  //     toast({
+  //       title: t("toast.updateError"),
+  //       description: t("toast.updateError"),
+  //       variant: "destructive",
+  //     });
+  //   }
+  // };
+
+  // const handleDeleteConfirm = async () => {
+  //   try {
+  //     await modelApi.deleteModelInfo(userId, model.alt_name);
+  //     toast({
+  //       title: t("deleteModel.success"),
+  //       description: t("deleteModel.success"),
+  //       variant: "default",
+  //     });
+  //     setIsDeleteModalOpen(false);
+  //     // Navigate back to scripts list or wherever appropriate
+  //     router.push(`/dashboard/${userId}/models`);
+  //   } catch (error) {
+  //     console.error("Error deleting model:", error);
+  //     toast({
+  //       title: t("deleteModel.error"),
+  //       description: t("deleteModel.error"),
+  //       variant: "destructive",
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -77,10 +86,7 @@ const ModelOverviewCard = ({
           <CardTitle>{t("modelDetails.title")}</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <DetailItem
-            label={t("modelDetails.name")}
-            value={model?.alt_name !== "" ? model.alt_name : model.name}
-          />
+          <DetailItem label={t("modelDetails.name")} value={model.name} />
           <DetailItem
             label={t("modelDetails.description")}
             value={
@@ -108,24 +114,53 @@ const ModelOverviewCard = ({
             }
           />
 
-          <DetailItem
-            label={t("modelDetails.tags")}
-            value={
-              model?.tags ? (
-                model.tags.map((tag: Tag) => (
-                  <Badge variant="default" className="mr-2" key={tag.key}>
-                    {tag.key} : {tag.value}
+          <div className="space-y-4">
+            <div>
+              <h3 className="mb-2 text-sm font-medium">
+                {t("modelDetails.tags")}
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Leaf className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">
+                    {t("card.plant")}:
+                  </span>
+                  <Badge variant="secondary">
+                    {plantType || t("card.noPlant")}
                   </Badge>
-                ))
-              ) : (
-                <div className="text-sm text-muted-foreground italic">
-                  {t("modelDetails.noTags")}
                 </div>
-              )
-            }
-          />
+                <div className="flex items-center gap-2">
+                  {isEnabled ? (
+                    <CheckCircle2 className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-red-500" />
+                  )}
+                  <span className="text-sm text-muted-foreground">
+                    {t("card.status")}:
+                  </span>
+                  <Badge variant={isEnabled ? "default" : "destructive"}>
+                    {isEnabled ? t("card.scheduled") : t("card.notScheduled")}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">
+                    {t("card.schedule")}:
+                  </span>
+                  <Badge variant="secondary">
+                    {schedule
+                      ? getCronDescription(
+                          schedule,
+                          window.location.pathname.split("/")[1]
+                        )
+                      : t("card.noSchedule")}
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          {typeof window !== "undefined" &&
+          {/* {typeof window !== "undefined" &&
             localStorage.getItem("userId") === userId && (
               <>
                 <Separator />
@@ -151,11 +186,11 @@ const ModelOverviewCard = ({
                   </div>
                 </div>
               </>
-            )}
+            )} */}
         </CardContent>
       </Card>
 
-      <EditModelModal
+      {/* <EditModelModal
         open={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         onConfirm={handleEditConfirm}
@@ -168,7 +203,7 @@ const ModelOverviewCard = ({
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDeleteConfirm}
         modelName={model?.name || "this model"}
-      />
+      /> */}
     </>
   );
 };

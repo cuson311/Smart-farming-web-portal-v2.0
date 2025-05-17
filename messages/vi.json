@@ -481,7 +481,8 @@
       "accessDenied": {
         "title": "Quyền truy cập bị từ chối",
         "description": "Bạn không có quyền truy cập vào mô hình này. Vui lòng liên hệ với chủ sở hữu mô hình để biết thêm thông tin.",
-        "returnButton": "Quay lại"
+        "returnButton": "Quay lại",
+        "back": "Quay lại"
       },
       "notFound": {
         "title": "Không tìm thấy mô hình",
@@ -688,17 +689,34 @@
         "title": "Lịch sử phiên bản",
         "descriptionSection": "Theo dõi thay đổi và cập nhật của mô hình tưới tiêu này",
         "version": "Phiên bản",
+        "loadMore": "Tải thêm",
+        "loading": "Đang tải...",
         "lastUpdated": "Cập nhật lần cuối",
         "name": "Tên:",
         "description": "Mô tả:",
         "noDescription": "Không có mô tả",
         "tags": "Thẻ:",
+        "plant": "Cây trồng",
+        "noPlant": "Chưa có cây trồng",
+        "algorithm": "Thuật toán",
+        "noAlgorithm": "Chưa có thuật toán",
         "noTags": "Không tìm thấy thẻ nào.",
         "noVersions": "Không tìm thấy phiên bản nào trong khoảng thời gian đã chọn",
         "toast": {
           "fetchError": "Lỗi tải phiên bản mô hình",
           "fetchErrorDesc": "Không thể tải phiên bản mô hình. Vui lòng thử lại."
         }
+      },
+      "card": {
+        "plant": "Cây trồng",
+        "noPlant": "Chưa có cây trồng",
+        "schedule": "Lịch tưới",
+        "noSchedule": "Chưa có lịch tưới",
+        "status": "Trạng thái",
+        "scheduled": "Đã lên lịch",
+        "notScheduled": "Chưa lên lịch",
+        "updatedAt": "Cập nhật lúc",
+        "view": "Xem"
       }
     }
   },
