@@ -167,10 +167,12 @@ const ScriptDetailPage = ({
         <Button
           variant="ghost"
           onClick={() => {
-            const currentLocale = window.location.pathname.split("/")[1];
-            router.push(
-              `/${currentLocale}/dashboard/${params.userId}/scripts?tab=all`
-            );
+            //   const currentLocale = window.location.pathname.split("/")[1];
+            //   router.push(
+            //     `/${currentLocale}/dashboard/${params.userId}/scripts?tab=all`
+            //   );
+            // }}
+            router.back();
           }}
         >
           <ArrowLeft className="h-4 w-4" />
