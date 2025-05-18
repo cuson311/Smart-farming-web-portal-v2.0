@@ -733,6 +733,50 @@
                 "updatedAt": "Updated at",
                 "view": "View"
             }
+        },
+        "settings": {
+            "title": "Settings",
+            "tabs": {
+                "general": "General",
+                "notifications": "Notifications",
+                "privacy": "Privacy",
+                "appearance": "Appearance",
+                "language": "Language"
+            },
+            "general": {
+                "profile": "Profile Settings",
+                "profileDescription": "Manage your account settings and preferences",
+                "emailNotifications": "Email Notifications",
+                "receiveEmailUpdates": "Receive email updates",
+                "timezone": "Timezone"
+            },
+            "notifications": {
+                "title": "Notification Preferences",
+                "description": "Configure how you receive notifications",
+                "modelUpdates": "Model Updates",
+                "scriptChanges": "Script Changes",
+                "systemAlerts": "System Alerts"
+            },
+            "privacy": {
+                "title": "Privacy Settings",
+                "description": "Manage your privacy preferences",
+                "publicProfile": "Public Profile",
+                "dataCollection": "Data Collection",
+                "deleteAccount": "Delete Account"
+            },
+            "appearance": {
+                "title": "Appearance Settings",
+                "description": "Customize how the application looks",
+                "theme": "Theme",
+                "light": "Light",
+                "dark": "Dark",
+                "system": "System"
+            },
+            "language": {
+                "title": "Language Settings",
+                "description": "Choose your preferred language",
+                "select": "Select Language"
+            }
         }
     },
     "footer": {

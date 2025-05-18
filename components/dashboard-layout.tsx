@@ -51,10 +51,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       active: pathname.includes(`/dashboard/${userId}/models`),
     },
     {
-      href: "/dashboard/settings",
+      href: `/dashboard/${userId}/settings`,
       label: t("navigation.settings"),
       icon: Settings,
-      active: pathname === "/dashboard/settings",
+      active: pathname === `/dashboard/${userId}/settings`,
     },
   ];
 

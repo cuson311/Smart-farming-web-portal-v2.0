@@ -732,6 +732,50 @@
         "updatedAt": "Cập nhật lúc",
         "view": "Xem"
       }
+    },
+    "settings": {
+      "title": "Cài đặt",
+      "tabs": {
+        "general": "Chung",
+        "notifications": "Thông báo",
+        "privacy": "Quyền riêng tư",
+        "appearance": "Giao diện",
+        "language": "Ngôn ngữ"
+      },
+      "general": {
+        "profile": "Cài đặt hồ sơ",
+        "profileDescription": "Quản lý cài đặt và tùy chọn tài khoản của bạn",
+        "emailNotifications": "Thông báo qua email",
+        "receiveEmailUpdates": "Nhận cập nhật qua email",
+        "timezone": "Múi giờ"
+      },
+      "notifications": {
+        "title": "Tùy chọn thông báo",
+        "description": "Cấu hình cách bạn nhận thông báo",
+        "modelUpdates": "Cập nhật mô hình",
+        "scriptChanges": "Thay đổi kịch bản",
+        "systemAlerts": "Cảnh báo hệ thống"
+      },
+      "privacy": {
+        "title": "Cài đặt quyền riêng tư",
+        "description": "Quản lý tùy chọn quyền riêng tư của bạn",
+        "publicProfile": "Hồ sơ công khai",
+        "dataCollection": "Thu thập dữ liệu",
+        "deleteAccount": "Xóa tài khoản"
+      },
+      "appearance": {
+        "title": "Cài đặt giao diện",
+        "description": "Tùy chỉnh giao diện ứng dụng",
+        "theme": "Giao diện",
+        "light": "Sáng",
+        "dark": "Tối",
+        "system": "Hệ thống"
+      },
+      "language": {
+        "title": "Cài đặt ngôn ngữ",
+        "description": "Chọn ngôn ngữ ưa thích của bạn",
+        "select": "Chọn ngôn ngữ"
+      }
     }
   },
   "footer": {
