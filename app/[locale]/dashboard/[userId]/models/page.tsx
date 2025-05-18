@@ -85,7 +85,9 @@ const ModelPage = () => {
         </div>
         <div className="flex gap-8">
           <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
-            <span className="text-sm font-medium">Results per page:</span>
+            <span className="text-sm font-medium">
+              {t("filter.resultsPerPage")}:
+            </span>
             <Select
               value={filters.max_results?.toString() ?? "10"}
               onValueChange={(value) =>
@@ -103,7 +105,7 @@ const ModelPage = () => {
             </Select>
           </div>
           <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
-            <span className="text-sm font-medium">Sort by:</span>
+            <span className="text-sm font-medium">{t("filter.sortBy")}:</span>
             <Select
               value={filters.order_by ?? "name ASC"}
               onValueChange={(value) => {
@@ -115,8 +117,10 @@ const ModelPage = () => {
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="name ASC">Name (A-Z)</SelectItem>
-                <SelectItem value="name DESC">Name (Z-A)</SelectItem>
+                <SelectItem value="name ASC">{t("filter.nameAsc")}</SelectItem>
+                <SelectItem value="name DESC">
+                  {t("filter.nameDesc")}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>

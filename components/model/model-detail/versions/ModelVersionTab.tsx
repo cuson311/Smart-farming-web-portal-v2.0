@@ -14,6 +14,13 @@ import { Clock, Leaf, Code2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
@@ -30,6 +37,10 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
   const [versionError, setVersionError] = useState<any>(false);
   const [nextPageToken, setNextPageToken] = useState<string | undefined>();
   const [hasMore, setHasMore] = useState(true);
+  const [filters, setFilters] = useState({
+    max_results: 10,
+    order_by: "name ASC",
+  });
 
   const getTagValue = (tags: any[], key: string) => {
     return tags?.find((tag) => tag.key === key)?.value;
@@ -44,7 +55,12 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
 
     setVersionLoading(true);
     try {
-      const response = await modelApi.getModelVersion(modelName, 10, pageToken);
+      const response = await modelApi.getModelVersion(
+        modelName,
+        filters.max_results,
+        pageToken,
+        filters.order_by
+      );
       if (pageToken) {
         setVersions((prev) => [...prev, ...response.model_versions]);
       } else {
@@ -65,12 +81,19 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
 
   useEffect(() => {
     fetchVersions();
-  }, [modelName]);
+  }, [modelName, filters]);
 
   const loadMore = () => {
     if (nextPageToken) {
       fetchVersions(nextPageToken);
     }
+  };
+
+  const handleFilterChange = (key: string, value: string | number) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
 
   console.log("versions", versions);
@@ -84,83 +107,130 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
         </div>
       </CardHeader>
       <CardContent className="pt-6">
-        <div className="flex flex-col space-y-8">
-          {versions?.map((item, index) => {
-            const plantType = getTagValue(item.tags, "plant");
-            const algorithm = getTagValue(item.tags, "algorithm");
-
-            return (
-              <div key={index} className="pl-8 relative">
-                <Clock size="16" className="absolute left-2 top-1" />
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="font-semibold">
-                    {t("version")} {item.version}
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    {t("lastUpdated")} {formatDate(item.last_updated_timestamp)}
-                  </span>
-                </div>
-                <Card>
-                  <CardContent className="p-4 space-y-2">
-                    <div>
-                      <span className="text-sm font-medium">{t("name")} </span>
-                      <span className="text-sm text-muted-foreground">
-                        {item.name}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium">
-                        {t("description")}
-                      </span>
-                      <span className="text-sm text-muted-foreground">
-                        {" "}
-                        {item.description
-                          ? item.description
-                          : t("noDescription")}
-                      </span>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <Leaf className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">
-                          {t("plant")}:
-                        </span>
-                        <Badge variant="secondary">
-                          {plantType || t("noPlant")}
-                        </Badge>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Code2 className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">
-                          {t("algorithm")}:
-                        </span>
-                        <Badge variant="secondary">
-                          {algorithm || t("noAlgorithm")}
-                        </Badge>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            );
-          })}
-
-          {versions?.length === 0 && !versionLoading && (
-            <div className="text-center text-muted-foreground py-4">
-              {t("noVersions")}
-            </div>
-          )}
-          {hasMore && (
-            <div className="flex justify-center">
-              <Button
-                variant="outline"
-                onClick={loadMore}
-                disabled={versionLoading}
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-muted/30 rounded-lg p-4">
+            <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
+              <span className="text-sm font-medium">
+                {t("filter.resultsPerPage")}:
+              </span>
+              <Select
+                value={filters.max_results.toString()}
+                onValueChange={(value) =>
+                  handleFilterChange("max_results", parseInt(value))
+                }
               >
-                {versionLoading ? t("loading") : t("loadMore")}
-              </Button>
+                <SelectTrigger className="w-[100px]">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="20">20</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          )}
+            <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
+              <span className="text-sm font-medium">{t("filter.sortBy")}:</span>
+              <Select
+                value={filters.order_by}
+                onValueChange={(value) => handleFilterChange("order_by", value)}
+              >
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name ASC">
+                    {t("filter.nameAsc")}
+                  </SelectItem>
+                  <SelectItem value="name DESC">
+                    {t("filter.nameDesc")}
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="flex flex-col space-y-8">
+            {versions?.map((item, index) => {
+              const plantType = getTagValue(item.tags, "plant");
+              const algorithm = getTagValue(item.tags, "algorithm");
+
+              return (
+                <div key={index} className="pl-8 relative">
+                  <Clock size="16" className="absolute left-2 top-1" />
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="font-semibold">
+                      {t("version")} {item.version}
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {t("lastUpdated")}{" "}
+                      {formatDate(item.last_updated_timestamp)}
+                    </span>
+                  </div>
+                  <Card>
+                    <CardContent className="p-4 space-y-2">
+                      <div>
+                        <span className="text-sm font-medium">
+                          {t("name")}{" "}
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          {item.name}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium">
+                          {t("description")}
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          {" "}
+                          {item.description
+                            ? item.description
+                            : t("noDescription")}
+                        </span>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <Leaf className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">
+                            {t("plant")}:
+                          </span>
+                          <Badge variant="secondary">
+                            {plantType || t("noPlant")}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Code2 className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">
+                            {t("algorithm")}:
+                          </span>
+                          <Badge variant="secondary">
+                            {algorithm || t("noAlgorithm")}
+                          </Badge>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })}
+
+            {versions?.length === 0 && !versionLoading && (
+              <div className="text-center text-muted-foreground py-4">
+                {t("noVersions")}
+              </div>
+            )}
+            {hasMore && (
+              <div className="flex justify-center">
+                <Button
+                  variant="outline"
+                  onClick={loadMore}
+                  disabled={versionLoading}
+                >
+                  {versionLoading ? t("loading") : t("loadMore")}
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

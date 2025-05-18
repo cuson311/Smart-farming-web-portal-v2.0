@@ -484,6 +484,13 @@
         "returnButton": "Quay lại",
         "back": "Quay lại"
       },
+      "filter": {
+        "title": "Bộ lọc",
+        "resultsPerPage": "Kết quả mỗi trang",
+        "sortBy": "Sắp xếp theo",
+        "nameAsc": "Tên (A-Z)",
+        "nameDesc": "Tên (Z-A)"
+      },
       "notFound": {
         "title": "Không tìm thấy mô hình",
         "invalidTab": "Tab không hợp lệ",
@@ -702,6 +709,13 @@
         "noAlgorithm": "Chưa có thuật toán",
         "noTags": "Không tìm thấy thẻ nào.",
         "noVersions": "Không tìm thấy phiên bản nào trong khoảng thời gian đã chọn",
+        "filter": {
+          "title": "Bộ lọc",
+          "resultsPerPage": "Kết quả mỗi trang",
+          "sortBy": "Sắp xếp theo",
+          "nameAsc": "Tên (A-Z)",
+          "nameDesc": "Tên (Z-A)"
+        },
         "toast": {
           "fetchError": "Lỗi tải phiên bản mô hình",
           "fetchErrorDesc": "Không thể tải phiên bản mô hình. Vui lòng thử lại."

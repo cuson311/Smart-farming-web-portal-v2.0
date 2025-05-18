@@ -485,6 +485,13 @@
                 "returnButton": "Return to My Models",
                 "back": "Back to Models"
             },
+            "filter": {
+                    "title": "Filter",
+                    "resultsPerPage": "Results per page",
+                    "sortBy": "Sort by",
+                    "nameAsc": "Name (A-Z)",
+                    "nameDesc": "Name (Z-A)"
+                },
             "notFound": {
                 "title": "Model Not Found",
                 "invalidTab": "Invalid Tab",
@@ -703,6 +710,13 @@
                 "noAlgorithm": "No algorithm specified",
                 "noTags": "No tags found.",
                 "noVersions": "No versions found in the selected date range",
+                "filter": {
+                    "title": "Filter",
+                    "resultsPerPage": "Results per page",
+                    "sortBy": "Sort by",
+                    "nameAsc": "Name (A-Z)",
+                    "nameDesc": "Name (Z-A)"
+                },
                 "toast": {
                     "fetchError": "Error fetching model versions",
                     "fetchErrorDesc": "Failed to fetch model versions. Please try again."

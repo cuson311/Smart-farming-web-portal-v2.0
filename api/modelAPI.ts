@@ -12,20 +12,22 @@ const modelApi = {
     const response = await axiosInstance.get(`/${userId}/models/get-all`);
     return response.data;
   },
-  getModelInfo: async (userId: string, modelName: string) => {
+  getModelInfo: async (modelName: string) => {
     const response = await axiosInstance.get(`/models/get?name=${modelName}`);
     return response.data;
   },
   getModelVersion: async (
     modelName: string,
     maxResults: number = 10,
-    pageToken?: string
+    pageToken?: string,
+    orderBy?: string
   ) => {
     const query = qs.stringify(
       {
         max_results: maxResults,
         page_token: pageToken,
         filter: `name='${modelName}'`,
+        order_by: orderBy,
       },
       { arrayFormat: "repeat" }
     );
