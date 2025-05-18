@@ -9,7 +9,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOverviewCard";
 import { useFetchModelInfo } from "@/hooks/useFetchModel";
 import ModelVersionTab from "@/components/model/model-detail/versions/ModelVersionTab";
-import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
+// import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
 
 // This component will be rendered on invalid tab routes
 const NotFoundComponent = ({ userId }: { userId: string }) => {
@@ -72,7 +72,7 @@ const ModelDetailPage = ({
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
 
-  const validTabs = ["versions", "schedule"];
+  const validTabs = ["versions"]; // Removed "schedule" from valid tabs
   const isValidTab = tabParam && validTabs.includes(tabParam);
   const tabName = isValidTab ? tabParam : "versions";
 
@@ -82,7 +82,7 @@ const ModelDetailPage = ({
     loading: modelInfoLoading,
     error: modelInfoError,
     refetch,
-  } = useFetchModelInfo(params.userId, params.modelName);
+  } = useFetchModelInfo(params.modelName);
 
   // If no tab param or invalid tab, render NotFound component
   if (!isValidTab) {
@@ -95,7 +95,7 @@ const ModelDetailPage = ({
     const newUrl = `/${currentLocale}/dashboard/${params.userId}/models/${params.modelName}?tab=${value}`;
     router.replace(newUrl);
   };
-
+  console.log("modelInfo", modelInfo);
   return (
     <div className="grid gap-6">
       <div className="flex items-center gap-4">
@@ -110,21 +110,18 @@ const ModelDetailPage = ({
           <ArrowLeft className="h-4 w-4" />
           <span className="sr-only">{t("back", { defaultValue: "Back" })}</span>
         </Button>
-        <h1 className="text-2xl font-bold">{modelInfo?.alt_name}</h1>
+        <h1 className="text-2xl font-bold">{modelInfo?.name}</h1>
       </div>
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <Tabs value={tabName} onValueChange={handleTabChange}>
             <TabsList>
-              {/* <TabsTrigger value="scripts">
-                {t("tabs.scripts", { defaultValue: "Scripts" })}
-              </TabsTrigger> */}
               <TabsTrigger value="versions">
                 {t("tabs.versions", { defaultValue: "Versions" })}
               </TabsTrigger>
-              <TabsTrigger value="schedule">
+              {/* <TabsTrigger value="schedule">
                 {t("tabs.schedule", { defaultValue: "Schedule" })}
-              </TabsTrigger>
+              </TabsTrigger> */}
             </TabsList>
             <TabsContent value="versions" className="border-none p-0 pt-4">
               {modelInfo ? (
@@ -137,7 +134,7 @@ const ModelDetailPage = ({
                 </p>
               )}
             </TabsContent>
-            <TabsContent value="schedule" className="border-none p-0 pt-4">
+            {/* <TabsContent value="schedule" className="border-none p-0 pt-4">
               {modelInfo ? (
                 <ScheduleModelTab model={modelInfo} />
               ) : (
@@ -147,7 +144,7 @@ const ModelDetailPage = ({
                   })}
                 </p>
               )}
-            </TabsContent>
+            </TabsContent> */}
           </Tabs>
         </div>
         <div>

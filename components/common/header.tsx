@@ -93,13 +93,13 @@ const Header = () => {
       href: "/dashboard/models",
       label: t("navigation.models"),
       icon: Database,
-      active: pathname.includes("/dashboard/models"),
+      active: pathname.includes(`/dashboard/${userId}/models`),
     },
     {
-      href: "/dashboard/settings",
+      href: `/dashboard/${userId}/settings`,
       label: t("navigation.settings"),
       icon: Settings,
-      active: pathname === "/dashboard/settings",
+      active: pathname === `/dashboard/${userId}/settings`,
     },
   ];
 
@@ -314,7 +314,7 @@ const Header = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/settings">
+                <Link href={`/dashboard/${userId}/settings`}>
                   <Settings className="mr-2 h-4 w-4" />
                   {t("navigation.settings")}
                 </Link>
