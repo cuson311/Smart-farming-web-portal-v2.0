@@ -11,8 +11,11 @@ import {
   Model,
   ModelsListOptions,
   RegisteredModelsResponse,
+  SubscribedModel,
+  SubscribedModelsResponse,
 } from "@/types/model";
 import notificationApi from "@/api/notificationAPI";
+import modelApi from "@/api/modelAPI";
 
 const useFetchProfile = (userId: string) => {
   const [data, setData] = useState<UserProfile | null>(null);
@@ -172,7 +175,30 @@ const useFetchModelsList = (options?: ModelsListOptions) => {
 
   return { data, loading, error, refetch: fetchModelsList };
 };
+const useFetchSubscribedModels = (userId: string) => {
+  const [data, setData] = useState<SubscribedModel[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<unknown>(null);
+  const fetchSubscribedModels = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const models = await modelApi.getSubscribedModels(userId);
+      setData(models);
+    } catch (err) {
+      console.error("Error fetching subscribed models:", err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId]);
 
+  useEffect(() => {
+    fetchSubscribedModels();
+  }, [fetchSubscribedModels, userId]);
+
+  return { data, loading, error, refetch: fetchSubscribedModels };
+};
 const useFetchBookmarkList = (userId: string, options?: ScriptsListOptions) => {
   const [data, setData] = useState<ScriptsResponse>({
     data: [],
@@ -293,6 +319,7 @@ export {
   useFetchActivities,
   useFetchScriptsList,
   useFetchModelsList,
+  useFetchSubscribedModels,
   useFetchBookmarkList,
   useFetchSharedScripts,
   useFetchNotifications,

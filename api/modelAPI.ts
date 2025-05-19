@@ -1,4 +1,6 @@
 import {
+  CreateGeneratedScriptData,
+  CreateModelVersionData,
   DeleteModelTagData,
   NewModelScheduleData,
   SetModelTagData,
@@ -6,6 +8,7 @@ import {
 } from "@/types/model";
 import axiosInstance from "./axiosInstance";
 import qs from "qs";
+import axios from "axios";
 
 const modelApi = {
   getModels: async (userId: string) => {
@@ -14,6 +17,12 @@ const modelApi = {
   },
   getModelInfo: async (modelName: string) => {
     const response = await axiosInstance.get(`/models/get?name=${modelName}`);
+    return response.data;
+  },
+  getSubscribedModels: async (userId: string) => {
+    const response = await axiosInstance.get(
+      `/models/get-all-subscribed?user_id=${userId}`
+    );
     return response.data;
   },
   getModelVersion: async (
@@ -55,9 +64,29 @@ const modelApi = {
     );
     return response.data;
   },
-  getScriptsModel: async (usedId: string, modelId: string) => {
+  getScriptsModel: async (
+    userId: string,
+    modelId: string,
+    params?: {
+      limit?: number;
+      page?: number;
+      sortBy?: string;
+      order?: "asc" | "desc";
+      location?: string;
+      model_name?: string;
+    }
+  ) => {
+    const queryParams = new URLSearchParams();
+    if (params?.limit) queryParams.append("limit", params.limit.toString());
+    if (params?.page) queryParams.append("page", params.page.toString());
+    if (params?.sortBy) queryParams.append("sortBy", params.sortBy);
+    if (params?.order) queryParams.append("order", params.order);
+    if (params?.location) queryParams.append("location", params.location);
+    if (params?.model_name) queryParams.append("model_name", params.model_name);
+    if (modelId) queryParams.append("model_id", modelId);
+
     const response = await axiosInstance.get(
-      `/${usedId}/models/scripts/get-all?model_id=${modelId}`
+      `/${userId}/models/scripts/get-all?${queryParams.toString()}`
     );
     return response.data;
   },
@@ -99,13 +128,9 @@ const modelApi = {
     );
     return response.data;
   },
-  getModelSchedulePlan: async (
-    userId: string,
-    start_date: string,
-    end_date: string
-  ) => {
+  getModelSchedulePlan: async (userId: string, end_date: string) => {
     const response = await axiosInstance.get(
-      `/${userId}/models/get-schedule-plan?start_date=${start_date}&end_date=${end_date}`
+      `/models/get-schedule-plan?userId=${userId}&end_date=${end_date}`
     );
     return response.data;
   },
@@ -135,6 +160,62 @@ const modelApi = {
       {
         data,
       }
+    );
+    return response.data;
+  },
+  subscribeModel: async (data: {
+    user_id: string;
+    model_name: string;
+    location: string;
+  }) => {
+    const response = await axiosInstance.post(`/models/subscribe`, data);
+    return response.data;
+  },
+  unsubscribeModel: async (data: { user_id: string; model_name: string }) => {
+    const response = await axiosInstance.delete(`/models/un-subscribe`, {
+      data: data,
+    });
+    return response.data;
+  },
+  deleteScriptModel: async (userId: string, scriptId: string) => {
+    const response = await axiosInstance.delete(
+      `/${userId}/models/scripts/delete`,
+      {
+        data: {
+          script_id: scriptId,
+        },
+      }
+    );
+    return response.data;
+  },
+  generateScript: async (userId: string, data: CreateGeneratedScriptData) => {
+    const response = await axiosInstance.post(
+      `/${userId}/models/scripts/generate`,
+      {
+        ...data,
+        avg_temp: data.avg_temp ?? 32,
+        avg_humid: data.avg_humid ?? 80,
+        avg_rainfall: data.avg_rainfall ?? 30,
+      }
+    );
+    return response.data;
+  },
+  getModelScriptInfo: async (userId: string, scriptId: string) => {
+    const response = await axiosInstance.get(
+      `/${userId}/models/scripts/get?scriptId=${scriptId}`
+    );
+    return response.data;
+  },
+  getModelScriptFile: async (userId: string, scriptId: string) => {
+    const response = await axiosInstance.get(
+      `/${userId}/models/scripts/get-file?scriptId=${scriptId}`
+    );
+    return response.data;
+  },
+  createModelVersion: async (data: FormData) => {
+    const response = await axios.post(
+      `http://0.0.0.0:7000/model-versions/create`,
+      data
     );
     return response.data;
   },

@@ -41,6 +41,14 @@ export interface RegisteredModel {
   latest_versions?: ModelVersion[];
   tags?: Tag[];
 }
+export interface SubscribedModelsResponse {
+  subscribed_models: SubscribedModel[];
+}
+export interface SubscribedModel {
+  id: string;
+  model_name: string;
+  location: string;
+}
 export type ModelsListOptions = {
   max_results?: number;
   order_by?: "name ASC" | "name DESC";
@@ -94,7 +102,40 @@ export interface NewModelScheduleData {
 
 export interface ModelSchedulePlan {
   time: string;
-  model_id: string;
+  model_name: string;
+}
+export interface CreateGeneratedScriptData {
+  model_name: string;
+  model_version: string;
+  location: string;
+  avg_temp: number;
+  avg_humid: number;
+  avg_rainfall: number;
+}
+export interface GeneratedScript {
+  _id: string;
+  model_name: string;
+  model_version: string;
+  location: string;
+  avg_temp: number;
+  avg_humid: number;
+  avg_rainfall: number;
+  owner_id: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface GeneratedScriptsResponse {
+  data: GeneratedScript[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
+
+export interface CreateModelVersionData {
   name: string;
   description: string;
+  tags: Tag[];
+  file: File;
 }

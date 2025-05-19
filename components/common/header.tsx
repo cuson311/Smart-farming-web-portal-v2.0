@@ -13,6 +13,7 @@ import {
   Database,
   Home,
   Share2,
+  FileChartLine,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -94,6 +95,12 @@ const Header = () => {
       label: t("navigation.models"),
       icon: Database,
       active: pathname.includes(`/dashboard/${userId}/models`),
+    },
+    {
+      href: "/dashboard/generatedScripts",
+      label: t("navigation.generatedScripts"),
+      icon: FileChartLine,
+      active: pathname.includes(`/dashboard/${userId}/generatedScripts`),
     },
     {
       href: `/dashboard/${userId}/settings`,
@@ -311,6 +318,12 @@ const Header = () => {
                 <Link href={`/dashboard/${userId}/models`}>
                   <Database className="mr-2 h-4 w-4" />
                   {t("navigation.models")}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={`/dashboard/${userId}/generatedScripts`}>
+                  <FileChartLine className="mr-2 h-4 w-4" />
+                  {t("navigation.generatedScripts")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>

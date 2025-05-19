@@ -241,7 +241,7 @@ export default function SettingPage() {
                 <Label>
                   {t("language.select", { defaultValue: "Select Language" })}
                 </Label>
-                <Select defaultValue="en">
+                <Select defaultValue="vi">
                   <SelectTrigger>
                     <SelectValue placeholder="Select language" />
                   </SelectTrigger>

@@ -88,6 +88,7 @@
       "dashboard": "Bảng điều khiển",
       "profile": "Hồ sơ",
       "scripts": "Kịch bản",
+      "generatedScripts": "Kịch bản động",
       "models": "Mô hình",
       "settings": "Cài đặt"
     },
@@ -431,6 +432,15 @@
             "saveError": "Lưu thất bại",
             "saveErrorDescription": "Không thể lưu lịch trình tưới"
           }
+        },
+        "view": {
+          "title": "Xem kịch bản",
+          "back": "Quay lại",
+          "loading": "Đang tải chi tiết kịch bản...",
+          "toast": {
+            "fetchError": "Lỗi",
+            "fetchErrorDesc": "Không thể tải chi tiết kịch bản"
+          }
         }
       },
       "list": {
@@ -505,7 +515,9 @@
       "tabs": {
         "scripts": "Kịch bản",
         "versions": "Phiên bản",
-        "schedule": "Lịch trình"
+        "schedule": "Lịch trình",
+        "generated": "Kịch bản động",
+        "all": "Tất cả"
       },
       "newModel": {
         "createButton": "Tạo mô hình",
@@ -552,7 +564,15 @@
         "noTags": "Không tìm thấy thẻ nào.",
         "actions": "Hành động",
         "editModel": "Chỉnh sửa mô hình",
-        "deleteModel": "Xóa"
+        "deleteModel": "Xóa",
+        "subscribe": "Đăng ký",
+        "unsubscribe": "Hủy đăng ký",
+        "subscribeTitle": "Đăng ký mô hình",
+        "subscribeDescription": "Nhập vị trí bạn muốn sử dụng mô hình này",
+        "location": "Vị trí",
+        "locationPlaceholder": "Nhập vị trí",
+        "cancel": "Hủy",
+        "confirmSubscribe": "Đăng ký"
       },
       "editModel": {
         "title": "Chỉnh sửa mô hình",
@@ -594,7 +614,17 @@
         "updateSuccess": "Cập nhật mô hình thành công",
         "updateError": "Cập nhật mô hình thất bại",
         "deleteSuccess": "Xóa mô hình thành công",
-        "deleteError": "Xóa mô hình thất bại"
+        "deleteError": "Xóa mô hình thất bại",
+        "subscribeSuccess": "Đăng kí mô hình thành công",
+        "subscribeSuccessDesc": "Bạn đã đăng kí mô hình thành công",
+        "subscribeError": "Đăng kí mô hình thất bại",
+        "subscribeErrorDesc": "Không thể đăng kí mô hình. Vui lòng thử lại.",
+        "unsubscribeSuccess": "Hủy đăng kí mô hình thành công",
+        "unsubscribeSuccessDesc": "Bạn đã hủy đăng kí mô hình thành công",
+        "unsubscribeError": "Hủy đăng kí mô hình thất bại",
+        "unsubscribeErrorDesc": "Không thể hủy đăng kí mô hình. Vui lòng thử lại.",
+        "missingLocation": "Thiếu vị trí",
+        "missingLocationDesc": "Vui lòng chọn vị trí trước khi đăng ký"
       },
       "emptyState": {
         "title": "Không tìm thấy mô hình",
@@ -670,6 +700,48 @@
           "planFetchErrorDesc": "Không thể tải kế hoạch lịch trình. Vui lòng thử lại."
         }
       },
+      "generated": {
+        "title": "Kịch bản",
+        "description": "Xem tất cả kịch bản mô hình đã được tạo",
+        "searchPlaceholder": "Tìm kiếm kịch bản...",
+        "loading": "Đang tải kịch bản...",
+        "noScripts": "Không tìm thấy kịch bản nào",
+        "modelName": "Mô hình:",
+        "version": "Phiên bản mô hình",
+        "location": "Vị trí",
+        "temperature": "Nhiệt độ",
+        "humidity": "Độ ẩm",
+        "rainfall": "Lượng mưa",
+        "createdAt": "Tạo lúc",
+        "lastUpdated": "Cập nhật lúc",
+        "actions": "Hành động",
+        "delete": "Xóa",
+        "view": "Xem chi tiết",
+        "toast": {
+          "fetchError": "Lỗi",
+          "fetchErrorDesc": "Không thể tải danh sách kịch bản"
+        },
+        "deleteDialog": {
+          "title": "Xóa kịch bản",
+          "description": "Bạn có chắc chắn muốn xóa kịch bản này? Hành động này không thể hoàn tác.",
+          "cancel": "Hủy",
+          "confirm": "Xóa"
+        },
+        "filter": {
+          "location": "Vị trí",
+          "locationPlaceholder": "Nhập vị trí",
+          "modelName": "Tên mô hình",
+          "modelNamePlaceholder": "Nhập tên mô hình",
+          "sortBy": "Sắp xếp theo",
+          "sortByPlaceholder": "Chọn trường sắp xếp",
+          "createdAt": "Ngày tạo",
+          "updatedAt": "Cập nhật lúc",
+          "order": "Thứ tự",
+          "orderPlaceholder": "Chọn thứ tự",
+          "descending": "Giảm dần",
+          "ascending": "Tăng dần"
+        }
+      },
       "scripts": {
         "title": "Kịch bản liên kết",
         "description": "Kịch bản thuộc về mô hình này",
@@ -709,6 +781,20 @@
         "noAlgorithm": "Chưa có thuật toán",
         "noTags": "Không tìm thấy thẻ nào.",
         "noVersions": "Không tìm thấy phiên bản nào trong khoảng thời gian đã chọn",
+        "generateScript": "Tạo script",
+        "createVersion": "Tạo phiên bản",
+        "createVersionDialog": {
+          "title": "Tạo phiên bản mới",
+          "description": "Tải lên file .pkl để tạo phiên bản mới",
+          "descriptionLabel": "Mô tả",
+          "descriptionPlaceholder": "Nhập mô tả cho phiên bản này",
+          "uploadLabel": "Tải lên file mô hình",
+          "uploadDescription": "Chọn file .pkl để tải lên",
+          "cancel": "Hủy",
+          "create": "Tạo phiên bản",
+          "fileRequired": "Vui lòng chọn file để tải lên",
+          "invalidFile": "Vui lòng chọn file .pkl hợp lệ"
+        },
         "filter": {
           "title": "Bộ lọc",
           "resultsPerPage": "Kết quả mỗi trang",
@@ -718,10 +804,21 @@
         },
         "toast": {
           "fetchError": "Lỗi tải phiên bản mô hình",
-          "fetchErrorDesc": "Không thể tải phiên bản mô hình. Vui lòng thử lại."
+          "fetchErrorDesc": "Không thể tải phiên bản mô hình. Vui lòng thử lại.",
+          "generateSuccess": "Phiên bản mô hình đã tạo script thành công",
+          "generateSuccessDesc": "Phiên bản mô hình {version} đã được tạo script thành công.",
+          "generateError": "Tạo script thất bại",
+          "generateErrorDesc": "Không thể tạo script. Vui lòng thử lại.",
+          "createSuccess": "Tạo phiên bản thành công",
+          "createSuccessDesc": "Phiên bản mới đã được tạo thành công.",
+          "createError": "Tạo phiên bản thất bại",
+          "createErrorDesc": "Không thể tạo phiên bản mới. Vui lòng thử lại.",
+          "notSubscribed": "Bạn chưa đăng ký mô hình này",
+          "notSubscribedDesc": "Vui lòng đăng ký mô hình trước khi tạo script."
         }
       },
       "card": {
+        "location": "Tỉnh đã đăng kí mô hình",
         "plant": "Cây trồng",
         "noPlant": "Chưa có cây trồng",
         "schedule": "Lịch tưới",
@@ -730,7 +827,53 @@
         "scheduled": "Đã lên lịch",
         "notScheduled": "Chưa lên lịch",
         "updatedAt": "Cập nhật lúc",
-        "view": "Xem"
+        "view": "Xem",
+        "subscribe": "Đăng ký",
+        "unsubscribe": "Hủy đăng ký",
+        "subscribedLocation": "Vị trí đã đăng kí mô hình",
+        "selectProvince": "Chọn tỉnh",
+        "searchProvince": "Tìm kiếm tỉnh",
+        "noProvinceFound": "Không tìm thấy tỉnh",
+        "subscribeDialog": {
+          "title": "Đăng ký mô hình",
+          "description": "Nhập vị trí bạn muốn sử dụng mô hình này",
+          "locationLabel": "Vị trí",
+          "locationPlaceholder": "Nhập vị trí",
+          "cancel": "Hủy",
+          "confirm": "Đăng ký"
+        },
+        "toast": {
+          "missingLocation": "Thiếu vị trí",
+          "missingLocationDesc": "Vui lòng nhập vị trí cho mô hình",
+          "subscribeSuccess": "Đăng ký thành công",
+          "subscribeSuccessDesc": "Bạn đã đăng ký thành công mô hình",
+          "subscribeError": "Đăng ký thất bại",
+          "subscribeErrorDesc": "Không thể đăng ký mô hình. Vui lòng thử lại.",
+          "unsubscribeSuccess": "Hủy đăng ký thành công",
+          "unsubscribeSuccessDesc": "Bạn đã hủy đăng ký thành công mô hình",
+          "unsubscribeError": "Hủy đăng ký thất bại",
+          "unsubscribeErrorDesc": "Không thể hủy đăng ký mô hình. Vui lòng thử lại."
+        },
+        "unsubscribeDialog": {
+          "title": "Hủy đăng ký mô hình",
+          "description": "Bạn có chắc chắn muốn hủy đăng ký mô hình này? Hành động này không thể hoàn tác.",
+          "cancel": "Hủy",
+          "confirm": "Hủy đăng ký"
+        }
+      },
+      "scriptInfo": {
+        "title": "Thông tin kịch bản",
+        "modelName": "Tên mô hình",
+        "modelVersion": "Phiên bản mô hình",
+        "location": "Vị trí",
+        "temperature": "Nhiệt độ",
+        "humidity": "Độ ẩm",
+        "rainfall": "Lượng mưa",
+        "createdAt": "Tạo lúc",
+        "updatedAt": "Cập nhật lúc",
+        "celsius": "°C",
+        "percentage": "%",
+        "mm": "mm"
       }
     },
     "settings": {
@@ -775,6 +918,50 @@
         "title": "Cài đặt ngôn ngữ",
         "description": "Chọn ngôn ngữ ưa thích của bạn",
         "select": "Chọn ngôn ngữ"
+      }
+    },
+    "generatedScripts": {
+      "title": "Kịch bản động",
+      "description": "Xem tất cả kịch bản được tạo bởi mô hình của bạn",
+      "loading": "Đang tải kịch bản...",
+      "noScripts": "Không tìm thấy kịch bản nào",
+      "subscribeModel": "Đăng ký mô hình",
+      "modelName": "Tên mô hình",
+      "version": "Phiên bản",
+      "location": "Vị trí",
+      "temperature": "Nhiệt độ",
+      "humidity": "Độ ẩm",
+      "rainfall": "Lượng mưa",
+      "lastUpdated": "Cập nhật lần cuối",
+      "actions": "Hành động",
+      "view": "Xem",
+      "delete": "Xóa",
+      "filter": {
+        "sortBy": "Sắp xếp theo",
+        "sortByPlaceholder": "Chọn trường sắp xếp",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Cập nhật lúc",
+        "order": "Thứ tự",
+        "orderPlaceholder": "Chọn thứ tự",
+        "descending": "Giảm dần",
+        "ascending": "Tăng dần",
+        "modelName": "Tên mô hình",
+        "modelNamePlaceholder": "Nhập tên mô hình",
+        "location": "Địa điểm",
+        "locationPlaceholder": "Nhập địa điểm"
+      },
+      "deleteDialog": {
+        "title": "Xóa kịch bản",
+        "description": "Bạn có chắc chắn muốn xóa kịch bản này? Hành động này không thể hoàn tác.",
+        "cancel": "Hủy",
+        "confirm": "Xóa"
+      },
+      "toast": {
+        "fetchError": "Lỗi",
+        "fetchErrorDesc": "Không thể tải danh sách kịch bản",
+        "deleteSuccess": "Xóa kịch bản thành công",
+        "deleteError": "Xóa kịch bản thất bại",
+        "deleteErrorDesc": "Không thể xóa kịch bản. Vui lòng thử lại."
       }
     }
   },
@@ -875,6 +1062,7 @@
       "dashboard": "Bảng điều khiển",
       "profile": "Hồ sơ",
       "scripts": "Kịch bản",
+      "generatedScripts": "Kịch bản động",
       "models": "Mô hình",
       "settings": "Cài đặt"
     }
@@ -886,6 +1074,7 @@
   "Navigation": {
     "dashboard": "Bảng điều khiển",
     "profile": "Hồ sơ",
+    "generatedScripts": "Kịch bản động",
     "settings": "Cài đặt",
     "logout": "Đăng xuất"
   },

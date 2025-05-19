@@ -4,10 +4,14 @@ import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { useFetchModelsList } from "@/hooks/useFetchUser";
+import {
+  useFetchModelsList,
+  useFetchSubscribedModels,
+} from "@/hooks/useFetchUser";
 import { ModelsListOptions } from "@/types/model";
 import ModelList from "@/components/model/model-list/ModelList";
-import NewModelDialog from "@/components/model/model-list/NewModel";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { useTranslations } from "next-intl";
 import {
   Select,
@@ -16,22 +20,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
 
 const ModelPage = () => {
   const { toast } = useToast();
   const t = useTranslations("dashboard.models");
+  const validTabs = ["all", "schedule"];
+  const [activeTab, setActiveTab] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filters, setFilters] = useState<ModelsListOptions>({
     max_results: 10,
     order_by: "name ASC",
     filter: "",
   });
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("userId") || "";
+      setUserId(storedUserId);
+    }
+  }, []);
 
   const {
     data: models,
     loading: modelsListLoading,
     refetch: refetchAllModels,
   } = useFetchModelsList(filters);
+
+  const {
+    data: subscribedModels,
+    loading: subscribedModelsLoading,
+    refetch: refetchSubscribedModels,
+  } = useFetchSubscribedModels(userId);
 
   // Effect to update search filter when search query changes
   useEffect(() => {
@@ -59,10 +80,14 @@ const ModelPage = () => {
     }));
   };
 
+  const handleSubscribedModelsChange = () => {
+    refetchAllModels(filters);
+    refetchSubscribedModels();
+  };
+
   const handleSearch = () => {
     refetchAllModels(filters);
   };
-  console.log("models", models);
   return (
     <div className="grid gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -126,11 +151,23 @@ const ModelPage = () => {
           </div>
         </div>
       </div>
-
-      <ModelList
-        models={models?.registered_models || []}
-        loading={modelsListLoading}
-      />
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList>
+          <TabsTrigger value="all">{t("tabs.all")}</TabsTrigger>
+          <TabsTrigger value="schedule">{t("tabs.schedule")}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="all">
+          <ModelList
+            models={models?.registered_models || []}
+            subscribedModels={subscribedModels}
+            loading={modelsListLoading || subscribedModelsLoading}
+            onSubscribedModelsChange={handleSubscribedModelsChange}
+          />
+        </TabsContent>
+        <TabsContent value="schedule">
+          <ScheduleModelTab />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
