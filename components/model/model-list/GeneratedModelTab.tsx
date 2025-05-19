@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -61,6 +61,7 @@ export default function GeneratedModelTab({
 }) {
   const t = useTranslations("dashboard.models.generated");
   const params = useParams();
+  const router = useRouter();
   const userId: string = Array.isArray(params.userId)
     ? params.userId[0]
     : params.userId;
@@ -131,10 +132,11 @@ export default function GeneratedModelTab({
   };
 
   const handleViewScript = (scriptId: string) => {
-    // TODO: Implement view script details
-    console.log("View script:", scriptId);
+    const currentLocale = window.location.pathname.split("/")[1];
+    router.push(
+      `/${currentLocale}/dashboard/${userId}/models/${model.name}/${scriptId}`
+    );
   };
-
   return (
     <div className="space-y-6 mt-4 pt-2">
       <Card>

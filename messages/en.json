@@ -432,6 +432,15 @@
                         "saveError": "Save failed",
                         "saveErrorDescription": "Failed to save irrigation schedule"
                     }
+                },
+                "view": {
+                    "title": "View Script",
+                    "back": "Back",
+                    "loading": "Loading script details...",
+                    "toast": {
+                        "fetchError": "Error",
+                        "fetchErrorDesc": "Failed to fetch script details"
+                    }
                 }
             },
             "list": {
@@ -556,7 +565,15 @@
                 "noTags": "No tags found.",
                 "actions": "Actions",
                 "editModel": "Edit Model",
-                "deleteModel": "Delete"
+                "deleteModel": "Delete",
+                "subscribe": "Subscribe",
+                "unsubscribe": "Unsubscribe",
+                "subscribeTitle": "Subscribe to Model",
+                "subscribeDescription": "Enter the location where you want to use this model",
+                "location": "Location",
+                "locationPlaceholder": "Enter location",
+                "cancel": "Cancel",
+                "confirmSubscribe": "Subscribe"
             },
             "editModel": {
                 "title": "Edit Model",
@@ -598,7 +615,17 @@
                 "updateSuccess": "Update model info successfully",
                 "updateError": "Failed to update model",
                 "deleteSuccess": "Model deleted successfully",
-                "deleteError": "Failed to delete model"
+                "deleteError": "Failed to delete model",
+                "subscribeSuccess": "Đăng kí mô hình thành công",
+                "subscribeSuccessDesc": "Bạn đã đăng kí mô hình thành công",
+                "subscribeError": "Đăng kí mô hình thất bại",
+                "subscribeErrorDesc": "Không thể đăng kí mô hình. Vui lòng thử lại.",
+                "unsubscribeSuccess": "Hủy đăng kí mô hình thành công",
+                "unsubscribeSuccessDesc": "You have successfully unsubscribed from the model",
+                "unsubscribeError": "Unsubscribe failed",
+                "unsubscribeErrorDesc": "Failed to unsubscribe from the model. Please try again.",
+                "missingLocation": "Missing Location",
+                "missingLocationDesc": "Please select a location before subscribing"
             },
             "emptyState": {
                 "title": "No models found",
@@ -774,6 +801,7 @@
             },
             "card": {
                 "plant": "Plant",
+                "location": "Location subscribed",
                 "noPlant": "No plant specified",
                 "schedule": "Schedule",
                 "noSchedule": "No schedule specified",
@@ -784,6 +812,7 @@
                 "view": "View",
                 "subscribe": "Subscribe",
                 "unsubscribe": "Unsubscribe",
+                "subscribedLocation": "Subscribed Location",
                 "selectProvince": "Select Province",
                 "searchProvince": "Search Province",
                 "noProvinceFound": "No province found",
@@ -813,6 +842,20 @@
                     "cancel": "Cancel",
                     "confirm": "Unsubscribe"
                 }
+            },
+            "scriptInfo": {
+                "title": "Script Information",
+                "modelName": "Model Name",
+                "modelVersion": "Model Version",
+                "location": "Location",
+                "temperature": "Temperature",
+                "humidity": "Humidity",
+                "rainfall": "Rainfall",
+                "createdAt": "Created At",
+                "updatedAt": "Updated At",
+                "celsius": "°C",
+                "percentage": "%",
+                "mm": "mm"
             }
         },
         "settings": {

@@ -198,6 +198,18 @@ const modelApi = {
     );
     return response.data;
   },
+  getModelScriptInfo: async (userId: string, scriptId: string) => {
+    const response = await axiosInstance.get(
+      `/${userId}/models/scripts/get?scriptId=${scriptId}`
+    );
+    return response.data;
+  },
+  getModelScriptFile: async (userId: string, scriptId: string) => {
+    const response = await axiosInstance.get(
+      `/${userId}/models/scripts/get-file?scriptId=${scriptId}`
+    );
+    return response.data;
+  },
 };
 
 export default modelApi;

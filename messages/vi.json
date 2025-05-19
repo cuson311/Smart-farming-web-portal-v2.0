@@ -431,6 +431,15 @@
             "saveError": "Lưu thất bại",
             "saveErrorDescription": "Không thể lưu lịch trình tưới"
           }
+        },
+        "view": {
+          "title": "Xem kịch bản",
+          "back": "Quay lại",
+          "loading": "Đang tải chi tiết kịch bản...",
+          "toast": {
+            "fetchError": "Lỗi",
+            "fetchErrorDesc": "Không thể tải chi tiết kịch bản"
+          }
         }
       },
       "list": {
@@ -554,7 +563,15 @@
         "noTags": "Không tìm thấy thẻ nào.",
         "actions": "Hành động",
         "editModel": "Chỉnh sửa mô hình",
-        "deleteModel": "Xóa"
+        "deleteModel": "Xóa",
+        "subscribe": "Đăng ký",
+        "unsubscribe": "Hủy đăng ký",
+        "subscribeTitle": "Đăng ký mô hình",
+        "subscribeDescription": "Nhập vị trí bạn muốn sử dụng mô hình này",
+        "location": "Vị trí",
+        "locationPlaceholder": "Nhập vị trí",
+        "cancel": "Hủy",
+        "confirmSubscribe": "Đăng ký"
       },
       "editModel": {
         "title": "Chỉnh sửa mô hình",
@@ -596,7 +613,17 @@
         "updateSuccess": "Cập nhật mô hình thành công",
         "updateError": "Cập nhật mô hình thất bại",
         "deleteSuccess": "Xóa mô hình thành công",
-        "deleteError": "Xóa mô hình thất bại"
+        "deleteError": "Xóa mô hình thất bại",
+        "subscribeSuccess": "Đăng kí mô hình thành công",
+        "subscribeSuccessDesc": "Bạn đã đăng kí mô hình thành công",
+        "subscribeError": "Đăng kí mô hình thất bại",
+        "subscribeErrorDesc": "Không thể đăng kí mô hình. Vui lòng thử lại.",
+        "unsubscribeSuccess": "Hủy đăng kí mô hình thành công",
+        "unsubscribeSuccessDesc": "Bạn đã hủy đăng kí mô hình thành công",
+        "unsubscribeError": "Hủy đăng kí mô hình thất bại",
+        "unsubscribeErrorDesc": "Không thể hủy đăng kí mô hình. Vui lòng thử lại.",
+        "missingLocation": "Thiếu vị trí",
+        "missingLocationDesc": "Vui lòng chọn vị trí trước khi đăng ký"
       },
       "emptyState": {
         "title": "Không tìm thấy mô hình",
@@ -771,6 +798,7 @@
         }
       },
       "card": {
+        "location": "Tỉnh đã đăng kí mô hình",
         "plant": "Cây trồng",
         "noPlant": "Chưa có cây trồng",
         "schedule": "Lịch tưới",
@@ -782,6 +810,7 @@
         "view": "Xem",
         "subscribe": "Đăng ký",
         "unsubscribe": "Hủy đăng ký",
+        "subscribedLocation": "Vị trí đã đăng kí mô hình",
         "selectProvince": "Chọn tỉnh",
         "searchProvince": "Tìm kiếm tỉnh",
         "noProvinceFound": "Không tìm thấy tỉnh",
@@ -811,6 +840,20 @@
           "cancel": "Hủy",
           "confirm": "Hủy đăng ký"
         }
+      },
+      "scriptInfo": {
+        "title": "Thông tin kịch bản",
+        "modelName": "Tên mô hình",
+        "modelVersion": "Phiên bản mô hình",
+        "location": "Vị trí",
+        "temperature": "Nhiệt độ",
+        "humidity": "Độ ẩm",
+        "rainfall": "Lượng mưa",
+        "createdAt": "Tạo lúc",
+        "updatedAt": "Cập nhật lúc",
+        "celsius": "°C",
+        "percentage": "%",
+        "mm": "mm"
       }
     },
     "settings": {

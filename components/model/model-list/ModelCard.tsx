@@ -99,11 +99,6 @@ const ModelCard = ({
     setLocationPopoverOpen(false);
   };
 
-  // Remove location
-  const handleRemoveLocation = () => {
-    setLocation("");
-  };
-
   const handleSubscribe = async () => {
     if (!location.trim()) {
       toast({
@@ -237,6 +232,23 @@ const ModelCard = ({
                 </div>
               )}
             </div>
+
+            {/* Subscribed Location */}
+            {isSubscribed && (
+              <div className="flex flex-wrap gap-1 mb-2 min-h-6">
+                <div className="flex items-center mr-1">
+                  <MapPin className="h-3 w-3 text-gray-400 mr-1" />
+                  <span className="text-xs text-muted-foreground">
+                    {t("subscribedLocation")}
+                  </span>
+                </div>
+                <Badge variant="outline" className="text-xs py-0">
+                  {subscribedModels.find(
+                    (subModel) => subModel.model_name === model.name
+                  )?.location || "N/A"}
+                </Badge>
+              </div>
+            )}
           </div>
         </CardContent>
 

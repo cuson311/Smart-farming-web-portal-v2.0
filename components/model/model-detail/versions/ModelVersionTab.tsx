@@ -151,7 +151,7 @@ const ModelVersionTab = ({
       </CardHeader>
       <CardContent className="pt-6">
         <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-muted/30 rounded-lg p-4">
+          {/* <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-muted/30 rounded-lg p-4">
             <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
               <span className="text-sm font-medium">
                 {t("filter.resultsPerPage")}:
@@ -191,7 +191,7 @@ const ModelVersionTab = ({
                 </SelectContent>
               </Select>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex flex-col space-y-8">
             {versions?.map((item, index) => {

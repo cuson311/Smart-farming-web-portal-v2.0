@@ -31,7 +31,6 @@ import {
   Thermometer,
   Gauge,
   FileText,
-  ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -73,20 +72,20 @@ export default function IrrigationScheduleForm({
 }: IrrigationScheduleFormProps) {
   const t = useTranslations("dashboard.scripts.detail.irrigationSchedule");
   const { toast } = useToast();
-  const [repeat, setRepeat] = useState({ interval: 3, unit: "ngày" });
+  const [repeat, setRepeat] = useState({ interval: 3, unit: "day" });
   const [wateringEventsCount, setWateringEventsCount] = useState(2);
   const [wateringEvents, setWateringEvents] = useState<WateringEvent[]>([
     {
       time: "07:00",
-      duration: { value: 20, unit: "phút" },
-      water_volume: { value: 90, unit: "lít" },
-      method: "nhỏ giọt",
+      duration: { value: 20, unit: "min" },
+      water_volume: { value: 90, unit: "l" },
+      method: "drip",
     },
     {
       time: "17:30",
-      duration: { value: 25, unit: "phút" },
-      water_volume: { value: 110, unit: "lít" },
-      method: "phun",
+      duration: { value: 25, unit: "min" },
+      water_volume: { value: 110, unit: "l" },
+      method: "spray",
     },
   ]);
   const [conditions, setConditions] = useState<Conditions>({
@@ -98,13 +97,18 @@ export default function IrrigationScheduleForm({
   });
   const [note, setNote] = useState("");
   const [timeErrors, setTimeErrors] = useState<{ [key: number]: string }>({});
-
   // Initialize form with initialData if provided
   useEffect(() => {
     if (initialData) {
-      setRepeat(initialData.repeat || { interval: 3, unit: "ngày" });
-      setWateringEventsCount(initialData.watering_events_count || 2);
-      setWateringEvents(initialData.watering_events || []);
+      const formattedEvents =
+        initialData.watering_events?.map((event: WateringEvent) => ({
+          ...event,
+          time: formatTime(event.time),
+        })) || [];
+
+      setRepeat(initialData.repeat || { interval: 3, unit: "day" });
+      setWateringEventsCount(formattedEvents.length || 2);
+      setWateringEvents(formattedEvents);
       setConditions(
         initialData.conditions || {
           skip_if_raining: false,
@@ -147,9 +151,9 @@ export default function IrrigationScheduleForm({
       for (let i = wateringEvents.length; i < newValue; i++) {
         newEvents.push({
           time: "12:00",
-          duration: { value: 15, unit: "phút" },
-          water_volume: { value: 50, unit: "lít" },
-          method: "nhỏ giọt",
+          duration: { value: 15, unit: "min" },
+          water_volume: { value: 50, unit: "l" },
+          method: "drip",
         });
       }
       setWateringEvents(newEvents);
@@ -162,6 +166,12 @@ export default function IrrigationScheduleForm({
     }
   };
 
+  const formatTime = (time: string) => {
+    // Ensure time is in HH:mm format
+    const [hours, minutes] = time.split(":");
+    return `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
+  };
+
   const updateEvent = (
     index: number,
     field: keyof WateringEvent,
@@ -172,6 +182,11 @@ export default function IrrigationScheduleForm({
       updatedEvents[index] = {
         ...updatedEvents[index],
         [field]: { ...updatedEvents[index][field], value },
+      };
+    } else if (field === "time") {
+      updatedEvents[index] = {
+        ...updatedEvents[index],
+        [field]: formatTime(value),
       };
     } else {
       updatedEvents[index] = { ...updatedEvents[index], [field]: value };
@@ -231,7 +246,7 @@ export default function IrrigationScheduleForm({
             className="border-destructive text-destructive"
             onClick={() => {
               if (initialData) {
-                setRepeat(initialData.repeat || { interval: 3, unit: "ngày" });
+                setRepeat(initialData.repeat || { interval: 3, unit: "day" });
                 setWateringEventsCount(initialData.watering_events_count || 2);
                 setWateringEvents(initialData.watering_events || []);
                 setConditions(
@@ -294,11 +309,11 @@ export default function IrrigationScheduleForm({
                 disabled={disabled}
               >
                 <SelectTrigger className="w-32 bg-background border-input focus:ring-ring">
-                  <SelectValue placeholder="Đơn vị" />
+                  <SelectValue placeholder="Unit" />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border">
-                  <SelectItem value="ngày">{t("timeSetup.days")}</SelectItem>
-                  <SelectItem value="tuần">{t("timeSetup.weeks")}</SelectItem>
+                  <SelectItem value="day">{t("timeSetup.days")}</SelectItem>
+                  <SelectItem value="week">{t("timeSetup.weeks")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -369,7 +384,7 @@ export default function IrrigationScheduleForm({
                     </span>
                     <span className="text-muted-foreground">
                       ({event.time} - {event.duration.value}{" "}
-                      {event.duration.unit === "phút"
+                      {event.duration.unit === "min"
                         ? t("wateringEvents.minutes")
                         : t("wateringEvents.hours")}
                       )
@@ -426,14 +441,11 @@ export default function IrrigationScheduleForm({
                             disabled={disabled}
                           >
                             <SelectTrigger className="w-24 bg-background border-input focus:ring-ring">
-                              <SelectValue placeholder="Đơn vị" />
+                              <SelectValue placeholder="Unit" />
                             </SelectTrigger>
                             <SelectContent className="bg-popover border-border">
-                              <SelectItem value="phút">
+                              <SelectItem value="min">
                                 {t("wateringEvents.minutes")}
-                              </SelectItem>
-                              <SelectItem value="giờ">
-                                {t("wateringEvents.hours")}
                               </SelectItem>
                             </SelectContent>
                           </Select>
@@ -465,14 +477,11 @@ export default function IrrigationScheduleForm({
                             disabled={disabled}
                           >
                             <SelectTrigger className="w-24 bg-background border-input focus:ring-ring">
-                              <SelectValue placeholder="Đơn vị" />
+                              <SelectValue placeholder="Unit" />
                             </SelectTrigger>
                             <SelectContent className="bg-popover border-border">
-                              <SelectItem value="lít">
+                              <SelectItem value="l">
                                 {t("wateringEvents.liters")}
-                              </SelectItem>
-                              <SelectItem value="m³">
-                                {t("wateringEvents.cubicMeters")}
                               </SelectItem>
                             </SelectContent>
                           </Select>
@@ -489,20 +498,14 @@ export default function IrrigationScheduleForm({
                           disabled={disabled}
                         >
                           <SelectTrigger className="w-full bg-background border-input focus:ring-ring">
-                            <SelectValue placeholder="Chọn phương pháp" />
+                            <SelectValue placeholder="Select method" />
                           </SelectTrigger>
                           <SelectContent className="bg-popover border-border">
-                            <SelectItem value="nhỏ giọt">
+                            <SelectItem value="drip">
                               {t("wateringEvents.methods.drip")}
                             </SelectItem>
-                            <SelectItem value="phun">
+                            <SelectItem value="spray">
                               {t("wateringEvents.methods.spray")}
-                            </SelectItem>
-                            <SelectItem value="tưới thấm">
-                              {t("wateringEvents.methods.soak")}
-                            </SelectItem>
-                            <SelectItem value="tưới tay">
-                              {t("wateringEvents.methods.manual")}
                             </SelectItem>
                           </SelectContent>
                         </Select>

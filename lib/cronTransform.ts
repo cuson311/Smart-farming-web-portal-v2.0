@@ -1,7 +1,7 @@
 // utils/getCronDescription.ts
 "use client";
 import cronstrue from "cronstrue";
-
+import "cronstrue/locales/vi";
 /**
  * Converts a cron expression to a human-readable description
  * in the user's current locale.
@@ -15,7 +15,7 @@ export function getCronDescription(
 ): string {
   try {
     return cronstrue.toString(cron, {
-      locale,
+      locale: "vi",
       use24HourTimeFormat: true,
     });
   } catch {
