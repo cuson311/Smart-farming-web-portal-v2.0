@@ -10,7 +10,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Leaf, Code2 } from "lucide-react";
+import { Clock, Leaf, Code2, Play } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -24,13 +24,22 @@ import {
 
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
-import { Model, ModelVersion } from "@/types/model";
+import { Model, ModelVersion, SubscribedModel } from "@/types/model";
 import { formatDate } from "@/lib/formatDate";
 
-const ModelVersionTab = ({ model }: { model: Model }) => {
+const ModelVersionTab = ({
+  model,
+  subscribedModels,
+  onSubscribedModelsChange,
+}: {
+  model: Model;
+  subscribedModels: SubscribedModel[];
+  onSubscribedModelsChange: () => void;
+}) => {
   const t = useTranslations("dashboard.models.versions");
   const params = useParams();
   const modelName: string = model.name;
+  const userId = params.userId as string;
 
   const [versions, setVersions] = useState<ModelVersion[]>([]);
   const [versionLoading, setVersionLoading] = useState(false);
@@ -41,7 +50,7 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
     max_results: 10,
     order_by: "name ASC",
   });
-
+  console.log("Model Version", model);
   const getTagValue = (tags: any[], key: string) => {
     return tags?.find((tag) => tag.key === key)?.value;
   };
@@ -94,6 +103,40 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
       ...prev,
       [key]: value,
     }));
+  };
+
+  const handleGenerateScript = async (version: string) => {
+    try {
+      // Find the subscribed model that matches the current model name
+      const subscribedModel = subscribedModels?.find(
+        (model) => model.model_name === modelName
+      );
+
+      if (!subscribedModel) {
+        toast.error(t("toast.generateError"), {
+          description: t("toast.notSubscribed"),
+        });
+        return;
+      }
+
+      await modelApi.generateScript(userId, {
+        model_name: modelName,
+        model_version: version,
+        location: subscribedModel.location,
+        avg_temp: 32,
+        avg_humid: 80,
+        avg_rainfall: 30,
+      });
+
+      toast.success(t("toast.generateSuccess"), {
+        description: t("toast.generateSuccessDesc", { version }),
+      });
+    } catch (err) {
+      console.error("Error generating script:", err);
+      toast.error(t("toast.generateError"), {
+        description: t("toast.generateErrorDesc"),
+      });
+    }
   };
 
   console.log("versions", versions);
@@ -169,44 +212,57 @@ const ModelVersionTab = ({ model }: { model: Model }) => {
                   </div>
                   <Card>
                     <CardContent className="p-4 space-y-2">
-                      <div>
-                        <span className="text-sm font-medium">
-                          {t("name")}{" "}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          {item.name}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-sm font-medium">
-                          {t("description")}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          {" "}
-                          {item.description
-                            ? item.description
-                            : t("noDescription")}
-                        </span>
-                      </div>
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <Leaf className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">
-                            {t("plant")}:
-                          </span>
-                          <Badge variant="secondary">
-                            {plantType || t("noPlant")}
-                          </Badge>
+                      <div className="flex justify-between items-start">
+                        <div className="space-y-2">
+                          <div>
+                            <span className="text-sm font-medium">
+                              {t("name")}{" "}
+                            </span>
+                            <span className="text-sm text-muted-foreground">
+                              {item.name}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-sm font-medium">
+                              {t("description")}
+                            </span>
+                            <span className="text-sm text-muted-foreground">
+                              {" "}
+                              {item.description
+                                ? item.description
+                                : t("noDescription")}
+                            </span>
+                          </div>
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                              <Leaf className="h-4 w-4 text-muted-foreground" />
+                              <span className="text-sm text-muted-foreground">
+                                {t("plant")}:
+                              </span>
+                              <Badge variant="secondary">
+                                {plantType || t("noPlant")}
+                              </Badge>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Code2 className="h-4 w-4 text-muted-foreground" />
+                              <span className="text-sm text-muted-foreground">
+                                {t("algorithm")}:
+                              </span>
+                              <Badge variant="secondary">
+                                {algorithm || t("noAlgorithm")}
+                              </Badge>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Code2 className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">
-                            {t("algorithm")}:
-                          </span>
-                          <Badge variant="secondary">
-                            {algorithm || t("noAlgorithm")}
-                          </Badge>
-                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleGenerateScript(item.version)}
+                          className="flex items-center gap-2"
+                        >
+                          <Play className="h-4 w-4" />
+                          {t("generateScript")}
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>

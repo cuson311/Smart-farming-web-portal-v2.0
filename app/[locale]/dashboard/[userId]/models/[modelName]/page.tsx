@@ -10,6 +10,8 @@ import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOve
 import { useFetchModelInfo } from "@/hooks/useFetchModel";
 import ModelVersionTab from "@/components/model/model-detail/versions/ModelVersionTab";
 import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
+import GeneratedModelTab from "@/components/model/model-list/GeneratedModelTab";
+import { useFetchSubscribedModels } from "@/hooks/useFetchUser";
 // import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
 
 // This component will be rendered on invalid tab routes
@@ -73,7 +75,7 @@ const ModelDetailPage = ({
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
 
-  const validTabs = ["versions"]; // Removed "schedule" from valid tabs
+  const validTabs = ["versions", "generated"];
   const isValidTab = tabParam && validTabs.includes(tabParam);
   const tabName = isValidTab ? tabParam : "versions";
 
@@ -84,6 +86,17 @@ const ModelDetailPage = ({
     error: modelInfoError,
     refetch,
   } = useFetchModelInfo(params.modelName);
+
+  const {
+    data: subscribedModels,
+    loading: subscribedModelsLoading,
+    error: subscribedModelsError,
+    refetch: refetchSubscribedModels,
+  } = useFetchSubscribedModels(params.userId);
+
+  const handleSubscribedModelsChange = () => {
+    refetchSubscribedModels();
+  };
 
   // If no tab param or invalid tab, render NotFound component
   if (!isValidTab) {
@@ -120,13 +133,17 @@ const ModelDetailPage = ({
               <TabsTrigger value="versions">
                 {t("tabs.versions", { defaultValue: "Versions" })}
               </TabsTrigger>
-              <TabsTrigger value="schedule">
-                {t("tabs.schedule", { defaultValue: "Schedule" })}
+              <TabsTrigger value="generated">
+                {t("tabs.generated", { defaultValue: "Generated" })}
               </TabsTrigger>
             </TabsList>
             <TabsContent value="versions" className="border-none p-0 pt-4">
               {modelInfo ? (
-                <ModelVersionTab model={modelInfo} />
+                <ModelVersionTab
+                  model={modelInfo}
+                  subscribedModels={subscribedModels}
+                  onSubscribedModelsChange={handleSubscribedModelsChange}
+                />
               ) : (
                 <p className="text-sm text-muted-foreground">
                   {t("loadingDetails", {
@@ -135,22 +152,25 @@ const ModelDetailPage = ({
                 </p>
               )}
             </TabsContent>
-            <TabsContent value="schedule" className="border-none p-0 pt-4">
-              {modelInfo ? (
-                <ScheduleModelTab model={modelInfo} />
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  {t("loadingDetails", {
-                    defaultValue: "Loading model details...",
-                  })}
-                </p>
+            <TabsContent value="generated" className="border-none p-0 pt-4">
+              {modelInfo && (
+                <GeneratedModelTab
+                  model={modelInfo}
+                  subscribedModels={subscribedModels}
+                  onSubscribedModelsChange={handleSubscribedModelsChange}
+                />
               )}
             </TabsContent>
           </Tabs>
         </div>
         <div>
           {modelInfo && (
-            <ModelOverviewCard model={modelInfo} refetch={refetch} />
+            <ModelOverviewCard
+              model={modelInfo}
+              refetch={refetch}
+              subscribedModels={subscribedModels}
+              onSubscribedModelsChange={handleSubscribedModelsChange}
+            />
           )}
         </div>
       </div>

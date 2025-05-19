@@ -102,7 +102,33 @@ export interface NewModelScheduleData {
 
 export interface ModelSchedulePlan {
   time: string;
-  model_id: string;
-  name: string;
-  description: string;
+  model_name: string;
+}
+export interface CreateGeneratedScriptData {
+  model_name: string;
+  model_version: string;
+  location: string;
+  avg_temp: number;
+  avg_humid: number;
+  avg_rainfall: number;
+}
+export interface GeneratedScript {
+  _id: string;
+  model_name: string;
+  model_version: string;
+  location: string;
+  avg_temp: number;
+  avg_humid: number;
+  avg_rainfall: number;
+  owner_id: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface GeneratedScriptsResponse {
+  data: GeneratedScript[];
+  total: number;
+  page: number;
+  totalPages: number;
 }

@@ -506,8 +506,8 @@
         "scripts": "Kịch bản",
         "versions": "Phiên bản",
         "schedule": "Lịch trình",
-        "unregisteredModels": "Mô hình chưa đăng ký",
-        "registeredModels": "Mô hình đã đăng ký"
+        "generated": "Kịch bản động",
+        "all": "Tất cả"
       },
       "newModel": {
         "createButton": "Tạo mô hình",
@@ -672,6 +672,48 @@
           "planFetchErrorDesc": "Không thể tải kế hoạch lịch trình. Vui lòng thử lại."
         }
       },
+      "generated": {
+        "title": "Kịch bản",
+        "description": "Xem tất cả kịch bản mô hình đã được tạo",
+        "searchPlaceholder": "Tìm kiếm kịch bản...",
+        "loading": "Đang tải kịch bản...",
+        "noScripts": "Không tìm thấy kịch bản nào",
+        "modelName": "Mô hình:",
+        "version": "Phiên bản mô hình",
+        "location": "Vị trí",
+        "temperature": "Nhiệt độ",
+        "humidity": "Độ ẩm",
+        "rainfall": "Lượng mưa",
+        "createdAt": "Tạo lúc",
+        "lastUpdated": "Cập nhật lúc",
+        "actions": "Hành động",
+        "delete": "Xóa",
+        "view": "Xem chi tiết",
+        "toast": {
+          "fetchError": "Lỗi",
+          "fetchErrorDesc": "Không thể tải danh sách kịch bản"
+        },
+        "deleteDialog": {
+          "title": "Xóa kịch bản",
+          "description": "Bạn có chắc chắn muốn xóa kịch bản này? Hành động này không thể hoàn tác.",
+          "cancel": "Hủy",
+          "confirm": "Xóa"
+        },
+        "filter": {
+          "location": "Vị trí",
+          "locationPlaceholder": "Nhập vị trí",
+          "modelName": "Tên mô hình",
+          "modelNamePlaceholder": "Nhập tên mô hình",
+          "sortBy": "Sắp xếp theo",
+          "sortByPlaceholder": "Chọn trường sắp xếp",
+          "createdAt": "Ngày tạo",
+          "updatedAt": "Cập nhật lúc",
+          "order": "Thứ tự",
+          "orderPlaceholder": "Chọn thứ tự",
+          "descending": "Giảm dần",
+          "ascending": "Tăng dần"
+        }
+      },
       "scripts": {
         "title": "Kịch bản liên kết",
         "description": "Kịch bản thuộc về mô hình này",
@@ -711,6 +753,7 @@
         "noAlgorithm": "Chưa có thuật toán",
         "noTags": "Không tìm thấy thẻ nào.",
         "noVersions": "Không tìm thấy phiên bản nào trong khoảng thời gian đã chọn",
+        "generateScript": "Tạo script",
         "filter": {
           "title": "Bộ lọc",
           "resultsPerPage": "Kết quả mỗi trang",
@@ -720,7 +763,11 @@
         },
         "toast": {
           "fetchError": "Lỗi tải phiên bản mô hình",
-          "fetchErrorDesc": "Không thể tải phiên bản mô hình. Vui lòng thử lại."
+          "fetchErrorDesc": "Không thể tải phiên bản mô hình. Vui lòng thử lại.",
+          "generateSuccess": "Phiên bản mô hình đã tạo script thành công",
+          "generateSuccessDesc": "Phiên bản mô hình {version} đã được tạo script thành công.",
+          "generateError": "Tạo script thất bại",
+          "generateErrorDesc": "Không thể tạo script. Vui lòng thử lại."
         }
       },
       "card": {

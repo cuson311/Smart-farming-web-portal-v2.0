@@ -5,7 +5,7 @@ import { Leaf, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Model, Tag, UpdateModelData } from "@/types/model";
+import { Model, SubscribedModel, Tag, UpdateModelData } from "@/types/model";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import modelApi from "@/api/modelAPI";
@@ -18,9 +18,13 @@ import { getCronDescription } from "@/lib/cronTransform";
 const ModelOverviewCard = ({
   model,
   refetch,
+  subscribedModels,
+  onSubscribedModelsChange,
 }: {
   model: Model;
   refetch: () => void;
+  subscribedModels: SubscribedModel[];
+  onSubscribedModelsChange: () => void;
 }) => {
   const router = useRouter();
   const { userId, modelName } = useParams<{
@@ -35,7 +39,7 @@ const ModelOverviewCard = ({
     return model.tags?.find((tag) => tag.key === key)?.value;
   };
 
-  const isEnabled = getTagValue("is_enabled") === "true";
+  const isEnabled = getTagValue("enable") === "true";
   const plantType = getTagValue("plant");
   const schedule = getTagValue("schedule");
   // const handleEditConfirm = async (updatedModel: UpdateModelData) => {

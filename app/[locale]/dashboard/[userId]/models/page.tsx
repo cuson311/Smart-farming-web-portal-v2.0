@@ -10,6 +10,7 @@ import {
 } from "@/hooks/useFetchUser";
 import { ModelsListOptions } from "@/types/model";
 import ModelList from "@/components/model/model-list/ModelList";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { useTranslations } from "next-intl";
 import {
@@ -19,10 +20,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
 
 const ModelPage = () => {
   const { toast } = useToast();
   const t = useTranslations("dashboard.models");
+  const validTabs = ["all", "schedule"];
+  const [activeTab, setActiveTab] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filters, setFilters] = useState<ModelsListOptions>({
     max_results: 10,
@@ -84,7 +88,6 @@ const ModelPage = () => {
   const handleSearch = () => {
     refetchAllModels(filters);
   };
-  console.log("models", models);
   return (
     <div className="grid gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -148,13 +151,23 @@ const ModelPage = () => {
           </div>
         </div>
       </div>
-
-      <ModelList
-        models={models?.registered_models || []}
-        subscribedModels={subscribedModels}
-        loading={modelsListLoading || subscribedModelsLoading}
-        onSubscribedModelsChange={handleSubscribedModelsChange}
-      />
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList>
+          <TabsTrigger value="all">{t("tabs.all")}</TabsTrigger>
+          <TabsTrigger value="schedule">{t("tabs.schedule")}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="all">
+          <ModelList
+            models={models?.registered_models || []}
+            subscribedModels={subscribedModels}
+            loading={modelsListLoading || subscribedModelsLoading}
+            onSubscribedModelsChange={handleSubscribedModelsChange}
+          />
+        </TabsContent>
+        <TabsContent value="schedule">
+          <ScheduleModelTab />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

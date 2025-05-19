@@ -9,57 +9,67 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { Calendar } from "lucide-react";
 import { toast } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import modelApi from "@/api/modelAPI";
 import { Model, ModelSchedulePlan } from "@/types/model";
-import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
+import { DatePicker } from "@/components/ui/date-picker";
 import Pagination from "@/components/ui/pagination";
 import { formatDate } from "@/lib/formatDate";
 import { useTranslations } from "next-intl";
 
-const ScheduleModelTab = ({ model }: { model: Model }) => {
+const ScheduleModelTab = () => {
   const t = useTranslations("dashboard.models.schedule");
   const params = useParams();
   const userId: string = Array.isArray(params.userId)
     ? params.userId[0]
     : params.userId;
-  const modelId: string = model._id;
 
-  const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({});
+  const getCurrentDate = () => {
+    const today = new Date();
+    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(today.getDate()).padStart(2, "0")}`;
+  };
+
+  const [endDate, setEndDate] = useState<string>(getCurrentDate());
   const [schedulePlan, setSchedulePlan] = useState<ModelSchedulePlan[]>([]);
 
-  // Add new state variables for pagination and sorting
+  // Add new state variables for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  const handleDateRangeChange = async (range: { from?: Date; to?: Date }) => {
-    setDateRange(range);
-    setCurrentPage(1);
-    if (range.from && range.to) {
+  useEffect(() => {
+    const fetchInitialSchedulePlan = async () => {
       try {
-        const formatDate = (date: Date) => {
-          return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-            2,
-            "0"
-          )}-${String(date.getDate()).padStart(2, "0")}`;
-        };
+        const response = await modelApi.getModelSchedulePlan(userId, endDate);
+        setSchedulePlan(response);
+      } catch (error) {
+        console.error("Error fetching initial schedule plan:", error);
+        toast.error(t("toast.planFetchError"), {
+          description: t("toast.planFetchErrorDesc"),
+        });
+      }
+    };
 
-        const fromDate = formatDate(range.from);
-        const toDate = formatDate(range.to);
+    fetchInitialSchedulePlan();
+  }, [userId, endDate, t]);
+
+  console.log("schedulePlan", schedulePlan);
+  console.log("endDate", endDate);
+
+  const handleDateChange = async (date: Date | undefined) => {
+    if (date) {
+      const formattedDate = `${date.getFullYear()}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+      setEndDate(formattedDate);
+      setCurrentPage(1);
+      try {
         const response = await modelApi.getModelSchedulePlan(
           userId,
-          fromDate,
-          toDate
+          formattedDate
         );
         setSchedulePlan(response);
       } catch (error) {
@@ -68,26 +78,18 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
           description: t("toast.planFetchErrorDesc"),
         });
       }
+    } else {
+      setEndDate(getCurrentDate());
+      setSchedulePlan([]);
     }
   };
 
-  // Add sorting and pagination logic
-  const sortedSchedulePlan = [...schedulePlan].sort((a, b) => {
-    const dateA = new Date(a.time).getTime();
-    const dateB = new Date(b.time).getTime();
-    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-  });
-
-  const totalPages = Math.ceil(sortedSchedulePlan.length / itemsPerPage);
-  const paginatedSchedulePlan = sortedSchedulePlan.slice(
+  // Simplified pagination logic
+  const totalPages = Math.ceil(schedulePlan.length / itemsPerPage);
+  const paginatedSchedulePlan = schedulePlan.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
-  const handleSortChange = (order: "asc" | "desc") => {
-    setSortOrder(order);
-    setCurrentPage(1); // Reset to first page when sorting changes
-  };
 
   return (
     <div className="space-y-6">
@@ -98,24 +100,11 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
             <CardDescription>{t("plan.descriptionSection")}</CardDescription>
           </div>
           <div className="flex flex-col gap-4 items-end">
-            <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
-            <div className="flex items-center gap-2">
-              <Label>{t("plan.sortBy")}</Label>
-              <Select
-                value={sortOrder}
-                onValueChange={(value: "asc" | "desc") =>
-                  handleSortChange(value)
-                }
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select sort order" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="asc">{t("plan.oldestFirst")}</SelectItem>
-                  <SelectItem value="desc">{t("plan.latestFirst")}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <DatePicker
+              date={endDate ? new Date(endDate) : undefined}
+              onSelect={handleDateChange}
+              placeholder="Chọn ngày kết thúc"
+            />
           </div>
         </CardHeader>
         <CardContent>
@@ -133,17 +122,10 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
                         <div>
                           {t("plan.name")}{" "}
                           <span className="text-sm text-muted-foreground">
-                            {plan.name}
+                            {plan.model_name}
                           </span>
                         </div>
                         {formatDate(plan.time)}
-                      </h3>
-
-                      <h3 className="mb-1 text-sm font-medium line-clamp-2">
-                        {t("plan.description")}{" "}
-                        <span className="text-sm text-muted-foreground">
-                          {plan.description}
-                        </span>
                       </h3>
                     </div>
                   </div>

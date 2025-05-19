@@ -507,7 +507,8 @@
                 "scripts": "Scripts",
                 "versions": "Versions",
                 "schedule": "Schedule",
-                "unregisteredModels": "Unregistered Models",
+                "all": "All Models",
+                "generated": "Generated Scripts",
                 "registeredModels": "Registered Models"
             },
             "newModel": {
@@ -673,6 +674,48 @@
                     "planFetchErrorDesc": "Could not load the schedule plan. Please try again."
                 }
             },
+            "generated": {
+                "title": "Generated Scripts",
+                "description": "View all your generated model scripts",
+                "searchPlaceholder": "Search scripts...",
+                "loading": "Loading scripts...",
+                "noScripts": "No scripts found",
+                "modelName": "Model:",
+                "version": "Model Version",
+                "location": "Location",
+                "temperature": "Temperature",
+                "humidity": "Humidity",
+                "rainfall": "Rainfall",
+                "createdAt": "Created At",
+                "lastUpdated": "Last Updated",
+                "actions": "Actions",
+                "delete": "Delete",
+                "view": "View detail",
+                "toast": {
+                    "fetchError": "Error",
+                    "fetchErrorDesc": "Failed to fetch scripts"
+                },
+                "deleteDialog": {
+                    "title": "Delete Script",
+                    "description": "Are you sure you want to delete this script? This action cannot be undone.",
+                    "cancel": "Cancel",
+                    "confirm": "Delete"
+                },
+                "filter": {
+                    "location": "Location",
+                    "locationPlaceholder": "Enter location",
+                    "modelName": "Model Name",
+                    "modelNamePlaceholder": "Enter model name",
+                    "sortBy": "Sort By",
+                    "sortByPlaceholder": "Select sort field",
+                    "createdAt": "Created At",
+                    "updatedAt": "Updated At",
+                    "order": "Order",
+                    "orderPlaceholder": "Select order",
+                    "descending": "Descending",
+                    "ascending": "Ascending"
+                }
+            },
             "scripts": {
                 "title": "Associated Scripts",
                 "description": "Scripts belong to this model",
@@ -712,6 +755,7 @@
                 "noAlgorithm": "No algorithm specified",
                 "noTags": "No tags found.",
                 "noVersions": "No versions found in the selected date range",
+                "generateScript": "Generate Script",
                 "filter": {
                     "title": "Filter",
                     "resultsPerPage": "Results per page",
@@ -721,7 +765,11 @@
                 },
                 "toast": {
                     "fetchError": "Error fetching model versions",
-                    "fetchErrorDesc": "Failed to fetch model versions. Please try again."
+                    "fetchErrorDesc": "Failed to fetch model versions. Please try again.",
+                    "generateSuccess": "Model version generated script successfully",
+                    "generateSuccessDesc": "Model version {version} has been generated script successfully.",
+                    "generateError": "Failed to generate model version",
+                    "generateErrorDesc": "Failed to generate model version. Please try again."
                 }
             },
             "card": {
