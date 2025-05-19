@@ -132,3 +132,10 @@ export interface GeneratedScriptsResponse {
   page: number;
   totalPages: number;
 }
+
+export interface CreateModelVersionData {
+  name: string;
+  description: string;
+  tags: Tag[];
+  file: File;
+}

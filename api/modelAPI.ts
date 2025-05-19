@@ -1,5 +1,6 @@
 import {
   CreateGeneratedScriptData,
+  CreateModelVersionData,
   DeleteModelTagData,
   NewModelScheduleData,
   SetModelTagData,
@@ -7,6 +8,7 @@ import {
 } from "@/types/model";
 import axiosInstance from "./axiosInstance";
 import qs from "qs";
+import axios from "axios";
 
 const modelApi = {
   getModels: async (userId: string) => {
@@ -207,6 +209,13 @@ const modelApi = {
   getModelScriptFile: async (userId: string, scriptId: string) => {
     const response = await axiosInstance.get(
       `/${userId}/models/scripts/get-file?scriptId=${scriptId}`
+    );
+    return response.data;
+  },
+  createModelVersion: async (data: FormData) => {
+    const response = await axios.post(
+      `http://0.0.0.0:7000/model-versions/create`,
+      data
     );
     return response.data;
   },

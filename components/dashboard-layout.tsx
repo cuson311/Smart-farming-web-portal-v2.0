@@ -5,7 +5,14 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Code2, Database, Home, Settings, User } from "lucide-react";
+import {
+  Code2,
+  Database,
+  Home,
+  Settings,
+  User,
+  FileChartLine,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
@@ -49,6 +56,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       label: t("navigation.models"),
       icon: Database,
       active: pathname.includes(`/dashboard/${userId}/models`),
+    },
+    {
+      href: `/dashboard/${userId}/generated_scripts`,
+      label: t("navigation.generatedScripts"),
+      icon: FileChartLine,
+      active: pathname.includes(`/dashboard/${userId}/generated_scripts`),
     },
     {
       href: `/dashboard/${userId}/settings`,

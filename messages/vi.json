@@ -88,6 +88,7 @@
       "dashboard": "Bảng điều khiển",
       "profile": "Hồ sơ",
       "scripts": "Kịch bản",
+      "generatedScripts": "Kịch bản động",
       "models": "Mô hình",
       "settings": "Cài đặt"
     },
@@ -781,6 +782,19 @@
         "noTags": "Không tìm thấy thẻ nào.",
         "noVersions": "Không tìm thấy phiên bản nào trong khoảng thời gian đã chọn",
         "generateScript": "Tạo script",
+        "createVersion": "Tạo phiên bản",
+        "createVersionDialog": {
+          "title": "Tạo phiên bản mới",
+          "description": "Tải lên file .pkl để tạo phiên bản mới",
+          "descriptionLabel": "Mô tả",
+          "descriptionPlaceholder": "Nhập mô tả cho phiên bản này",
+          "uploadLabel": "Tải lên file mô hình",
+          "uploadDescription": "Chọn file .pkl để tải lên",
+          "cancel": "Hủy",
+          "create": "Tạo phiên bản",
+          "fileRequired": "Vui lòng chọn file để tải lên",
+          "invalidFile": "Vui lòng chọn file .pkl hợp lệ"
+        },
         "filter": {
           "title": "Bộ lọc",
           "resultsPerPage": "Kết quả mỗi trang",
@@ -794,7 +808,13 @@
           "generateSuccess": "Phiên bản mô hình đã tạo script thành công",
           "generateSuccessDesc": "Phiên bản mô hình {version} đã được tạo script thành công.",
           "generateError": "Tạo script thất bại",
-          "generateErrorDesc": "Không thể tạo script. Vui lòng thử lại."
+          "generateErrorDesc": "Không thể tạo script. Vui lòng thử lại.",
+          "createSuccess": "Tạo phiên bản thành công",
+          "createSuccessDesc": "Phiên bản mới đã được tạo thành công.",
+          "createError": "Tạo phiên bản thất bại",
+          "createErrorDesc": "Không thể tạo phiên bản mới. Vui lòng thử lại.",
+          "notSubscribed": "Bạn chưa đăng ký mô hình này",
+          "notSubscribedDesc": "Vui lòng đăng ký mô hình trước khi tạo script."
         }
       },
       "card": {
@@ -899,6 +919,50 @@
         "description": "Chọn ngôn ngữ ưa thích của bạn",
         "select": "Chọn ngôn ngữ"
       }
+    },
+    "generatedScripts": {
+      "title": "Kịch bản động",
+      "description": "Xem tất cả kịch bản được tạo bởi mô hình của bạn",
+      "loading": "Đang tải kịch bản...",
+      "noScripts": "Không tìm thấy kịch bản nào",
+      "subscribeModel": "Đăng ký mô hình",
+      "modelName": "Tên mô hình",
+      "version": "Phiên bản",
+      "location": "Vị trí",
+      "temperature": "Nhiệt độ",
+      "humidity": "Độ ẩm",
+      "rainfall": "Lượng mưa",
+      "lastUpdated": "Cập nhật lần cuối",
+      "actions": "Hành động",
+      "view": "Xem",
+      "delete": "Xóa",
+      "filter": {
+        "sortBy": "Sắp xếp theo",
+        "sortByPlaceholder": "Chọn trường sắp xếp",
+        "createdAt": "Ngày tạo",
+        "updatedAt": "Cập nhật lúc",
+        "order": "Thứ tự",
+        "orderPlaceholder": "Chọn thứ tự",
+        "descending": "Giảm dần",
+        "ascending": "Tăng dần",
+        "modelName": "Tên mô hình",
+        "modelNamePlaceholder": "Nhập tên mô hình",
+        "location": "Địa điểm",
+        "locationPlaceholder": "Nhập địa điểm"
+      },
+      "deleteDialog": {
+        "title": "Xóa kịch bản",
+        "description": "Bạn có chắc chắn muốn xóa kịch bản này? Hành động này không thể hoàn tác.",
+        "cancel": "Hủy",
+        "confirm": "Xóa"
+      },
+      "toast": {
+        "fetchError": "Lỗi",
+        "fetchErrorDesc": "Không thể tải danh sách kịch bản",
+        "deleteSuccess": "Xóa kịch bản thành công",
+        "deleteError": "Xóa kịch bản thất bại",
+        "deleteErrorDesc": "Không thể xóa kịch bản. Vui lòng thử lại."
+      }
     }
   },
   "footer": {
@@ -998,6 +1062,7 @@
       "dashboard": "Bảng điều khiển",
       "profile": "Hồ sơ",
       "scripts": "Kịch bản",
+      "generatedScripts": "Kịch bản động",
       "models": "Mô hình",
       "settings": "Cài đặt"
     }
@@ -1009,6 +1074,7 @@
   "Navigation": {
     "dashboard": "Bảng điều khiển",
     "profile": "Hồ sơ",
+    "generatedScripts": "Kịch bản động",
     "settings": "Cài đặt",
     "logout": "Đăng xuất"
   },
