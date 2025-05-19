@@ -9,10 +9,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Calendar } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -22,14 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import modelApi from "@/api/modelAPI";
-import {
-  Model,
-  ModelSchedule,
-  ModelSchedulePlan,
-  NewModelScheduleData,
-} from "@/types/model";
+import { Model, ModelSchedulePlan } from "@/types/model";
 import { DatePickerWithRange } from "@/components/ui/DatePickerWithRange";
 import Pagination from "@/components/ui/pagination";
 import { formatDate } from "@/lib/formatDate";
@@ -43,137 +34,13 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
     : params.userId;
   const modelId: string = model._id;
 
-  const [schedule, setSchedule] = useState<ModelSchedule | null>(null);
-  const [cronString, setCronString] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
   const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({});
   const [schedulePlan, setSchedulePlan] = useState<ModelSchedulePlan[]>([]);
-  const [scheduleType, setScheduleType] = useState<string>("daily");
-  const [showCustomInput, setShowCustomInput] = useState(false);
 
   // Add new state variables for pagination and sorting
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-
-  useEffect(() => {
-    fetchSchedule();
-  }, [modelId]);
-
-  const fetchSchedule = async () => {
-    try {
-      const response = await modelApi.getModelSchedule(userId, modelId);
-      setSchedule(response);
-      if (response.schedule) {
-        setCronString(response.schedule);
-        const matchedOption = SCHEDULE_OPTIONS.find(
-          (option) => option.cron === response.schedule
-        );
-        if (matchedOption) {
-          setScheduleType(matchedOption.value);
-          setShowCustomInput(false);
-        } else {
-          setScheduleType("custom");
-          setShowCustomInput(true);
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching schedule:", error);
-      toast.error(t("toast.fetchError"), {
-        description: t("toast.fetchErrorDesc"),
-      });
-    }
-  };
-
-  const handleScheduleTypeChange = (value: string) => {
-    setScheduleType(value);
-    if (value === "custom") {
-      setShowCustomInput(true);
-    } else {
-      setShowCustomInput(false);
-      const selectedOption = SCHEDULE_OPTIONS.find(
-        (option) => option.value === value
-      );
-    }
-  };
-
-  const SCHEDULE_OPTIONS = [
-    {
-      label: t("scheduleOptions.daily.label"),
-      value: "daily",
-      cron: "0 0 * * *",
-      description: t("scheduleOptions.daily.description"),
-    },
-    {
-      label: t("scheduleOptions.weekly.label"),
-      value: "weekly",
-      cron: "0 0 * * 0",
-      description: t("scheduleOptions.weekly.description"),
-    },
-    {
-      label: t("scheduleOptions.monthly.label"),
-      value: "monthly",
-      cron: "0 0 1 * *",
-      description: t("scheduleOptions.monthly.description"),
-    },
-    {
-      label: t("scheduleOptions.hourly.label"),
-      value: "hourly",
-      cron: "0 * * * *",
-      description: t("scheduleOptions.hourly.description"),
-    },
-    {
-      label: t("scheduleOptions.custom.label"),
-      value: "custom",
-      cron: "",
-      description: t("scheduleOptions.custom.description"),
-    },
-  ];
-
-  const handleSetSchedule = async () => {
-    if (!cronString) {
-      toast.error(t("toast.enterCron"));
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const scheduleData: NewModelScheduleData = {
-        model_id: modelId,
-        cron_string: cronString,
-      };
-      await modelApi.setModelSchedule(userId, scheduleData);
-      await fetchSchedule();
-      toast.success(t("toast.setSuccess"));
-    } catch (error) {
-      console.error("Error setting schedule:", error);
-      toast.error(t("toast.setError"), {
-        description: t("toast.setErrorDesc"),
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleEnableSchedule = async () => {
-    setIsLoading(true);
-    try {
-      await modelApi.setEnableSchedule(
-        userId,
-        modelId,
-        !schedule?.enableSchedule
-      );
-      await fetchSchedule();
-      toast.success(t("toast.enableSuccess"));
-    } catch (error) {
-      console.error("Error enabling schedule:", error);
-      toast.error(t("toast.enableError"), {
-        description: t("toast.enableErrorDesc"),
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleDateRangeChange = async (range: { from?: Date; to?: Date }) => {
     setDateRange(range);
@@ -224,81 +91,6 @@ const ScheduleModelTab = ({ model }: { model: Model }) => {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>{t("title")}</CardTitle>
-          <CardDescription>{t("description")}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center space-x-2">
-            <Switch
-              checked={schedule?.enableSchedule || false}
-              onCheckedChange={handleEnableSchedule}
-              disabled={isLoading}
-            />
-            <Label>{t("enableSchedule")}</Label>
-          </div>
-
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>{t("scheduleType")}</Label>
-              <RadioGroup
-                value={scheduleType}
-                onValueChange={handleScheduleTypeChange}
-                className="grid grid-cols-2 gap-4"
-              >
-                {SCHEDULE_OPTIONS.map((option) => (
-                  <div
-                    key={option.value}
-                    className="flex items-center space-x-2 p-4 border rounded-lg"
-                  >
-                    <RadioGroupItem
-                      value={option.value}
-                      id={option.value}
-                      className="peer"
-                    />
-                    <Label
-                      htmlFor={option.value}
-                      className="flex flex-col cursor-pointer"
-                    >
-                      <span className="font-medium">{option.label}</span>
-                      <span className="text-sm text-muted-foreground">
-                        {option.description}
-                      </span>
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-
-            {showCustomInput && (
-              <div className="space-y-2">
-                <Label>{t("customCron.label")}</Label>
-                <div className="flex space-x-2">
-                  <Input
-                    placeholder={t("customCron.placeholder")}
-                    value={cronString}
-                    onChange={(e) => setCronString(e.target.value)}
-                    disabled={isLoading}
-                  />
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  {t("customCron.description")}
-                </p>
-              </div>
-            )}
-
-            <Button
-              onClick={handleSetSchedule}
-              disabled={isLoading || !cronString}
-              className="w-full"
-            >
-              {t("setSchedule")}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
       <Card>
         <CardHeader className="flex flex-row justify-between">
           <div>

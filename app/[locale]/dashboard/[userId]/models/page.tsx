@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { useFetchModelsList } from "@/hooks/useFetchUser";
+import {
+  useFetchModelsList,
+  useFetchSubscribedModels,
+} from "@/hooks/useFetchUser";
 import { ModelsListOptions } from "@/types/model";
 import ModelList from "@/components/model/model-list/ModelList";
-import NewModelDialog from "@/components/model/model-list/NewModel";
+
 import { useTranslations } from "next-intl";
 import {
   Select,
@@ -26,12 +29,26 @@ const ModelPage = () => {
     order_by: "name ASC",
     filter: "",
   });
+  const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("userId") || "";
+      setUserId(storedUserId);
+    }
+  }, []);
 
   const {
     data: models,
     loading: modelsListLoading,
     refetch: refetchAllModels,
   } = useFetchModelsList(filters);
+
+  const {
+    data: subscribedModels,
+    loading: subscribedModelsLoading,
+    refetch: refetchSubscribedModels,
+  } = useFetchSubscribedModels(userId);
 
   // Effect to update search filter when search query changes
   useEffect(() => {
@@ -57,6 +74,11 @@ const ModelPage = () => {
       ...prev,
       [key]: value,
     }));
+  };
+
+  const handleSubscribedModelsChange = () => {
+    refetchAllModels(filters);
+    refetchSubscribedModels();
   };
 
   const handleSearch = () => {
@@ -129,7 +151,9 @@ const ModelPage = () => {
 
       <ModelList
         models={models?.registered_models || []}
-        loading={modelsListLoading}
+        subscribedModels={subscribedModels}
+        loading={modelsListLoading || subscribedModelsLoading}
+        onSubscribedModelsChange={handleSubscribedModelsChange}
       />
     </div>
   );

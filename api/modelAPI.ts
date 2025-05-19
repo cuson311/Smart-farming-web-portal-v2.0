@@ -16,6 +16,12 @@ const modelApi = {
     const response = await axiosInstance.get(`/models/get?name=${modelName}`);
     return response.data;
   },
+  getSubscribedModels: async (userId: string) => {
+    const response = await axiosInstance.get(
+      `/models/get-all-subscribed?user_id=${userId}`
+    );
+    return response.data;
+  },
   getModelVersion: async (
     modelName: string,
     maxResults: number = 10,
@@ -136,6 +142,20 @@ const modelApi = {
         data,
       }
     );
+    return response.data;
+  },
+  subscribeModel: async (data: {
+    user_id: string;
+    model_name: string;
+    location: string;
+  }) => {
+    const response = await axiosInstance.post(`/models/subscribe`, data);
+    return response.data;
+  },
+  unsubscribeModel: async (data: { user_id: string; model_name: string }) => {
+    const response = await axiosInstance.delete(`/models/un-subscribe`, {
+      data: data,
+    });
     return response.data;
   },
 };

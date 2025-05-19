@@ -41,6 +41,14 @@ export interface RegisteredModel {
   latest_versions?: ModelVersion[];
   tags?: Tag[];
 }
+export interface SubscribedModelsResponse {
+  subscribed_models: SubscribedModel[];
+}
+export interface SubscribedModel {
+  id: string;
+  model_name: string;
+  location: string;
+}
 export type ModelsListOptions = {
   max_results?: number;
   order_by?: "name ASC" | "name DESC";

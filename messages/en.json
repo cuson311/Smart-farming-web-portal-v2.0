@@ -506,7 +506,9 @@
             "tabs": {
                 "scripts": "Scripts",
                 "versions": "Versions",
-                "schedule": "Schedule"
+                "schedule": "Schedule",
+                "unregisteredModels": "Unregistered Models",
+                "registeredModels": "Registered Models"
             },
             "newModel": {
                 "createButton": "Create Model",
@@ -731,7 +733,38 @@
                 "scheduled": "Scheduled",
                 "notScheduled": "Not Scheduled",
                 "updatedAt": "Updated at",
-                "view": "View"
+                "view": "View",
+                "subscribe": "Subscribe",
+                "unsubscribe": "Unsubscribe",
+                "selectProvince": "Select Province",
+                "searchProvince": "Search Province",
+                "noProvinceFound": "No province found",
+                "subscribeDialog": {
+                    "title": "Subscribe to Model",
+                    "description": "Enter the location where you want to use this model",
+                    "locationLabel": "Location",
+                    "locationPlaceholder": "Enter location",
+                    "cancel": "Cancel",
+                    "confirm": "Subscribe"
+                },
+                "toast": {
+                    "missingLocation": "Missing Location",
+                    "missingLocationDesc": "Please enter a location for the model",
+                    "subscribeSuccess": "Subscribed Successfully",
+                    "subscribeSuccessDesc": "You have successfully subscribed to the model",
+                    "subscribeError": "Subscription Failed",
+                    "subscribeErrorDesc": "Failed to subscribe to the model. Please try again.",
+                    "unsubscribeSuccess": "Unsubscribed Successfully",
+                    "unsubscribeSuccessDesc": "You have successfully unsubscribed from the model",
+                    "unsubscribeError": "Unsubscribe Failed",
+                    "unsubscribeErrorDesc": "Failed to unsubscribe from the model. Please try again."
+                },
+                "unsubscribeDialog": {
+                    "title": "Unsubscribe from Model",
+                    "description": "Are you sure you want to unsubscribe from this model? This action cannot be undone.",
+                    "cancel": "Cancel",
+                    "confirm": "Unsubscribe"
+                }
             }
         },
         "settings": {

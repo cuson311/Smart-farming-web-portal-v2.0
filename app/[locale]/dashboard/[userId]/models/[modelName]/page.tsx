@@ -9,6 +9,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOverviewCard";
 import { useFetchModelInfo } from "@/hooks/useFetchModel";
 import ModelVersionTab from "@/components/model/model-detail/versions/ModelVersionTab";
+import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
 // import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
 
 // This component will be rendered on invalid tab routes
@@ -119,9 +120,9 @@ const ModelDetailPage = ({
               <TabsTrigger value="versions">
                 {t("tabs.versions", { defaultValue: "Versions" })}
               </TabsTrigger>
-              {/* <TabsTrigger value="schedule">
+              <TabsTrigger value="schedule">
                 {t("tabs.schedule", { defaultValue: "Schedule" })}
-              </TabsTrigger> */}
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="versions" className="border-none p-0 pt-4">
               {modelInfo ? (
@@ -134,7 +135,7 @@ const ModelDetailPage = ({
                 </p>
               )}
             </TabsContent>
-            {/* <TabsContent value="schedule" className="border-none p-0 pt-4">
+            <TabsContent value="schedule" className="border-none p-0 pt-4">
               {modelInfo ? (
                 <ScheduleModelTab model={modelInfo} />
               ) : (
@@ -144,7 +145,7 @@ const ModelDetailPage = ({
                   })}
                 </p>
               )}
-            </TabsContent> */}
+            </TabsContent>
           </Tabs>
         </div>
         <div>

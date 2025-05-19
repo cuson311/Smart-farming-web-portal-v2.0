@@ -505,7 +505,9 @@
       "tabs": {
         "scripts": "Kịch bản",
         "versions": "Phiên bản",
-        "schedule": "Lịch trình"
+        "schedule": "Lịch trình",
+        "unregisteredModels": "Mô hình chưa đăng ký",
+        "registeredModels": "Mô hình đã đăng ký"
       },
       "newModel": {
         "createButton": "Tạo mô hình",
@@ -730,7 +732,38 @@
         "scheduled": "Đã lên lịch",
         "notScheduled": "Chưa lên lịch",
         "updatedAt": "Cập nhật lúc",
-        "view": "Xem"
+        "view": "Xem",
+        "subscribe": "Đăng ký",
+        "unsubscribe": "Hủy đăng ký",
+        "selectProvince": "Chọn tỉnh",
+        "searchProvince": "Tìm kiếm tỉnh",
+        "noProvinceFound": "Không tìm thấy tỉnh",
+        "subscribeDialog": {
+          "title": "Đăng ký mô hình",
+          "description": "Nhập vị trí bạn muốn sử dụng mô hình này",
+          "locationLabel": "Vị trí",
+          "locationPlaceholder": "Nhập vị trí",
+          "cancel": "Hủy",
+          "confirm": "Đăng ký"
+        },
+        "toast": {
+          "missingLocation": "Thiếu vị trí",
+          "missingLocationDesc": "Vui lòng nhập vị trí cho mô hình",
+          "subscribeSuccess": "Đăng ký thành công",
+          "subscribeSuccessDesc": "Bạn đã đăng ký thành công mô hình",
+          "subscribeError": "Đăng ký thất bại",
+          "subscribeErrorDesc": "Không thể đăng ký mô hình. Vui lòng thử lại.",
+          "unsubscribeSuccess": "Hủy đăng ký thành công",
+          "unsubscribeSuccessDesc": "Bạn đã hủy đăng ký thành công mô hình",
+          "unsubscribeError": "Hủy đăng ký thất bại",
+          "unsubscribeErrorDesc": "Không thể hủy đăng ký mô hình. Vui lòng thử lại."
+        },
+        "unsubscribeDialog": {
+          "title": "Hủy đăng ký mô hình",
+          "description": "Bạn có chắc chắn muốn hủy đăng ký mô hình này? Hành động này không thể hoàn tác.",
+          "cancel": "Hủy",
+          "confirm": "Hủy đăng ký"
+        }
       }
     },
     "settings": {
