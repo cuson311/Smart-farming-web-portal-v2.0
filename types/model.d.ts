@@ -108,9 +108,9 @@ export interface CreateGeneratedScriptData {
   model_name: string;
   model_version: string;
   location: string;
-  avg_temp: number;
-  avg_humid: number;
-  avg_rainfall: number;
+  // avg_temp: number;
+  // avg_humid: number;
+  // avg_rainfall: number;
 }
 export interface GeneratedScript {
   _id: string;

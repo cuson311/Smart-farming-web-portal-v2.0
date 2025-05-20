@@ -193,9 +193,9 @@ const modelApi = {
       `/${userId}/models/scripts/generate`,
       {
         ...data,
-        avg_temp: data.avg_temp ?? 32,
-        avg_humid: data.avg_humid ?? 80,
-        avg_rainfall: data.avg_rainfall ?? 30,
+        // avg_temp: data.avg_temp ?? 32,
+        // avg_humid: data.avg_humid ?? 80,
+        // avg_rainfall: data.avg_rainfall ?? 30,
       }
     );
     return response.data;
