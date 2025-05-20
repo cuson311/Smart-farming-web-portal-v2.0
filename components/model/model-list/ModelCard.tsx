@@ -49,6 +49,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { vietnamProvinces } from "@/lib/constant";
+import SubscribeModelDialog from "@/components/model/SubscribeModelDialog";
 
 interface ModelCardProp {
   model: RegisteredModel;
@@ -68,10 +69,7 @@ const ModelCard = ({
   const { toast } = useToast();
   const [isSubscribeDialogOpen, setIsSubscribeDialogOpen] = useState(false);
   const [isUnsubscribeDialogOpen, setIsUnsubscribeDialogOpen] = useState(false);
-  const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
-  const [locationSearchTerm, setLocationSearchTerm] = useState("");
 
   const getTagValue = (key: string) => {
     const tag = model.tags?.find((tag) => tag.key === key);
@@ -86,33 +84,10 @@ const ModelCard = ({
     (subModel) => subModel.model_name === model.name
   );
 
-  // Filter provinces based on search term
-  const filteredProvinces = locationSearchTerm
-    ? vietnamProvinces.filter((province) =>
-        province.toLowerCase().includes(locationSearchTerm.toLowerCase())
-      )
-    : vietnamProvinces;
-
-  // Handle location selection
-  const handleLocationSelect = (selectedLocation: string) => {
-    setLocation(selectedLocation);
-    setLocationPopoverOpen(false);
-  };
-
-  const handleSubscribe = async () => {
-    if (!location.trim()) {
-      toast({
-        title: t("toast.missingLocation"),
-        description: t("toast.missingLocationDesc"),
-        variant: "destructive",
-      });
-      return;
-    }
-    // setIsLoading(true);
+  const handleSubscribe = async (location: string) => {
     try {
       await onSubscribe(model.name, location);
       setIsSubscribeDialogOpen(false);
-      setLocation("");
       toast({
         title: t("toast.subscribeSuccess"),
         description: t("toast.subscribeSuccessDesc"),
@@ -130,7 +105,6 @@ const ModelCard = ({
 
   const handleUnsubscribe = async () => {
     setIsUnsubscribeDialogOpen(false);
-    // setIsLoading(true);
     try {
       await onUnsubscribe(model.name);
       toast({
@@ -291,90 +265,13 @@ const ModelCard = ({
         </CardFooter>
       </Card>
 
-      <Dialog
+      <SubscribeModelDialog
         open={isSubscribeDialogOpen}
         onOpenChange={setIsSubscribeDialogOpen}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("subscribeDialog.title")}</DialogTitle>
-            <DialogDescription>
-              {t("subscribeDialog.description")}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="flex items-center gap-4">
-              <label className="text-sm font-medium text-nowrap">
-                {t("subscribeDialog.locationLabel")}
-              </label>
-              <Popover
-                open={locationPopoverOpen}
-                onOpenChange={setLocationPopoverOpen}
-                modal={true}
-              >
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    role="combobox"
-                  >
-                    <MapPin className="mr-2 h-4 w-4" />
-                    {location || t("selectProvince")}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[400px] p-0" align="start">
-                  <Command>
-                    <CommandInput
-                      placeholder={t("searchProvince")}
-                      value={locationSearchTerm}
-                      onValueChange={setLocationSearchTerm}
-                    />
-                    <CommandEmpty>{t("noProvinceFound")}</CommandEmpty>
-                    <CommandGroup>
-                      <ScrollArea className="h-64">
-                        {filteredProvinces.map((province) => (
-                          <CommandItem
-                            key={province}
-                            value={province}
-                            onSelect={() => handleLocationSelect(province)}
-                          >
-                            <div className="flex items-center gap-2 w-full">
-                              <div
-                                className={`h-4 w-4 border rounded-sm flex items-center justify-center ${
-                                  location === province
-                                    ? "bg-primary border-primary"
-                                    : "border-input"
-                                }`}
-                              >
-                                {location === province && (
-                                  <X className="h-3 w-3 text-primary-foreground" />
-                                )}
-                              </div>
-                              <span>{province}</span>
-                            </div>
-                          </CommandItem>
-                        ))}
-                      </ScrollArea>
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsSubscribeDialogOpen(false)}
-              disabled={isLoading}
-            >
-              {t("subscribeDialog.cancel")}
-            </Button>
-            <Button onClick={handleSubscribe} disabled={isLoading}>
-              {t("subscribeDialog.confirm")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        onSubscribe={handleSubscribe}
+        title={t("subscribeDialog.title")}
+        description={t("subscribeDialog.description")}
+      />
 
       <Dialog
         open={isUnsubscribeDialogOpen}

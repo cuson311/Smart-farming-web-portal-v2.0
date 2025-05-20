@@ -644,60 +644,29 @@
       "updatedAt": "Cập nhật lúc",
       "view": "Xem",
       "schedule": {
-        "title": "Lịch trình mô hình",
-        "description": "Cấu hình thời gian mô hình này sẽ được cập nhật tự động",
-        "enableSchedule": "Bật lịch trình",
-        "scheduleType": "Loại lịch trình",
-        "customCron": {
-          "label": "Biểu thức Cron tùy chỉnh",
-          "placeholder": "0 0 * * *",
-          "description": "Dùng định dạng biểu thức cron (ví dụ: \"0 0 * * *\" để chạy hàng ngày lúc nửa đêm)"
-        },
-        "setSchedule": "Thiết lập lịch trình",
-        "scheduleOptions": {
-          "daily": {
-            "label": "Hàng ngày",
-            "description": "Chạy một lần mỗi ngày lúc nửa đêm"
-          },
-          "weekly": {
-            "label": "Hàng tuần",
-            "description": "Chạy một lần mỗi tuần vào Chủ Nhật"
-          },
-          "monthly": {
-            "label": "Hàng tháng",
-            "description": "Chạy một lần mỗi tháng vào ngày 1"
-          },
-          "hourly": {
-            "label": "Hàng giờ",
-            "description": "Chạy một lần mỗi giờ"
-          },
-          "custom": {
-            "label": "Tùy chỉnh",
-            "description": "Thiết lập lịch trình tùy chỉnh"
-          }
-        },
         "plan": {
-          "title": "Kế hoạch lịch trình",
-          "descriptionSection": "Xem các lần chạy đã được lên lịch cho mô hình này",
-          "sortBy": "Sắp xếp theo:",
-          "oldestFirst": "Cũ nhất trước",
-          "latestFirst": "Mới nhất trước",
-          "name": "Tên:",
-          "description": "Mô tả:",
-          "noRuns": "Không tìm thấy lần chạy nào trong khoảng thời gian đã chọn"
+          "title": "Lịch Trình",
+          "descriptionSection": "Xem và quản lý lịch trình chạy model của bạn",
+          "noRuns": "Không tìm thấy lịch trình nào"
         },
+        "table": {
+          "filterTitle": "Bộ lọc",
+          "searchPlaceholder": "Tìm kiếm theo tên model...",
+          "sortBy": "Sắp xếp theo",
+          "sortByName": "Tên",
+          "sortByTime": "Thời gian",
+          "sortOrder": "Thứ tự sắp xếp",
+          "ascending": "Tăng dần",
+          "descending": "Giảm dần",
+          "modelName": "Tên Model",
+          "scheduledTime": "Thời gian lên lịch",
+          "endDateAPI": "Chọn ngày kết thúc",
+           "resetFilters": "Đặt lại bộ lọc"
+        },
+        "selectEndDate": "Chọn Ngày Kết Thúc",
         "toast": {
-          "enterCron": "Vui lòng nhập biểu thức cron",
-          "setSuccess": "Đã thiết lập lịch trình thành công",
-          "setError": "Thiết lập lịch trình thất bại",
-          "setErrorDesc": "Không thể thiết lập lịch trình. Vui lòng thử lại.",
-          "enableSuccess": "Đã cập nhật trạng thái lịch trình thành công",
-          "enableError": "Cập nhật trạng thái lịch trình thất bại",
-          "enableErrorDesc": "Không thể cập nhật trạng thái lịch trình. Vui lòng thử lại.",
-          "fetchError": "Lỗi tải lịch trình",
-          "fetchErrorDesc": "Không thể tải lịch trình. Vui lòng thử lại.",
-          "planFetchError": "Lỗi tải kế hoạch lịch trình",
-          "planFetchErrorDesc": "Không thể tải kế hoạch lịch trình. Vui lòng thử lại."
+          "planFetchError": "Lỗi khi tải lịch trình",
+          "planFetchErrorDesc": "Không thể tải dữ liệu lịch trình"
         }
       },
       "generated": {
@@ -717,9 +686,27 @@
         "actions": "Hành động",
         "delete": "Xóa",
         "view": "Xem chi tiết",
+        "createScript": "Tạo kịch bản động ngay",
+        "subscribeDialog": {
+          "title": "Đăng ký mô hình",
+          "description": "Bạn cần đăng ký mô hình này trước khi tạo kịch bản. Vui lòng chọn vị trí của bạn.",
+          "location": "Vị trí",
+          "selectProvince": "Chọn tỉnh",
+          "searchProvince": "Tìm kiếm tỉnh",
+          "noProvinceFound": "Không tìm thấy tỉnh",
+          "cancel": "Hủy",
+          "subscribe": "Đăng ký"
+        },
         "toast": {
+          "deleteSuccess": "Xóa kịch bản động thành công",
           "fetchError": "Lỗi",
-          "fetchErrorDesc": "Không thể tải danh sách kịch bản"
+          "fetchErrorDesc": "Không thể tải danh sách kịch bản",
+          "missingLocation": "Thiếu thông tin vị trí",
+          "missingLocationDesc": "Vui lòng chọn tỉnh/thành phố trước khi đăng ký",
+          "subscribeSuccess": "Đăng ký mô hình thành công",
+          "subscribeSuccessDesc": "Bạn đã đăng ký mô hình thành công. Bây giờ bạn có thể tạo kịch bản.",
+          "subscribeError": "Đăng ký mô hình thất bại",
+          "subscribeErrorDesc": "Không thể đăng ký mô hình. Vui lòng thử lại sau."
         },
         "deleteDialog": {
           "title": "Xóa kịch bản",

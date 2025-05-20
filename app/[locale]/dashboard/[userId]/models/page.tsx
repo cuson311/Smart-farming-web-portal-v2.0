@@ -93,64 +93,68 @@ const ModelPage = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold">{t("title")}</h1>
       </div>
-      <div className="flex flex-col gap-8 md:flex-row items-center justify-between bg-muted/30 rounded-lg p-4">
-        <div className="flex flex-wrap gap-4 items-center flex-grow">
-          <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder={t("searchPlaceholder")}
-              className="pl-8"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            />
+      {activeTab === "all" && (
+        <div className="flex flex-col gap-8 md:flex-row items-center justify-between bg-muted/30 rounded-lg p-4">
+          <div className="flex flex-wrap gap-4 items-center flex-grow">
+            <div className="relative flex-1">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder={t("searchPlaceholder")}
+                className="pl-8"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              />
+            </div>
+            {/* <NewModelDialog onModelCreated={refetchAllModels} /> */}
           </div>
-          {/* <NewModelDialog onModelCreated={refetchAllModels} /> */}
+          <div className="flex gap-8">
+            <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
+              <span className="text-sm font-medium">
+                {t("filter.resultsPerPage")}:
+              </span>
+              <Select
+                value={filters.max_results?.toString() ?? "10"}
+                onValueChange={(value) =>
+                  handleFilterChange("max_results", parseInt(value))
+                }
+              >
+                <SelectTrigger className="w-[100px]">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10</SelectItem>
+                  <SelectItem value="20">20</SelectItem>
+                  <SelectItem value="50">50</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
+              <span className="text-sm font-medium">{t("filter.sortBy")}:</span>
+              <Select
+                value={filters.order_by ?? "name ASC"}
+                onValueChange={(value) => {
+                  console.log("Sort value changed:", value);
+                  handleFilterChange("order_by", value);
+                }}
+              >
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name ASC">
+                    {t("filter.nameAsc")}
+                  </SelectItem>
+                  <SelectItem value="name DESC">
+                    {t("filter.nameDesc")}
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
-        <div className="flex gap-8">
-          <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
-            <span className="text-sm font-medium">
-              {t("filter.resultsPerPage")}:
-            </span>
-            <Select
-              value={filters.max_results?.toString() ?? "10"}
-              onValueChange={(value) =>
-                handleFilterChange("max_results", parseInt(value))
-              }
-            >
-              <SelectTrigger className="w-[100px]">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="10">10</SelectItem>
-                <SelectItem value="20">20</SelectItem>
-                <SelectItem value="50">50</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
-            <span className="text-sm font-medium">{t("filter.sortBy")}:</span>
-            <Select
-              value={filters.order_by ?? "name ASC"}
-              onValueChange={(value) => {
-                console.log("Sort value changed:", value);
-                handleFilterChange("order_by", value);
-              }}
-            >
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="name ASC">{t("filter.nameAsc")}</SelectItem>
-                <SelectItem value="name DESC">
-                  {t("filter.nameDesc")}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </div>
+      )}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
           <TabsTrigger value="all">{t("tabs.all")}</TabsTrigger>

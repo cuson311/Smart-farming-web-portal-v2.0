@@ -1,1227 +1,1215 @@
 {
     "home": {
-        "hero": {
-            "title": "Smart Irrigation",
-            "subtitle": "Management Made Simple",
-            "description": "Optimize your irrigation systems with intelligent scripts and models. Save water, time, and resources with our advanced management platform.",
-            "getStarted": "Get Started",
-            "learnMore": "Learn More"
+      "hero": {
+        "title": "Smart irrigation",
+        "subtitle": "Simple irrigation management",
+        "description": "Optimize your irrigation systems with smart scenarios and models. ",
+        "getStarted": "Begin",
+        "learnMore": "Learn more"
+      },
+      "features": {
+        "title": "Feature",
+        "heading": "Things you need to optimize irrigation",
+        "description": "Our platform provides powerful tools to manage and optimize your irrigation systems.",
+        "smartScripts": {
+          "title": "Smart script",
+          "description": "Create and manage flexible irrigation scenarios, adapt to weather conditions, soil moisture and crop needs to ensure optimal efficiency in each irrigation cycle."
         },
-        "features": {
-            "title": "Features",
-            "heading": "Everything You Need to Optimize Irrigation",
-            "description": "Our platform provides powerful tools to manage and optimize your irrigation systems.",
-            "smartScripts": {
-              "title": "Smart Scripts",
-              "description": "Create and manage adaptive irrigation scenarios that respond to real-time changes in weather, soil moisture, and crop needs for maximum efficiency."
-            },
-            "advancedModels": {
-              "title": "Advanced Models",
-              "description": "Develop intelligent irrigation models based on real-world data such as soil composition, weather conditions, and crop types to make informed decisions."
-            },
-            "securePlatform": {
-              "title": "Secure Platform",
-              "description": "All irrigation data is protected using enterprise-grade encryption and security protocols, ensuring privacy and safety for all users."
-            },
-            "waterConservation": {
-              "title": "Water Conservation",
-              "description": "Reduce water waste and operational costs with intelligent scheduling and precise water delivery based on real-time data and optimized scripts."
-            }
+        "advancedModels": {
+          "title": "Advanced model",
+          "description": "Develop smart irrigation models based on actual data such as soil, weather and crops, in order to support the accurate decision making in the operation of the irrigation system."
         },
-        "testimonials": {
-            "title": "Testimonials",
-            "heading": "Trusted by Users Worldwide",
-            "description": "See what our customers are saying about our irrigation management platform.",
-            "testimonial1": {
-                "name": "Cu Hoang Nguyen S",
-                "role": "Farm Manager",
-                "quote": "This platform has revolutionized how we manage irrigation on our farm. We've reduced water usage by 30% while improving crop yields."
-            },
-            "testimonial2": {
-                "name": "Le Hoang Anh V",
-                "role": "Agricultural Engineer",
-                "quote": "The ability to create custom irrigation models and scripts has been a game-changer for our operations. Highly recommended!"
-            },
-            "testimonial3": {
-                "name": "Vu Ngoc T",
-                "role": "Vineyard Owner",
-                "quote": "We've been using this platform for our vineyard irrigation for over a year now. The water savings and improved grape quality speak for themselves."
-            }
+        "securePlatform": {
+          "title": "Safety platform",
+          "description": "Information and irrigation data are kept confidential with corporate encryption, ensuring privacy and safety for all users in the system."
         },
-        "cta": {
-            "heading": "Ready to Optimize Your Irrigation?",
-            "description": "Join with professionals who are saving water and improving crop yields with our platform.",
-            "getStarted": "Get Started",
-            "contactSales": "Contact Sales"
+        "waterConservation": {
+          "title": "Water conservation",
+          "description": "Minimize waste and cost savings through accurate irrigation solutions, suitable to the actual needs of crops and environmental conditions."
         }
+      },
+      "testimonials": {
+        "title": "Testimony",
+        "heading": "Trusted by users",
+        "description": "See what our customers are talking about our script management platform & irrigation model.",
+        "testimonial1": {
+          "name": "Cu Hoang Nguyen S",
+          "role": "Farm management",
+          "quote": "This platform has revolutionized the way we manage irrigation in our farm. "
+        },
+        "testimonial2": {
+          "name": "Le Hoang Anh V",
+          "role": "Agricultural engineer",
+          "quote": "The ability to create custom models and scenarios is a person who changes the game for our activities. "
+        },
+        "testimonial3": {
+          "name": "Vu Ngoc T",
+          "role": "Vine garden owner",
+          "quote": "We have used this platform for watering our vineyards for more than a year. "
+        }
+      },
+      "cta": {
+        "heading": "Ready to optimize your irrigation?",
+        "description": "Joining many experts are saving water and improving crop yields with our platform.",
+        "getStarted": "Begin",
+        "contactSales": "Contact sales"
+      }
     },
     "dashboard": {
-        "title": "Dashboard",
-        "welcome": "Welcome to your irrigation management dashboard.",
-        "stats": {
-            "totalScripts": {
-                "title": "Total Scripts",
-                "value": "24",
-                "change": "+2 from last week"
-            },
-            "totalModels": {
-                "title": "Total Models",
-                "value": "12",
-                "change": "+1 from last week"
-            },
-            "activeUsers": {
-                "title": "Active Users",
-                "value": "5",
-                "change": "+2 from last month"
-            },
-            "waterSaved": {
-                "title": "Water Saved",
-                "value": "28%",
-                "change": "+8% from last month"
-            }
+      "title": "Dashboard",
+      "welcome": "Welcome to your irrigation control panel.",
+      "stats": {
+        "totalScripts": {
+          "title": "Total scenario",
+          "value": "24",
+          "change": "+2 from last week"
         },
-        "tabs": {
-            "recent": "Recent Scripts",
-            "activity": "Activity Log"
+        "totalModels": {
+          "title": "Total number of models",
+          "value": "12",
+          "change": "+1 from last week"
         },
-        "navigation": {
-            "dashboard": "Dashboard",
-            "profile": "Profile",
-            "scripts": "Scripts",
-            "generatedScripts": "Generated Scripts",
-            "models": "Models",
-            "settings": "Settings"
+        "activeUsers": {
+          "title": "Users operate",
+          "value": "5",
+          "change": "+2 from last month"
         },
-        "scripts": {
-            "title": "Scripts",
-            "searchPlaceholder": "Search scripts...",
-            "selectLocations": "Select locations",
-            "locations": "Locations",
-            "selectPlantTypes": "Select plant types",
-            "plantTypes": "Plant Types",
-            "privacy": "Privacy",
-            "allPrivacyTypes": "All privacy types",
-            "all": "All",
-            "public": "Public",
-            "private": "Private",
-            "clearFilters": "Clear filters",
-            "sortBy": "Sort by",
-            "selectField": "Select field",
-            "creationDate": "Creation Date",
-            "lastUpdate": "Last Update",
-            "selectOrder": "Select order",
-            "latestFirst": "Latest First",
-            "oldestFirst": "Oldest First",
-            "allScripts": "All Scripts",
-            "favorites": "Favorites",
-            "sharedScripts": "Shared Scripts",
-            "publicScripts": "Public Scripts",
-            "noOptionsFound": "No options found.",
-            "favorite": {
-                "success": "Favorite updated",
-                "error": "Failed to update favorite status"
-            },
-            "emptyState": {
-                "title": "No scripts yet",
-                "description": "Get started by creating your first irrigation script.",
-                "createButton": "Create New Script"
-            },
-            "deleteScript": {
-                "title": "Delete Script",
-                "description": "Are you sure you want to delete script {name}? This action cannot be undone.",
-                "cancel": "Cancel",
-                "delete": "Delete"
-            },
-            "scriptModal": {
-                "newScriptButton": "New Script",
-                "dialogTitle": "Create New Script",
-                "dialogDescription": "Add a new irrigation script to your collection.",
-                "nameLabel": "Name",
-                "namePlaceholder": "Enter script name",
-                "descriptionLabel": "Description",
-                "descriptionPlaceholder": "Enter script description (optional)",
-                "locationLabel": "Location",
-                "locationPlaceholder": "Select location",
-                "selectProvinces": "Select provinces",
-                "searchProvinces": "Search provinces...",
-                "locationsSelected": "{count} Location selected",
-                "plantTypeLabel": "Plant Type",
-                "selectPlantTypes": "Select plant types",
-                "searchPlantTypes": "Search plant types...",
-                "plantTypesSelected": "{count} Plant type selected",
-                "privacyLabel": "Privacy",
-                "publicLabel": "Public",
-                "publicDescription": "Anyone can view and fork this script",
-                "privateLabel": "Private",
-                "privateDescription": "Only you and people you share with can access",
-                "sharedUsersLabel": "Shared with:",
-                "searchUsersPlaceholder": "Search users...",
-                "searchButton": "Search",
-                "scriptJsonLabel": "Script JSON",
-                "uploadJsonButton":"Upload JSON",
-                "templateButton": "Template",
-                "defaultTemplate": "Default template",
-                "cancelButton": "Cancel",
-                "createButton": "Create Script",
-                "noPlantTypeFound": "No plant types found",
-                "noProvinceFound": "No provinces found",
-                "noUserFound": "No users found",
-                "searchResults": "Search Results",
-                "confirm": "Confirm",
-                "cancel": "Cancel",
-                "scriptUrl": "Script URL",
-                "add": "Add",
-                "sharedWithLabel": "Shared with",
-                "added": "Added",
-                "new": "New",
-                "toast": {
-                    "searchFailed": "Search failed",
-                    "searchFailedDescription": "Failed to search users. Please try again.",
-                    "invalidFile": "Invalid file",
-                    "invalidFileDescription": "Please upload a valid JSON file.",
-                    "uploadFailed": "Upload failed",
-                    "uploadFailedDescription": "Failed to upload script file.",
-                    "missingInformation": "Missing information",
-                    "missingInformationDescription": "Please provide a name for your script.",
-                    "authError": "Authentication error",
-                    "authErrorDescription": "You must be logged in to create a script.",
-                    "createSuccess": "Script created",
-                    "createSuccessDescription": "Script {name} has been created successfully.",
-                    "createFailed": "Creation failed",
-                    "createFailedDescription": "Failed to create script. Please try again."
-                }
-            },
-            "detail": {
-                "cancel": "Cancel",
-                "save": "Save",
-                "edit": "Edit",
-                "delete": "Delete",
-                "back": "Back",
-                "loading": "Loading...",
-                "checkingAccess": "Checking access permissions...",
-                "notFound": {
-                    "title": "Page Not Found",
-                    "invalidTab": "Invalid Tab",
-                    "description": "The requested tab does not exist. Please select a valid tab or return to your scripts.",
-                    "returnButton": "Return to My Scripts"
-                },
-                "accessDenied": {
-                    "title": "Script Access",
-                    "alertTitle": "Access Denied",
-                    "description": "You don't have permission to view this script. Please contact the script owner if you believe this is an error.",
-                    "returnButton": "Return to My Scripts"
-                },
-                "tabs": {
-                    "code": "Code",
-                    "comments": "Comments",
-                    "versions": "Versions"
-                },
-                "toast": {
-                    "saveSuccess": "Save successfully",
-                    "saveSuccessDescription": "Script saved successfully",
-                    "saveError": "Save failed",
-                    "saveErrorDescription": "Failed to save script",
-                    "updateSuccess": "Update successfully",
-                    "updateSuccessDescription": "Update script info successfully",
-                    "updateError": "Update failed",
-                    "updateErrorDescription": "Failed to update script info",
-                    "deleteSuccess": "Delete successfully",
-                    "deleteSuccessDescription": "Script deleted successfully",
-                    "ratingSuccess": "Rating submitted",
-                    "ratingSuccessDescription": "Your rating was submitted successfully",
-                    "ratingError": "Rating failed",
-                    "ratingErrorDescription": "Failed to submit your rating",
-                    "ratingDeleteSuccess": "Rating deleted",
-                    "ratingDeleteSuccessDescription": "Your rating was deleted successfully",
-                    "ratingDeleteError": "Rating delete failed",
-                    "ratingDeleteErrorDescription": "Failed to delete your rating",
-                    "downloadSuccess": "Download successful",
-                    "downloadSuccessDescription": "The file has been downloaded successfully.",
-                    "downloadError": "Download failed",
-                    "downloadErrorDescription": "Failed to download the file.",
-                    "newVersionSuccess": "New version created",
-                    "newVersionSuccessDescription": "A new version has been created successfully.",
-                    "newVersionError": "Create new version failed",
-                    "newVersionErrorDescription": "Failed to create a new version.",
-                    "deleteVersionSuccess": "Version deleted",
-                    "deleteVersionSuccessDescription": "The version has been deleted successfully.",
-                    "deleteVersionError": "Delete version failed",
-                    "deleteVersionErrorDescription": "Failed to delete the version."
-                },
-                "loadingDetails": "Loading script details...",
-                "scriptDetails": {
-                    "public": "Public",
-                    "private": "Private",
-                    "title": "Script Details",
-                    "owner": "Owner",
-                    "description": "Description",
-                    "noDescription": "There is no description",
-                    "location": "Location",
-                    "noLocations": "No locations specified",
-                    "plantType": "Plant Type",
-                    "noPlants": "No plants specified",
-                    "privacy": "Privacy",
-                    "averageRating": "Average Rating",
-                    "rating": "Ratings",
-                    "yourRating": "Your Rating",
-                    "rateScript": "Rate this script",
-                    "youRated": "You rated {value} {value, plural, one {star} other {stars}}",
-                    "deleteRating": "Delete your rating",
-                    "created": "Created",
-                    "lastUpdated": "Last Updated",
-                    "actions": "Actions",
-                    "editScript": "Edit Script",
-                    "delete": "Delete",
-                    "allLocations": "All Locations",
-                    "allPlantTypes": "All Plant Types"
-                },
-                "code": {
-                    "title": "Script Code",
-                    "version": "Version {version}",
-                    "currentVersion": "Current version: {version}",
-                    "reload": "Reload",
-                    "download": "Download",
-                    "newVersion": "New version",
-                    "upload": "Upload",
-                    "save": "Save",
-                    "deleteVersion": "Delete version",
-                    "enableEditing": "Enable editing",
-                    "disableEditing": "Disable editing",
-                    "deleteDialog": {
-                        "title": "Delete Version",
-                        "description": "Are you sure you want to delete version {version}? This action cannot be undone.",
-                        "cancel": "Cancel",
-                        "confirm": "Delete"
-                    }
-                },
-                "comments": {
-                    "title": "Comments",
-                    "description": "Discuss this script with your team",
-                    "addComment": "Add a comment...",
-                    "postComment": "Post Comment",
-                    "noComments": "No comments yet.",
-                    "searchResults": "Search Results",
-                    "unknownUser": "Unknown User",
-                    "viewScripts": "View Scripts",
-                    "reply": "Reply",
-                    "edit": "Edit",
-                    "delete": "Delete",
-                    "history": "View edit history",
-                    "showReplies": "Show replies ({count})",
-                    "hideReplies": "Hide replies",
-                    "writeReply": "Write a reply...",
-                    "cancel": "Cancel",
-                    "save": "Save",
-                    "deleteDialog": {
-                        "title": "Delete comment",
-                        "description": "Are you sure you want to delete this? This action cannot be undone.",
-                        "cancel": "Cancel",
-                        "confirm": "Delete"
-                    },
-                    "historyDialog": {
-                        "title": "{type} Edit History",
-                        "description": "View the edit history of this {type}",
-                        "edit": "Edit {number}",
-                        "noHistory": "No edit history available for this {type}",
-                        "close": "Close"
-                    },
-                    "toast": {
-                        "addSuccess": "Comment added successfully",
-                        "addSuccessDescription": "Your comment has been added successfully",
-                        "addError": "Failed to add comment",
-                        "addErrorDescription": "Could not add your comment. Please try again.",
-                        "editSuccess": "Edited comment successfully",
-                        "editSuccessDescription": "Your comment has been updated successfully",
-                        "editError": "Failed to edit comment",
-                        "editErrorDescription": "Could not edit your comment. Please try again.",
-                        "deleteSuccess": "Comment has been deleted successfully",
-                        "deleteSuccessDescription": "The comment was removed successfully",
-                        "deleteError": "Failed to delete comment",
-                        "deleteErrorDescription": "Could not delete the comment. Please try again.",
-                        "replySuccess": "Successful!",
-                        "replySuccessDescription": "Reply comment successfully",
-                        "replyError": "Failed!",
-                        "replyErrorDescription": "Failed to reply comment",
-                        "loadCommentsError": "Failed!",
-                        "loadCommentsErrorDescription": "Could not load comment history"
-                    }
-                },
-                "subcomments": {
-                    "toast": {
-                        "editReplySuccess": "Successful!",
-                        "editReplySuccessDescription": "Edited reply successfully",
-                        "editReplyError": "Failed!",
-                        "editReplyErrorDescription": "Failed to edit reply",
-                        "deleteReplySuccess": "Successful!",
-                        "deleteReplySuccessDescription": "Reply has been deleted successfully",
-                        "deleteReplyError": "Failed!",
-                        "deleteReplyErrorDescription": "Failed to delete reply",
-                        "loadHistoryError": "Failed!",
-                        "loadHistoryErrorDescription": "Could not load comment history"
-                    },
-                    "dialog": {
-                        "deleteTitle": "Delete Reply",
-                        "deleteDescription": "Are you sure you want to delete this reply? This action cannot be undone.",
-                        "deleteConfirm": "Delete",
-                        "deleteCancel": "Cancel",
-                        "historyTitle": "Reply Edit History",
-                        "historyDescription": "View the edit history of this reply",
-                        "historyEmpty": "No edit history available for this reply",
-                        "close": "Close"
-                    },
-                    "button": {
-                        "edit": "Edit",
-                        "delete": "Delete",
-                        "cancel": "Cancel",
-                        "save": "Save",
-                        "close": "Close"
-                    }
-                },
-                "versionCompare": {
-                    "title": "Compare version",
-                    "selectVersion": "Select version"
-                },
-                "irrigationSchedule": {
-                    "title": "Irrigation Schedule",
-                    "timeSetup": {
-                        "title": "Time Setup",
-                        "repeatEvery": "Repeat every",
-                        "days": "days",
-                        "weeks": "weeks"
-                    },
-                    "wateringEvents": {
-                        "title": "Watering Events",
-                        "eventsPerDay": "Events per day",
-                        "event": "Event #{number}",
-                        "time": "Time",
-                        "duration": "Duration",
-                        "waterVolume": "Water Volume",
-                        "method": "Method",
-                        "minutes": "minutes",
-                        "hours": "hours",
-                        "liters": "liters",
-                        "cubicMeters": "m³",
-                        "methods": {
-                            "drip": "Drip",
-                            "spray": "Spray",
-                            "soak": "Soak",
-                            "manual": "Manual"
-                        }
-                    },
-                    "conditions": {
-                        "title": "Watering Conditions",
-                        "skipIfRaining": "Skip if raining",
-                        "minSoilMoisture": "Min Soil Moisture (%)",
-                        "maxTemperature": "Max Temperature (°C)",
-                        "minAirHumidity": "Min Air Humidity (%)",
-                        "maxWindSpeed": "Max Wind Speed (m/s)"
-                    },
-                    "notes": {
-                        "title": "Notes",
-                        "placeholder": "Enter additional notes or information about the irrigation schedule..."
-                    },
-                    "actions": {
-                        "cancel": "Cancel",
-                        "save": "Save"
-                    },
-                    "errors": {
-                        "duplicateTime": "This time is already used"
-                    },
-                    "toast": {
-                        "saveSuccess": "Save successfully",
-                        "saveSuccessDescription": "Irrigation schedule saved successfully",
-                        "saveError": "Save failed",
-                        "saveErrorDescription": "Failed to save irrigation schedule"
-                    }
-                },
-                "view": {
-                    "title": "View Script",
-                    "back": "Back",
-                    "loading": "Loading script details...",
-                    "toast": {
-                        "fetchError": "Error",
-                        "fetchErrorDesc": "Failed to fetch script details"
-                    }
-                }
-            },
-            "list": {
-                "loading": "Loading scripts...",
-                "emptyState": {
-                    "title": "No scripts found",
-                    "description": "Try adjusting your filters or try a different search query."
-                },
-                "card": {
-                    "noDescription": "No description",
-                    "locations": "Locations:",
-                    "noLocations": "No locations specified",
-                    "plants": "Plants:",
-                    "noPlants": "No plants specified",
-                    "more": "+{count} more",
-                    "favorite": "Favorite",
-                    "updatedAt": "Updated at {date}",
-                    "view": "View",
-                    "private": "Private",
-                    "public": "Public"
-                },
-                "public": {
-                    "searchPlaceholder": "Search for users",
-                    "searchButton": "Search",
-                    "showingScriptsBy": "Showing scripts by {name}",
-                    "clear": "Clear",
-                    "searchResults": "Search Results",
-                    "noUsersFound": "No users found",
-                    "viewScripts": "View Scripts",
-                    "unknownUser": "Unknown User",
-                    "emptyState": {
-                        "title": "Search for public scripts",
-                        "description": "Find users to discover their public scripts"
-                    },
-                    "toast": {
-                        "searchFailed": "Search failed",
-                        "searchFailedDesc": "Failed to search users. Please try again."
-                    }
-                }
-            }
-        },
-        "models": {
-            "title": "Models",
-            "back": "Back",
-            "loadingDetails": "Loading model details...",
-            "loading": "Loading models...",
-            "checkingAccess": "Checking access permissions...",
-            "accessDenied": {
-                "title": "Access Denied",
-                "description": "You don't have permission to view this model. Please contact the model owner if you believe this is an error.",
-                "returnButton": "Return to My Models",
-                "back": "Back to Models"
-            },
-            "filter": {
-                    "title": "Filter",
-                    "resultsPerPage": "Results per page",
-                    "sortBy": "Sort by",
-                    "nameAsc": "Name (A-Z)",
-                    "nameDesc": "Name (Z-A)"
-                },
-            "notFound": {
-                "title": "Model Not Found",
-                "invalidTab": "Invalid Tab",
-                "description": "The requested tab does not exist. Please select a valid tab or return to your models.",
-                "returnButton": "Return to My Models"
-            },
-            "searchPlaceholder": "Search models...",
-            "favoriteUpdated": "Favorite updated",
-            "favoriteUpdatedDescription": "Model favorite status has been updated.",
-            "error": "Error",
-            "favoriteUpdateFailed": "Failed to update favorite status.",
-            "tabs": {
-                "scripts": "Scripts",
-                "versions": "Versions",
-                "schedule": "Schedule",
-                "all": "All Models",
-                "generated": "Generated Scripts",
-                "registeredModels": "Registered Models"
-            },
-            "newModel": {
-                "createButton": "Create Model",
-                "dialogTitle": "Create New Model",
-                "dialogDescription": "Add a new model to your collection.",
-                "nameLabel": "Name",
-                "namePlaceholder": "Enter model name",
-                "descriptionLabel": "Description",
-                "descriptionPlaceholder": "Enter model description (optional)",
-                "tagsLabel": "Tags",
-                "tagKeyLabel": "Key",
-                "tagValueLabel": "Value",
-                "tagKeyPlaceholder": "Enter tag key",
-                "tagValuePlaceholder": "Enter tag value",
-                "missingInfo": "Missing information",
-                "provideName": "Please provide a name for your model.",
-                "tagMissingInfo": "Please provide both key and value for the tag.",
-                "duplicateTag": "Duplicate tag",
-                "duplicateTagDesc": "A tag with this key already exists.",
-                "cancelButton": "Cancel",
-                "submitButton": "Create",
-                "toast": {
-                    "missingInfo": "Missing information",
-                    "provideName": "Please provide a name for your model.",
-                    "tagMissingInfo": "Please provide both key and value for the tag.",
-                    "duplicateTag": "Duplicate tag",
-                    "duplicateTagDesc": "A tag with this key already exists.",
-                    "authError": "Authentication error",
-                    "loginRequired": "You must be logged in to create a model.",
-                    "createSuccess": "Model created",
-                    "createSuccessDesc": "Model \"{name}\" has been created successfully.",
-                    "createError": "Creation failed",
-                    "createErrorDesc": "Failed to create model. Please try again."
-                }
-            },
-            "modelDetails": {
-                "title": "Model Details",
-                "name": "Name",
-                "description": "Description",
-                "created": "Created",
-                "lastUpdated": "Last Updated",
-                "tags": "Tags",
-                "noDescription": "No description.",
-                "noTags": "No tags found.",
-                "actions": "Actions",
-                "editModel": "Edit Model",
-                "deleteModel": "Delete",
-                "subscribe": "Subscribe",
-                "unsubscribe": "Unsubscribe",
-                "subscribeTitle": "Subscribe to Model",
-                "subscribeDescription": "Enter the location where you want to use this model",
-                "location": "Location",
-                "locationPlaceholder": "Enter location",
-                "cancel": "Cancel",
-                "confirmSubscribe": "Subscribe"
-            },
-            "editModel": {
-                "title": "Edit Model",
-                "modelName": "Model Name",
-                "description": "Description",
-                "descriptionPlaceholder": "Enter model description (optional)",
-                "tags": "Tags",
-                "tagKey": "Key",
-                "tagValue": "Value",
-                "tagKeyPlaceholder": "Enter tag key",
-                "tagValuePlaceholder": "Enter tag value",
-                "cancel": "Cancel",
-                "confirm": "Confirm",
-                "missingInfo": "Missing information",
-                "provideName": "Please provide a name for your model.",
-                "tagMissingInfo": "Please provide both key and value for the tag.",
-                "duplicateTag": "Duplicate tag",
-                "duplicateTagDesc": "A tag with this key already exists.",
-                "tagUpdated": "Tag updated",
-                "tagAdded": "Tag added",
-                "tagUpdateSuccess": "Tag {key} has been updated successfully.",
-                "tagAddSuccess": "Tag {key} has been added successfully.",
-                "tagOperationFailed": "Tag operation failed",
-                "tagUpdateFailed": "Failed to update tag. Please try again.",
-                "tagAddFailed": "Failed to add tag. Please try again.",
-                "tagRemoved": "Tag removed",
-                "tagRemoveSuccess": "Tag {key} has been removed successfully.",
-                "tagRemoveFailed": "Failed to remove tag. Please try again."
-            },
-            "deleteModel": {
-                "title": "Delete Model",
-                "description": "Are you sure you want to delete model {modelName}? This action cannot be undone.",
-                "cancel": "Cancel",
-                "confirm": "Delete",
-                "success": "Model deleted successfully",
-                "error": "Failed to delete model"
-            },
-            "toast": {
-                "updateSuccess": "Update model info successfully",
-                "updateError": "Failed to update model",
-                "deleteSuccess": "Model deleted successfully",
-                "deleteError": "Failed to delete model",
-                "subscribeSuccess": "Đăng kí mô hình thành công",
-                "subscribeSuccessDesc": "Bạn đã đăng kí mô hình thành công",
-                "subscribeError": "Đăng kí mô hình thất bại",
-                "subscribeErrorDesc": "Không thể đăng kí mô hình. Vui lòng thử lại.",
-                "unsubscribeSuccess": "Hủy đăng kí mô hình thành công",
-                "unsubscribeSuccessDesc": "You have successfully unsubscribed from the model",
-                "unsubscribeError": "Unsubscribe failed",
-                "unsubscribeErrorDesc": "Failed to unsubscribe from the model. Please try again.",
-                "missingLocation": "Missing Location",
-                "missingLocationDesc": "Please select a location before subscribing"
-            },
-            "emptyState": {
-                "title": "No models found",
-                "description": "Create a new model or try a different search query."
-            },
-            "sortBy": "Sort by",
-            "selectField": "Select field",
-            "selectOrder": "Select order",
-            "creationDate": "Creation Date",
-            "lastUpdate": "Last Update",
-            "latestFirst": "Latest First",
-            "oldestFirst": "Oldest First",
-            "cloneModel": "Clone",
-            "version": "Version",
-            "scheduled": "Scheduled",
-            "notScheduled": "Not Scheduled",
-            "updatedAt": "Updated at",
-            "view": "View",
-            "schedule": {
-                "title": "Model Schedule",
-                "description": "Configure when this model should be automatically updated",
-                "enableSchedule": "Enable Scheduling",
-                "scheduleType": "Schedule Type",
-                "customCron": {
-                    "label": "Custom Cron Expression",
-                    "placeholder": "0 0 * * *",
-                    "description": "Use cron expression format (e.g., \"0 0 * * *\" for daily at midnight)"
-                },
-                "setSchedule": "Set Schedule",
-                "scheduleOptions": {
-                    "daily": {
-                        "label": "Daily",
-                        "description": "Run once a day at midnight"
-                    },
-                    "weekly": {
-                        "label": "Weekly",
-                        "description": "Run once a week on Sunday"
-                    },
-                    "monthly": {
-                        "label": "Monthly",
-                        "description": "Run once a month on the 1st"
-                    },
-                    "hourly": {
-                        "label": "Hourly",
-                        "description": "Run once every hour"
-                    },
-                    "custom": {
-                        "label": "Custom",
-                        "description": "Set a custom schedule"
-                    }
-                },
-                "plan": {
-                    "title": "Schedule Plan",
-                    "descriptionSection": "View upcoming scheduled runs for this model",
-                    "sortBy": "Sort by:",
-                    "oldestFirst": "Oldest First",
-                    "latestFirst": "Latest First",
-                    "name": "Name:",
-                    "description": "Description:",
-                    "noRuns": "No scheduled runs found in the selected date range"
-                },
-                "toast": {
-                    "enterCron": "Please enter a cron expression",
-                    "setSuccess": "Schedule set successfully",
-                    "setError": "Failed to set schedule",
-                    "setErrorDesc": "Could not set the schedule. Please try again.",
-                    "enableSuccess": "Schedule status updated successfully",
-                    "enableError": "Failed to update schedule status",
-                    "enableErrorDesc": "Could not update the schedule status. Please try again.",
-                    "fetchError": "Failed to fetch schedule",
-                    "fetchErrorDesc": "Could not load the schedule. Please try again.",
-                    "planFetchError": "Failed to fetch schedule plan",
-                    "planFetchErrorDesc": "Could not load the schedule plan. Please try again."
-                }
-            },
-            "generated": {
-                "title": "Generated Scripts",
-                "description": "View all your generated model scripts",
-                "searchPlaceholder": "Search scripts...",
-                "loading": "Loading scripts...",
-                "noScripts": "No scripts found",
-                "modelName": "Model:",
-                "version": "Model Version",
-                "location": "Location",
-                "temperature": "Temperature",
-                "humidity": "Humidity",
-                "rainfall": "Rainfall",
-                "createdAt": "Created At",
-                "lastUpdated": "Last Updated",
-                "actions": "Actions",
-                "delete": "Delete",
-                "view": "View detail",
-                "toast": {
-                    "fetchError": "Error",
-                    "fetchErrorDesc": "Failed to fetch scripts"
-                },
-                "deleteDialog": {
-                    "title": "Delete Script",
-                    "description": "Are you sure you want to delete this script? This action cannot be undone.",
-                    "cancel": "Cancel",
-                    "confirm": "Delete"
-                },
-                "filter": {
-                    "location": "Location",
-                    "locationPlaceholder": "Enter location",
-                    "modelName": "Model Name",
-                    "modelNamePlaceholder": "Enter model name",
-                    "sortBy": "Sort By",
-                    "sortByPlaceholder": "Select sort field",
-                    "createdAt": "Created At",
-                    "updatedAt": "Updated At",
-                    "order": "Order",
-                    "orderPlaceholder": "Select order",
-                    "descending": "Descending",
-                    "ascending": "Ascending"
-                }
-            },
-            "scripts": {
-                "title": "Associated Scripts",
-                "description": "Scripts belong to this model",
-                "loading": "Loading scripts...",
-                "sortBy": "Sort by:",
-                "sortFields": {
-                    "creationDate": "Creation Date",
-                    "lastUpdate": "Last Update",
-                    "latestFirst": "Latest First",
-                    "oldestFirst": "Oldest First"
-                },
-                "version": "Version",
-                "modelVersion": "Model Version",
-                "createdAt": "Created At",
-                "lastUpdate": "Last Update",
-                "noScripts": "No scripts found in the selected date range",
-                "viewDetails": "View Details",
-                "toast": {
-                    "fetchError": "Error fetching model scripts",
-                    "fetchErrorDesc": "Failed to fetch model scripts. Please try again."
-                }
-            },
-            "versions": {
-                "title": "Version History",
-                "descriptionSection": "Track changes and updates to this irrigation model",
-                "version": "Version",
-                "loadMore": "Load More",
-                "loading": "Loading...",
-                "lastUpdated": "Last Updated",
-                "name": "Name:",
-                "description": "Description:",
-                "noDescription": "No description",
-                "tags": "Tags:",
-                "plant": "Plant",
-                "noPlant": "No plant specified",
-                "algorithm": "Algorithm",
-                "noAlgorithm": "No algorithm specified",
-                "noTags": "No tags found.",
-                "noVersions": "No versions found in the selected date range",
-                "generateScript": "Generate Script",
-                "createVersion": "Create Version",
-                "createVersionDialog": {
-                  "title": "Create New Version",
-                  "description": "Upload a .pkl file to create a new version",
-                  "descriptionLabel": "Description",
-                  "descriptionPlaceholder": "Enter a description for this version",
-                  "uploadLabel": "Upload Model File",
-                  "uploadDescription": "Select a .pkl file to upload",
-                  "cancel": "Cancel",
-                  "create": "Create Version",
-                  "fileRequired": "Please select a file to upload",
-                  "invalidFile": "Please select a valid .pkl file"
-                },
-                "filter": {
-                    "title": "Filter",
-                    "resultsPerPage": "Results per page",
-                    "sortBy": "Sort by",
-                    "nameAsc": "Name (A-Z)",
-                    "nameDesc": "Name (Z-A)"
-                },
-                "toast": {
-                    "fetchError": "Error fetching model versions",
-                    "fetchErrorDesc": "Failed to fetch model versions. Please try again.",
-                    "generateSuccess": "Model version generated script successfully",
-                    "generateSuccessDesc": "Model version {version} has been generated script successfully.",
-                    "generateError": "Failed to generate model version",
-                    "generateErrorDesc": "Failed to generate model version. Please try again.",
-                    "createSuccess": "Model version created successfully",
-                    "createSuccessDesc": "Model version {version} has been created successfully.",
-                    "createError": "Failed to create model version",
-                    "createErrorDesc": "Failed to create model version. Please try again.",
-                    "notSubscribed": "You are not subscribed to this model",
-                    "notSubscribedDesc": "Please subscribe to the model before creating a version."
-                }
-            },
-            "card": {
-                "plant": "Plant",
-                "location": "Location subscribed",
-                "noPlant": "No plant specified",
-                "schedule": "Schedule",
-                "noSchedule": "No schedule specified",
-                "status": "Status",
-                "scheduled": "Scheduled",
-                "notScheduled": "Not Scheduled",
-                "updatedAt": "Updated at",
-                "view": "View",
-                "subscribe": "Subscribe",
-                "unsubscribe": "Unsubscribe",
-                "subscribedLocation": "Subscribed Location",
-                "selectProvince": "Select Province",
-                "searchProvince": "Search Province",
-                "noProvinceFound": "No province found",
-                "subscribeDialog": {
-                    "title": "Subscribe to Model",
-                    "description": "Enter the location where you want to use this model",
-                    "locationLabel": "Location",
-                    "locationPlaceholder": "Enter location",
-                    "cancel": "Cancel",
-                    "confirm": "Subscribe"
-                },
-                "toast": {
-                    "missingLocation": "Missing Location",
-                    "missingLocationDesc": "Please enter a location for the model",
-                    "subscribeSuccess": "Subscribed Successfully",
-                    "subscribeSuccessDesc": "You have successfully subscribed to the model",
-                    "subscribeError": "Subscription Failed",
-                    "subscribeErrorDesc": "Failed to subscribe to the model. Please try again.",
-                    "unsubscribeSuccess": "Unsubscribed Successfully",
-                    "unsubscribeSuccessDesc": "You have successfully unsubscribed from the model",
-                    "unsubscribeError": "Unsubscribe Failed",
-                    "unsubscribeErrorDesc": "Failed to unsubscribe from the model. Please try again."
-                },
-                "unsubscribeDialog": {
-                    "title": "Unsubscribe from Model",
-                    "description": "Are you sure you want to unsubscribe from this model? This action cannot be undone.",
-                    "cancel": "Cancel",
-                    "confirm": "Unsubscribe"
-                }
-            },
-            "scriptInfo": {
-                "title": "Script Information",
-                "modelName": "Model Name",
-                "modelVersion": "Model Version",
-                "location": "Location",
-                "temperature": "Temperature",
-                "humidity": "Humidity",
-                "rainfall": "Rainfall",
-                "createdAt": "Created At",
-                "updatedAt": "Updated At",
-                "celsius": "°C",
-                "percentage": "%",
-                "mm": "mm"
-            }
-        },
-        "settings": {
-            "title": "Settings",
-            "tabs": {
-                "general": "General",
-                "notifications": "Notifications",
-                "privacy": "Privacy",
-                "appearance": "Appearance",
-                "language": "Language"
-            },
-            "general": {
-                "profile": "Profile Settings",
-                "profileDescription": "Manage your account settings and preferences",
-                "emailNotifications": "Email Notifications",
-                "receiveEmailUpdates": "Receive email updates",
-                "timezone": "Timezone"
-            },
-            "notifications": {
-                "title": "Notification Preferences",
-                "description": "Configure how you receive notifications",
-                "modelUpdates": "Model Updates",
-                "scriptChanges": "Script Changes",
-                "systemAlerts": "System Alerts"
-            },
-            "privacy": {
-                "title": "Privacy Settings",
-                "description": "Manage your privacy preferences",
-                "publicProfile": "Public Profile",
-                "dataCollection": "Data Collection",
-                "deleteAccount": "Delete Account"
-            },
-            "appearance": {
-                "title": "Appearance Settings",
-                "description": "Customize how the application looks",
-                "theme": "Theme",
-                "light": "Light",
-                "dark": "Dark",
-                "system": "System"
-            },
-            "language": {
-                "title": "Language Settings",
-                "description": "Choose your preferred language",
-                "select": "Select Language"
-            }
-        },
-        "generatedScripts": {
-            "title": "Generated Scripts",
-            "description": "View all scripts generated by your models",
-            "loading": "Loading scripts...",
-            "noScripts": "No scripts found",
-            "modelName": "Model name",
-            "version": "Version",
-            "location": "Location",
-            "temperature": "Temperature",
-            "humidity": "Humidity",
-            "rainfall": "Rainfall",
-            "lastUpdated": "Last Updated",
-            "actions": "Actions",
-            "view": "View",
-            "delete": "Delete",
-            "filter": {
-                "sortBy": "Sort by",
-                "sortByPlaceholder": "Select sort field",
-                "createdAt": "Created At",
-                "updatedAt": "Updated At",
-                "order": "Order",
-                "orderPlaceholder": "Select order",
-                "descending": "Descending",
-                "ascending": "Ascending",
-                "modelName": "Model Name",
-                "modelNamePlaceholder": "Enter model name",
-                "location": "Location",
-                "locationPlaceholder": "Enter location"
-            },
-            "deleteDialog": {
-                "title": "Delete Script",
-                "description": "Are you sure you want to delete this script? This action cannot be undone.",
-                "cancel": "Cancel",
-                "confirm": "Delete"
-            },
-            "toast": {
-                "fetchError": "Error",
-                "fetchErrorDesc": "Failed to fetch scripts",
-                "deleteSuccess": "Script deleted successfully",
-                "deleteError": "Failed to delete script",
-                "deleteErrorDesc": "Could not delete script. Please try again."
-            },
-            "subscribeModel": "Subscribe Model"
+        "waterSaved": {
+          "title": "Water",
+          "value": "28%",
+          "change": "+8% from last month"
         }
-    },
-    "footer": {
-        "description": "Smart irrigation management for modern agriculture.",
-        "product": {
-            "title": "Product",
-            "features": "Features",
-            "pricing": "Pricing",
-            "documentation": "Documentation"
-        },
-        "company": {
-            "title": "Company",
-            "about": "About",
-            "blog": "Blog",
-            "careers": "Careers"
-        },
-        "contact": {
-            "title": "Contact",
-            "email": "Email: info@irrigationportal.com",
-            "phone": "Phone: +1 (555) 123-4567",
-            "address": "Address: 123 Irrigation St, Farmville, CA 94123"
-        },
-        "copyright": "© 2023 Irrigation Portal. All rights reserved."
-    },
-    "login": {
-        "welcome": "Welcome Back",
-        "title": "Log in to your account",
-        "description": "Enter your credentials below to access your irrigation management dashboard",
-        "errors": {
-            "emptyFields": "Please fill in all fields",
-            "invalidCredentials": "Login failed. Please check your credentials and try again."
-        },
-        "form": {
-            "email": "Username",
-            "emailPlaceholder": "Username",
-            "password": "Password",
-            "passwordPlaceholder": "Password",
-            "forgotPassword": "Forgot password?",
-            "rememberMe": "Remember me for 30 days",
-            "submit": "Log in",
-            "orContinue": "Or continue with",
-            "google": "Google",
-            "microsoft": "Microsoft",
-            "noAccount": "Don't have an account?",
-            "signUp": "Sign up"
-        },
-        "hero": {
-            "title": "Smart Irrigation Management",
-            "description": "Optimize your irrigation systems with intelligent scripts and models. Save water, time, and resources."
-        }
-    },
-    "signup": {
-        "welcome": "Create Account",
-        "title": "Sign up for an account",
-        "description": "Enter your details below to create your irrigation management account",
-        "errors": {
-            "emptyFields": "Please fill in all fields",
-            "passwordMismatch": "Passwords do not match",
-            "signupFailed": "Sign up failed. Please try again."
-        },
-        "form": {
-            "username": "Username",
-            "usernamePlaceholder": "Choose a username",
-            "password": "Password",
-            "passwordPlaceholder": "Create a password",
-            "confirmPassword": "Confirm Password",
-            "confirmPasswordPlaceholder": "Confirm your password",
-            "submit": "Sign up",
-            "orContinue": "Or continue with",
-            "google": "Google",
-            "microsoft": "Microsoft",
-            "haveAccount": "Already have an account?",
-            "signIn": "Sign in"
-        },
-        "hero": {
-            "title": "Smart Irrigation Management",
-            "description": "Join our community of farmers and optimize your irrigation systems with intelligent scripts and models."
-        }
-    },
-    "header": {
-        "mobileMenu": "Toggle navigation menu",
-        "notifications": "Notifications",
-        "noNotifications": "No notifications",
-        "someone": "Someone",
-        "shared": "shared",
-        "something": "something",
-        "withYou": "with you",
-        "viewAllNotifications": "View all notifications",
-        "user": "User",
-        "logout": "Log out",
-        "features": "Features",
-        "testimonials": "Testimonials",
-        "pricing": "Pricing",
-        "contact": "Contact",
-        "getStarted": "Get Started",
-        "navigation": {
-            "dashboard": "Dashboard",
-            "profile": "Profile",
-            "scripts": "Scripts",
-            "generatedScripts":"Generated Scripts",
-            "models": "Models",
-            "settings": "Settings"
-        }
-    },
-    "Index": {
-        "title": "Welcome to Smart Farming Portal",
-        "description": "Your comprehensive farming management solution"
-    },
-    "Navigation": {
+      },
+      "tabs": {
+        "recent": "Recent scenario",
+        "activity": "Operational Diary"
+      },
+      "navigation": {
         "dashboard": "Dashboard",
-        "profile": "Profile",
-        "settings": "Settings",
-        "logout": "Logout"
-    },
-    "Common": {
-        "loading": "Loading...",
-        "error": "An error occurred",
-        "success": "Operation successful",
-        "pageNotFound": "Page not found",
-        "backToHome": "Back to Home"
-    },
-    "profile": {
-        "title": "Profile",
-        "Common": {
-            "loading": "Loading...",
-            "error": "An error occurred",
-            "success": "Operation successful",
-            "pageNotFound": "Page not found",
-            "backToHome": "Back to Home"
-        },
-        "tabs": { 
-            "profile": "Profile",
-            "activity": "Activity",
-            "notifications": "Notifications",
-            "topScripts": "Top Scripts"
-        },
-        "notFound": {
-            "title": "Page Not Found",
-            "back": "Back",
-            "invalidTab": "Invalid Tab",
-            "description": "The requested tab does not exist. Please select a valid tab or return to the dashboard.",
-            "returnToDashboard": "Return to Dashboard"
-        },
-        "activity": {
-            "title": "Activity Log",
-            "description": "Activities by month",
-            "loading": "Loading activities...",
-            "noActivities": "No activities found for {year}",
-            "pagination": "Showing {start} to {end} of {total} activity months",
-            "scripts": "Scripts",
-            "models": "Models",
-            "comments": "Comments",
-            "showMore": "More",
-            "showLess": "Show less"
-        },
-        "edit": {
-            "title": "Edit Profile",
-            "description": "Update your profile information below",
-            "avatar": {
-                "change": "Change Avatar",
-                "upload": "Upload new avatar",
-                "error": "Error uploading avatar",
-                "success": "Avatar updated successfully"
-            },
-            "form": {
-                "username": "Username",
-                "bio": "Bio",
-                "socialLinks": "Social Links",
-                "addLink": "Add Link",
-                "removeLink": "Remove",
-                "saveChanges": "Save Changes",
-                "cancel": "Cancel",
-                "saving": "Saving..."
-            },
-            "success": "Profile updated successfully",
-            "error": "Failed to update profile"
-        },
-        "view": {
-            "following": "Following",
-            "followers": "Followers",
-            "editProfile": "Edit Profile",
-            "noBio": "No bio available",
-            "noLinks": "No social links available"
-        },
-        "notifications": {
-      "title": "Notifications",
-      "description": {
-        "loading": "Loading notifications...",
-        "empty": "No notifications to display",
-        "pagination": "Showing {start} to {end} of {total} notifications"
+        "profile": "File",
+        "scripts": "Script",
+        "generatedScripts": "Dynamic script",
+        "models": "Model",
+        "settings": "Setting"
       },
-      "delete": {
-        "title": "Delete Notification",
-        "description": "Are you sure you want to delete this notification? This action cannot be undone.",
-        "cancel": "Cancel",
-        "confirm": "Delete",
-        "deleting": "Deleting...",
-        "success": "Notification deleted successfully",
-        "error": "Failed to delete notification"
-      },
-      "notification": {
-        "shared": "{username} shared {scriptName} with you",
-            "default": "{username} shared something with you"
+      "scripts": {
+        "title": "Script",
+        "searchPlaceholder": "Search for scripts ...",
+        "selectLocations": "Select the location",
+        "locations": "Location",
+        "selectPlantTypes": "Choose the type of crop",
+        "plantTypes": "Crop",
+        "privacy": "Privacy",
+        "allPrivacyTypes": "All privacy",
+        "all": "All",
+        "public": "Public",
+        "private": "Private",
+        "clearFilters": "Delete the filter",
+        "sortBy": "Arrange",
+        "selectField": "School",
+        "creationDate": "Day creation",
+        "lastUpdate": "The nearest update",
+        "selectOrder": "Select the order",
+        "latestFirst": "Latest",
+        "oldestFirst": "Oldest",
+        "allScripts": "All scripts",
+        "favorites": "Favourite",
+        "sharedScripts": "The script is shared",
+        "publicScripts": "Public scenario",
+        "noOptionsFound": "No option found",
+        "favorite": {
+          "success": "Updated favorite",
+          "error": "Favorite update failure"
+        },
+        "emptyState": {
+          "title": "No script",
+          "description": "Start by creating your first irrigation script.",
+          "createButton": "Create a new script"
+        },
+        "deleteScript": {
+          "title": "Delete script",
+          "description": "Are you sure you want to delete the script {name}? ",
+          "cancel": "Cancel",
+          "delete": "Erase"
+        },
+        "scriptModal": {
+          "newScriptButton": "New scenario",
+          "dialogTitle": "Create a new script",
+          "dialogDescription": "Add a new irrigation script to your collection.",
+          "nameLabel": "Name",
+          "namePlaceholder": "Enter the script name",
+          "descriptionLabel": "Describe",
+          "descriptionPlaceholder": "Enter the description of the script (optional)",
+          "locationLabel": "Location",
+          "selectProvinces": "Choose province",
+          "searchProvinces": "Searching the province ...",
+          "locationsSelected": "{Count} The selected location",
+          "plantTypeLabel": "Crop",
+          "selectPlantTypes": "Choose the type of crop",
+          "searchPlantTypes": "Search for crops ...",
+          "plantTypesSelected": "{Count} selected crops",
+          "privacyLabel": "Privacy",
+          "publicLabel": "Public",
+          "publicDescription": "All users can view this script.",
+          "privateLabel": "Private",
+          "privateDescription": "Only you and shared people can view this script.",
+          "sharedUsersLabel": "Share with:",
+          "searchUsersPlaceholder": "Search users ...",
+          "searchButton": "Search",
+          "scriptJsonLabel": "JSON file scenario",
+          "uploadJsonButton": "Download JSON file",
+          "templateButton": "JSON model",
+          "defaultTemplate": "Default",
+          "cancelButton": "Cancel",
+          "createButton": "Create script",
+          "noPlantTypeFound": "Do not find the right tree",
+          "noProvinceFound": "Do not find the right province",
+          "noUserFound": "No user found",
+          "searchResults": "Search results",
+          "confirm": "Confirm",
+          "cancel": "Cancel",
+          "scriptUrl": "Link script",
+          "add": "More",
+          "sharedWithLabel": "Share with",
+          "added": "Added",
+          "new": "New",
+          "toast": {
+            "searchFailed": "Search failed",
+            "searchFailedDescription": "Can not find users. ",
+            "invalidFile": "Invalid file",
+            "invalidFileDescription": "Please upload a valid JSON file.",
+            "uploadFailed": "Upload failure",
+            "uploadFailedDescription": "Unable to upload the script file.",
+            "missingInformation": "Lack of information",
+            "missingInformationDescription": "Please enter the name for your script.",
+            "authError": "Authentication error",
+            "authErrorDescription": "You must login to create a script.",
+            "createSuccess": "Create successful script",
+            "createSuccessDescription": "Script {Name} has been successfully created.",
+            "createFailed": "Create failure",
+            "createFailedDescription": "Cannot create script. "
           }
         },
-        "topScripts": {
-            "title": "Top Scripts",
-            "loading": "Loading scripts...",
-            "empty": {
-                "title": "No scripts found",
-                "description": "Create a new script or try a different search query."
+        "detail": {
+          "cancel": "Cancel",
+          "save": "Save",
+          "edit": "Edit",
+          "delete": "Erase",
+          "back": "Come back",
+          "loading": "Downloading ...",
+          "checkingAccess": "Examining access ...",
+          "notFound": {
+            "title": "No page found",
+            "invalidTab": "The tab is invalid",
+            "description": "The tab is required to not exist. ",
+            "returnButton": "Back to the script list"
+          },
+          "accessDenied": {
+            "title": "Access the script",
+            "alertTitle": "Refuse access",
+            "description": "You have no right to view this script. ",
+            "returnButton": "Back to the script list"
+          },
+          "tabs": {
+            "code": "Source code",
+            "comments": "Comment",
+            "versions": "Version"
+          },
+          "toast": {
+            "saveSuccess": "Save successfully",
+            "saveSuccessDescription": "The script has been successfully saved",
+            "saveError": "Liu failed",
+            "saveErrorDescription": "Can't save the script",
+            "updateSuccess": "Success update",
+            "updateSuccessDescription": "Script information has been successfully updated",
+            "updateError": "Update failure",
+            "updateErrorDescription": "Can't update Script information",
+            "deleteSuccess": "Delete success",
+            "deleteSuccessDescription": "Script has been successfully erased",
+            "ratingSuccess": "Successful evaluation",
+            "ratingSuccessDescription": "Your review has been successfully sent",
+            "ratingError": "Review failure",
+            "ratingErrorDescription": "Can't send your reviews",
+            "ratingDeleteSuccess": "Delete success evaluation",
+            "ratingDeleteSuccessDescription": "Your assessment has been deleted successfully",
+            "ratingDeleteError": "Delete failure evaluation",
+            "ratingDeleteErrorDescription": "Can not delete your assessment",
+            "downloadSuccess": "Download successfully",
+            "downloadSuccessDescription": "The file has been downloaded successfully.",
+            "downloadError": "Download failure",
+            "downloadErrorDescription": "Can't download the file.",
+            "newVersionSuccess": "Create a new version successful",
+            "newVersionSuccessDescription": "The new version has been successfully created.",
+            "newVersionError": "Create a new version failed",
+            "newVersionErrorDescription": "Can not create a new version.",
+            "deleteVersionSuccess": "Delete the successful version",
+            "deleteVersionSuccessDescription": "The version has been deleted successfully.",
+            "deleteVersionError": "Delete the failure version",
+            "deleteVersionErrorDescription": "Unable to delete the version."
+          },
+          "loadingDetails": "Loading script details ...",
+          "scriptDetails": {
+            "public": "Public",
+            "private": "Private",
+            "title": "Details of the script",
+            "owner": "Owner",
+            "description": "Describe",
+            "noDescription": "Undesirable",
+            "location": "Location",
+            "noLocations": "There is no specified position",
+            "plantType": "Crop",
+            "noPlants": "There is no specified crop",
+            "privacy": "Privacy",
+            "averageRating": "Average review",
+            "rating": "Evaluate",
+            "yourRating": "Your assessment",
+            "rateScript": "Review this script",
+            "youRated": "You have evaluated {value} {value, plural, one {star} other {star}}",
+            "deleteRating": "Delete your assessment",
+            "created": "Created",
+            "lastUpdated": "Last update",
+            "actions": "Act",
+            "editScript": "Edit the script",
+            "delete": "Erase",
+            "allLocations": "All position",
+            "allPlantTypes": "All crops"
+          },
+          "code": {
+            "title": "Scenario information",
+            "version": "Version {Version}",
+            "currentVersion": "The current version: {Version}",
+            "reload": "Reload",
+            "download": "Download",
+            "newVersion": "New version",
+            "upload": "Upload",
+            "save": "Save",
+            "deleteVersion": "Delete version",
+            "enableEditing": "Turn on editing mode",
+            "disableEditing": "Turn off the editing mode",
+            "deleteDialog": {
+              "title": "Delete version",
+              "description": "Are you sure you want to delete the version {Version}? ",
+              "cancel": "Cancel",
+              "confirm": "Erase"
+            }
+          },
+          "comments": {
+            "title": "Comment",
+            "description": "Discuss this script with your group",
+            "addComment": "Add comments ...",
+            "postComment": "Post comments",
+            "noComments": "No comments.",
+            "searchResults": "Search results",
+            "unknownUser": "Users are not determined",
+            "viewScripts": "View script",
+            "reply": "Reply",
+            "edit": "Edit",
+            "delete": "Erase",
+            "history": "View editing history",
+            "showReplies": "Show ({count})",
+            "hideReplies": "Answer",
+            "writeReply": "Writing answer ...",
+            "cancel": "Cancel",
+            "save": "Save",
+            "deleteDialog": {
+              "title": "Delete comments",
+              "description": "Are you sure you want to delete it? ",
+              "cancel": "Cancel",
+              "confirm": "Erase"
             },
-            "filters": {
-                "rating": "Top Rated",
-                "favorite": "Most Favorited"
+            "historyDialog": {
+              "title": "Editing history {type}",
+              "description": "See the editing history of this {type}",
+              "edit": "Edit {number}",
+              "noHistory": "There is no editing history for this {type}",
+              "close": "Close"
             },
-            "favorite": {
-                "success": "Script favorite status has been updated",
-                "error": "Failed to update favorite status"
+            "toast": {
+              "addSuccess": "Add successful comments",
+              "addSuccessDescription": "Your comments have been added successfully",
+              "addError": "More comments failed",
+              "addErrorDescription": "Can not add comments. ",
+              "editSuccess": "Correct comments successfully",
+              "editSuccessDescription": "Comments have been successfully updated",
+              "editError": "Failure to edit failure",
+              "editErrorDescription": "Can not edit comments. ",
+              "deleteSuccess": "Delete a successful comment",
+              "deleteSuccessDescription": "The comment has been successfully erased",
+              "deleteError": "Delete failure comments",
+              "deleteErrorDescription": "Unable to delete comments. ",
+              "replySuccess": "Success!",
+              "replySuccessDescription": "Answer the comment successfully",
+              "replyError": "Failure!",
+              "replyErrorDescription": "Unable to answer the comment",
+              "loadCommentsError": "Failure!",
+              "loadCommentsErrorDescription": "Can not download the history of comments"
+            }
+          },
+          "subcomments": {
+            "toast": {
+              "editReplySuccess": "Success!",
+              "editReplySuccessDescription": "Successful reply",
+              "editReplyError": "Failure!",
+              "editReplyErrorDescription": "Answer correction failure",
+              "deleteReplySuccess": "Success!",
+              "deleteReplySuccessDescription": "Successfully deleted the answer",
+              "deleteReplyError": "Failure!",
+              "deleteReplyErrorDescription": "Delete the failure",
+              "loadHistoryError": "Failure!",
+              "loadHistoryErrorDescription": "Can not download the history of comments"
+            },
+            "dialog": {
+              "deleteTitle": "Delete answer",
+              "deleteDescription": "Are you sure you want to delete this answer? ",
+              "deleteConfirm": "Delete",
+              "deleteCancel": "Cancel",
+              "historyTitle": "History of reply",
+              "historyDescription": "See the editing history of this answer",
+              "historyEmpty": "There is no history of editing for this answer",
+              "close": "Close"
+            },
+            "button": {
+              "edit": "Edit",
+              "delete": "Delete",
+              "cancel": "Cancel",
+              "save": "Save",
+              "close": "Close"
+            }
+          },
+          "versionCompare": {
+            "title": "Compare version",
+            "selectVersion": "Select the version"
+          },
+          "irrigationSchedule": {
+            "title": "Irrigation schedule",
+            "timeSetup": {
+              "title": "Set time",
+              "repeatEvery": "Repeat each",
+              "days": "day",
+              "weeks": "week"
+            },
+            "wateringEvents": {
+              "title": "Irrigation",
+              "eventsPerDay": "Number of irrigation times per day",
+              "event": "Irrigation #{number}",
+              "time": "Time",
+              "duration": "Duration",
+              "waterVolume": "Water",
+              "method": "Method",
+              "minutes": "minute",
+              "hours": "hour",
+              "liters": "liter",
+              "cubicMeters": "m³",
+              "methods": {
+                "drip": "Drip",
+                "spray": "Spray",
+                "soak": "Irrigate",
+                "manual": "Hand"
+              }
+            },
+            "conditions": {
+              "title": "Irrigation conditions",
+              "skipIfRaining": "Ignore if it rains",
+              "minSoilMoisture": "Minimum soil moisture (%)",
+              "maxTemperature": "Maximum temperature (° C)",
+              "minAirHumidity": "Minimum air humidity (%)",
+              "maxWindSpeed": "Maximum wind speed (m/s)"
+            },
+            "notes": {
+              "title": "Note",
+              "placeholder": "Enter notes or additional information about irrigation schedule ..."
+            },
+            "actions": {
+              "cancel": "Cancel",
+              "save": "Save"
+            },
+            "errors": {
+              "duplicateTime": "This time has been used"
+            },
+            "toast": {
+              "saveSuccess": "Save successfully",
+              "saveSuccessDescription": "Scheduled irrigation schedule has been successfully saved",
+              "saveError": "Liu failed",
+              "saveErrorDescription": "Can not save irrigation schedules"
+            }
+          },
+          "view": {
+            "title": "View script",
+            "back": "Come back",
+            "loading": "Loading script details ...",
+            "toast": {
+              "fetchError": "Error",
+              "fetchErrorDesc": "Can not download the script details"
+            }
+          }
+        },
+        "list": {
+          "loading": "Loading the script ...",
+          "emptyState": {
+            "title": "No script found",
+            "description": "Adjust the filter or try searching with other keywords."
+          },
+          "card": {
+            "noDescription": "Undesirable",
+            "locations": "Location:",
+            "noLocations": "There is no location",
+            "plants": "Plants:",
+            "noPlants": "There is no crop",
+            "more": "+{count}",
+            "favorite": "Favourite",
+            "updatedAt": "Update at {date}",
+            "view": "See",
+            "private": "Private",
+            "public": "Public"
+          },
+          "public": {
+            "searchPlaceholder": "Search users",
+            "searchButton": "Search",
+            "showingScriptsBy": "Showing scenarios of {Name}",
+            "clear": "Erase",
+            "searchResults": "Search results",
+            "noUsersFound": "No user found",
+            "viewScripts": "View script",
+            "unknownUser": "Users are not determined",
+            "emptyState": {
+              "title": "Search for public scripts",
+              "description": "Find users to explore their public scripts"
+            },
+            "toast": {
+              "searchFailed": "Search failed",
+              "searchFailedDesc": "Can not search users. "
+            }
+          }
+        }
+      },
+      "models": {
+        "title": "Model",
+        "back": "Come back",
+        "loadingDetails": "Loading model details ...",
+        "loading": "Loading the model ...",
+        "checkingAccess": "Check access ...",
+        "accessDenied": {
+          "title": "The access is rejected",
+          "description": "You have no access to this model. ",
+          "returnButton": "Come back",
+          "back": "Come back"
+        },
+        "filter": {
+          "title": "Filter",
+          "resultsPerPage": "The results of each page",
+          "sortBy": "Arrange",
+          "nameAsc": "Name (A-Z)",
+          "nameDesc": "Name (Z-A)"
+        },
+        "notFound": {
+          "title": "No model found",
+          "invalidTab": "The tab is invalid",
+          "description": "Please check the path or contact the model owner for more information.",
+          "returnButton": "Come back"
+        },
+        "searchPlaceholder": "Search for models ...",
+        "favoriteUpdated": "Updated favorite",
+        "favoriteUpdatedDescription": "The favorite state of the model has been updated.",
+        "error": "Error",
+        "favoriteUpdateFailed": "Can not update your favorite state.",
+        "tabs": {
+          "scripts": "Script",
+          "versions": "Version",
+          "schedule": "Schedule",
+          "generated": "Dynamic script",
+          "all": "All"
+        },
+        "newModel": {
+          "createButton": "Create model",
+          "dialogTitle": "Create a new model",
+          "dialogDescription": "Add a new model to your collection.",
+          "nameLabel": "Name",
+          "namePlaceholder": "Enter the model name",
+          "descriptionLabel": "Describe",
+          "descriptionPlaceholder": "Enter the model description (not required)",
+          "tagsLabel": "Card",
+          "tagKeyLabel": "Lock",
+          "tagValueLabel": "Value",
+          "tagKeyPlaceholder": "Enter the card lock",
+          "tagValuePlaceholder": "Enter the card value",
+          "missingInfo": "Lack of information",
+          "provideName": "Please enter the name for the model.",
+          "tagMissingInfo": "Please enter both the lock and the value of the card.",
+          "duplicateTag": "Duplicate card",
+          "duplicateTagDesc": "This card has existed.",
+          "cancelButton": "Cancel",
+          "submitButton": "Create",
+          "toast": {
+            "missingInfo": "Lack of information",
+            "provideName": "Please enter the name for the model.",
+            "tagMissingInfo": "Please enter both the lock and the value of the card.",
+            "duplicateTag": "Duplicate card",
+            "duplicateTagDesc": "This card has existed.",
+            "authError": "Authentication error",
+            "loginRequired": "You need to login to create a model.",
+            "createSuccess": "Created a model",
+            "createSuccessDesc": "The model \"{name}\" has been successfully created.",
+            "createError": "Create failure",
+            "createErrorDesc": "Can not create a model. "
+          }
+        },
+        "modelDetails": {
+          "title": "Model details",
+          "name": "Name",
+          "description": "Describe",
+          "created": "Day creation",
+          "lastUpdated": "Last update",
+          "tags": "Card",
+          "noDescription": "No description.",
+          "noTags": "No card found.",
+          "actions": "Act",
+          "editModel": "Model editing",
+          "deleteModel": "Erase",
+          "subscribe": "Register",
+          "unsubscribe": "Cancel registration",
+          "subscribeTitle": "Model registration",
+          "subscribeDescription": "Enter the location you want to use this model",
+          "location": "Location",
+          "locationPlaceholder": "Enter the position",
+          "cancel": "Cancel",
+          "confirmSubscribe": "Register"
+        },
+        "editModel": {
+          "title": "Model editing",
+          "modelName": "Model name",
+          "description": "Describe",
+          "descriptionPlaceholder": "Enter the model description (not required)",
+          "tags": "Card",
+          "tagKey": "Lock",
+          "tagValue": "Value",
+          "tagKeyPlaceholder": "Enter the card lock",
+          "tagValuePlaceholder": "Enter the card value",
+          "cancel": "Cancel",
+          "confirm": "Confirm",
+          "missingInfo": "Lack of information",
+          "provideName": "Please enter the name for the model.",
+          "tagMissingInfo": "Please enter both the lock and the value of the card.",
+          "duplicateTag": "Duplicate card",
+          "duplicateTagDesc": "This card has existed.",
+          "tagUpdated": "Update the card",
+          "tagAdded": "Added cards",
+          "tagUpdateSuccess": "Update the card {key} Success.",
+          "tagAddSuccess": "Adding {key} success.",
+          "tagOperationFailed": "Card operation fails",
+          "tagUpdateFailed": "Can not update the card. ",
+          "tagAddFailed": "Can't add cards. ",
+          "tagRemoved": "Deleted the card",
+          "tagRemoveSuccess": "Delete the card {key} Success.",
+          "tagRemoveFailed": "Can not delete the card. "
+        },
+        "deleteModel": {
+          "title": "Delete the model",
+          "description": "Are you sure to delete the model {ModelName}? ",
+          "cancel": "Cancel",
+          "confirm": "Erase",
+          "success": "Has deleted the successful model",
+          "error": "Delete a failure model"
+        },
+        "toast": {
+          "updateSuccess": "Update a successful model",
+          "updateError": "Update failure model",
+          "deleteSuccess": "Delete a successful model",
+          "deleteError": "Delete a failure model",
+          "subscribeSuccess": "Successful model registration",
+          "subscribeSuccessDesc": "You have registered a successful model",
+          "subscribeError": "Register for a failed model",
+          "subscribeErrorDesc": "Unable to register the model. ",
+          "unsubscribeSuccess": "Cancellation of successful model registration",
+          "unsubscribeSuccessDesc": "You have canceled the successful model",
+          "unsubscribeError": "Cancel registration model failure",
+          "unsubscribeErrorDesc": "Unable to cancel the model registration. ",
+          "missingLocation": "Lack of location",
+          "missingLocationDesc": "Please choose the location before registering"
+        },
+        "emptyState": {
+          "title": "No model found",
+          "description": "Create a new model or try another search keyword."
+        },
+        "sortBy": "Arrange",
+        "selectField": "School",
+        "selectOrder": "Select the order",
+        "creationDate": "Day creation",
+        "lastUpdate": "Last update",
+        "latestFirst": "Latest",
+        "oldestFirst": "Oldest",
+        "cloneModel": "Human",
+        "version": "Version",
+        "scheduled": "Scheduled",
+        "notScheduled": "Not scheduled",
+        "updatedAt": "Update at",
+        "view": "See",
+        "schedule": {
+        "schedule": {
+            "plan": {
+                "title": "Schedule Plan",
+                "descriptionSection": "View and manage your model schedule plans",
+                "noRuns": "No scheduled runs found"
+            },
+            "table": {
+                "filterTitle": "Filters",
+                "searchPlaceholder": "Search by model name...",
+                "sortBy": "Sort by",
+                "sortByName": "Name",
+                "sortByTime": "Time",
+                "sortOrder": "Sort order",
+                "ascending": "Ascending",
+                "descending": "Descending",
+                "modelName": "Model Name",
+                "scheduledTime": "Scheduled Time",
+                "endDateAPI": "Select end date",
+                "resetFilters": "Reset Filters"
+            },
+            "selectEndDate": "Select End Date",
+            "toast": {
+                "planFetchError": "Error fetching schedule plan",
+                "planFetchErrorDesc": "Failed to load schedule plan data"
             }
         }
+        },
+        "generated": {
+          "title": "Script",
+          "description": "See all the model scenario has been created",
+          "searchPlaceholder": "Search for scripts ...",
+          "loading": "Loading the script ...",
+          "noScripts": "No script found",
+          "modelName": "Model:",
+          "version": "Model version",
+          "location": "Location",
+          "temperature": "Temperature",
+          "humidity": "Moisture",
+          "rainfall": "Rainfall",
+          "createdAt": "Create",
+          "lastUpdated": "Update at",
+          "actions": "Act",
+          "delete": "Erase",
+          "view": "See details",
+          "createScript": "Create a dynamic script immediately",
+          "subscribeDialog": {
+            "title": "Model registration",
+            "description": "You need to register this model before creating the script. ",
+            "location": "Location",
+            "selectProvince": "Choose province",
+            "searchProvince": "Search province",
+            "noProvinceFound": "No province found",
+            "cancel": "Cancel",
+            "subscribe": "Register"
+          },
+          "toast": {
+            "deleteSuccess": "Delete successful scenario",
+            "fetchError": "Error",
+            "fetchErrorDesc": "Can't download the script list",
+            "missingLocation": "Lack of location information",
+            "missingLocationDesc": "Please choose the province/city before registering",
+            "subscribeSuccess": "Successful model registration",
+            "subscribeSuccessDesc": "You have registered a successful model. ",
+            "subscribeError": "Register for a failed model",
+            "subscribeErrorDesc": "Unable to register the model. "
+          },
+          "deleteDialog": {
+            "title": "Delete script",
+            "description": "Are you sure you want to delete this script? ",
+            "cancel": "Cancel",
+            "confirm": "Erase"
+          },
+          "filter": {
+            "location": "Location",
+            "locationPlaceholder": "Enter the position",
+            "modelName": "Model name",
+            "modelNamePlaceholder": "Enter the model name",
+            "sortBy": "Arrange",
+            "sortByPlaceholder": "Select the arrangement school",
+            "createdAt": "Day creation",
+            "updatedAt": "Update at",
+            "order": "Order",
+            "orderPlaceholder": "Select the order",
+            "descending": "Decrease",
+            "ascending": "Rise"
+          }
+        },
+        "scripts": {
+          "title": "Linking scenario",
+          "description": "The script belongs to this model",
+          "loading": "Loading the script ...",
+          "sortBy": "Sort by:",
+          "sortFields": {
+            "creationDate": "Day creation",
+            "lastUpdate": "Last update",
+            "latestFirst": "Latest",
+            "oldestFirst": "Oldest"
+          },
+          "version": "Version",
+          "modelVersion": "Model version",
+          "createdAt": "Create",
+          "lastUpdate": "Last update",
+          "noScripts": "No scenario was found during the selected time",
+          "viewDetails": "See details",
+          "toast": {
+            "fetchError": "Model scenario error error",
+            "fetchErrorDesc": "Unable to download the model script. "
+          }
+        },
+        "versions": {
+          "title": "History version history",
+          "descriptionSection": "Monitor changes and updates of this irrigation model",
+          "version": "Version",
+          "loadMore": "Download more",
+          "loading": "Downloading ...",
+          "lastUpdated": "Last update",
+          "name": "Name:",
+          "description": "Describe:",
+          "noDescription": "Undesirable",
+          "tags": "Card:",
+          "plant": "Crop",
+          "noPlant": "There is no crop",
+          "algorithm": "Algorithm",
+          "noAlgorithm": "There is no algorithm",
+          "noTags": "No card found.",
+          "noVersions": "No version is not found in the selected time period",
+          "generateScript": "Create script",
+          "createVersion": "Create version",
+          "createVersionDialog": {
+            "title": "Create a new version",
+            "description": "Upload .pkl file to create a new version",
+            "descriptionLabel": "Describe",
+            "descriptionPlaceholder": "Enter the description for this version",
+            "uploadLabel": "Upload to the model file",
+            "uploadDescription": "!!!>>> Unexpected token '<', \"<html lang\"... is not valid JSON <<<!!!",
+            "cancel": "Cancel",
+            "create": "Create version",
+            "fileRequired": "!!!>>> Unexpected token '<', \"<html lang\"... is not valid JSON <<<!!!",
+            "invalidFile": "Please select a valid .pkl file"
+          },
+          "filter": {
+            "title": "Filter",
+            "resultsPerPage": "The results of each page",
+            "sortBy": "Arrange",
+            "nameAsc": "Name (A-Z)",
+            "nameDesc": "Name (Z-A)"
+          },
+          "toast": {
+            "fetchError": "Model version download error",
+            "fetchErrorDesc": "Unable to download the model version. ",
+            "generateSuccess": "The model version has created a successful script",
+            "generateSuccessDesc": "Model version {Version} has been successfully created.",
+            "generateError": "Create a failed script",
+            "generateErrorDesc": "Cannot create script. ",
+            "createSuccess": "Create a successful version",
+            "createSuccessDesc": "The new version has been successfully created.",
+            "createError": "Create a failed version",
+            "createErrorDesc": "Can not create a new version. ",
+            "notSubscribed": "You have not registered this model",
+            "notSubscribedDesc": "Please register the model before creating a script."
+          }
+        },
+        "card": {
+          "location": "The province has registered the model",
+          "plant": "Crop",
+          "noPlant": "There is no crop",
+          "schedule": "Irrigation schedule",
+          "noSchedule": "No irrigation schedule",
+          "status": "Status",
+          "scheduled": "Scheduled",
+          "notScheduled": "Not scheduled",
+          "updatedAt": "Update at",
+          "view": "See",
+          "subscribe": "Register",
+          "unsubscribe": "Cancel registration",
+          "subscribedLocation": "Location registered model",
+          "selectProvince": "Choose province",
+          "searchProvince": "Search province",
+          "noProvinceFound": "No province found",
+          "subscribeDialog": {
+            "title": "Model registration",
+            "description": "Enter the location you want to use this model",
+            "locationLabel": "Location",
+            "locationPlaceholder": "Enter the position",
+            "cancel": "Cancel",
+            "confirm": "Register"
+          },
+          "toast": {
+            "missingLocation": "Lack of location",
+            "missingLocationDesc": "Please enter the position for the model",
+            "subscribeSuccess": "Successful registration",
+            "subscribeSuccessDesc": "You have successfully registered the model",
+            "subscribeError": "Register for failure",
+            "subscribeErrorDesc": "Unable to register the model. ",
+            "unsubscribeSuccess": "Cancel registration successfully",
+            "unsubscribeSuccessDesc": "You have successfully registered the model",
+            "unsubscribeError": "Cancel registration failure",
+            "unsubscribeErrorDesc": "Unable to cancel the model registration. "
+          },
+          "unsubscribeDialog": {
+            "title": "Cancel model registration",
+            "description": "Are you sure you want to cancel this model? ",
+            "cancel": "Cancel",
+            "confirm": "Cancel registration"
+          }
+        },
+        "scriptInfo": {
+          "title": "Scenario information",
+          "modelName": "Model name",
+          "modelVersion": "Model version",
+          "location": "Location",
+          "temperature": "Temperature",
+          "humidity": "Moisture",
+          "rainfall": "Rainfall",
+          "createdAt": "Create",
+          "updatedAt": "Update at",
+          "celsius": "° C",
+          "percentage": "%",
+          "mm": "mm"
+        }
+      },
+      "settings": {
+        "title": "Setting",
+        "tabs": {
+          "general": "Shared",
+          "notifications": "Notification",
+          "privacy": "Privacy",
+          "appearance": "Interface",
+          "language": "Language"
+        },
+        "general": {
+          "profile": "Install records",
+          "profileDescription": "Manage the settings and your account options",
+          "emailNotifications": "Notice via email",
+          "receiveEmailUpdates": "Receive update via email",
+          "timezone": "Time zone"
+        },
+        "notifications": {
+          "title": "Notice options",
+          "description": "Configure how you receive notifications",
+          "modelUpdates": "Model update",
+          "scriptChanges": "Change the script",
+          "systemAlerts": "System warning"
+        },
+        "privacy": {
+          "title": "Install privacy",
+          "description": "Manage your privacy options",
+          "publicProfile": "Public records",
+          "dataCollection": "Collect data",
+          "deleteAccount": "Delete account"
+        },
+        "appearance": {
+          "title": "Install interface",
+          "description": "Customize the application interface",
+          "theme": "Interface",
+          "light": "Bright",
+          "dark": "Dark",
+          "system": "System"
+        },
+        "language": {
+          "title": "Language installation",
+          "description": "Choose your favorite language",
+          "select": "Select language"
+        }
+      },
+      "generatedScripts": {
+        "title": "Dynamic script",
+        "description": "See all the scripts created by your model",
+        "loading": "Loading the script ...",
+        "noScripts": "No script found",
+        "subscribeModel": "Model registration",
+        "modelName": "Model name",
+        "version": "Version",
+        "location": "Location",
+        "temperature": "Temperature",
+        "humidity": "Moisture",
+        "rainfall": "Rainfall",
+        "lastUpdated": "Last update",
+        "actions": "Act",
+        "view": "See",
+        "delete": "Erase",
+        "filter": {
+          "sortBy": "Arrange",
+          "sortByPlaceholder": "Select the arrangement school",
+          "createdAt": "Day creation",
+          "updatedAt": "Update at",
+          "order": "Order",
+          "orderPlaceholder": "Select the order",
+          "descending": "Decrease",
+          "ascending": "Rise",
+          "modelName": "Model name",
+          "modelNamePlaceholder": "Enter the model name",
+          "location": "Location",
+          "locationPlaceholder": "Enter the location"
+        },
+        "deleteDialog": {
+          "title": "Delete script",
+          "description": "Are you sure you want to delete this script? ",
+          "cancel": "Cancel",
+          "confirm": "Erase"
+        },
+        "toast": {
+          "fetchError": "Error",
+          "fetchErrorDesc": "Can't download the script list",
+          "deleteSuccess": "Delete successful scripts",
+          "deleteError": "Delete the script failed",
+          "deleteErrorDesc": "Can not delete the script. "
+        }
+      }
+    },
+    "footer": {
+      "description": "Smart irrigation management for modern agriculture.",
+      "product": {
+        "title": "Product",
+        "features": "Feature",
+        "pricing": "Price",
+        "documentation": "Document"
+      },
+      "company": {
+        "title": "Company",
+        "about": "About",
+        "blog": "Blog",
+        "careers": "Career"
+      },
+      "contact": {
+        "title": "Contact",
+        "email": "Email: info@irratorportal.com",
+        "phone": "Phone: +1 (555) 123-4567",
+        "address": "Address: 123 Irrigation St, Farmville, Ca 94123"
+      },
+      "copyright": "© 2023 Irrigation Portal. "
+    },
+    "login": {
+      "welcome": "Welcome back",
+      "title": "Log in to your account",
+      "description": "Enter your login information below to access your irrigation control panel",
+      "errors": {
+        "emptyFields": "Please fill in all schools",
+        "invalidCredentials": "Unchanged login. "
+      },
+      "form": {
+        "email": "Username",
+        "emailPlaceholder": "User name",
+        "password": "Password",
+        "passwordPlaceholder": "Password",
+        "forgotPassword": "Forgot the password?",
+        "rememberMe": "Miss me for 30 days",
+        "submit": "Log in",
+        "orContinue": "Or continue with",
+        "google": "Google",
+        "microsoft": "Microsoft",
+        "noAccount": "No account?",
+        "signUp": "Register"
+      },
+      "hero": {
+        "title": "Smart irrigation management",
+        "description": "Optimize your irrigation systems with smart scenarios and models. "
+      }
+    },
+    "signup": {
+      "welcome": "Create account",
+      "title": "Account registration",
+      "description": "Enter your details below to create irrigation management accounts",
+      "errors": {
+        "emptyFields": "Please fill in all schools",
+        "passwordMismatch": "Password does not match",
+        "signupFailed": "Unsuccessful registration. "
+      },
+      "form": {
+        "username": "User name",
+        "usernamePlaceholder": "Select the username",
+        "password": "Password",
+        "passwordPlaceholder": "Create password",
+        "confirmPassword": "Confirm the password",
+        "confirmPasswordPlaceholder": "Confirm the password",
+        "submit": "Register",
+        "orContinue": "Or continue with",
+        "google": "Google",
+        "microsoft": "Microsoft",
+        "haveAccount": "Do you have an account?",
+        "signIn": "Log in"
+      },
+      "hero": {
+        "title": "Smart irrigation management",
+        "description": "Join our farmer community and optimize your irrigation system with intelligent instructions and models."
+      }
+    },
+    "header": {
+      "mobileMenu": "Convert the navigation menu",
+      "notifications": "Notification",
+      "noNotifications": "There is no notice",
+      "someone": "Someone",
+      "shared": "shared",
+      "something": "one content",
+      "withYou": "with you",
+      "viewAllNotifications": "See all notifications",
+      "user": "User",
+      "logout": "Log out",
+      "features": "Feature",
+      "testimonials": "Evaluate",
+      "pricing": "Price",
+      "contact": "Contact",
+      "getStarted": "Begin",
+      "navigation": {
+        "dashboard": "Dashboard",
+        "profile": "File",
+        "scripts": "Script",
+        "generatedScripts": "Dynamic script",
+        "models": "Model",
+        "settings": "Setting"
+      }
+    },
+    "Index": {
+      "title": "Welcome to smart agricultural gate",
+      "description": "Your comprehensive farming solution"
+    },
+    "Navigation": {
+      "dashboard": "Dashboard",
+      "profile": "File",
+      "generatedScripts": "Dynamic script",
+      "settings": "Setting",
+      "logout": "Log out"
+    },
+    "Common": {
+      "loading": "Downloading ...",
+      "error": "An error happened",
+      "success": "Successful operation",
+      "pageNotFound": "No page found",
+      "backToHome": "Back home"
+    },
+    "profile": {
+      "Common": {
+        "loading": "Downloading ...",
+        "error": "An error happened",
+        "success": "Successful operation",
+        "pageNotFound": "No page found",
+        "backToHome": "Back home"
+      },
+      "title": "File",
+      "tabs": {
+        "profile": "File",
+        "activity": "Work",
+        "notifications": "Notification",
+        "topScripts": "Top script"
+      },
+      "notFound": {
+        "title": "No page found",
+        "back": "Return",
+        "invalidTab": "The tab is invalid",
+        "description": "The tab is required to not exist. ",
+        "returnToDashboard": "Back to the control panel"
+      },
+      "activity": {
+        "title": "Operational Diary",
+        "description": "Monthly",
+        "loading": "Loading activity ...",
+        "noActivities": "No activity is found in the year {year}",
+        "pagination": "Show {start} to {end} in the total number {total} months of operation",
+        "scripts": "Script",
+        "models": "Model",
+        "comments": "Comment",
+        "showMore": "See more",
+        "showLess": "Hide"
+      },
+      "edit": {
+        "title": "Edit records",
+        "description": "Update your profile information below",
+        "avatar": {
+          "change": "Change avatar",
+          "upload": "Upload a new avatar",
+          "error": "Error when uploading the avatar",
+          "success": "Update successful avatar"
+        },
+        "form": {
+          "username": "User name",
+          "bio": "Biography",
+          "socialLinks": "Social link",
+          "addLink": "Add link",
+          "removeLink": "Erase",
+          "saveChanges": "Save change",
+          "cancel": "Cancel",
+          "saving": "Save ..."
+        },
+        "success": "Update successful records",
+        "error": "Update failure records"
+      },
+      "view": {
+        "following": "Monitoring",
+        "followers": "Follow -up",
+        "editProfile": "Edit records",
+        "noBio": "No biography",
+        "noLinks": "There is no social link"
+      },
+      "notifications": {
+        "title": "Notification",
+        "description": {
+          "loading": "Download notifications ...",
+          "empty": "There is no notice to display",
+          "pagination": "Show {start} to {end} in the total number {total} notification"
+        },
+        "delete": {
+          "title": "Delete notifications",
+          "description": "Are you sure you want to delete this notice? ",
+          "cancel": "Cancel",
+          "confirm": "Erase",
+          "deleting": "Delete ...",
+          "success": "Delete successful notifications",
+          "error": "Delete failure notice"
+        },
+        "notification": {
+          "shared": "{Username} shared {scriptname} with you",
+          "default": "{Username} shared a content with you"
+        }
+      },
+      "topScripts": {
+        "title": "Top script",
+        "loading": "Loading the script ...",
+        "empty": {
+          "title": "No script found",
+          "description": "Create a new scenario or try searching with other keywords."
+        },
+        "filters": {
+          "rating": "The most appreciated",
+          "favorite": "The most popular"
+        },
+        "favorite": {
+          "success": "Updated the scenario favorite status",
+          "error": "Update your favorite state failure"
+        }
+      }
     },
     "theme": {
-        "toggle": {
-            "title": "Toggle theme",
-            "light": "Light",
-            "dark": "Dark",
-            "system": "System"
-        }
+      "toggle": {
+        "title": "Interface conversion",
+        "light": "Bright",
+        "dark": "Dark",
+        "system": "System"
+      }
     },
     "common": {
-        "at": "At",
-        "datePicker": {
-            "pickDateRange": "Pick a date range",
-            "months": {
-                "january": "January",
-                "february": "February",
-                "march": "March",
-                "april": "April",
-                "may": "May",
-                "june": "June",
-                "july": "July",
-                "august": "August",
-                "september": "September",
-                "october": "October",
-                "november": "November",
-                "december": "December"
-            },
-            "weekDays": {
-                "sunday": "Su",
-                "monday": "Mo",
-                "tuesday": "Tu",
-                "wednesday": "We",
-                "thursday": "Th",
-                "friday": "Fr",
-                "saturday": "Sa"
-            }
+      "at": "At the time",
+      "datePicker": {
+        "pickDateRange": "Select the time period",
+        "months": {
+          "january": "January",
+          "february": "February",
+          "march": "March",
+          "april": "April",
+          "may": "May",
+          "june": "June",
+          "july": "July",
+          "august": "August",
+          "september": "September",
+          "october": "October",
+          "november": "November",
+          "december": "December"
+        },
+        "weekDays": {
+          "sunday": "CN",
+          "monday": "T2",
+          "tuesday": "T3",
+          "wednesday": "T4",
+          "thursday": "T5",
+          "friday": "T6",
+          "saturday": "T7"
         }
+      }
     }
-}
+  }
