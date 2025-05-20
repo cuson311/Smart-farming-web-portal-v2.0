@@ -5,13 +5,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import ModelOverviewCard from "@/components/model/model-detail/overview/ModelOverviewCard";
-import { useFetchModelInfo } from "@/hooks/useFetchModel";
-import ModelVersionTab from "@/components/model/model-detail/versions/ModelVersionTab";
-import ScheduleModelTab from "@/components/model/model-detail/schedule/ScheduleModelTab";
-import { useFetchSubscribedModels } from "@/hooks/useFetchUser";
 import {
   Card,
   CardContent,

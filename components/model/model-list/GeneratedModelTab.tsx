@@ -207,7 +207,7 @@ export default function GeneratedModelTab({
     // If subscribed, navigate to versions tab
     const currentLocale = window.location.pathname.split("/")[1];
     router.push(
-      `/${currentLocale}/dashboard/${userId}/models/${model.name}/versions`
+      `/${currentLocale}/dashboard/${userId}/models/${model.name}?tab=versions`
     );
   };
 
