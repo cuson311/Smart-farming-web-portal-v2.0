@@ -113,9 +113,9 @@ const ModelVersionTab = ({
         model_name: modelName,
         model_version: version,
         location: subscribedModel.location,
-        avg_temp: 32,
-        avg_humid: 80,
-        avg_rainfall: 30,
+        // avg_temp: 32,
+        // avg_humid: 80,
+        // avg_rainfall: 30,
       });
 
       toast({
