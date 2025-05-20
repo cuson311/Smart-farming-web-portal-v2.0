@@ -644,7 +644,6 @@
         "updatedAt": "Update at",
         "view": "See",
         "schedule": {
-        "schedule": {
             "plan": {
                 "title": "Schedule Plan",
                 "descriptionSection": "View and manage your model schedule plans",
@@ -668,7 +667,6 @@
             "toast": {
                 "planFetchError": "Error fetching schedule plan",
                 "planFetchErrorDesc": "Failed to load schedule plan data"
-            }
         }
         },
         "generated": {
