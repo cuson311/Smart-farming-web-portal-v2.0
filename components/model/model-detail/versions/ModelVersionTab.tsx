@@ -10,26 +10,14 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Leaf, Code2, Play, Upload } from "lucide-react";
+import { Clock, Leaf, Code2, Play } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
 import { Model, ModelVersion, SubscribedModel } from "@/types/model";
 import { formatDate } from "@/lib/formatDate";
+import { toast } from "@/hooks/use-toast";
 
 const ModelVersionTab = ({
   model,
@@ -54,13 +42,7 @@ const ModelVersionTab = ({
     max_results: 10,
     order_by: "name ASC",
   });
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState<{ key: string; value: string }[]>([
-    { key: "plant", value: "Táo" },
-    { key: "algorithm", value: "Decision Tree" },
-  ]);
+
   console.log("Model Version", model);
   const getTagValue = (tags: any[], key: string) => {
     return tags?.find((tag) => tag.key === key)?.value;
@@ -91,7 +73,9 @@ const ModelVersionTab = ({
     } catch (err) {
       setVersionError("Error fetching model");
       console.error("Error fetching model:", err);
-      toast.error(t("toast.fetchError"), {
+      toast({
+        variant: "destructive",
+        title: t("toast.fetchError"),
         description: t("toast.fetchErrorDesc"),
       });
     } finally {
@@ -113,12 +97,14 @@ const ModelVersionTab = ({
     try {
       // Find the subscribed model that matches the current model name
       const subscribedModel = subscribedModels?.find(
-        (model) => model.model_name === modelName
+        (subscribed) => subscribed.model_name === modelName
       );
 
       if (!subscribedModel) {
-        toast.error(t("toast.generateError"), {
-          description: t("toast.notSubscribed"),
+        toast({
+          variant: "destructive",
+          title: t("toast.notSubscribed"),
+          description: t("toast.notSubscribedDesc"),
         });
         return;
       }
@@ -132,65 +118,19 @@ const ModelVersionTab = ({
         avg_rainfall: 30,
       });
 
-      toast.success(t("toast.generateSuccess"), {
+      toast({
+        variant: "default",
+        title: t("toast.generateSuccess"),
         description: t("toast.generateSuccessDesc", { version }),
       });
     } catch (err) {
       console.error("Error generating script:", err);
-      toast.error(t("toast.generateError"), {
+      toast({
+        variant: "destructive",
+        title: t("toast.generateError"),
         description: t("toast.generateErrorDesc"),
       });
     }
-  };
-
-  const handleCreateVersion = async () => {
-    if (!selectedFile) {
-      toast.error(t("createVersionDialog.fileRequired"));
-      return;
-    }
-
-    if (!selectedFile.name.endsWith(".pkl")) {
-      toast.error(t("createVersionDialog.invalidFile"));
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append("name", modelName);
-      formData.append("description", description);
-      formData.append("tags", JSON.stringify(tags));
-      formData.append("file", selectedFile);
-
-      await modelApi.createModelVersion(formData);
-      toast.success(t("toast.createSuccess"), {
-        description: t("toast.createSuccessDesc"),
-      });
-      // Reset state and close dialog
-      setSelectedFile(null);
-      setDescription("");
-      setIsCreateDialogOpen(false);
-      // Refresh the versions list
-      fetchVersions();
-    } catch (err) {
-      console.error("Error creating version:", err);
-      toast.error(t("toast.createError"), {
-        description: t("toast.createErrorDesc"),
-      });
-    }
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-    }
-  };
-
-  const handleTagChange = (key: string, value: string) => {
-    if (key === "plant") return; // Prevent editing plant tag
-    setTags((prevTags) =>
-      prevTags.map((tag) => (tag.key === key ? { ...tag, value } : tag))
-    );
   };
 
   console.log("versions", versions);
@@ -202,146 +142,10 @@ const ModelVersionTab = ({
           <CardTitle className="mb-2">{t("title")}</CardTitle>
           <CardDescription>{t("descriptionSection")}</CardDescription>
         </div>
-        <Button
-          variant="default"
-          size="sm"
-          onClick={() => setIsCreateDialogOpen(true)}
-          className="flex items-center gap-2"
-        >
-          <Code2 className="h-4 w-4" />
-          {t("createVersion")}
-        </Button>
       </CardHeader>
-
-      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("createVersionDialog.title")}</DialogTitle>
-            <DialogDescription>
-              {t("createVersionDialog.description")}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="description">
-                {t("createVersionDialog.descriptionLabel")}
-              </Label>
-              <Textarea
-                required
-                id="description"
-                placeholder={t("createVersionDialog.descriptionPlaceholder")}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="min-h-[100px]"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="file">
-                {t("createVersionDialog.uploadLabel")}
-              </Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  id="file"
-                  type="file"
-                  accept=".pkl"
-                  onChange={handleFileChange}
-                  className="flex-1"
-                />
-                <Upload className="h-4 w-4 text-muted-foreground" />
-              </div>
-              <p className="text-sm text-muted-foreground">
-                {t("createVersionDialog.uploadDescription")}
-              </p>
-            </div>
-            <div className="grid gap-2">
-              <Label>{t("tags")}</Label>
-              <div className="space-y-2">
-                {tags.map((tag, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <Badge
-                      variant="secondary"
-                      className="flex items-center gap-2"
-                    >
-                      <span className="font-medium">{tag.key}:</span>
-                      {tag.key === "plant" ? (
-                        <span>{tag.value}</span>
-                      ) : (
-                        <Input
-                          value={tag.value}
-                          onChange={(e) =>
-                            handleTagChange(tag.key, e.target.value)
-                          }
-                          className="h-6 w-32"
-                        />
-                      )}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setIsCreateDialogOpen(false);
-                setDescription("");
-                setSelectedFile(null);
-              }}
-            >
-              {t("createVersionDialog.cancel")}
-            </Button>
-            <Button onClick={handleCreateVersion}>
-              {t("createVersionDialog.create")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       <CardContent className="pt-6">
         <div className="flex flex-col gap-8">
-          {/* <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-muted/30 rounded-lg p-4">
-            <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
-              <span className="text-sm font-medium">
-                {t("filter.resultsPerPage")}:
-              </span>
-              <Select
-                value={filters.max_results.toString()}
-                onValueChange={(value) =>
-                  handleFilterChange("max_results", parseInt(value))
-                }
-              >
-                <SelectTrigger className="w-[100px]">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="20">20</SelectItem>
-                  <SelectItem value="50">50</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-wrap gap-4 w-full items-center md:w-auto">
-              <span className="text-sm font-medium">{t("filter.sortBy")}:</span>
-              <Select
-                value={filters.order_by}
-                onValueChange={(value) => handleFilterChange("order_by", value)}
-              >
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="name ASC">
-                    {t("filter.nameAsc")}
-                  </SelectItem>
-                  <SelectItem value="name DESC">
-                    {t("filter.nameDesc")}
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div> */}
-
           <div className="flex flex-col space-y-8">
             {versions?.map((item, index) => {
               const plantType = getTagValue(item.tags, "plant");
@@ -403,15 +207,19 @@ const ModelVersionTab = ({
                             </div>
                           </div>
                         </div>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleGenerateScript(item.version)}
-                          className="flex items-center gap-2"
-                        >
-                          <Play className="h-4 w-4" />
-                          {t("generateScript")}
-                        </Button>
+                        {subscribedModels?.some(
+                          (model) => model.model_name === modelName
+                        ) ? (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleGenerateScript(item.version)}
+                            className="flex items-center gap-2"
+                          >
+                            <Play className="h-4 w-4" />
+                            {t("generateScript")}
+                          </Button>
+                        ) : null}
                       </div>
                     </CardContent>
                   </Card>

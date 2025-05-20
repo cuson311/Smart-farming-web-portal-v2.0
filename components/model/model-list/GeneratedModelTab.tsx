@@ -17,8 +17,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FileText, SearchCode, Trash2 } from "lucide-react";
-import { toast } from "sonner";
+import { FileText, SearchCode, Trash2, Plus, MapPin, X } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 import modelApi from "@/api/modelAPI";
 import { GeneratedScript, Model, SubscribedModel } from "@/types/model";
 import Pagination from "@/components/ui/pagination";
@@ -48,7 +48,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { vietnamProvinces } from "@/lib/constant";
+import SubscribeModelDialog from "@/components/model/SubscribeModelDialog";
 
 export default function GeneratedModelTab({
   model,
@@ -80,20 +102,49 @@ export default function GeneratedModelTab({
       ?.location,
     model_name: model.name,
   });
+  const [subscribeDialogOpen, setSubscribeDialogOpen] = useState(false);
+  const [location, setLocation] = useState("");
+  const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
+  const [locationSearchTerm, setLocationSearchTerm] = useState("");
+
+  const filteredProvinces = vietnamProvinces.filter((province: string) =>
+    province.toLowerCase().includes(locationSearchTerm.toLowerCase())
+  );
+
+  const handleLocationSelect = (province: string) => {
+    setLocation(province);
+    setLocationPopoverOpen(false);
+  };
 
   const fetchScripts = async (page: number = 1) => {
     setLoading(true);
     try {
+      // Get the subscribed location for current model
+      const subscribedLocation = subscribedModels?.find(
+        (item) => item.model_name === model.name
+      )?.location;
+
+      // If no location is subscribed, return empty list
+      if (!subscribedLocation) {
+        setScripts([]);
+        setTotalPages(1);
+        setCurrentPage(1);
+        return;
+      }
+
       const response = await modelApi.getScriptsModel(userId, "", {
         ...filters,
         page,
+        location: subscribedLocation, // Only fetch scripts for subscribed location
       });
       setScripts(response.data);
       setTotalPages(response.totalPages);
       setCurrentPage(response.page);
     } catch (error) {
       console.error("Error fetching scripts:", error);
-      toast.error(t("toast.fetchError"), {
+      toast({
+        variant: "destructive",
+        title: t("toast.fetchError"),
         description: t("toast.fetchErrorDesc"),
       });
     } finally {
@@ -103,7 +154,7 @@ export default function GeneratedModelTab({
 
   useEffect(() => {
     fetchScripts(currentPage);
-  }, [userId, currentPage, filters]);
+  }, [userId, currentPage, filters, subscribedModels]);
 
   const handleFilterChange = (key: string, value: string | number) => {
     setFilters((prev) => ({
@@ -118,11 +169,15 @@ export default function GeneratedModelTab({
 
     try {
       await modelApi.deleteScriptModel(userId, scriptToDelete);
-      toast.success(t("toast.deleteSuccess"));
+      toast({
+        title: t("toast.deleteSuccess"),
+      });
       fetchScripts(currentPage);
     } catch (error) {
       console.error("Error deleting script:", error);
-      toast.error(t("toast.deleteError"), {
+      toast({
+        variant: "destructive",
+        title: t("toast.deleteError"),
         description: t("toast.deleteErrorDesc"),
       });
     } finally {
@@ -137,6 +192,49 @@ export default function GeneratedModelTab({
       `/${currentLocale}/dashboard/${userId}/models/${model.name}/${scriptId}`
     );
   };
+
+  const handleCreateScript = () => {
+    // Check if model is subscribed
+    const isSubscribed = subscribedModels?.some(
+      (item) => item.model_name === model.name
+    );
+
+    if (!isSubscribed) {
+      setSubscribeDialogOpen(true);
+      return;
+    }
+
+    // If subscribed, navigate to versions tab
+    const currentLocale = window.location.pathname.split("/")[1];
+    router.push(
+      `/${currentLocale}/dashboard/${userId}/models/${model.name}/versions`
+    );
+  };
+
+  const handleSubscribe = async (location: string) => {
+    try {
+      await modelApi.subscribeModel({
+        user_id: userId,
+        model_name: model.name,
+        location: location,
+      });
+      toast({
+        title: t("toast.subscribeSuccess"),
+        description: t("toast.subscribeSuccessDesc"),
+        variant: "default",
+      });
+      onSubscribedModelsChange();
+      setSubscribeDialogOpen(false);
+    } catch (error) {
+      console.error("Error subscribing to model:", error);
+      toast({
+        title: t("toast.subscribeError"),
+        description: t("toast.subscribeErrorDesc"),
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="space-y-6 mt-4 pt-2">
       <Card>
@@ -276,9 +374,18 @@ export default function GeneratedModelTab({
               )}
             </div>
           ) : (
-            <div className="text-center py-8">
+            <div className="text-center py-8 space-y-4">
               <FileText className="h-12 w-12 mx-auto text-muted-foreground/50" />
-              <p className="mt-2 text-muted-foreground">{t("noScripts")}</p>
+              <p className="text-muted-foreground">{t("noScripts")}</p>
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleCreateScript}
+                className="flex items-center gap-2 mx-auto"
+              >
+                <Plus className="h-4 w-4" />
+                {t("createScript")}
+              </Button>
             </div>
           )}
         </CardContent>
@@ -300,6 +407,14 @@ export default function GeneratedModelTab({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <SubscribeModelDialog
+        open={subscribeDialogOpen}
+        onOpenChange={setSubscribeDialogOpen}
+        onSubscribe={handleSubscribe}
+        title={t("subscribeDialog.title")}
+        description={t("subscribeDialog.description")}
+      />
     </div>
   );
 }
