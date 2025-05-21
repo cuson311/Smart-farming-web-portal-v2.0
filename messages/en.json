@@ -413,7 +413,12 @@
               "minSoilMoisture": "Minimum soil moisture (%)",
               "maxTemperature": "Maximum temperature (° C)",
               "minAirHumidity": "Minimum air humidity (%)",
-              "maxWindSpeed": "Maximum wind speed (m/s)"
+              "maxWindSpeed": "Maximum wind speed (m/s)",
+              "skipIfRainingNote": "If the system detects rain (via sensors or weather API), skip watering for that day.",
+              "minSoilMoistureNote": "Only water if soil moisture is below this threshold.",
+              "maxTemperatureNote": "Do not water if temperature is above this threshold.",
+              "minAirHumidityNote": "Do not water if the air is too dry.",
+              "maxWindSpeedNote": "Do not water if wind speed is above this threshold."
             },
             "notes": {
               "title": "Note",
