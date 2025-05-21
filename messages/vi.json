@@ -413,7 +413,12 @@
             "minSoilMoisture": "Độ ẩm đất tối thiểu (%)",
             "maxTemperature": "Nhiệt độ tối đa (°C)",
             "minAirHumidity": "Độ ẩm không khí tối thiểu (%)",
-            "maxWindSpeed": "Tốc độ gió tối đa (m/s)"
+            "maxWindSpeed": "Tốc độ gió tối đa (m/s)",
+            "skipIfRainingNote": "Nếu hệ thống phát hiện đang mưa (qua cảm biến hoặc API thời tiết), thì bỏ qua việc tưới nước hôm đó.",
+            "minSoilMoistureNote": "Chỉ tưới nếu độ ẩm đất < ngưỡng này.",
+            "maxTemperatureNote": "Không tưới nếu nhiệt độ > ngưỡng này.",
+            "minAirHumidityNote": "Không tưới nếu không khí quá khô.",
+            "maxWindSpeedNote": "Không tưới nếu gió mạnh hơn ngưỡng."
           },
           "notes": {
             "title": "Ghi chú",

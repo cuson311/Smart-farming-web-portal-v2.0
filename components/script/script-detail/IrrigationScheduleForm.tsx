@@ -541,9 +541,14 @@ export default function IrrigationScheduleForm({
               className="border-input "
               disabled={disabled}
             />
-            <Label htmlFor="skipRain" className="font-medium">
-              {t("conditions.skipIfRaining")}
-            </Label>
+            <div>
+              <Label htmlFor="skipRain" className="font-medium">
+                {t("conditions.skipIfRaining")}
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                {t("conditions.skipIfRainingNote")}
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -571,6 +576,9 @@ export default function IrrigationScheduleForm({
                 className="bg-background border-input focus-visible:ring-ring"
                 disabled={disabled}
               />
+              <p className="text-sm text-muted-foreground">
+                {t("conditions.minSoilMoistureNote")}
+              </p>
             </div>
 
             <div className="space-y-2 bg-muted/30 p-4 rounded-md">
@@ -595,6 +603,9 @@ export default function IrrigationScheduleForm({
                 className="bg-background border-input focus-visible:ring-ring"
                 disabled={disabled}
               />
+              <p className="text-sm text-muted-foreground">
+                {t("conditions.maxTemperatureNote")}
+              </p>
             </div>
 
             <div className="space-y-2 bg-muted/30 p-4 rounded-md">
@@ -621,6 +632,9 @@ export default function IrrigationScheduleForm({
                 className="bg-background border-input focus-visible:ring-ring"
                 disabled={disabled}
               />
+              <p className="text-sm text-muted-foreground">
+                {t("conditions.minAirHumidityNote")}
+              </p>
             </div>
 
             <div className="space-y-2 bg-muted/30 p-4 rounded-md">
@@ -643,6 +657,9 @@ export default function IrrigationScheduleForm({
                 className="bg-background border-input focus-visible:ring-ring"
                 disabled={disabled}
               />
+              <p className="text-sm text-muted-foreground">
+                {t("conditions.maxWindSpeedNote")}
+              </p>
             </div>
           </div>
         </CardContent>
