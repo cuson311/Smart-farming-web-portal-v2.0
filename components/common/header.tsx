@@ -91,13 +91,13 @@ const Header = () => {
       active: pathname.includes(`/dashboard/${userId}/scripts`),
     },
     {
-      href: "/dashboard/models",
+      href: `/dashboard/${userId}models`,
       label: t("navigation.models"),
       icon: Database,
       active: pathname.includes(`/dashboard/${userId}/models`),
     },
     {
-      href: "/dashboard/generatedScripts",
+      href: `/dashboard/${userId}/generatedScripts`,
       label: t("navigation.generatedScripts"),
       icon: FileChartLine,
       active: pathname.includes(`/dashboard/${userId}/generatedScripts`),

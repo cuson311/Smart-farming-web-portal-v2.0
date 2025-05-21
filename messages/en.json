@@ -397,11 +397,14 @@
               "waterVolume": "Water",
               "method": "Method",
               "minutes": "minute",
+              "seconds": "second",
               "hours": "hour",
               "liters": "liter",
+              "milliliters": "ml",
               "cubicMeters": "m³",
               "methods": {
                 "drip": "Drip",
+                "mist": "Mist",
                 "spray": "Spray",
                 "soak": "Irrigate",
                 "manual": "Hand"
@@ -807,6 +810,21 @@
             "createErrorDesc": "Can not create a new version. ",
             "notSubscribed": "You have not registered this model",
             "notSubscribedDesc": "Please register the model before creating a script."
+          },
+          "generateScriptDialog": {
+            "title": "Generate Script",
+            "location": "Location",
+            "locationPlaceholder": "Select province",
+            "searchProvince": "Search province",
+            "noProvinceFound": "No province found",
+            "avgTemp": "Average Temperature",
+            "avgTempPlaceholder": "Enter average temperature",
+            "avgHumid": "Average Humidity",
+            "avgHumidPlaceholder": "Enter average humidity",
+            "avgRainfall": "Average Rainfall",
+            "avgRainfallPlaceholder": "Enter average rainfall",
+            "cancel": "Cancel",
+            "submit": "Generate"
           }
         },
         "card": {

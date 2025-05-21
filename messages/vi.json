@@ -397,11 +397,14 @@
             "waterVolume": "Lượng nước",
             "method": "Phương pháp",
             "minutes": "phút",
+            "seconds": "giây",
             "hours": "giờ",
             "liters": "lít",
+            "milliliters": "ml",
             "cubicMeters": "m³",
             "methods": {
               "drip": "Nhỏ giọt",
+              "mist": "Phun sương",
               "spray": "Phun",
               "soak": "Tưới thấm",
               "manual": "Tưới tay"
@@ -807,6 +810,21 @@
           "createErrorDesc": "Không thể tạo phiên bản mới. Vui lòng thử lại.",
           "notSubscribed": "Bạn chưa đăng ký mô hình này",
           "notSubscribedDesc": "Vui lòng đăng ký mô hình trước khi tạo script."
+        },
+        "generateScriptDialog": {
+          "title": "Tạo Kịch Bản",
+          "location": "Vị Trí",
+          "locationPlaceholder": "Chọn tỉnh",
+          "searchProvince": "Tìm kiếm tỉnh",
+          "noProvinceFound": "Không tìm thấy tỉnh",
+          "avgTemp": "Nhiệt Độ Trung Bình",
+          "avgTempPlaceholder": "Nhập nhiệt độ trung bình",
+          "avgHumid": "Độ Ẩm Trung Bình",
+          "avgHumidPlaceholder": "Nhập độ ẩm trung bình",
+          "avgRainfall": "Lượng Mưa Trung Bình",
+          "avgRainfallPlaceholder": "Nhập lượng mưa trung bình",
+          "cancel": "Hủy",
+          "submit": "Tạo"
         }
       },
       "card": {
