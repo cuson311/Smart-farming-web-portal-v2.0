@@ -275,7 +275,7 @@ const ScheduleModelTab = () => {
                             </span>
                           </TableCell>
                           <TableCell className="text-right">
-                            {formatDate(plan.time)}
+                            {formatDate(plan.time, "UTC")}
                           </TableCell>
                         </TableRow>
                       ))}

@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
+// const API_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
+const API_URL = "https://antamtuoi.hpcc.vn/api/";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
