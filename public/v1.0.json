@@ -1,0 +1,29 @@
+{
+  "repeat": {
+    "interval": 3,
+    "unit": "day"
+  },
+  "watering_events_count": 1,
+  "watering_events": [
+    {
+      "time": "07:00",
+      "duration": {
+        "value": 20,
+        "unit": "min"
+      },
+      "water_volume": {
+        "value": 90,
+        "unit": "l"
+      },
+      "method": "spray"
+    }
+  ],
+  "conditions": {
+    "skip_if_raining": true,
+    "min_soil_moisture": 35,
+    "max_temperature": 35,
+    "min_air_humidity": 55,
+    "max_wind_speed": 15
+  },
+  "note": ""
+}

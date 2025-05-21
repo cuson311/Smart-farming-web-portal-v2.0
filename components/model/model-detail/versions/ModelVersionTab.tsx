@@ -13,6 +13,30 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, Leaf, Code2, Play } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { MapPin, X } from "lucide-react";
+import { vietnamProvinces } from "@/lib/constant";
 // Assuming you'll create this API client in a similar way
 import modelApi from "@/api/modelAPI";
 import { Model, ModelVersion, SubscribedModel } from "@/types/model";
@@ -42,6 +66,25 @@ const ModelVersionTab = ({
     max_results: 10,
     order_by: "name ASC",
   });
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedVersion, setSelectedVersion] = useState<string>("");
+  const [formData, setFormData] = useState({
+    location: "",
+    avg_temp: "",
+    avg_humid: "",
+    avg_rainfall: "",
+  });
+  const [locationPopoverOpen, setLocationPopoverOpen] = useState(false);
+  const [locationSearchTerm, setLocationSearchTerm] = useState("");
+
+  const filteredProvinces = vietnamProvinces.filter((province) =>
+    province.toLowerCase().includes(locationSearchTerm.toLowerCase())
+  );
+
+  const handleLocationSelect = (province: string) => {
+    setFormData({ ...formData, location: province });
+    setLocationPopoverOpen(false);
+  };
 
   console.log("Model Version", model);
   const getTagValue = (tags: any[], key: string) => {
@@ -101,11 +144,8 @@ const ModelVersionTab = ({
       );
 
       if (!subscribedModel) {
-        toast({
-          variant: "destructive",
-          title: t("toast.notSubscribed"),
-          description: t("toast.notSubscribedDesc"),
-        });
+        setSelectedVersion(version);
+        setDialogOpen(true);
         return;
       }
 
@@ -122,6 +162,41 @@ const ModelVersionTab = ({
         variant: "default",
         title: t("toast.generateSuccess"),
         description: t("toast.generateSuccessDesc", { version }),
+      });
+    } catch (err) {
+      console.error("Error generating script:", err);
+      toast({
+        variant: "destructive",
+        title: t("toast.generateError"),
+        description: t("toast.generateErrorDesc"),
+      });
+    }
+  };
+
+  const handleSubmitForm = async () => {
+    try {
+      await modelApi.generateScript(userId, {
+        model_name: modelName,
+        model_version: selectedVersion,
+        location: formData.location,
+        avg_temp: Number(formData.avg_temp),
+        avg_humid: Number(formData.avg_humid),
+        avg_rainfall: Number(formData.avg_rainfall),
+      });
+
+      toast({
+        variant: "default",
+        title: t("toast.generateSuccess"),
+        description: t("toast.generateSuccessDesc", {
+          version: selectedVersion,
+        }),
+      });
+      setDialogOpen(false);
+      setFormData({
+        location: "",
+        avg_temp: "",
+        avg_humid: "",
+        avg_rainfall: "",
       });
     } catch (err) {
       console.error("Error generating script:", err);
@@ -207,19 +282,15 @@ const ModelVersionTab = ({
                             </div>
                           </div>
                         </div>
-                        {subscribedModels?.some(
-                          (model) => model.model_name === modelName
-                        ) ? (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleGenerateScript(item.version)}
-                            className="flex items-center gap-2"
-                          >
-                            <Play className="h-4 w-4" />
-                            {t("generateScript")}
-                          </Button>
-                        ) : null}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleGenerateScript(item.version)}
+                          className="flex items-center gap-2"
+                        >
+                          <Play className="h-4 w-4" />
+                          {t("generateScript")}
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -246,6 +317,126 @@ const ModelVersionTab = ({
           </div>
         </div>
       </CardContent>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("generateScriptDialog.title")}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="location">
+                {t("generateScriptDialog.location")}
+              </Label>
+              <Popover
+                open={locationPopoverOpen}
+                onOpenChange={setLocationPopoverOpen}
+                modal={true}
+              >
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    role="combobox"
+                  >
+                    <MapPin className="mr-2 h-4 w-4" />
+                    {formData.location ||
+                      t("generateScriptDialog.locationPlaceholder")}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[400px] p-0" align="start">
+                  <Command>
+                    <CommandInput
+                      placeholder={t("generateScriptDialog.searchProvince")}
+                      value={locationSearchTerm}
+                      onValueChange={setLocationSearchTerm}
+                    />
+                    <CommandEmpty>
+                      {t("generateScriptDialog.noProvinceFound")}
+                    </CommandEmpty>
+                    <CommandGroup>
+                      <ScrollArea className="h-64">
+                        {filteredProvinces.map((province) => (
+                          <CommandItem
+                            key={province}
+                            value={province}
+                            onSelect={() => handleLocationSelect(province)}
+                          >
+                            <div className="flex items-center gap-2 w-full">
+                              <div
+                                className={`h-4 w-4 border rounded-sm flex items-center justify-center ${
+                                  formData.location === province
+                                    ? "bg-primary border-primary"
+                                    : "border-input"
+                                }`}
+                              >
+                                {formData.location === province && (
+                                  <X className="h-3 w-3 text-primary-foreground" />
+                                )}
+                              </div>
+                              <span>{province}</span>
+                            </div>
+                          </CommandItem>
+                        ))}
+                      </ScrollArea>
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="avg_temp">
+                {t("generateScriptDialog.avgTemp")}
+              </Label>
+              <Input
+                id="avg_temp"
+                type="number"
+                value={formData.avg_temp}
+                onChange={(e) =>
+                  setFormData({ ...formData, avg_temp: e.target.value })
+                }
+                placeholder={t("generateScriptDialog.avgTempPlaceholder")}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="avg_humid">
+                {t("generateScriptDialog.avgHumid")}
+              </Label>
+              <Input
+                id="avg_humid"
+                type="number"
+                value={formData.avg_humid}
+                onChange={(e) =>
+                  setFormData({ ...formData, avg_humid: e.target.value })
+                }
+                placeholder={t("generateScriptDialog.avgHumidPlaceholder")}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="avg_rainfall">
+                {t("generateScriptDialog.avgRainfall")}
+              </Label>
+              <Input
+                id="avg_rainfall"
+                type="number"
+                value={formData.avg_rainfall}
+                onChange={(e) =>
+                  setFormData({ ...formData, avg_rainfall: e.target.value })
+                }
+                placeholder={t("generateScriptDialog.avgRainfallPlaceholder")}
+              />
+            </div>
+          </div>
+          <div className="flex justify-end space-x-2">
+            <Button variant="outline" onClick={() => setDialogOpen(false)}>
+              {t("generateScriptDialog.cancel")}
+            </Button>
+            <Button onClick={handleSubmitForm}>
+              {t("generateScriptDialog.submit")}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };

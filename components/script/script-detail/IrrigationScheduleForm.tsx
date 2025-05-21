@@ -129,8 +129,8 @@ export default function IrrigationScheduleForm({
 
     events.forEach((event, index) => {
       if (timeMap.has(event.time)) {
-        errors[index] = "Thời gian này đã được sử dụng";
-        errors[timeMap.get(event.time)!] = "Thời gian này đã được sử dụng";
+        errors[index] = t("e");
+        errors[timeMap.get(event.time)!] = t("e");
       } else {
         timeMap.set(event.time, index);
       }
@@ -386,7 +386,9 @@ export default function IrrigationScheduleForm({
                       ({event.time} - {event.duration.value}{" "}
                       {event.duration.unit === "min"
                         ? t("wateringEvents.minutes")
-                        : t("wateringEvents.hours")}
+                        : event.duration.unit === "h"
+                        ? t("wateringEvents.hours")
+                        : t("wateringEvents.seconds")}
                       )
                     </span>
                   </div>
@@ -447,6 +449,12 @@ export default function IrrigationScheduleForm({
                               <SelectItem value="min">
                                 {t("wateringEvents.minutes")}
                               </SelectItem>
+                              <SelectItem value="s">
+                                {t("wateringEvents.seconds")}
+                              </SelectItem>
+                              <SelectItem value="h">
+                                {t("wateringEvents.hours")}
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -482,6 +490,12 @@ export default function IrrigationScheduleForm({
                             <SelectContent className="bg-popover border-border">
                               <SelectItem value="l">
                                 {t("wateringEvents.liters")}
+                              </SelectItem>
+                              <SelectItem value="ml">
+                                {t("wateringEvents.milliliters")}
+                              </SelectItem>
+                              <SelectItem value="m3">
+                                {t("wateringEvents.cubicMeters")}
                               </SelectItem>
                             </SelectContent>
                           </Select>
