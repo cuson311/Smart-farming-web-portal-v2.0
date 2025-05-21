@@ -1,4 +1,7 @@
-export const formatDate = (isoString: string): string => {
+export const formatDate = (
+  isoString: string,
+  timezone: string = "Asia/Bangkok"
+): string => {
   if (!isoString) {
     return "Invalid date";
   }
@@ -11,7 +14,7 @@ export const formatDate = (isoString: string): string => {
   }
 
   const options: Intl.DateTimeFormatOptions = {
-    timeZone: "Asia/Bangkok",
+    timeZone: timezone,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
